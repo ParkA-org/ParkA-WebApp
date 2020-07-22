@@ -1,0 +1,20 @@
+# Workflow to mirror repo
+
+name: Mirror
+on:  
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  repo-sync:
+    runs-on: self-hosted
+    steps:
+    - name: repo-sync
+      uses: wei/git-sync@v2
+      with:
+        source_repo: "ParkA-WebApp"
+        source_branch: "master"
+        destination_repo: "mirror-parka"
+        destination_branch: "master"
