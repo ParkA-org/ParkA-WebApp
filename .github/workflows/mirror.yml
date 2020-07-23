@@ -15,4 +15,4 @@ jobs:
     - uses: net-engine/github-repository-sync-action@v1
       with:
         ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        target_repo_url: git@github.com:Bant89/mirror-parka.git 
+        target_repo_url: https://github.com/Bant89/mirror-parka.git 
