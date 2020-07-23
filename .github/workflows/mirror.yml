@@ -14,7 +14,7 @@ jobs:
     - name: repo-sync
       uses: wei/git-sync@v2
       with:
-        source_repo: "ParkA-org/ParkA-WebApp"
+        source_repo: "https://github.com/ParkA-org/ParkA-WebApp.git"
         source_branch: "master"
-        destination_repo: "Bant89/mirror-parka"
+        destination_repo: "https://github.com/Bant89/mirror-parka.git"
         destination_branch: "master"
