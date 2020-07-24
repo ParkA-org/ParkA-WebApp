@@ -11,6 +11,8 @@ jobs:
   sync-repo:
     runs-on: self-hosted
     steps:
+    - name: cur-dir
+      uses: actions/checkout@v2
     - name: sync-repo
       uses: ./
       with:
