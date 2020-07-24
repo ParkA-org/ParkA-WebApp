@@ -8,14 +8,13 @@ on:
     branches: [ master ]
 
 jobs:
-  repo-sync:
+  sync-repo:
     runs-on: self-hosted
     steps:
-    - name: repo-sync
-      uses: wei/git-sync@v2
+    - name: sync-repo
+      uses: ./
       with:
         source_repo: "ParkA-org/ParkA-WebApp"
-        source_branch: "master"
         destination_repo: "Bant89/mirror-parka"
-        destination_branch: "master"
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        username: ${{ secrets.GIT_USER }}
+        user_password: ${{ secrets.GIT_PASSWORD }}
