@@ -15,6 +15,6 @@ jobs:
       uses: ./
       with:
         source_repo: "ParkA-org/ParkA-WebApp"
-        destination_repo: "Bant89/mirror-parka"
+        destination_repo: "Bant89/ParkA-Mirror"
         username: ${{ secrets.GIT_USER }}
         user_password: ${{ secrets.GIT_PASSWORD }}
