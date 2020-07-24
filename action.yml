@@ -8,23 +8,18 @@ inputs:
   source_repo:
     description: GitHub repo slug or full clone url
     required: true
-  source_branch:
-    description: Branch name to sync from
-    required: true
   destination_repo:
     description: GitHub repo slug or full clone url
     required: true
-  destination_branch:
-    description: Branch name to sync to
+  username:
+    description: User of committer
     required: true
-  ssh_private_key:
-    description: SSH key used to authenticate with git clone urls provided (optional if public or https clone url with authentication)
-    required: false
+  user_password:
+    description: Password of user that's doing the commit
+    required: true
 runs:
   using: 'docker'
   image: 'Dockerfile'
-  env:
-    SSH_PRIVATE_KEY: ${{ inputs.ssh_private_key }}
   args:
     - ${{ inputs.source_repo }}
     - ${{ inputs.destination_repo }}
