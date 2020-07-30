@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Menu, Logo, ListItem, Button, Hamburguer } from "./styles";
+import Link from "next/link";
+import { Menu, Logo, ListItem, Button, Hamburger, StyledLink } from "./styles";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,20 +9,30 @@ export default function Navbar() {
     <>
       <Menu>
         <Logo>
-          {" "}
-          <Hamburguer onClick={() => setIsOpen(!isOpen)} /> ParkA
+          <Hamburger onClick={() => setIsOpen(!isOpen)} />
+          <Link href="/">
+            <StyledLink>ParkA</StyledLink>
+          </Link>
         </Logo>
         <ListItem hide={isOpen} layout>
-          Contacto
+          <Link href="/contact">
+            <StyledLink>Contacto</StyledLink>
+          </Link>
         </ListItem>
         <ListItem hide={isOpen} layout>
-          Ayuda
+          <Link href="/help">
+            <StyledLink>Ayuda</StyledLink>
+          </Link>
         </ListItem>
         <Button hide={isOpen} layout>
-          Iniciar Sesión
+          <Link href="/login">
+            <StyledLink>Iniciar Sesión</StyledLink>
+          </Link>
         </Button>
         <Button hide={isOpen} layout>
-          Registrate
+          <Link href="/register">
+            <StyledLink>Registrate</StyledLink>
+          </Link>
         </Button>
       </Menu>
     </>
