@@ -1,9 +1,9 @@
 import React from "react";
 import Layout from "./layout";
-export default function Home() {
+export default function Login() {
   return (
-    <Layout pageTitle="Index">
-      <h1>Index</h1>
+    <Layout pageTitle="Login">
+      <h1>Login</h1>
     </Layout>
   );
 }
