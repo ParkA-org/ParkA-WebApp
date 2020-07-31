@@ -70,8 +70,9 @@ export const Menu = styled(motion.ul)`
   display: flex;
   width: 100vw;
   justify-content: space-between;
+  align-items: center;
   font-size: 1.5em;
-  background-color: #64c7b2;
+  background-color: #fff;
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -89,8 +90,8 @@ export const Hamburger = styled.i`
     box-sizing: border-box;
     position: relative;
     display: block;
-    width: 20px;
-    height: 2px;
+    width: 35px;
+    height: 5px;
     border-radius: 3px;
     background: currentColor;
     @media (max-width: 768px) {
@@ -101,9 +102,9 @@ export const Hamburger = styled.i`
   &::before {
     content: "";
     position: absolute;
-    top: -6px;
+    top: -10px;
   }
   &::after {
-    top: 6px;
+    top: 10px;
   }
 `;
