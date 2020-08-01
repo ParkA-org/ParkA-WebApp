@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Menu, Logo, ListItem, Button, Hamburger, StyledLink } from "./styles";
 
-export default function Navbar() {
+export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(false);
 
   const variants = {
