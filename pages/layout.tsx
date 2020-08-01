@@ -12,7 +12,7 @@ export default function Layout({
   pageTitle = "ParkA Webapp",
   icon = "/favicon.ico",
   children,
-}: LayoutProps) {
+}: LayoutProps): JSX.Element {
   return (
     <div className="container">
       <Head>
