@@ -1,11 +1,27 @@
 import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
+export const Menu = styled(motion.ul)`
+  padding: 1em;
+  display: flex;
+  width: 80vw;
+  max-width: 1380px;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 1.5em;
+  background-color: #fff;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
 export const ListItem = styled(motion.li)`
   list-style: none;
   margin: 1em;
   color: #084c7c;
   display: inline-block;
+  font-weight: bold;
+  font-size: 1.2em;
   &:hover {
     cursor: pointer;
     filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));
@@ -26,9 +42,10 @@ export const StyledLink = styled.a`
 
 export const Logo = styled(motion.li)`
   list-style: none;
-  font-size: 2em;
+  font-size: 2.5em;
   font-weight: 900;
   flex-grow: 2;
+  font-family: "Righteous";
   display: flex;
   align-items: center;
   color: #037185;
@@ -42,16 +59,15 @@ export const Button = styled(motion.button)`
   background-color: #3d907f;
   border: none;
   width: fit-content;
-  border-radius: 0.8em;
+  border-radius: 1.2em;
   margin: 1em;
-  font-weight: bold;
-  padding: 1em;
+  padding: 0.5em 1em;
   display: inline-block;
-
+  font-size: 1.1em;
   &:hover {
     background-color: #037185;
     cursor: pointer;
-    filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));
+    filter: drop-shadow(4px 4px 4px hsla(0deg, 0%, 0%, 0.5));
   }
 
   @media (max-width: 768px) {
@@ -62,19 +78,6 @@ export const Button = styled(motion.button)`
       css`
         display: none;
       `}
-  }
-`;
-
-export const Menu = styled(motion.ul)`
-  padding: 1em;
-  display: flex;
-  width: 100vw;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 1.5em;
-  background-color: #fff;
-  @media (max-width: 768px) {
-    flex-direction: column;
   }
 `;
 
