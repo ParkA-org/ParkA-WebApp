@@ -11,7 +11,7 @@ import {
 } from "./styles";
 
 export default function Navbar(): JSX.Element {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
