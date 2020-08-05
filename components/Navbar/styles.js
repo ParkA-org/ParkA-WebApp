@@ -1,6 +1,31 @@
 import styled, { css } from "styled-components";
 import { motion } from "framer-motion";
 
+const HiddenContainerVariants = {
+  open: {
+    opacity: 1,
+    transition: {
+      when: "beforeChildren",
+      staggerChildren: 0.3,
+    },
+  },
+  closed: {
+    opacity: 0,
+    transition: {
+      when: "afterChildren",
+    },
+  },
+};
+
+const ListItemVariants = {
+  open: {
+    display: "inherit",
+  },
+  closed: {
+    display: "none",
+  },
+};
+
 export const Menu = styled(motion.ul)`
   padding: 1em;
   display: flex;
@@ -15,7 +40,20 @@ export const Menu = styled(motion.ul)`
   }
 `;
 
-export const ListItem = styled(motion.li)`
+export const HiddenContainer = styled(motion.div).attrs(() => ({
+  initial: "open",
+  variants: HiddenContainerVariants,
+}))`
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`;
+
+export const ListItem = styled(motion.li).attrs(() => ({
+  initial: "open",
+  variants: ListItemVariants,
+}))`
   list-style: none;
   margin: 1em;
   color: #084c7c;
@@ -51,33 +89,6 @@ export const Logo = styled(motion.li)`
   color: #037185;
   &:hover {
     cursor: pointer;
-  }
-`;
-
-export const Button = styled(motion.button)`
-  color: #fff;
-  background-color: #3d907f;
-  border: none;
-  width: fit-content;
-  border-radius: 1.2em;
-  margin: 1em;
-  padding: 0.5em 1em;
-  display: inline-block;
-  font-size: 1.1em;
-  &:hover {
-    background-color: #037185;
-    cursor: pointer;
-    filter: drop-shadow(4px 4px 4px hsla(0deg, 0%, 0%, 0.5));
-  }
-
-  @media (max-width: 768px) {
-    margin: 1em 0;
-
-    ${(props) =>
-      props.hide &&
-      css`
-        display: none;
-      `}
   }
 `;
 

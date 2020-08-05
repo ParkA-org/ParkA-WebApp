@@ -1,30 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { Menu, Logo, ListItem, Button, Hamburger, StyledLink } from "./styles";
+import Button from "../Button";
+import {
+  Menu,
+  Logo,
+  ListItem,
+  Hamburger,
+  StyledLink,
+  HiddenContainer,
+} from "./styles";
 
 export default function Navbar(): JSX.Element {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const variants = {
-    open: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 2,
-      },
-    },
-    closed: {
-      opacity: 0,
-      y: -50,
-      transition: {
-        duration: 2,
-      },
-    },
-  };
+  const [isOpen, setIsOpen] = useState(true);
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) setIsOpen(false);
+      if (window.innerWidth > 768) setIsOpen(true);
     };
     window.addEventListener("resize", handleResize);
 
@@ -42,42 +33,28 @@ export default function Navbar(): JSX.Element {
             <StyledLink>ParkA</StyledLink>
           </Link>
         </Logo>
-        <ListItem
-          hide={isOpen}
-          animate={isOpen ? "closed" : "open"}
-          variants={variants}
-        >
-          <Link href="/contact">
-            <StyledLink>Contacto</StyledLink>
-          </Link>
-        </ListItem>
-        <ListItem
-          hide={isOpen}
-          animate={isOpen ? "closed" : "open"}
-          variants={variants}
-        >
-          <Link href="/help">
-            <StyledLink>Ayuda</StyledLink>
-          </Link>
-        </ListItem>
-        <Button
-          hide={isOpen}
-          animate={isOpen ? "closed" : "open"}
-          variants={variants}
-        >
-          <Link href="/login">
-            <StyledLink>Iniciar Sesión</StyledLink>
-          </Link>
-        </Button>
-        <Button
-          hide={isOpen}
-          animate={isOpen ? "closed" : "open"}
-          variants={variants}
-        >
-          <Link href="/register">
-            <StyledLink>Registrate</StyledLink>
-          </Link>
-        </Button>
+        <HiddenContainer animate={isOpen ? "open" : "closed"} inherit="false">
+          <ListItem>
+            <Link href="/contact">
+              <StyledLink>Contacto</StyledLink>
+            </Link>
+          </ListItem>
+          <ListItem>
+            <Link href="/help">
+              <StyledLink>Ayuda</StyledLink>
+            </Link>
+          </ListItem>
+          <Button>
+            <Link href="/login">
+              <StyledLink>Iniciar Sesión</StyledLink>
+            </Link>
+          </Button>
+          <Button>
+            <Link href="/register">
+              <StyledLink>Registrate</StyledLink>
+            </Link>
+          </Button>
+        </HiddenContainer>
       </Menu>
     </>
   );
