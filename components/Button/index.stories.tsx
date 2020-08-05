@@ -1,11 +1,12 @@
 import React from "react";
 import { action } from "@storybook/addon-actions";
-import { Button } from "@storybook/react/demo";
+import { text } from "@storybook/addon-knobs";
+import Button from ".";
 
 export default { title: "Button" };
 
 export const withText = () => (
-  <Button onClick={action("clicked")}>Hello Button</Button>
+  <Button onClick={action("clicked")}>{text("Content", "Hello Button")}</Button>
 );
 
 export const withSomeEmoji = () => (

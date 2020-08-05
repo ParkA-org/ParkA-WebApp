@@ -1,6 +1,13 @@
-import { configure, addParameters } from "@storybook/react";
+import { configure, addParameters, addDecorator } from "@storybook/react";
+import { withKnobs } from "@storybook/addon-knobs";
+import { INITIAL_VIEWPORTS } from "@storybook/addon-viewport";
+
+addDecorator(withKnobs);
 
 addParameters({
+  viewport: {
+    viewports: INITIAL_VIEWPORTS,
+  },
   //Taken from Next JS with-storybook-typescript example
   options: {
     storySort: (a, b) => {
@@ -19,7 +26,7 @@ addParameters({
 });
 
 // automatically import all files ending in *.stories.(ts|tsx)
-const req = require.context("../stories", true, /.stories.tsx?$/);
+const req = require.context("../components", true, /\.stories\.tsx?$/);
 
 // the first argument can be an array too, so if you want to load from different locations or
 // different extensions, you can do it like this: configure([req1, req2], module)
