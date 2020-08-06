@@ -33,7 +33,6 @@ export const Menu = styled(motion.ul)`
   max-width: 1380px;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5em;
   background-color: #fff;
   @media (max-width: 768px) {
     flex-direction: column;
@@ -45,6 +44,7 @@ export const HiddenContainer = styled(motion.div).attrs(() => ({
   variants: HiddenContainerVariants,
 }))`
   display: flex;
+  align-items: center;
   @media (max-width: 768px) {
     flex-direction: column;
   }
