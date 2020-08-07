@@ -27,17 +27,25 @@ const ListItemVariants = {
 };
 
 export const Menu = styled(motion.ul)`
-  padding: 1em;
+  padding: 1em 1em 0 1em;
   display: flex;
   width: 80vw;
   max-width: 1380px;
   justify-content: space-between;
   align-items: center;
-  font-size: 1.5em;
   background-color: #fff;
   @media (max-width: 768px) {
     flex-direction: column;
   }
+`;
+
+export const ColorBar = styled.div`
+  width: 80vw;
+  height: 30px;
+  background-color: #63c7b2;
+  -webkit-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+  box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
 `;
 
 export const HiddenContainer = styled(motion.div).attrs(() => ({
@@ -45,6 +53,8 @@ export const HiddenContainer = styled(motion.div).attrs(() => ({
   variants: HiddenContainerVariants,
 }))`
   display: flex;
+  align-items: center;
+
   @media (max-width: 768px) {
     flex-direction: column;
   }
