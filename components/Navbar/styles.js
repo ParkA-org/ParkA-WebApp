@@ -27,7 +27,7 @@ const ListItemVariants = {
 };
 
 export const Menu = styled(motion.ul)`
-  padding: 1em;
+  padding: 1em 1em 0 1em;
   display: flex;
   width: 80vw;
   max-width: 1380px;
@@ -39,12 +39,25 @@ export const Menu = styled(motion.ul)`
   }
 `;
 
+export const ColorBar = styled.div`
+  width: 80vw;
+  height: 30px;
+  background-color: #63c7b2;
+  -webkit-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+  -moz-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+  box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+`;
+
 export const HiddenContainer = styled(motion.div).attrs(() => ({
   initial: "open",
   variants: HiddenContainerVariants,
 }))`
   display: flex;
   align-items: center;
+<<<<<<< HEAD
+=======
+
+>>>>>>> PWB-29
   @media (max-width: 768px) {
     flex-direction: column;
   }

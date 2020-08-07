@@ -8,6 +8,7 @@ import {
   Hamburger,
   StyledLink,
   HiddenContainer,
+  ColorBar,
 } from "./styles";
 
 export default function Navbar(): JSX.Element {
@@ -56,6 +57,7 @@ export default function Navbar(): JSX.Element {
           </Button>
         </HiddenContainer>
       </Menu>
+      <ColorBar />
     </>
   );
 }
