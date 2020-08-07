@@ -1,10 +1,11 @@
 import React from "react";
 import Layout from "./layout";
+import ContactForm from "../components/ContactForm";
 
 export default function Contact(): JSX.Element {
   return (
     <Layout pageTitle="Contact">
-      <h1>Contact</h1>
+      <ContactForm />
     </Layout>
   );
 }
