@@ -46,6 +46,7 @@ export const ColorBar = styled.div`
   -webkit-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
   -moz-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
   box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
+  margin-bottom: 2em;
 `;
 
 export const HiddenContainer = styled(motion.div).attrs(() => ({
@@ -54,10 +55,6 @@ export const HiddenContainer = styled(motion.div).attrs(() => ({
 }))`
   display: flex;
   align-items: center;
-<<<<<<< HEAD
-=======
-
->>>>>>> PWB-29
   @media (max-width: 768px) {
     flex-direction: column;
   }

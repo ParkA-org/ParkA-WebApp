@@ -71,7 +71,9 @@ export const ContactContainer = styled.div`
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   @media (max-width: 768px) {
     padding: 1em;
     border: none;
