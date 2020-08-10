@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
 import Button from "../Button";
+import NavigationLink from "../NavigationLink";
 import {
   Menu,
   Logo,
   ListItem,
   Hamburger,
-  StyledLink,
   HiddenContainer,
   ColorBar,
 } from "./styles";
@@ -30,30 +29,20 @@ export default function Navbar(): JSX.Element {
       <Menu>
         <Logo>
           <Hamburger onClick={() => setIsOpen(!isOpen)} />
-          <Link href="/">
-            <StyledLink>ParkA</StyledLink>
-          </Link>
+          <NavigationLink href="/" text="ParkA" />
         </Logo>
         <HiddenContainer animate={isOpen ? "open" : "closed"} inherit="false">
           <ListItem>
-            <Link href="/contact">
-              <StyledLink>Contacto</StyledLink>
-            </Link>
+            <NavigationLink href="/contact" text="Contacto" />
           </ListItem>
           <ListItem>
-            <Link href="/help">
-              <StyledLink>Ayuda</StyledLink>
-            </Link>
+            <NavigationLink href="/help" text="Ayuda" />
           </ListItem>
           <Button>
-            <Link href="/login">
-              <StyledLink>Iniciar Sesión</StyledLink>
-            </Link>
+            <NavigationLink href="/login" text="Iniciar Sesión" />
           </Button>
           <Button>
-            <Link href="/register">
-              <StyledLink>Registrate</StyledLink>
-            </Link>
+            <NavigationLink href="/register" text="Registrate" />
           </Button>
         </HiddenContainer>
       </Menu>
