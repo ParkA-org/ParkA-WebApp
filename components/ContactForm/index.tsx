@@ -6,8 +6,8 @@ import Field from "../Field";
 import {
   MainFormContainer,
   FormContainer,
-  FieldSide,
-  InformationSide,
+  FieldSection,
+  InformationSection,
 } from "../../styles/formStyles";
 
 const ContactSchema = Yup.object().shape({
@@ -36,7 +36,7 @@ export default function ContactForm(): JSX.Element {
         {({ errors, touched }) => (
           <Form>
             <FormContainer>
-              <FieldSide>
+              <FieldSection>
                 <Field
                   type="email"
                   name="email"
@@ -57,14 +57,14 @@ export default function ContactForm(): JSX.Element {
                   errorMessage={errors.message}
                   isTouched={touched.message}
                 />
-              </FieldSide>
-              <InformationSide>
+              </FieldSection>
+              <InformationSection>
                 <h3>
                   Respondemos en un tiempo estimado de alrededor 48 horas
                   laborables, con lo cual espera saber pronto de nosotros.
                 </h3>
                 <Button type="submit">Enviar</Button>
-              </InformationSide>
+              </InformationSection>
             </FormContainer>
           </Form>
         )}

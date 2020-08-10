@@ -84,10 +84,6 @@ export const ListItem = styled(motion.li).attrs(() => ({
   }
 `;
 
-export const StyledLink = styled.a`
-  text-decoration: none;
-`;
-
 export const Logo = styled(motion.li)`
   list-style: none;
   font-size: 2.5em;

@@ -8,25 +8,26 @@ export const FormContainer = styled.div`
   justify-items: center;
   align-items: center;
   grid-template-areas:
-    "left right"
-    "left right"
-    "left right";
+    "field information"
+    "field information"
+    "field information"
+    "actions actions";
 
   column-gap: 2em;
-  row-gap: 2em;
+  row-gap: 1em;
 
   @media (max-width: 768px) {
     grid-template-areas:
-      "left"
-      "right";
+      "field"
+      "information";
     width: auto;
     column-gap: 1.5em;
     row-gap: 1.5em;
   }
 `;
 
-export const FieldSide = styled.div`
-  grid-area: left;
+export const FieldSection = styled.div`
+  grid-area: field;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -60,11 +61,12 @@ export const MainFormContainer = styled.div`
   }
 `;
 
-export const InformationSide = styled.div`
-  grid-area: right;
+export const InformationSection = styled.div`
+  grid-area: information;
   height: 80%;
   display: flex;
-  width: auto;
+  max-width: 450px;
+  max-height: 400px;
   min-width: 275px;
   flex-direction: column;
   justify-content: space-between;
@@ -73,4 +75,9 @@ export const InformationSide = styled.div`
   & > h3 {
     width: 200px;
   }
+`;
+
+export const ActionSection = styled.div`
+  display: flex;
+  justify-content: space-around;
 `;

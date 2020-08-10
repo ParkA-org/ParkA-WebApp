@@ -1,13 +1,16 @@
 import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import Field from "../components/Field";
 import Layout from "./layout";
+import NavigationLink from "../components/NavigationLink";
+import Field from "../components/Field";
+import Button from "../components/Button";
 import {
   MainFormContainer,
   FormContainer,
-  FieldSide,
-  InformationSide,
+  FieldSection,
+  InformationSection,
+  ActionSection,
 } from "../styles/formStyles";
 
 const SignInSchema = Yup.object().shape({
@@ -17,7 +20,7 @@ const SignInSchema = Yup.object().shape({
 
 export default function SignWithEmail(): JSX.Element {
   return (
-    <Layout>
+    <Layout pageTitle="Sign in with email">
       <MainFormContainer>
         <h1>Sign with email</h1>
         <Formik
@@ -31,7 +34,7 @@ export default function SignWithEmail(): JSX.Element {
           {({ errors, touched }) => (
             <Form>
               <FormContainer>
-                <FieldSide>
+                <FieldSection>
                   <Field
                     type="email"
                     name="email"
@@ -48,17 +51,23 @@ export default function SignWithEmail(): JSX.Element {
                     errorMessage={errors.password}
                     isTouched={touched.password}
                   />
-                  <h3>Olvidaste tu contraseña?</h3>
-                </FieldSide>
-                <InformationSide>
+                  <NavigationLink href="#" text="Olvidaste tu contraseña?" />
+                </FieldSection>
+                <InformationSection>
                   <img
                     src="./projectLogo.png"
-                    style={{ width: "500px", height: "400px" }}
+                    style={{ width: "100%", height: "100%" }}
                   />
-                </InformationSide>
+                </InformationSection>
               </FormContainer>
-              <button>Cancel</button>
-              <button>Iniciar Sesión</button>
+              <ActionSection>
+                <Button>
+                  <NavigationLink href="/" text="Cancelar" />
+                </Button>
+                <Button type="submit">
+                  <NavigationLink href="#" text="Iniciar Sesión" />
+                </Button>
+              </ActionSection>
             </Form>
           )}
         </Formik>
