@@ -33,6 +33,7 @@ export const FieldSection = styled.div`
   justify-content: space-between;
   width: 20vw;
   min-width: 275px;
+  text-align: left;
   border-right: 1px solid rgba(0, 0, 0, 0.5);
   border-bottom: none;
   @media (max-width: 768px) {
@@ -80,4 +81,10 @@ export const InformationSection = styled.div`
 export const ActionSection = styled.div`
   display: flex;
   justify-content: space-around;
+`;
+
+export const AdditionalInfo = styled.p`
+  overflow-wrap: break-word;
+  max-width: 250px;
+  margin: 0.25em 0;
 `;
