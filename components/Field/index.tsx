@@ -8,6 +8,7 @@ type FieldProps = {
   errorMessage: string;
   isTouched: boolean;
   component?: string;
+  placeholder?: string;
 };
 
 export default function Field({
@@ -17,11 +18,17 @@ export default function Field({
   errorMessage,
   isTouched,
   component,
+  placeholder,
 }: FieldProps): JSX.Element {
   return (
     <>
       <StyledLabel htmlFor={type}>{label}</StyledLabel>
-      <StyledField type={type} name={name} component={component} />
+      <StyledField
+        type={type}
+        name={name}
+        component={component}
+        placeholder={placeholder}
+      />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : null}

@@ -4,11 +4,11 @@ import { Formik, Form } from "formik";
 import Button from "../Button";
 import Field from "../Field";
 import {
-  ContactContainer,
+  MainFormContainer,
   FormContainer,
   FieldSide,
   InformationSide,
-} from "./styles";
+} from "../../styles/formStyles";
 
 const ContactSchema = Yup.object().shape({
   email: Yup.string().email("Email inválido").required("Requerido"),
@@ -20,7 +20,7 @@ const ContactSchema = Yup.object().shape({
 
 export default function ContactForm(): JSX.Element {
   return (
-    <ContactContainer>
+    <MainFormContainer>
       <h2>
         Para comunicarte con nosotros, puedes usar el siguiente formulario.
       </h2>
@@ -69,6 +69,6 @@ export default function ContactForm(): JSX.Element {
           </Form>
         )}
       </Formik>
-    </ContactContainer>
+    </MainFormContainer>
   );
 }
