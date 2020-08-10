@@ -2,9 +2,8 @@ import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Button from "../Button";
+import Field from "../Field";
 import {
-  StyledField,
-  StyledLabel,
   ContactContainer,
   FormContainer,
   FieldSide,
@@ -38,21 +37,26 @@ export default function ContactForm(): JSX.Element {
           <Form>
             <FormContainer>
               <FieldSide>
-                <StyledLabel htmlFor="email">Email</StyledLabel>
-                <StyledField name="email" type="email" />
-                {errors.email && touched.email ? (
-                  <div>{errors.email}</div>
-                ) : null}
-                <StyledLabel htmlFor="topic">Asunto</StyledLabel>
-                <StyledField name="topic" />
-                {errors.topic && touched.topic ? (
-                  <div>{errors.topic}</div>
-                ) : null}
-                <StyledLabel htmlFor="message">Mensaje</StyledLabel>
-                <StyledField name="message" component="textarea" />
-                {errors.message && touched.message ? (
-                  <div>{errors.message}</div>
-                ) : null}
+                <Field
+                  type="email"
+                  name="email"
+                  label="Email"
+                  errorMessage={errors.email}
+                  isTouched={touched.email}
+                />
+                <Field
+                  label="Asunto"
+                  name="topic"
+                  errorMessage={errors.topic}
+                  isTouched={touched.topic}
+                />
+                <Field
+                  component="textarea"
+                  label="Mensaje"
+                  name="message"
+                  errorMessage={errors.message}
+                  isTouched={touched.message}
+                />
               </FieldSide>
               <InformationSide>
                 <h3>
