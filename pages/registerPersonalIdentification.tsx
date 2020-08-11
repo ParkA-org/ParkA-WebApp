@@ -5,6 +5,7 @@ import Layout from "./layout";
 import NavigationLink from "../components/NavigationLink";
 import Field, { SelectField } from "../components/Field";
 import Button from "../components/Button";
+import IdentificationCard from "../components/IdentificationCard";
 import {
   MainFormContainer,
   FormContainer,
@@ -74,10 +75,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   {/* <DatePickerField name="dateOfBirth" /> */}
                 </FieldSection>
                 <InformationSection>
-                  <img
-                    src="./projectLogo.png"
-                    style={{ width: "100%", height: "100%" }}
-                  />
+                  <IdentificationCard />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
