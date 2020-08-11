@@ -15,7 +15,7 @@ import {
 } from "../styles/formStyles";
 
 const PersonalIdentificationSchema = Yup.object().shape({
-  typeOfDocument: Yup.mixed().oneOf(["Passport", "Identification Card"]),
+  typeOfDocument: Yup.string().required("Requerido"),
   documentCode: Yup.string().required("Requerido"),
   // dateOfBirth: Yup.string().required("Requerido"),
   birthPlace: Yup.string().required("Requerido"),
@@ -38,7 +38,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           validationSchema={PersonalIdentificationSchema}
           onSubmit={(values) => console.log(values)}
         >
-          {({ errors, touched }) => (
+          {({ values, errors, touched }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
@@ -47,8 +47,8 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     label="Tipo de documento"
                     placeholder="Tipo de documento"
                   >
-                    <option value="Passport">Pasaporte</option>
-                    <option value="Identification Card">Cédula</option>
+                    <option value="Pasaporte">Pasaporte</option>
+                    <option value="Cédula">Cédula</option>
                   </SelectField>
                   {errors.typeOfDocument && <div>{errors.typeOfDocument}</div>}
                   <Field
@@ -75,7 +75,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   {/* <DatePickerField name="dateOfBirth" /> */}
                 </FieldSection>
                 <InformationSection>
-                  <IdentificationCard />
+                  <IdentificationCard {...values} />
                 </InformationSection>
               </FormContainer>
               <ActionSection>

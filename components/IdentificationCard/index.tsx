@@ -8,31 +8,43 @@ import {
   Container,
 } from "./styles";
 
-export default function IdentificationCard(): JSX.Element {
+type CardProps = {
+  typeOfDocument: string;
+  documentCode: string;
+  birthPlace: string;
+  nationality: string;
+};
+
+export default function IdentificationCard({
+  typeOfDocument,
+  documentCode,
+  birthPlace,
+  nationality,
+}: CardProps): JSX.Element {
   return (
     <Container>
       <HeaderContainer>
         <Image src="./image-placeholder.png" />
         <DataContainer>
           <Title>No. Documento</Title>
-          <Content>Probando esto</Content>
+          <Content>{documentCode}</Content>
         </DataContainer>
       </HeaderContainer>
       <DataContainer>
         <Title>Fecha de Nacimiento</Title>
-        <Content>Probando esto</Content>
+        <Content>21/03/2020</Content>
       </DataContainer>
       <DataContainer>
         <Title>Nacionalidad</Title>
-        <Content>Probando esto</Content>
+        <Content>{nationality}</Content>
       </DataContainer>
       <DataContainer>
         <Title>Lugar de Nacimiento</Title>
-        <Content>Probando esto</Content>
+        <Content>{birthPlace}</Content>
       </DataContainer>
       <DataContainer>
         <Title>Tipo de Documento</Title>
-        <Content>Probando esto</Content>
+        <Content>{typeOfDocument}</Content>
       </DataContainer>
     </Container>
   );

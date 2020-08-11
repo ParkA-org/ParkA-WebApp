@@ -54,7 +54,7 @@ export function SelectField({
   return (
     <>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField as="select" name={name} placeholder={placeholder}>
+      <StyledField component="select" name={name} placeholder={placeholder}>
         {children}
       </StyledField>
     </>
