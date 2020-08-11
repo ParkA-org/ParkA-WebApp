@@ -8,9 +8,11 @@ export const Title = styled.h3`
 
 export const Content = styled.p`
   border-radius: 0.5em;
-  height: 1.5em;
+  min-height: 1.5em;
+  max-height: auto;
   width: 200px;
   background-color: #e5e4e4;
+  word-break: break-word;
 `;
 
 export const Image = styled.img`

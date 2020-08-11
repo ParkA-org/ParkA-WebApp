@@ -16,10 +16,16 @@ import {
 
 const PersonalIdentificationSchema = Yup.object().shape({
   typeOfDocument: Yup.string().required("Requerido"),
-  documentCode: Yup.string().required("Requerido"),
-  // dateOfBirth: Yup.string().required("Requerido"),
-  birthPlace: Yup.string().required("Requerido"),
-  nationality: Yup.string().required("Requerido"),
+  documentCode: Yup.string()
+    .required("Requerido")
+    .max(40, "Máximo de 40 caracteres"),
+  dateOfBirth: Yup.string().required("Requerido"),
+  birthPlace: Yup.string()
+    .required("Requerido")
+    .max(50, "Máximo de 50 caracteres"),
+  nationality: Yup.string()
+    .required("Requerido")
+    .max(40, "Máximo de 40 caracteres"),
 });
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
@@ -31,7 +37,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           initialValues={{
             typeOfDocument: "",
             documentCode: "",
-            // dateOfBirth: "",
+            dateOfBirth: "",
             birthPlace: "",
             nationality: "",
           }}
@@ -46,11 +52,13 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     name="typeOfDocument"
                     label="Tipo de documento"
                     placeholder="Tipo de documento"
+                    errorMessage={errors.typeOfDocument}
+                    isTouched={touched.typeOfDocument}
                   >
                     <option value="Pasaporte">Pasaporte</option>
                     <option value="Cédula">Cédula</option>
                   </SelectField>
-                  {errors.typeOfDocument && <div>{errors.typeOfDocument}</div>}
+
                   <Field
                     label="No. de documento"
                     name="documentCode"
@@ -72,7 +80,14 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.nationality}
                     isTouched={touched.nationality}
                   />
-                  {/* <DatePickerField name="dateOfBirth" /> */}
+                  <Field
+                    type="date"
+                    label="Fecha de nacimiento"
+                    name="dateOfBirth"
+                    placeholder="Fecha de nacimiento"
+                    errorMessage={errors.dateOfBirth}
+                    isTouched={touched.dateOfBirth}
+                  />
                 </FieldSection>
                 <InformationSection>
                   <IdentificationCard {...values} />

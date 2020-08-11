@@ -12,6 +12,7 @@ type CardProps = {
   typeOfDocument: string;
   documentCode: string;
   birthPlace: string;
+  dateOfBirth: string;
   nationality: string;
 };
 
@@ -19,6 +20,7 @@ export default function IdentificationCard({
   typeOfDocument,
   documentCode,
   birthPlace,
+  dateOfBirth,
   nationality,
 }: CardProps): JSX.Element {
   return (
@@ -32,7 +34,7 @@ export default function IdentificationCard({
       </HeaderContainer>
       <DataContainer>
         <Title>Fecha de Nacimiento</Title>
-        <Content>21/03/2020</Content>
+        <Content>{dateOfBirth}</Content>
       </DataContainer>
       <DataContainer>
         <Title>Nacionalidad</Title>
