@@ -11,6 +11,9 @@
     "build-storybook": "build-storybook"
   },
   "dependencies": {
+    "carbon-components": "^10.17.0",
+    "carbon-components-react": "^7.17.0",
+    "carbon-icons": "^7.0.7",
     "formik": "^2.1.5",
     "framer-motion": "^2.3.0",
     "next": "9.4.4",
