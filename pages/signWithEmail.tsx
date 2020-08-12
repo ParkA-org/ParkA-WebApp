@@ -58,7 +58,7 @@ export default function SignWithEmail(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./projectLogo.png"
+                    src="./images/porjectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
