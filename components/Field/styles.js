@@ -19,10 +19,10 @@ export const StyledLabel = styled.label`
   font-weight: bolder;
   font-size: 1.25em;
   text-align: left;
-  margin-bottom: 0.5em;
+  margin: 0.5em 0;
 `;
 
 export const ErrorMessage = styled.p`
   color: red;
-  margin: auto auto auto 0;
+  margin-bottom: 0.25em;
 `;
