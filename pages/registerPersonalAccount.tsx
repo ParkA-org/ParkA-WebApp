@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
 import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
+import Field, { FileUploader } from "../components/Field";
 import Button from "../components/Button";
 import {
   MainFormContainer,
@@ -39,7 +39,7 @@ export default function registerPersonalAccount(): JSX.Element {
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => console.log(values)}
         >
-          {({ values, errors, touched, setFieldValue }) => (
+          {({ errors, touched }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
@@ -82,20 +82,7 @@ export default function registerPersonalAccount(): JSX.Element {
                   />
                 </FieldSection>
                 <InformationSection>
-                  <FileField
-                    type="file"
-                    label="Seleccione foto de perfil"
-                    name="file"
-                    onChange={(event) => {
-                      event.preventDefault();
-                      setFieldValue("file", event.currentTarget.files[0]);
-                    }}
-                  />
-                  {/* <Thumb file={values.file} /> */}
-                  {/* <img
-                    src="./projectLogo.png"
-                    style={{ width: "100%", height: "100%" }}
-                  /> */}
+                  <FileUploader />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
@@ -116,59 +103,3 @@ export default function registerPersonalAccount(): JSX.Element {
     </Layout>
   );
 }
-
-function Thumb({ file }: any): JSX.Element {
-  const [loading, setLoading] = useState(false);
-  const [image, setImage] = useState(undefined);
-
-  useEffect(() => {
-    console.log(file);
-    if (!file) return;
-    setLoading(true);
-
-    const reader = new FileReader();
-
-    console.log("Pasamos aqui");
-    reader.addEventListener("loadend", () => {
-      setLoading(false);
-      setImage(reader.result);
-    });
-
-    console.log("Before fucked up ?");
-    reader.readAsDataURL(file);
-  }, [file]);
-
-  if (!file) return null;
-  if (loading) return <p>loading...</p>;
-
-  return <img src={image} alt={file.name} height={200} width={200} />;
-}
-
-// function FileUpload(props: any): JSX.Element | null {
-//   const [file, setFile] = useState(undefined)
-//   const [loading, setLoading] = useState(false)
-
-//   useEffect(() => {
-//       if(!props.file) { return; }
-
-//       setLoading(true)
-//       const reader = new FileReader();
-//       reader.onloadend = () => {
-//         setLoading(false)
-//         setFile(reader.result)
-//       }
-
-//       reader.readAsDataURL(props.file);
-
-//   }, [props])
-
-//   if(!file)
-//     return null
-//   else
-//   return (
-//     <>
-//     {loading && <p>Loading...</p>}
-//     {!loading && !file && <img src={file} alt={file.name} height={200} width={200}/>}
-//     </>
-//   )
-// }
