@@ -75,6 +75,10 @@ export const InformationSection = styled.div`
   & > h3 {
     width: 200px;
   }
+
+  @media (max-width: 768px) {
+    height: auto;
+  }
 `;
 
 export const ActionSection = styled.div`

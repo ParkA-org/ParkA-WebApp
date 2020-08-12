@@ -23,7 +23,7 @@ export default function Field({
 }: FieldProps): JSX.Element {
   return (
     <>
-      <StyledLabel htmlFor={type}>{label}</StyledLabel>
+      <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField
         type={type}
         name={name}
@@ -36,6 +36,34 @@ export default function Field({
     </>
   );
 }
+
+
+type SelectFieldProps = {
+  name: string;
+  label: string;
+  placeholder: string;
+  children: JSX.Element[];
+  errorMessage: string;
+  isTouched: boolean;
+};
+
+export function SelectField({
+  name,
+  label,
+  placeholder,
+  children,
+  errorMessage,
+  isTouched,
+}: SelectFieldProps): JSX.Element {
+  return (
+    <>
+      <StyledLabel htmlFor={name}>{label}</StyledLabel>
+      <StyledField component="select" name={name} placeholder={placeholder}>
+        {children}
+      </StyledField>
+      {errorMessage && isTouched ? (
+        <ErrorMessage>{errorMessage}</ErrorMessage>
+      ) : null}
 
 export function FileUploader(): JSX.Element {
   const imgEl = useRef(null),
@@ -78,6 +106,7 @@ export function FileUploader(): JSX.Element {
         ref={inputEl}
       />
       <Button onClick={handleClick}>Upload a photo</Button>
+
     </>
   );
 }
