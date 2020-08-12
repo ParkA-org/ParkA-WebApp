@@ -51,7 +51,10 @@ export default function SignWithEmail(): JSX.Element {
                     errorMessage={errors.password}
                     isTouched={touched.password}
                   />
-                  <NavigationLink href="#" text="Olvidaste tu contraseña?" />
+                  <NavigationLink
+                    href="/forgotPassword"
+                    text="Olvidaste tu contraseña?"
+                  />
                 </FieldSection>
                 <InformationSection>
                   <img
@@ -62,7 +65,7 @@ export default function SignWithEmail(): JSX.Element {
               </FormContainer>
               <ActionSection>
                 <Button>
-                  <NavigationLink href="/" text="Cancelar" />
+                  <NavigationLink href="/login" text="Atrás" />
                 </Button>
                 <Button type="submit">
                   <NavigationLink href="#" text="Iniciar Sesión" />

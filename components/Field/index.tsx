@@ -37,7 +37,6 @@ export default function Field({
   );
 }
 
-
 type SelectFieldProps = {
   name: string;
   label: string;
@@ -64,6 +63,9 @@ export function SelectField({
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : null}
+    </>
+  );
+}
 
 export function FileUploader(): JSX.Element {
   const imgEl = useRef(null),
@@ -106,7 +108,6 @@ export function FileUploader(): JSX.Element {
         ref={inputEl}
       />
       <Button onClick={handleClick}>Upload a photo</Button>
-
     </>
   );
 }

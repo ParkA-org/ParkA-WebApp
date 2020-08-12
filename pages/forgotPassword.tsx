@@ -116,7 +116,7 @@ export default function ForgotPassword(): JSX.Element {
               </FormContainer>
               <ActionSection>
                 <Button onClick={(event) => event.preventDefault()}>
-                  <NavigationLink href="/" text="Cancelar" />
+                  <NavigationLink href="/signWithEmail" text="Atrás" />
                 </Button>
                 <Button type="submit">
                   <NavigationLink href="#" text="Iniciar Sesión" />

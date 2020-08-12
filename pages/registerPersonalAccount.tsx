@@ -87,11 +87,11 @@ export default function registerPersonalAccount(): JSX.Element {
               </FormContainer>
               <ActionSection>
                 <Button onClick={(event) => event.preventDefault()}>
-                  <NavigationLink href="/" text="Cancelar" />
+                  <NavigationLink href="/login" text="Atrás" />
                 </Button>
                 <Button type="submit">
                   <NavigationLink
-                    href="/registerIdentificationData"
+                    href="/registerPersonalIdentification"
                     text="Continuar"
                   />
                 </Button>
