@@ -26,7 +26,7 @@ export default function IdentificationCard({
   return (
     <Container>
       <HeaderContainer>
-        <Image src="./image-placeholder.png" />
+        <Image src="./placeholders/image-placeholder.png" />
         <DataContainer>
           <Title>No. Documento</Title>
           <Content>{documentCode}</Content>

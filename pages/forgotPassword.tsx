@@ -103,22 +103,25 @@ export default function ForgotPassword(): JSX.Element {
                         setSendCode(true);
                       }
                     }}
+                    rank="secondary"
                   >
                     Enviar código
                   </Button>
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./projectLogo.png"
+                    src="./images/porjectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button onClick={(event) => event.preventDefault()}>
-                  <NavigationLink href="/signWithEmail" text="Atrás" />
-                </Button>
-                <Button type="submit">
+                <NavigationLink
+                  href="/signWithEmail"
+                  text="Atrás"
+                  styled={true}
+                />
+                <Button submit={true} rank="secondary">
                   <NavigationLink href="#" text="Iniciar Sesión" />
                 </Button>
               </ActionSection>

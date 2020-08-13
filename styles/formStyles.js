@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
+  background-color: #f5f5f5;
   padding: 1em;
   display: grid;
   height: auto;
@@ -48,7 +49,7 @@ export const MainFormContainer = styled.div`
   width: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 3em;
-  border-radius: 0.5em;
+  border-radius: 50px;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
@@ -85,6 +86,17 @@ export const InformationSection = styled.div`
 export const ActionSection = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
+`;
+
+export const CompactActionSection = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 15vw;
+
+  & > a:nth-child(2) {
+    color: #023944;
+  }
 `;
 
 export const AdditionalInfo = styled.p`

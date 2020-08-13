@@ -58,7 +58,7 @@ export default function SignWithEmail(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./projectLogo.png"
+                    src="./images/porjectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
@@ -67,7 +67,7 @@ export default function SignWithEmail(): JSX.Element {
                 <Button>
                   <NavigationLink href="/login" text="Atrás" />
                 </Button>
-                <Button type="submit">
+                <Button submit={true}>
                   <NavigationLink href="#" text="Iniciar Sesión" />
                 </Button>
               </ActionSection>

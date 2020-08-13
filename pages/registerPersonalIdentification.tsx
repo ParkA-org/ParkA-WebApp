@@ -94,13 +94,12 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button>
-                  <NavigationLink
-                    href="/registerPersonalAccount"
-                    text="Atrás"
-                  />
-                </Button>
-                <Button type="submit">
+                <NavigationLink
+                  href="/registerPersonalAccount"
+                  text="Atrás"
+                  styled={true}
+                />
+                <Button submit={true} rank="secondary">
                   <NavigationLink
                     href="/registerPaymentInformation"
                     text="Continuar"

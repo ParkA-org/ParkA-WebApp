@@ -28,7 +28,7 @@ export default function Layout({
           rel="noopener noreferrer"
         >
           Powered by
-          <img src="/vercel.svg" alt="Vercel Logo" className="logo" />
+          <img src="/icons/vercel.svg" alt="Vercel Logo" className="logo" />
         </a>
       </footer>
 

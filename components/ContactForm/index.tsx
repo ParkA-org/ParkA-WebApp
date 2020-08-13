@@ -63,7 +63,7 @@ export default function ContactForm(): JSX.Element {
                   Respondemos en un tiempo estimado de alrededor 48 horas
                   laborables, con lo cual espera saber pronto de nosotros.
                 </h3>
-                <Button type="submit">Enviar</Button>
+                <Button submit={true}>Enviar</Button>
               </InformationSection>
             </FormContainer>
           </Form>
