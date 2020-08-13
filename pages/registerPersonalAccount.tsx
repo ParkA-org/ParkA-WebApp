@@ -86,10 +86,8 @@ export default function registerPersonalAccount(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button onClick={(event) => event.preventDefault()}>
-                  <NavigationLink href="/login" text="Atrás" />
-                </Button>
-                <Button submit={true}>
+                <NavigationLink href="/login" text="Atrás" styled={true} />
+                <Button submit={true} rank="secondary">
                   <NavigationLink
                     href="/registerPersonalIdentification"
                     text="Continuar"

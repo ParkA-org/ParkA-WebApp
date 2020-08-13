@@ -12,6 +12,7 @@ import {
   FieldSection,
   InformationSection,
   ActionSection,
+  CompactActionSection,
 } from "../styles/formStyles";
 
 const PaymentInformationSchema = Yup.object().shape({
@@ -79,11 +80,14 @@ export default function RegisterPaymentInformation(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <NavigationLink
-                  href="/registerPersonalIdentification"
-                  text="Atrás"
-                />
-                <NavigationLink href="/" text="Omitir" />
+                <CompactActionSection>
+                  <NavigationLink
+                    href="/registerPersonalIdentification"
+                    text="Atrás"
+                    styled={true}
+                  />
+                  <NavigationLink href="/" text="Omitir" styled={true} />
+                </CompactActionSection>
                 <Button submit={true} rank="secondary">
                   <NavigationLink href="/" text="Continuar" />
                 </Button>

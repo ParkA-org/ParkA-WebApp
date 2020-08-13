@@ -7,7 +7,7 @@ export const Container = styled.div`
   background-position: center;
   color: white;
   width: 350px;
-  height: 250px;
+  height: 270px;
   display: grid;
   justify-items: center;
   grid-template-areas:
@@ -44,6 +44,7 @@ export const CardNumbers = styled.pre`
 export const ValidationMessage = styled.h4`
   display: inline-block;
   grid-area: message;
+  padding-top: 5px;
   padding-bottom: 2em;
 `;
 
@@ -56,6 +57,7 @@ export const CardHolder = styled.h3`
 
 export const CardExpirationDate = styled.h3`
   display: inline-block;
+  padding-top: 10px;
   grid-area: expiration;
   justify-self: start;
 `;

@@ -86,6 +86,17 @@ export const InformationSection = styled.div`
 export const ActionSection = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
+`;
+
+export const CompactActionSection = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 15vw;
+
+  & > a:nth-child(2) {
+    color: #023944;
+  }
 `;
 
 export const AdditionalInfo = styled.p`
