@@ -67,7 +67,7 @@ export default function SignWithEmail(): JSX.Element {
                 <Button>
                   <NavigationLink href="/login" text="Atrás" />
                 </Button>
-                <Button type="submit">
+                <Button submit={true}>
                   <NavigationLink href="#" text="Iniciar Sesión" />
                 </Button>
               </ActionSection>

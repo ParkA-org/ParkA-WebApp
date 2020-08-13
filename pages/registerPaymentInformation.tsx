@@ -75,20 +75,16 @@ export default function RegisterPaymentInformation(): JSX.Element {
                   />
                 </FieldSection>
                 <InformationSection>
-                  <CreditCard />
+                  <CreditCard {...values} />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button>
-                  <NavigationLink
-                    href="/registerPersonalIdentification"
-                    text="Atrás"
-                  />
-                </Button>
-                <Button>
-                  <NavigationLink href="/" text="Omitir" />
-                </Button>
-                <Button type="submit">
+                <NavigationLink
+                  href="/registerPersonalIdentification"
+                  text="Atrás"
+                />
+                <NavigationLink href="/" text="Omitir" />
+                <Button submit={true} rank="secondary">
                   <NavigationLink href="/" text="Continuar" />
                 </Button>
               </ActionSection>

@@ -100,7 +100,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     text="Atrás"
                   />
                 </Button>
-                <Button type="submit">
+                <Button submit={true}>
                   <NavigationLink
                     href="/registerPaymentInformation"
                     text="Continuar"
