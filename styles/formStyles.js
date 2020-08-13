@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 export const FormContainer = styled.div`
+  background-color: #f5f5f5;
   padding: 1em;
   display: grid;
   height: auto;
@@ -33,6 +34,7 @@ export const FieldSection = styled.div`
   justify-content: space-between;
   width: 20vw;
   min-width: 275px;
+  text-align: left;
   border-right: 1px solid rgba(0, 0, 0, 0.5);
   border-bottom: none;
   @media (max-width: 768px) {
@@ -47,7 +49,7 @@ export const MainFormContainer = styled.div`
   width: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 3em;
-  border-radius: 0.5em;
+  border-radius: 50px;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
@@ -75,9 +77,30 @@ export const InformationSection = styled.div`
   & > h3 {
     width: 200px;
   }
+
+  @media (max-width: 768px) {
+    height: auto;
+  }
 `;
 
 export const ActionSection = styled.div`
   display: flex;
   justify-content: space-around;
+  align-items: center;
+`;
+
+export const CompactActionSection = styled.div`
+  display: flex;
+  justify-content: space-evenly;
+  width: 15vw;
+
+  & > a:nth-child(2) {
+    color: #023944;
+  }
+`;
+
+export const AdditionalInfo = styled.p`
+  overflow-wrap: break-word;
+  max-width: 250px;
+  margin: 0.25em 0;
 `;

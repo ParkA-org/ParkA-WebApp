@@ -5,16 +5,18 @@ import { HandlerFunction } from "@storybook/addon-actions";
 type props = {
   onClick?: HandlerFunction;
   children?: React.ReactNode;
-  type?: string;
+  submit?: boolean;
+  rank?: string;
 };
 
 export default function Button({
   children,
   onClick,
-  type,
+  submit,
+  rank = "primary",
 }: props): JSX.Element {
   return (
-    <StyledButton onClick={onClick} type={type}>
+    <StyledButton onClick={onClick} type={submit ? "submit" : ""} rank={rank}>
       {children}
     </StyledButton>
   );
