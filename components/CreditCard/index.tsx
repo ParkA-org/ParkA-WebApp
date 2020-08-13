@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import {
   Container,
   CardNumbers,
@@ -32,15 +32,16 @@ export default function CreditCard({
     return `${data.substr(5, 2)}/${data.substr(2, 2)}`;
   };
 
-  const logoEl = useRef(null);
-  useEffect(() => {
-    if (cardNumber[0] === "4") {
-      logoEl.current.src = "./images/visaLogo.jpg";
-    }
-  });
   return (
     <Container>
-      <Logo ref={logoEl} src="./images/mastercardLogo.png" alt="card logo" />
+      <Logo
+        src={
+          cardNumber[0] === "4"
+            ? "./images/visaLogo.jpg"
+            : "./images/mastercardLogo.png"
+        }
+        alt="card logo"
+      />
       <Chip src="./images/cardChip.png" alt="card chip" />
       <CardNumbers>
         {cardNumber.length === 0
