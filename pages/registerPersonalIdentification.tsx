@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
+import { gql, useQuery } from '@apollo/client';
 import Layout from "./layout";
 import NavigationLink from "../components/NavigationLink";
 import Field, { SelectField } from "../components/Field";
@@ -28,7 +29,31 @@ const PersonalIdentificationSchema = Yup.object().shape({
     .max(40, "Máximo de 40 caracteres"),
 });
 
+type Country = {
+  __typename: string;
+  name: string
+}
+
+interface CountriesData {
+  countries: Country[]
+}
+
+
+const GET_COUNTRIES = gql`
+query GetCountries {
+  countries {
+    name
+  }
+}
+`
+
 export default function RegisterPersonalIdentificacion(): JSX.Element {
+
+  const { loading, error, data } = useQuery<CountriesData>(GET_COUNTRIES);
+
+  if (loading) return <h1>Loading....</h1>
+  if (error) return <h2>`Error ${error.message}`</h2>
+  console.log(data)
   return (
     <Layout pageTitle="Identificación Personal">
       <MainFormContainer>
@@ -73,13 +98,16 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.birthPlace}
                     isTouched={touched.birthPlace}
                   />
-                  <Field
-                    label="Nacionalidad"
+
+                  <SelectField
                     name="nationality"
+                    label="Nacionalidad"
                     placeholder="Nacionalidad"
                     errorMessage={errors.nationality}
                     isTouched={touched.nationality}
-                  />
+                  >
+                    {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)}
+                  </SelectField>
                   <Field
                     type="date"
                     label="Fecha de nacimiento"
