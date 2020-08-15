@@ -110,7 +110,7 @@ export default function ForgotPassword(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./images/porjectLogo.png"
+                    src="./images/projectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
