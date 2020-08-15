@@ -35,11 +35,7 @@ export const FieldSection = styled.div`
   width: 20vw;
   min-width: 275px;
   text-align: left;
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
-  border-bottom: none;
   @media (max-width: 768px) {
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     width: 100%;
     padding-bottom: 1.5em;
   }
