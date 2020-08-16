@@ -95,7 +95,7 @@ export function FileUploader(): JSX.Element {
   return (
     <>
       <img
-        src="./images/porjectLogo.png"
+        src="./images/projectLogo.png"
         ref={imgEl}
         alt="uploaded by the user"
         style={{ width: "100%", height: "100%" }}
