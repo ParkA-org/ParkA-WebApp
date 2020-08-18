@@ -2,12 +2,12 @@ import styled from "styled-components";
 import { Field } from "formik";
 
 export const StyledField = styled(Field)`
-  border: 1px solid #333;
+  background-color: #E5E4E4;
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
   line-height: 1.5em;
-  width: 15vw;
+  width: 100%;
   text-align: left;
   padding: 0.5em;
   @media (max-width: 768px) {
