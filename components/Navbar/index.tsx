@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Button from "../Button";
 import NavigationLink from "../NavigationLink";
 import {
@@ -29,20 +29,20 @@ export default function Navbar(): JSX.Element {
       <Menu>
         <Logo>
           <Hamburger onClick={() => setIsOpen(!isOpen)} />
-          <NavigationLink href="/" text="ParkA" />
+          <NavigationLink href="/">ParkA</NavigationLink>
         </Logo>
         <HiddenContainer animate={isOpen ? "open" : "closed"} inherit="false">
           <ListItem>
-            <NavigationLink href="/contact" text="Contacto" />
+            <NavigationLink href="/contact">Contacto</NavigationLink>
           </ListItem>
           <ListItem>
-            <NavigationLink href="/help" text="Ayuda" />
+            <NavigationLink href="/help">Ayuda</NavigationLink>
           </ListItem>
           <Button>
-            <NavigationLink href="/login" text="Iniciar Sesión" />
+            <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
           </Button>
           <Button>
-            <NavigationLink href="/register" text="Registrate" />
+            <NavigationLink href="/register">Registrate</NavigationLink>
           </Button>
         </HiddenContainer>
       </Menu>

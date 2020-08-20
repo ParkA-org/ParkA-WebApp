@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components"
 import Layout from "./layout";
 import Button from "../components/Button"
@@ -44,10 +43,14 @@ export default function Login(): JSX.Element {
             <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
             <LoginButton> <Icon src="/icons/googleLogo.png" alt="Google Logo" />Continuar con <b>Google </b></LoginButton>
             <LoginButton>
-              <NavigationLink href="/signWithEmail" text="Iniciar sesión con mi correo electrónico" />
+              <NavigationLink href="/signWithEmail">
+                Iniciar sesión con mi correo electrónico
+                </NavigationLink>
             </LoginButton>
             <LoginButton>
-              <NavigationLink href="/register" text="Crear cuenta con mi correo electrónico" />
+              <NavigationLink href="/register">
+                Crear cuenta con mi correo electrónico
+                </NavigationLink>
             </LoginButton>
           </FieldSection>
           <InformationSection>

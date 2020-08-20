@@ -1,20 +1,19 @@
-import React from "react";
+
 import Link from "next/link";
 import { StyledLink, SpecialLink } from "./styles";
 
 type LinkProps = {
   href: string;
-  text: string;
   styled?: boolean;
+  children?: JSX.Element | string
 };
 
 export default function NavigationLink({
   href,
-  text,
   styled,
+  children
 }: LinkProps): JSX.Element {
-  let linkElement = <StyledLink>{text}</StyledLink>;
-  if (styled) linkElement = <SpecialLink>{text}</SpecialLink>;
+  let linkElement = styled ? <SpecialLink>{children}</SpecialLink> : <StyledLink>{children}</StyledLink>;
 
   return (
     <>

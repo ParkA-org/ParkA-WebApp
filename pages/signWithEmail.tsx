@@ -1,4 +1,4 @@
-import React from "react";
+
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
@@ -53,8 +53,8 @@ export default function SignWithEmail(): JSX.Element {
                   />
                   <NavigationLink
                     href="/forgotPassword"
-                    text="Olvidaste tu contraseña?"
-                  />
+                  >Olvidaste tu contraseña?
+                    </NavigationLink>
                 </FieldSection>
                 <InformationSection>
                   <img
@@ -65,10 +65,14 @@ export default function SignWithEmail(): JSX.Element {
               </FormContainer>
               <ActionSection>
                 <Button>
-                  <NavigationLink href="/login" text="Atrás" />
+                  <NavigationLink href="/login">
+                    Atrás
+                  </NavigationLink>
                 </Button>
                 <Button submit={true}>
-                  <NavigationLink href="#" text="Iniciar Sesión" />
+                  <NavigationLink href="#" >
+                    Iniciar Sesión
+                    </NavigationLink>
                 </Button>
               </ActionSection>
             </Form>

@@ -1,4 +1,4 @@
-import React from "react";
+
 import Layout from "./layout";
 import Button from "../components/Button";
 import styled from "styled-components";

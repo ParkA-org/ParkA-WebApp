@@ -18,7 +18,8 @@ export const Content = styled.p`
 export const Image = styled.img`
   width: 100px;
   height: 100px;
-  margin-right: 0.5em;
+  margin-right: 2em;
+  border-radius: 50%;
 `;
 
 export const HeaderContainer = styled.div`

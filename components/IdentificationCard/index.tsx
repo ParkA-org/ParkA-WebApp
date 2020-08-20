@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Title,
   Content,
@@ -14,6 +13,7 @@ type CardProps = {
   birthPlace: string;
   dateOfBirth: string;
   nationality: string;
+  imageUrl: string;
 };
 
 export default function IdentificationCard({
@@ -22,11 +22,12 @@ export default function IdentificationCard({
   birthPlace,
   dateOfBirth,
   nationality,
+  imageUrl
 }: CardProps): JSX.Element {
   return (
     <Container>
       <HeaderContainer>
-        <Image src="./placeholders/image-placeholder.png" />
+        <Image src={imageUrl} />
         <DataContainer>
           <Title>No. Documento</Title>
           <Content>{documentCode}</Content>
