@@ -1,17 +1,17 @@
 
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
+import Layout from "../layout";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "../styles/formStyles";
+} from "styles/formStyles";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Email inválido").required("Requerido"),
@@ -58,7 +58,7 @@ export default function SignWithEmail(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./images/projectLogo.png"
+                    src="../images/projectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>

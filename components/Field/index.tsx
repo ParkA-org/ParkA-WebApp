@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage } from "./styles";
-import Button from "../Button";
+import Button from "components/Button";
 
 type FieldProps = {
   type?: string;

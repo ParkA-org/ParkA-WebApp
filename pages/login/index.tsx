@@ -1,15 +1,12 @@
 import styled from "styled-components"
-import Layout from "./layout";
-import Button from "../components/Button"
+import Layout from "../layout";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
-  ActionSection,
-  CompactActionSection,
-} from "../styles/formStyles";
-import NavigationLink from "../components/NavigationLink";
+} from "styles/formStyles";
+import NavigationLink from "components/NavigationLink";
 
 const LoginButton = styled.button`
   background-color: white;
@@ -43,7 +40,7 @@ export default function Login(): JSX.Element {
             <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
             <LoginButton> <Icon src="/icons/googleLogo.png" alt="Google Logo" />Continuar con <b>Google </b></LoginButton>
             <LoginButton>
-              <NavigationLink href="/signWithEmail">
+              <NavigationLink href="login/WithEmail">
                 Iniciar sesión con mi correo electrónico
                 </NavigationLink>
             </LoginButton>
@@ -55,7 +52,7 @@ export default function Login(): JSX.Element {
           </FieldSection>
           <InformationSection>
             <img
-              src="./images/projectLogo.png"
+              src="./../images/projectLogo.png"
               style={{ width: "100%", height: "100%" }}
             />
             <p>Utiliza uno de estos métodos para registrarte o iniciar sesión</p>

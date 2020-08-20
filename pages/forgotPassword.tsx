@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
 import {
   MainFormContainer,
   FormContainer,
@@ -110,7 +110,7 @@ export default function ForgotPassword(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./images/projectLogo.png"
+                    src="./../images/projectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>

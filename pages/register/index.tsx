@@ -3,19 +3,19 @@ import * as Yup from "yup";
 import axios from "axios"
 import { Formik, Form } from "formik";
 import { gql, useMutation } from '@apollo/client'
-import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useLocalStorage } from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field, { FileUploader } from "../components/Field";
-import Button from "../components/Button";
+import Layout from "../layout";
+import NavigationLink from "components/NavigationLink";
+import Field, { FileUploader } from "components/Field";
+import Button from "components/Button";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "../styles/formStyles";
+} from "styles/formStyles";
 
 
 const CREATE_USER = gql`
@@ -105,7 +105,7 @@ export default function registerPersonalAccount(): JSX.Element {
             })
             if (!error && !imageStatus.error) {
               if (!imageStatus.loading && !loading) {
-                router.push('/registerPersonalIdentification')
+                router.push('/PersonalIdentification')
               }
             }
             else

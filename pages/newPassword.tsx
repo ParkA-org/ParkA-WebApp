@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import styled from "styled-components"
 import Layout from "./layout";
-import Button from "../components/Button"
+import Button from "components/Button"
 import {
   MainFormContainer,
   FormContainer,
@@ -12,8 +12,8 @@ import {
   ActionSection,
   CompactActionSection,
 } from "../styles/formStyles";
-import NavigationLink from "../components/NavigationLink";
-import Field, { FileUploader } from "../components/Field";
+import NavigationLink from "components/NavigationLink";
+import Field, { FileUploader } from "components/Field";
 import { motion } from "framer-motion";
 
 const LoginButton = styled.button`
@@ -72,7 +72,7 @@ export default function Login(): JSX.Element {
   return (
     <Layout pageTitle="Nueva Contraseña">
       <MainFormContainer>
-        
+
         <Formik
           initialValues={{
             name: "",
@@ -86,45 +86,45 @@ export default function Login(): JSX.Element {
           onSubmit={(values) => console.log(values)}
         >
           {({ errors, touched }) => (
-        <Form>
-        <Logo>
-          <NavigationLink href="/" text="ParkA" />
-        </Logo>
-        <FormContainer>
-          <FieldSection>
-          <Field
-            type="password"
-            label="Nueva contraseña"
-            name="password"
-            errorMessage={errors.password}
-            isTouched={touched.password}
-          />
-          <Field
-            type="password"
-            label="Confirmar nueva contraseña"
-            name="confirmPassword"
-            errorMessage={errors.confirmPassword}
-            isTouched={touched.confirmPassword}
-          />
-          </FieldSection>
-          <InformationSection>
-            <img
-              src="./images/projectLogo.png"
-              style={{ width: "80%" }}
-            />
-          </InformationSection>
-        </FormContainer>
-        <ActionSection>
-          <NavigationLink href="/login" text="Cancelar" styled={true} />
-          <Button submit={true} rank="secondary">
-            <NavigationLink
-              href="/."
-              text="Confirmar"
-            />
-          </Button>
-        </ActionSection>
-        </Form>
-        )}
+            <Form>
+              <Logo>
+                <NavigationLink href="/" text="ParkA" />
+              </Logo>
+              <FormContainer>
+                <FieldSection>
+                  <Field
+                    type="password"
+                    label="Nueva contraseña"
+                    name="password"
+                    errorMessage={errors.password}
+                    isTouched={touched.password}
+                  />
+                  <Field
+                    type="password"
+                    label="Confirmar nueva contraseña"
+                    name="confirmPassword"
+                    errorMessage={errors.confirmPassword}
+                    isTouched={touched.confirmPassword}
+                  />
+                </FieldSection>
+                <InformationSection>
+                  <img
+                    src="./../images/projectLogo.png"
+                    style={{ width: "80%" }}
+                  />
+                </InformationSection>
+              </FormContainer>
+              <ActionSection>
+                <NavigationLink href="/login" text="Cancelar" styled={true} />
+                <Button submit={true} rank="secondary">
+                  <NavigationLink
+                    href="/."
+                    text="Confirmar"
+                  />
+                </Button>
+              </ActionSection>
+            </Form>
+          )}
         </Formik>
       </MainFormContainer>
     </Layout>

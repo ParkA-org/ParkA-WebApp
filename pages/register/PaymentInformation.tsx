@@ -1,11 +1,11 @@
 
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
-import CreditCard from "../components/CreditCard";
+import Layout from "pages/layout";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
+import CreditCard from "components/CreditCard";
 import {
   MainFormContainer,
   FormContainer,
@@ -13,7 +13,7 @@ import {
   InformationSection,
   ActionSection,
   CompactActionSection,
-} from "../styles/formStyles";
+} from "styles/formStyles";
 
 const PaymentInformationSchema = Yup.object().shape({
   cardNumber: Yup.string()
@@ -82,7 +82,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
               <ActionSection>
                 <CompactActionSection>
                   <NavigationLink
-                    href="/registerPersonalIdentification"
+                    href="/register/PersonalIdentification"
                     styled={true}
                   >
                     Atrás

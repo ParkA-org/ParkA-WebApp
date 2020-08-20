@@ -1,20 +1,20 @@
 import { useEffect } from "react"
 import * as Yup from "yup";
-import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useLocalStorage } from "hooks/useLocalStorage"
 import { Formik, Form } from "formik";
 import { gql, useQuery } from '@apollo/client';
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field, { SelectField } from "../components/Field";
-import Button from "../components/Button";
-import IdentificationCard from "../components/IdentificationCard";
+import Layout from "../layout";
+import NavigationLink from "components/NavigationLink";
+import Field, { SelectField } from "components/Field";
+import Button from "components/Button";
+import IdentificationCard from "components/IdentificationCard";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "../styles/formStyles";
+} from "styles/formStyles";
 
 const PersonalIdentificationSchema = Yup.object().shape({
   typeOfDocument: Yup.string().required("Requerido"),
@@ -57,9 +57,9 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     console.log(`User ID ${userId}`)
   }, [])
 
-  if (loading) return <h1>Loading....</h1>
-  if (error) return <h2>`Error ${error.message}`</h2>
-  console.log(data)
+  // if (loading) return <h1>Loading....</h1>
+  // if (error) return <pre>`Error ${JSON.stringify(error)}`</pre>
+  // console.log(data)
   return (
     <Layout pageTitle="Identificación Personal">
       <MainFormContainer>
@@ -112,7 +112,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.nationality}
                     isTouched={touched.nationality}
                   >
-                    {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)}
+                    {/* {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)} */}
                   </SelectField>
                   <Field
                     type="date"
@@ -129,13 +129,13 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
               </FormContainer>
               <ActionSection>
                 <NavigationLink
-                  href="/registerPersonalAccount"
+                  href="/register"
                   styled={true}
                 >Atrás
                 </NavigationLink>
                 <Button submit={true} rank="secondary">
                   <NavigationLink
-                    href="/registerPaymentInformation"
+                    href="/register/PaymentInformation"
                   >
                     Continuar
                     </NavigationLink>

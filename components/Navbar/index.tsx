@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import Button from "../Button";
-import NavigationLink from "../NavigationLink";
+import Button from "components/Button";
+import NavigationLink from "components/NavigationLink";
 import {
   Menu,
   Logo,

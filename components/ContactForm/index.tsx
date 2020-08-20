@@ -1,14 +1,14 @@
 
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import Button from "../Button";
-import Field from "../Field";
+import Button from "components/Button";
+import Field from "components/Field";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
-} from "../../styles/formStyles";
+} from "styles/formStyles";
 
 const ContactSchema = Yup.object().shape({
   email: Yup.string().email("Email inválido").required("Requerido"),
