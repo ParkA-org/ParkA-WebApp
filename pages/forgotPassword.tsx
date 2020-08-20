@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
@@ -118,11 +118,12 @@ export default function ForgotPassword(): JSX.Element {
               <ActionSection>
                 <NavigationLink
                   href="/signWithEmail"
-                  text="Atrás"
                   styled={true}
-                />
+                >
+                  Atrás
+                  </NavigationLink>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink href="#" text="Iniciar Sesión" />
+                  <NavigationLink href="#">Iniciar Sesión</NavigationLink>
                 </Button>
               </ActionSection>
             </Form>

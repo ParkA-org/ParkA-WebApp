@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage } from "./styles";
 import Button from "../Button";
 

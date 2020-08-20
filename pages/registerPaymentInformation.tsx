@@ -1,4 +1,4 @@
-import React from "react";
+
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
@@ -83,13 +83,18 @@ export default function RegisterPaymentInformation(): JSX.Element {
                 <CompactActionSection>
                   <NavigationLink
                     href="/registerPersonalIdentification"
-                    text="Atrás"
                     styled={true}
-                  />
-                  <NavigationLink href="/" text="Omitir" styled={true} />
+                  >
+                    Atrás
+                    </NavigationLink>
+                  <NavigationLink href="/" styled={true} >
+                    Omitir
+                    </NavigationLink>
                 </CompactActionSection>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink href="/" text="Continuar" />
+                  <NavigationLink href="/" >
+                    Continuar
+                    </NavigationLink>
                 </Button>
               </ActionSection>
             </Form>

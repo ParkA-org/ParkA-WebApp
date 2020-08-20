@@ -1,5 +1,6 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react"
 import * as Yup from "yup";
+import { useLocalStorage } from "../hooks/useLocalStorage"
 import { Formik, Form } from "formik";
 import { gql, useQuery } from '@apollo/client';
 import Layout from "./layout";
@@ -44,12 +45,17 @@ query GetCountries {
   countries {
     name
   }
-}
-`
+}`
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-
   const { loading, error, data } = useQuery<CountriesData>(GET_COUNTRIES);
+  const [image, setImage] = useLocalStorage("image", "./placeholders/image-placeholder.png")
+  const [userId, setUserId] = useLocalStorage("user-id", "")
+
+  useEffect(() => {
+    console.log(`Image ${image}`)
+    console.log(`User ID ${userId}`)
+  }, [])
 
   if (loading) return <h1>Loading....</h1>
   if (error) return <h2>`Error ${error.message}`</h2>
@@ -118,20 +124,21 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   />
                 </FieldSection>
                 <InformationSection>
-                  <IdentificationCard {...values} />
+                  <IdentificationCard {...values} imageUrl={image} />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
                 <NavigationLink
                   href="/registerPersonalAccount"
-                  text="Atrás"
                   styled={true}
-                />
+                >Atrás
+                </NavigationLink>
                 <Button submit={true} rank="secondary">
                   <NavigationLink
                     href="/registerPaymentInformation"
-                    text="Continuar"
-                  />
+                  >
+                    Continuar
+                    </NavigationLink>
                 </Button>
               </ActionSection>
             </Form>

@@ -1,8 +1,10 @@
-import React from "react";
+import { useState } from "react"
 import * as Yup from "yup";
 import axios from "axios"
 import { Formik, Form } from "formik";
 import { gql, useMutation } from '@apollo/client'
+import { useLocalStorage } from "../hooks/useLocalStorage"
+import { useRouter } from 'next/router'
 import Layout from "./layout";
 import NavigationLink from "../components/NavigationLink";
 import Field, { FileUploader } from "../components/Field";
@@ -15,14 +17,12 @@ import {
   ActionSection,
 } from "../styles/formStyles";
 
+
 const CREATE_USER = gql`
 mutation CreateUser($user: createUserInput!) {
   createUser(input: $user) {
      user {
-        username
-        email
-        lastname
-        profilepicture
+        id
     }
   }
 }
@@ -37,8 +37,39 @@ const CreateAccountSchema = Yup.object().shape({
   file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
 });
 
+function UpdateImage(file: any, success, error) {
+  const apiBaseURL = "https://parka-api.herokuapp.com/upload";
+  const formData = new FormData()
+  formData.append("files", file)
+  axios({
+    method: "POST",
+    url: apiBaseURL,
+    data: formData
+  }).then(res => {
+    success(res.data['0'].url)
+    error(prevState => {
+      return { ...prevState, loading: false }
+    })
+  })
+    .catch(err => error(prevState => {
+      return { ...prevState, error: err }
+    }))
+}
+
 export default function registerPersonalAccount(): JSX.Element {
-  const [createUser, { data, error }] = useMutation(CREATE_USER)
+  const [createUser, { loading, error }] = useMutation(CREATE_USER, {
+    onCompleted({ createUser }) {
+      const { user } = createUser
+      setUserId(user.id)
+    }
+  })
+  const router = useRouter()
+  const [imageStatus, setImageStatus] = useState({
+    loading: false,
+    error: undefined
+  })
+  const [image, setImage] = useLocalStorage("image", "./placeholders/image-placeholder.png")
+  const [userId, setUserId] = useLocalStorage("user-id", "")
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
@@ -54,32 +85,31 @@ export default function registerPersonalAccount(): JSX.Element {
           }}
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => {
-            const apiBaseURL = "https://parka-api.herokuapp.com/upload";
-            const formData = new FormData()
-            formData.append("files", values.file)
-            console.log(values.file)
-            axios({
-              method: "POST",
-              url: apiBaseURL,
-              data: formData
-            }).then(res => { console.log(res.data['0'].url) })
-              .catch(err => console.log(`Error while uploading file ${err}`))
 
-            // createUser({
-            //   variables: {
-            //     user: {
-            //       data: {
-            //         username: values.name,
-            //         email: values.email,
-            //         lastname: values.lastName,
-            //         password: values.password,
-            //         profilepicture: "https://spoiler.bolavip.com/__export/1594763139104/sites/bolavip/img/2020/07/14/will_smith_crop1594763138495.jpg_423682103.jpg"
-            //       }
-            //     }
-            //   }
-            // })
-            // console.log(data)
-            // console.log(`Error: ${error}`)
+            setImageStatus(prevState => {
+              return { ...prevState, loading: true }
+            })
+            UpdateImage(values.file, setImage, setImageStatus)
+
+            createUser({
+              variables: {
+                user: {
+                  data: {
+                    username: values.name,
+                    email: values.email,
+                    lastname: values.lastName,
+                    password: values.password
+                  }
+                }
+              }
+            })
+            if (!error && !imageStatus.error) {
+              if (!imageStatus.loading && !loading) {
+                router.push('/registerPersonalIdentification')
+              }
+            }
+            else
+              alert(error)
           }}
         >
           {({ setFieldValue, errors, touched }) => (
@@ -129,12 +159,8 @@ export default function registerPersonalAccount(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <NavigationLink href="/login" text="Atrás" styled={true} />
+                <NavigationLink href="/login" styled={true}>Atrás</NavigationLink>
                 <Button submit={true} rank="secondary">
-                  {/* <NavigationLink
-                    href="/registerPersonalIdentification"
-                    text="Continuar"
-                  /> */}
                   Continuar
                 </Button>
               </ActionSection>
@@ -142,6 +168,8 @@ export default function registerPersonalAccount(): JSX.Element {
           )}
         </Formik>
       </MainFormContainer>
-    </Layout>
+      {imageStatus.loading && <p>Loading...</p>}
+      {imageStatus.error && <p>Error...</p>}
+    </Layout >
   );
 }
