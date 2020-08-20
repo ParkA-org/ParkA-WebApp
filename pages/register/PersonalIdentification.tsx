@@ -1,8 +1,9 @@
 import { useEffect } from "react"
-import * as Yup from "yup";
+import { PersonalIdentificationSchema } from "utils/schemas"
 import { useLocalStorage } from "hooks/useLocalStorage"
 import { Formik, Form } from "formik";
-import { gql, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { GET_COUNTRIES } from "queries"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { SelectField } from "components/Field";
@@ -16,20 +17,6 @@ import {
   ActionSection,
 } from "styles/formStyles";
 
-const PersonalIdentificationSchema = Yup.object().shape({
-  typeOfDocument: Yup.string().required("Requerido"),
-  documentCode: Yup.string()
-    .required("Requerido")
-    .max(40, "Máximo de 40 caracteres"),
-  dateOfBirth: Yup.string().required("Requerido"),
-  birthPlace: Yup.string()
-    .required("Requerido")
-    .max(50, "Máximo de 50 caracteres"),
-  nationality: Yup.string()
-    .required("Requerido")
-    .max(40, "Máximo de 40 caracteres"),
-});
-
 type Country = {
   __typename: string;
   name: string
@@ -39,13 +26,6 @@ interface CountriesData {
   countries: Country[]
 }
 
-
-const GET_COUNTRIES = gql`
-query GetCountries {
-  countries {
-    name
-  }
-}`
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
   const { loading, error, data } = useQuery<CountriesData>(GET_COUNTRIES);
@@ -57,9 +37,9 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     console.log(`User ID ${userId}`)
   }, [])
 
-  // if (loading) return <h1>Loading....</h1>
-  // if (error) return <pre>`Error ${JSON.stringify(error)}`</pre>
-  // console.log(data)
+  if (loading) return <h1>Loading....</h1>
+  if (error) return <pre>`Error ${JSON.stringify(error)}`</pre>
+  console.log(data)
   return (
     <Layout pageTitle="Identificación Personal">
       <MainFormContainer>
@@ -112,7 +92,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.nationality}
                     isTouched={touched.nationality}
                   >
-                    {/* {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)} */}
+                    {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)}
                   </SelectField>
                   <Field
                     type="date"

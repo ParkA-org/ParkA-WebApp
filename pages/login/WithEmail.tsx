@@ -1,6 +1,5 @@
-
-import * as Yup from "yup";
 import { Formik, Form } from "formik";
+import { SignInSchema } from "utils/schemas"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field from "components/Field";
@@ -12,11 +11,6 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
-
-const SignInSchema = Yup.object().shape({
-  email: Yup.string().email("Email inválido").required("Requerido"),
-  password: Yup.string().required("Requerido"),
-});
 
 export default function SignWithEmail(): JSX.Element {
   return (

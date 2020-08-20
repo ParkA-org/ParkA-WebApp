@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import * as Yup from "yup";
+import { ForgotPasswordSchema } from "utils/schemas"
 import { Formik, Form } from "formik";
 import Layout from "./layout";
 import NavigationLink from "components/NavigationLink";
@@ -13,11 +13,6 @@ import {
   ActionSection,
   AdditionalInfo,
 } from "../styles/formStyles";
-
-const ForgotPasswordSchema = Yup.object().shape({
-  email: Yup.string().email("Email inválido").required("Requerido"),
-  code: Yup.string().required("Requerido"),
-});
 
 const Timer = (props: any) => {
   const { initialMinute = 0, initialSeconds = 0 } = props;

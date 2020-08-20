@@ -1,5 +1,5 @@
 import React from "react";
-import * as Yup from "yup";
+import { CreatePasswordSchema } from "utils/schemas"
 import { Formik, Form } from "formik";
 import styled from "styled-components"
 import Layout from "./layout";
@@ -16,25 +16,7 @@ import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
 import { motion } from "framer-motion";
 
-const LoginButton = styled.button`
-  background-color: white;
-  color: rgba(0,0,0,0.8);
-  border-radius: 5px;
-  padding: 1em; 
-  border: 1px solid #333;
-  margin-bottom: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  & > b {
-    margin-left: 3px;
-  }
-`;
 
-const CreateAccountSchema = Yup.object().shape({
-  password: Yup.string().required("Requerido"),
-  confirmPassword: Yup.string().required("Requerido"),
-});
 
 const StyledField = styled(Field)`
   border: 1px solid #333;
@@ -82,13 +64,15 @@ export default function Login(): JSX.Element {
             confirmPassword: "",
             file: "",
           }}
-          validationSchema={CreateAccountSchema}
+          validationSchema={CreatePasswordSchema}
           onSubmit={(values) => console.log(values)}
         >
           {({ errors, touched }) => (
             <Form>
               <Logo>
-                <NavigationLink href="/" text="ParkA" />
+                <NavigationLink href="/">
+                  ParkA
+                  </NavigationLink>
               </Logo>
               <FormContainer>
                 <FieldSection>
@@ -115,18 +99,21 @@ export default function Login(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <NavigationLink href="/login" text="Cancelar" styled={true} />
+                <NavigationLink href="/login" styled={true}>
+                  Cancelar
+                </NavigationLink>
                 <Button submit={true} rank="secondary">
                   <NavigationLink
                     href="/."
-                    text="Confirmar"
-                  />
+                  >
+                    Confirmar
+                  </NavigationLink>
                 </Button>
               </ActionSection>
             </Form>
           )}
         </Formik>
       </MainFormContainer>
-    </Layout>
+    </Layout >
   );
 }

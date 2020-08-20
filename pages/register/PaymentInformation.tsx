@@ -1,6 +1,5 @@
-
-import * as Yup from "yup";
 import { Formik, Form } from "formik";
+import { PaymentInformationSchema } from "utils/schemas"
 import Layout from "pages/layout";
 import NavigationLink from "components/NavigationLink";
 import Field from "components/Field";
@@ -15,16 +14,7 @@ import {
   CompactActionSection,
 } from "styles/formStyles";
 
-const PaymentInformationSchema = Yup.object().shape({
-  cardNumber: Yup.string()
-    .length(16, "Los números de tarjeta solo son 16")
-    .required("Requerido"),
-  cardHolder: Yup.string().required("Requerido"),
-  expirationDate: Yup.date().required("Requerido"),
-  cvv: Yup.string()
-    .length(3, "El CVV debe contener solo 3 dígitos")
-    .required("Requerido"),
-});
+
 
 export default function RegisterPaymentInformation(): JSX.Element {
   return (

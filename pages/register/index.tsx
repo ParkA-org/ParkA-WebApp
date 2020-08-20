@@ -1,10 +1,11 @@
 import { useState } from "react"
-import * as Yup from "yup";
 import axios from "axios"
 import { Formik, Form } from "formik";
-import { gql, useMutation } from '@apollo/client'
+import { useMutation } from '@apollo/client'
 import { useLocalStorage } from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
+import { CREATE_USER } from "mutations"
+import { CreateAccountSchema } from "utils/schemas"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
@@ -16,26 +17,6 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
-
-
-const CREATE_USER = gql`
-mutation CreateUser($user: createUserInput!) {
-  createUser(input: $user) {
-     user {
-        id
-    }
-  }
-}
-`
-
-const CreateAccountSchema = Yup.object().shape({
-  name: Yup.string().required("Requerido"),
-  lastName: Yup.string().required("Requerido"),
-  email: Yup.string().email("Email inválido").required("Requerido"),
-  password: Yup.string().required("Requerido"),
-  confirmPassword: Yup.string().required("Requerido"),
-  file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
-});
 
 function UpdateImage(file: any, success, error) {
   const apiBaseURL = "https://parka-api.herokuapp.com/upload";
