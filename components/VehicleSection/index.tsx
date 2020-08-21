@@ -16,6 +16,8 @@ export default function VehicleSection() {
             </HeaderSection>
             <VehicleList>
                 <VehicleCard />
+                <VehicleCard />
+                <VehicleCard />
             </VehicleList>
         </>
     )
