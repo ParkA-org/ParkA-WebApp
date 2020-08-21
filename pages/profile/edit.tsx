@@ -10,6 +10,7 @@ import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
 import Button from "components/Button";
+import Logo from "components/Logo"
 import {
     MainFormContainer,
     FormContainer,
@@ -78,7 +79,7 @@ export default function EditProfile(): JSX.Element {
                         })
                         if (!error && !imageStatus.error) {
                             if (!imageStatus.loading && !loading) {
-                                router.push('/PersonalIdentification')
+                                router.push('/profile')
                             }
                         }
                         else
@@ -88,6 +89,7 @@ export default function EditProfile(): JSX.Element {
                         <Form>
                             <FormContainer>
                                 <FieldSection>
+                                    <Logo />
                                     <Field
                                         name="name"
                                         label="Nombre"
@@ -123,9 +125,11 @@ export default function EditProfile(): JSX.Element {
                                 </InformationSection>
                             </FormContainer>
                             <ActionSection>
-                                <Button submit={true} rank="secondary">
-                                    Cancelar
-                                </Button>
+                                <NavigationLink href="/profile">
+                                    <Button rank="secondary">
+                                        Cancelar
+                                    </Button>
+                                </NavigationLink>
                                 <Button submit={true} rank="secondary">
                                     Guardar
                                 </Button>
