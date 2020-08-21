@@ -1,5 +1,8 @@
 import { Formik, Form } from "formik";
+import { useMutation } from '@apollo/client';
 import { PaymentInformationSchema } from "utils/schemas"
+import { CREATE_PAYMENTINFO } from "mutations"
+import { useRouter } from "next/router";
 import Layout from "pages/layout";
 import NavigationLink from "components/NavigationLink";
 import Field from "components/Field";
@@ -13,10 +16,12 @@ import {
   ActionSection,
   CompactActionSection,
 } from "styles/formStyles";
-
-
+import { useLocalStorage } from "hooks/useLocalStorage";
 
 export default function RegisterPaymentInformation(): JSX.Element {
+  const router = useRouter()
+  const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
+  const [accountId,] = useLocalStorage("account-id", "")
   return (
     <Layout pageTitle="Información Crediticia">
       <MainFormContainer>
@@ -29,7 +34,24 @@ export default function RegisterPaymentInformation(): JSX.Element {
             cvv: "",
           }}
           validationSchema={PaymentInformationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+            CreatePaymentInfo({
+              variables: {
+                userPaymentInfo: {
+                  data: {
+                    digit: values.cardNumber,
+                    name: values.cardHolder,
+                    expirationDate: values.expirationDate,
+                    type_card: "",
+                    account_data: accountId
+                  }
+                }
+              }
+            })
+            if (!loading && !error) {
+              router.push("/")
+            }
+          }}
         >
           {({ values, errors, touched }) => (
             <Form>

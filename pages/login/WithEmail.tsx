@@ -1,5 +1,9 @@
 import { Formik, Form } from "formik";
 import { SignInSchema } from "utils/schemas"
+import { useMutation } from "@apollo/client"
+import { LOGIN_USER } from "mutations"
+import { useLocalStorage } from "hooks/useLocalStorage";
+import { useRouter } from "next/router"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field from "components/Field";
@@ -13,6 +17,15 @@ import {
 } from "styles/formStyles";
 
 export default function SignWithEmail(): JSX.Element {
+  const [LoginUser, { loading, error }] = useMutation(LOGIN_USER, {
+    onCompleted({ LoginUser }) {
+      const { jwt: token } = LoginUser
+      setJWT(token)
+    }
+  })
+  const [, setJWT] = useLocalStorage("token", "")
+  const router = useRouter()
+
   return (
     <Layout pageTitle="Sign in with email">
       <MainFormContainer>
@@ -23,7 +36,22 @@ export default function SignWithEmail(): JSX.Element {
             password: "",
           }}
           validationSchema={SignInSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+
+            LoginUser({
+              variables: {
+                loggedUser: {
+                  identifier: values.email,
+                  password: values.password
+                }
+              }
+            })
+
+            if (!loading && !error) {
+              router.push("/")
+            }
+
+          }}
         >
           {({ errors, touched }) => (
             <Form>
