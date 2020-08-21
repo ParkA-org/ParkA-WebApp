@@ -1,5 +1,3 @@
-import * as React from "react"
-
 export default function SaveIcon() {
     return (
         <svg width={50} height={50} viewBox="0 0 50 50" fill="none">

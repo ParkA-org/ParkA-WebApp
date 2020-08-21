@@ -1,4 +1,3 @@
-
 export default function Logo() {
     return (
         <svg width={198} height={61} viewBox="0 0 198 61" fill="none">

@@ -1,5 +1,3 @@
-import * as React from "react"
-
 export default function DeleteIcon() {
     return (
         <svg width={42} height={53} viewBox="0 0 42 53" fill="none">

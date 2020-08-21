@@ -1,12 +1,14 @@
 import styled from "styled-components"
 
-export const Container = styled.div`
+export const ProfileContainer = styled.div`
     display: flex;
     flex-direction: column;
-    width: 70vw;
-    margin: 0 auto;
     text-align: left;
     justify-content: flex-start;
+    @media (max-width: 768px) {
+        align-items: center;
+        text-align: center;
+    }
 `;
 
 export const ContentContainer = styled.div`
@@ -22,6 +24,7 @@ export const ContentContainer = styled.div`
         "image"
         "content"
         "reservations";
+        justify-items: center;
     }
 `;
 

@@ -1,5 +1,6 @@
+import NavigationLink from "components/NavigationLink"
 import {
-    Container,
+    ProfileContainer,
     ContentContainer,
     ProfilePicture,
     CircularButton,
@@ -11,7 +12,7 @@ import Button from "components/Button"
 
 export default function ProfileSection() {
     return (
-        <Container>
+        <ProfileContainer>
             <h1>Sebastiano Faiella</h1>
             <ContentContainer>
                 <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
@@ -27,7 +28,9 @@ export default function ProfileSection() {
                 </ContentSection>
                 <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
             </ContentContainer>
-            <Button>Editar</Button>
-        </Container>
+            <NavigationLink href="/profile/edit">
+                <Button>Editar</Button>
+            </NavigationLink>
+        </ProfileContainer>
     )
 }
