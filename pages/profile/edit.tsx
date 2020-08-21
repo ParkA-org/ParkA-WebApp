@@ -10,7 +10,10 @@ import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
 import Button from "components/Button";
-import Logo from "components/Logo"
+import IconButtom from "components/IconButton"
+import Logo from "components/Icons/Logo"
+import SaveIcon from "components/Icons/Save"
+import DeleteIcon from "components/Icons/Delete"
 import {
     MainFormContainer,
     FormContainer,
@@ -18,6 +21,7 @@ import {
     InformationSection,
     ActionSection,
 } from "styles/formStyles";
+import IconButton from "components/IconButton";
 
 function UpdateImage(file: any, success, error) {
     const apiBaseURL = "https://parka-api.herokuapp.com/upload";
@@ -126,13 +130,17 @@ export default function EditProfile(): JSX.Element {
                             </FormContainer>
                             <ActionSection>
                                 <NavigationLink href="/profile">
-                                    <Button rank="secondary">
-                                        Cancelar
-                                    </Button>
+                                    <IconButton text="Cancelar" color="#f0021a">
+                                        <DeleteIcon />
+                                    </IconButton>
                                 </NavigationLink>
-                                <Button submit={true} rank="secondary">
-                                    Guardar
-                                </Button>
+
+                                <NavigationLink href="/profile">
+                                    <IconButton text="Guardar" color="#077187">
+                                        <SaveIcon />
+                                    </IconButton>
+                                </NavigationLink>
+
                             </ActionSection>
                         </Form>
                     )}
