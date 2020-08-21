@@ -48,3 +48,11 @@ export const CreatePasswordSchema = Yup.object().shape({
     password: Yup.string().required("Requerido"),
     confirmPassword: Yup.string().required("Requerido"),
 });
+
+export const EditProfileSchema = Yup.object().shape({
+    name: Yup.string().required("Requerido"),
+    lastName: Yup.string().required("Requerido"),
+    email: Yup.string().email("Email inválido").required("Requerido"),
+    dateOfBirth: Yup.string().required("Requerido"),
+    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+});

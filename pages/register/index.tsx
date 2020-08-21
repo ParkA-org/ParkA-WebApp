@@ -49,7 +49,7 @@ export default function registerPersonalAccount(): JSX.Element {
     loading: false,
     error: undefined
   })
-  const [image, setImage] = useLocalStorage("image", "./placeholders/image-placeholder.png")
+  const [image, setImage] = useLocalStorage("image", "")
   const [userId, setUserId] = useLocalStorage("user-id", "")
   return (
     <Layout pageTitle="Registro Datos Personales">
