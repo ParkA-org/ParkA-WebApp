@@ -10,6 +10,16 @@ mutation CreateUser($user: createUserInput!) {
 }
 `
 
+export const UPDATE_USER = gql`
+  mutation UpdateUser($user: updateUserInput) {
+    updateUser(input: $user) {
+      user {
+        id
+      }
+    }
+  }
+`
+
 export const CREATE_ACCOUNT = gql`
 mutation createNewAccount($userAccount: createAccountDatumInput) {
   createAccountDatum(input: $userAccount) {
