@@ -14,11 +14,10 @@ export const ProfileContainer = styled.div`
 export const ContentContainer = styled.div`
     display: grid;
     grid-template-areas:
-    "image content reservations"
-    "image content reservations";
-    justify-items: stretch;
+    "image content content reservations"
+    "image content content reservations";
+    justify-items: center;
     align-items: center;
-    grid-gap: 1em;
     @media (max-width: 768px) {
         grid-template-areas:
         "image"
@@ -59,6 +58,8 @@ export const ContentSection = styled.section`
     justify-content: center;
     text-align: left;
     height: 100%;
+    justify-self: stretch;
+
 `;
 
 export const ContentRow = styled.div`
@@ -69,5 +70,6 @@ margin-bottom: 1em;
     }
     & > h4 {
         font-size: 1.2em;
+        font-weight: normal;
     }
 `;

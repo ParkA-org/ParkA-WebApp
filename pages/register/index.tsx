@@ -18,7 +18,7 @@ import {
   ActionSection,
 } from "styles/formStyles";
 
-function UpdateImage(file: any, success, error) {
+function UpdateImage(file: any, success, state) {
   const apiBaseURL = "https://parka-api.herokuapp.com/upload";
   const formData = new FormData()
   formData.append("files", file)
@@ -28,11 +28,11 @@ function UpdateImage(file: any, success, error) {
     data: formData
   }).then(res => {
     success(res.data['0'].url)
-    error(prevState => {
+    state(prevState => {
       return { ...prevState, loading: false }
     })
   })
-    .catch(err => error(prevState => {
+    .catch(err => state(prevState => {
       return { ...prevState, error: err }
     }))
 }
@@ -70,6 +70,7 @@ export default function registerPersonalAccount(): JSX.Element {
             setImageStatus(prevState => {
               return { ...prevState, loading: true }
             })
+
             UpdateImage(values.file, setImage, setImageStatus)
 
             createUser({
@@ -86,7 +87,7 @@ export default function registerPersonalAccount(): JSX.Element {
             })
             if (!error && !imageStatus.error) {
               if (!imageStatus.loading && !loading) {
-                router.push('/PersonalIdentification')
+                router.push('/register/PersonalIdentification')
               }
             }
             else

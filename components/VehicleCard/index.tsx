@@ -1,4 +1,6 @@
+import { AiFillCheckCircle } from "react-icons/ai"
 import Button from "components/Button"
+import NavigationLink from "components/NavigationLink"
 import {
     Card,
     CardImage,
@@ -22,8 +24,10 @@ export default function VehicleCard() {
             </CardDetails>
 
             <AdditionalInfo>
-                <span>Verificado</span>
-                <Button>Editar</Button>
+                <span>Verificado <AiFillCheckCircle size="1.3em" /> </span>
+                <NavigationLink href="/profile/edit">
+                    <Button>Editar</Button>
+                </NavigationLink>
             </AdditionalInfo>
         </Card>
     )

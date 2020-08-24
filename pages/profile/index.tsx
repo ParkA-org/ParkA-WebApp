@@ -4,7 +4,7 @@ import VehicleSection from "components/VehicleSection"
 import styled from "styled-components"
 
 const Container = styled.div`
-width: 70vw;
+width: 100%;
 margin: 0 auto;
 `;
 

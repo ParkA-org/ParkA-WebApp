@@ -1,17 +1,19 @@
+import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import VehicleCard from "components/VehicleCard"
 import {
     HeaderSection,
-    VehicleList
+    VehicleList,
+    NewLink
 } from "./styles"
 
 export default function VehicleSection() {
     return (
         <>
             <HeaderSection>
-                <h2>Vehículos</h2>
+                <h1>Vehículos</h1>
                 <NavigationLink href="/vehicle/new">
-                    Nuevo Vehículo
+                    <NewLink><BiPlusCircle size="1.5em" /> Nuevo Vehículo</NewLink>
                 </NavigationLink>
             </HeaderSection>
             <VehicleList>

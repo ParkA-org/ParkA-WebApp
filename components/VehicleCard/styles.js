@@ -49,6 +49,14 @@ export const AdditionalInfo = styled.div`
     flex-direction: column;
     justify-content: space-between;
 
+    & > span {
+        display: flex;
+        justify-items: center;
+        align-items: center;
+        font-size: 1.3em;
+        color: blue;
+    }
+
     @media (max-width: 768px) {
         flex-direction: row;
         align-items: center;
