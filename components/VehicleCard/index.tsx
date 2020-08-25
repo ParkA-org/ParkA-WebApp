@@ -11,7 +11,7 @@ import {
 export default function VehicleCard() {
     return (
         <Card>
-            <CardImage alt="user car" src="./placeholders/image-placeholder.png" />
+            <CardImage alt="user car" src="../placeholders/image-placeholder.png" />
             <CardDetails>
                 <h3>Tesla</h3>
                 <h3>Model S</h3>
@@ -25,7 +25,7 @@ export default function VehicleCard() {
 
             <AdditionalInfo>
                 <span>Verificado <AiFillCheckCircle size="1.3em" /> </span>
-                <NavigationLink href="/profile/edit">
+                <NavigationLink href="/vehicle/edit">
                     <Button>Editar</Button>
                 </NavigationLink>
             </AdditionalInfo>

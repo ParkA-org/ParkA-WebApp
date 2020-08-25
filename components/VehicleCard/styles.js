@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Card = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     border: 3px solid #0B768C;
     width: 80%;
     border-radius: 20px;
@@ -22,6 +23,7 @@ export const CardImage = styled.img`
     width: 150px;
     height: 100px;
     border-radius: 20px;
+    margin-left: 2em;
 `;
 
 export const CardDetails = styled.div`
