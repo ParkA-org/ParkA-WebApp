@@ -2,14 +2,17 @@ import styled from "styled-components"
 import Layout from "pages/layout";
 import DeleteIcon from "components/Icons/Delete"
 import VehicleCard from "components/VehicleCard";
+import ReservationCard from "components/ReservationCard"
 import { CircularButton } from "components/ProfileSection/styles";
 import IconButton from "components/IconButton";
+import Carousel from "components/Carousel";
 
 const Container = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
+    overflow-x: hidden;
     & > section {
         margin-bottom: 2em;
         text-align: left;
@@ -18,14 +21,13 @@ const Container = styled.div`
         align-items: center;
         justify-content: space-between;
     }
-
 `;
 
 export default function EditVehicle() {
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>
-                <h1>Edit Vehicle</h1>
+                <h1>Editar Vehículo</h1>
                 <section>
                     <VehicleCard />
                     <IconButton color="#AB1414" text="  ">
@@ -41,7 +43,7 @@ export default function EditVehicle() {
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>
                 </section>
                 <section>
-                    <h1>Historial de reservas</h1>
+                    <Carousel />
                 </section>
             </Container>
         </Layout>
