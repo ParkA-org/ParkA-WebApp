@@ -14,7 +14,7 @@ export const Container = styled.div`
     "image cost"
     "image buttons";
     row-gap: 10px;
-    width: 30vw;
+    width: 35vw;
     @media(max-width: 768px) {
         grid-template-areas:
         "image"
