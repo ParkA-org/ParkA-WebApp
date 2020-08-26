@@ -24,8 +24,7 @@ export default function Carousel() {
         <Container>
             <h1>Historial de Reservas</h1>
             <CarouselContainer>
-                <LeftSide>
-                </LeftSide>
+                <LeftSide />
                 <LeftButton onClick={() => scrollAction("LEFT")}><BiLeftArrow size="3em" /></LeftButton>
                 <ScrollSection ref={scrollRef} id="scrollSection">
                     <ReservationCard />

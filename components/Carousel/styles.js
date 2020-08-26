@@ -67,6 +67,7 @@ export const RightSide = styled.div`
     grid-row: 1;
     z-index: 10;
 `;
+
 export const RightButton = styled.button`
     border-radius: 50%;
     width: 65px;
