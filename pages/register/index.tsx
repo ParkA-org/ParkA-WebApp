@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
-import useSessionStorage from "hooks/useSessionStorage"
+import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
 import { CREATE_USER } from "mutations"
 import { CreateAccountSchema } from "utils/schemas"
@@ -41,6 +41,9 @@ function UpdateImage(file: any, success, state) {
 
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
+  const router = useRouter()
+  const [image, setImage] = useLocalStorage("image", "")
+  const [userId, setUserId] = useLocalStorage("user-id", "")
   const [createUser, { error }] = useMutation(CREATE_USER, {
     onCompleted({ createUser }) {
       const { user } = createUser
@@ -49,13 +52,10 @@ export default function registerPersonalAccount(): JSX.Element {
       router.push('/register/PersonalIdentification')
     }
   })
-  const router = useRouter()
   const [imageStatus, setImageStatus] = useState({
     loading: false,
     error: undefined
   })
-  const [image, setImage] = useSessionStorage("image", "")
-  const [userId, setUserId] = useSessionStorage("user-id", "")
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>

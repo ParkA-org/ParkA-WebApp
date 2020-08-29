@@ -5,7 +5,7 @@ import { GET_COUNTRIES } from "queries"
 import { CREATE_ACCOUNT } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
 import { useRouter } from "next/router";
-import useSessionStorage from "hooks/useSessionStorage"
+import useLocalStorage from "hooks/useLocalStorage"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { SelectField } from "components/Field";
@@ -32,9 +32,9 @@ interface CountriesData {
 }
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-  const [accountId, setAccountId] = useSessionStorage("account-id", "")
-  const [image,] = useSessionStorage("image", "../placeholders/image-placeholder.png")
-  const [userId,] = useSessionStorage("user-id", "")
+  const [accountId, setAccountId] = useLocalStorage("account-id", "")
+  const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
+  const [userId,] = useLocalStorage("user-id", "")
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const { loading: countryLoading, error: countryError, data } = useQuery<CountriesData>(GET_COUNTRIES);
@@ -99,8 +99,8 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.typeOfDocument}
                     isTouched={touched.typeOfDocument}
                   >
-                    <option value="5f356c60f1a9ffdb504f404f">Pasaporte</option>
                     <option value="5f356c47f1a9ffdb504f404e">Cédula</option>
+                    <option value="5f356c60f1a9ffdb504f404f">Pasaporte</option>
                   </SelectField>
 
                   <Field

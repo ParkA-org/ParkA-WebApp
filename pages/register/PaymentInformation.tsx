@@ -19,14 +19,13 @@ import {
   ActionSection,
   CompactActionSection,
 } from "styles/formStyles";
-import useSessionStorage from "hooks/useSessionStorage";
+import useLocalStorage from "hooks/useLocalStorage";
 
 export default function RegisterPaymentInformation(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
-  const [accountId,] = useSessionStorage("account-id", "")
-
+  const [accountId,] = useLocalStorage("account-id", "")
 
   useEffect(() => {
     console.log(`Account ID id ${accountId}`)
@@ -61,6 +60,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
             })
             if (!loading && !error) {
               setShowModal(false)
+              router.push("/")
             }
           }}
         >
