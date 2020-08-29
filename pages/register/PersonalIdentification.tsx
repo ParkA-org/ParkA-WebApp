@@ -1,15 +1,17 @@
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from '@apollo/client';
 import { GET_COUNTRIES } from "queries"
 import { CREATE_ACCOUNT } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
 import { useRouter } from "next/router";
-import { useLocalStorage } from "hooks/useLocalStorage"
+import useSessionStorage from "hooks/useSessionStorage"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { SelectField } from "components/Field";
+import ModalPortal from "components/Modal"
 import Button from "components/Button";
+import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard";
 import {
   MainFormContainer,
@@ -30,26 +32,26 @@ interface CountriesData {
 }
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
+  const [accountId, setAccountId] = useSessionStorage("account-id", "")
+  const [image,] = useSessionStorage("image", "../placeholders/image-placeholder.png")
+  const [userId,] = useSessionStorage("user-id", "")
+  const [showModal, setShowModal] = useState(false)
+  const router = useRouter()
   const { loading: countryLoading, error: countryError, data } = useQuery<CountriesData>(GET_COUNTRIES);
-  const [CreateAccount, { loading, error }] = useMutation(CREATE_ACCOUNT, {
-    onCompleted({ CreateAccount }) {
-      const { accountDatum } = CreateAccount
+  const [CreateAccount, { error }] = useMutation(CREATE_ACCOUNT, {
+    onCompleted({ createAccountDatum }) {
+      const { accountDatum } = createAccountDatum
       setAccountId(accountDatum.id)
+      setShowModal(false)
+      router.push('/register/PaymentInformation')
     }
   })
-  const router = useRouter()
-  const [accountId, setAccountId] = useLocalStorage("account-id", "")
-  const [image,] = useLocalStorage("image", "./placeholders/image-placeholder.png")
-  const [userId,] = useLocalStorage("user-id", "")
 
   useEffect(() => {
-    console.log(`Image ${image}`)
-    console.log(`User ID ${userId}`)
-  }, [])
+    console.log(`User id ${userId}`)
+  })
 
-  if (countryLoading) return <h1>Loading....</h1>
   if (countryError) return <pre>`Error ${JSON.stringify(countryError)}`</pre>
-  console.log(data)
   return (
     <Layout pageTitle="Identificación Personal">
       <MainFormContainer>
@@ -64,6 +66,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           }}
           validationSchema={PersonalIdentificationSchema}
           onSubmit={(values) => {
+            setShowModal(true)
 
             CreateAccount({
               variables: {
@@ -80,9 +83,8 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
               }
             })
 
-            if (!error && !loading) {
-              router.push('/PaymentInformation')
-            }
+            if (error)
+              alert(error)
 
           }}
         >
@@ -116,15 +118,16 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     isTouched={touched.birthPlace}
                   />
 
-                  <SelectField
-                    name="nationality"
-                    label="Nacionalidad"
-                    placeholder="Nacionalidad"
-                    errorMessage={errors.nationality}
-                    isTouched={touched.nationality}
-                  >
-                    {data.countries.map((country: Country) => <option value={country.id} key={country.name}>{country.name}</option>)}
-                  </SelectField>
+                  {countryLoading ? <Spinner /> :
+                    <SelectField
+                      name="nationality"
+                      label="Nacionalidad"
+                      placeholder="Nacionalidad"
+                      errorMessage={errors.nationality}
+                      isTouched={touched.nationality}
+                    >
+                      {data.countries.map((country: Country) => <option value={country.id} key={country.name}>{country.name}</option>)}
+                    </SelectField>}
                   <Field
                     type="date"
                     label="Fecha de nacimiento"
@@ -135,7 +138,8 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   />
                 </FieldSection>
                 <InformationSection>
-                  <IdentificationCard {...values} imageUrl={image} />
+                  {countryLoading ? <Spinner /> :
+                    <IdentificationCard {...values} imageUrl={image} countries={data.countries} />}
                 </InformationSection>
               </FormContainer>
               <ActionSection>
@@ -145,16 +149,16 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 >Atrás
                 </NavigationLink>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink
-                    href="/register/PaymentInformation"
-                  >
-                    Continuar
-                    </NavigationLink>
+                  Continuar
                 </Button>
               </ActionSection>
             </Form>
           )}
         </Formik>
+        {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+          <Spinner />
+          <h3>Loading...</h3>
+        </ModalPortal>}
       </MainFormContainer>
     </Layout >
   );

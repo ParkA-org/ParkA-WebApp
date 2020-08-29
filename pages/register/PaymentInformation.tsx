@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client';
 import { PaymentInformationSchema } from "utils/schemas"
@@ -8,6 +9,8 @@ import NavigationLink from "components/NavigationLink";
 import Field from "components/Field";
 import Button from "components/Button";
 import CreditCard from "components/CreditCard";
+import Spinner from "components/Spinner"
+import ModalPortal from "components/Modal"
 import {
   MainFormContainer,
   FormContainer,
@@ -16,12 +19,19 @@ import {
   ActionSection,
   CompactActionSection,
 } from "styles/formStyles";
-import { useLocalStorage } from "hooks/useLocalStorage";
+import useSessionStorage from "hooks/useSessionStorage";
 
 export default function RegisterPaymentInformation(): JSX.Element {
+  const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
-  const [accountId,] = useLocalStorage("account-id", "")
+  const [accountId,] = useSessionStorage("account-id", "")
+
+
+  useEffect(() => {
+    console.log(`Account ID id ${accountId}`)
+  })
+
   return (
     <Layout pageTitle="Información Crediticia">
       <MainFormContainer>
@@ -35,21 +45,22 @@ export default function RegisterPaymentInformation(): JSX.Element {
           }}
           validationSchema={PaymentInformationSchema}
           onSubmit={(values) => {
+            setShowModal(true)
             CreatePaymentInfo({
               variables: {
                 userPaymentInfo: {
                   data: {
-                    digit: values.cardNumber,
+                    digit: parseInt(values.cardNumber),
                     name: values.cardHolder,
-                    expirationDate: values.expirationDate,
-                    type_card: "",
+                    expirationdate: values.expirationDate,
+                    type_card: "5f20dee0b1b8d80017e0d686",
                     account_data: accountId
                   }
                 }
               }
             })
             if (!loading && !error) {
-              router.push("/")
+              setShowModal(false)
             }
           }}
         >
@@ -104,15 +115,17 @@ export default function RegisterPaymentInformation(): JSX.Element {
                     </NavigationLink>
                 </CompactActionSection>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink href="/" >
-                    Continuar
-                    </NavigationLink>
+                  Continuar
                 </Button>
               </ActionSection>
             </Form>
           )}
         </Formik>
       </MainFormContainer>
+      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+        <Spinner />
+        <h3>Loading...</h3>
+      </ModalPortal>}
     </Layout>
   );
 }

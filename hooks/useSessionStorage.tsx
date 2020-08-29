@@ -1,7 +1,7 @@
 import { useState } from "react"
 
-export function useLocalStorage(key, initialValue) {
-    // Taken from https://usehooks.com/useLocalStorage/
+export default function useSessionStorage(key, initialValue) {
+    // Taken from https://usehooks.com/useSessionStorage/
     // State to store our value
     // Pass initial state function to useState so logic is only executed once
     const [storedValue, setStoredValue] = useState(() => {
@@ -10,7 +10,7 @@ export function useLocalStorage(key, initialValue) {
             let item;
 
             if (process.browser) {
-                item = window.localStorage.getItem(key);
+                item = window.sessionStorage.getItem(key);
             }
             return item ? JSON.parse(item) : initialValue;
         } catch (error) {
@@ -19,7 +19,7 @@ export function useLocalStorage(key, initialValue) {
         }
     });
     // Return a wrapped version of useState's setter function that ...
-    // ... persists the new value to localStorage.
+    // ... persists the new value to sessionStorage.
     const setValue = value => {
         try {
             // Allow value to be a function so we have same API as useState
@@ -27,7 +27,7 @@ export function useLocalStorage(key, initialValue) {
                 value instanceof Function ? value(storedValue) : value;
             setStoredValue(valueToStore);
             if (process.browser) {
-                window.localStorage.setItem(key, JSON.stringify(valueToStore));
+                window.sessionStorage.setItem(key, JSON.stringify(valueToStore));
             }
         } catch (error) {
             // A more advanced implementation would handle the error case

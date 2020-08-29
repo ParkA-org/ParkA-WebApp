@@ -7,6 +7,12 @@ import {
   Container,
 } from "./styles";
 
+type Country = {
+  __typename: string;
+  name: string;
+  id: string;
+}
+
 type CardProps = {
   typeOfDocument: string;
   documentCode: string;
@@ -14,6 +20,7 @@ type CardProps = {
   dateOfBirth: string;
   nationality: string;
   imageUrl: string;
+  countries: Country[];
 };
 
 export default function IdentificationCard({
@@ -22,8 +29,20 @@ export default function IdentificationCard({
   birthPlace,
   dateOfBirth,
   nationality,
-  imageUrl
+  imageUrl,
+  countries = []
 }: CardProps): JSX.Element {
+
+  const getCountry = (currentCountry = "") => {
+    let returnValue = ""
+    if (countries !== undefined && currentCountry !== "") {
+      console.log('Countries')
+      console.log(countries)
+      returnValue = countries.filter(country => country.id === currentCountry)[0].name
+    }
+    return returnValue
+  }
+
   return (
     <Container>
       <HeaderContainer>
@@ -39,7 +58,7 @@ export default function IdentificationCard({
       </DataContainer>
       <DataContainer>
         <Title>Nacionalidad</Title>
-        <Content>{nationality}</Content>
+        <Content>{getCountry(nationality)}</Content>
       </DataContainer>
       <DataContainer>
         <Title>Lugar de Nacimiento</Title>
@@ -47,7 +66,7 @@ export default function IdentificationCard({
       </DataContainer>
       <DataContainer>
         <Title>Tipo de Documento</Title>
-        <Content>{typeOfDocument}</Content>
+        <Content>{typeOfDocument === "5f356c60f1a9ffdb504f404f" ? "Pasaporte" : "Cédula"}</Content>
       </DataContainer>
     </Container>
   );

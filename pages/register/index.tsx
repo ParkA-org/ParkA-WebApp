@@ -2,7 +2,7 @@ import { useState } from "react"
 import axios from "axios"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
-import { useLocalStorage } from "hooks/useLocalStorage"
+import useSessionStorage from "hooks/useSessionStorage"
 import { useRouter } from 'next/router'
 import { CREATE_USER } from "mutations"
 import { CreateAccountSchema } from "utils/schemas"
@@ -10,6 +10,8 @@ import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
 import Button from "components/Button";
+import ModalPortal from "components/Modal"
+import Spinner from "components/Spinner"
 import {
   MainFormContainer,
   FormContainer,
@@ -38,10 +40,13 @@ function UpdateImage(file: any, success, state) {
 }
 
 export default function registerPersonalAccount(): JSX.Element {
-  const [createUser, { loading, error }] = useMutation(CREATE_USER, {
+  const [showModal, setShowModal] = useState(false)
+  const [createUser, { error }] = useMutation(CREATE_USER, {
     onCompleted({ createUser }) {
       const { user } = createUser
       setUserId(user.id)
+      setShowModal(false)
+      router.push('/register/PersonalIdentification')
     }
   })
   const router = useRouter()
@@ -49,8 +54,8 @@ export default function registerPersonalAccount(): JSX.Element {
     loading: false,
     error: undefined
   })
-  const [image, setImage] = useLocalStorage("image", "")
-  const [userId, setUserId] = useLocalStorage("user-id", "")
+  const [image, setImage] = useSessionStorage("image", "")
+  const [userId, setUserId] = useSessionStorage("user-id", "")
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
@@ -66,7 +71,7 @@ export default function registerPersonalAccount(): JSX.Element {
           }}
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => {
-
+            setShowModal(true)
             setImageStatus(prevState => {
               return { ...prevState, loading: true }
             })
@@ -85,13 +90,9 @@ export default function registerPersonalAccount(): JSX.Element {
                 }
               }
             })
-            if (!error && !imageStatus.error) {
-              if (!imageStatus.loading && !loading) {
-                router.push('/register/PersonalIdentification')
-              }
-            }
-            else
+            if (error)
               alert(error)
+
           }}
         >
           {({ setFieldValue, errors, touched }) => (
@@ -150,8 +151,11 @@ export default function registerPersonalAccount(): JSX.Element {
           )}
         </Formik>
       </MainFormContainer>
-      {imageStatus.loading && <p>Loading...</p>}
-      {imageStatus.error && <p>Error...</p>}
+
+      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+        <Spinner />
+        <h3>Loading...</h3>
+      </ModalPortal>}
     </Layout >
   );
 }
