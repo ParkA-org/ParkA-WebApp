@@ -6,7 +6,7 @@ export default function Carousel({ title, children }: { title: string, children:
     const scrollRef = useRef(null)
     const [scrollDistance, setScrollDistance] = useState(0)
     const scrollAction = (direction: string) => {
-        let maxDistance = scrollRef.current.scrollLeftMax;
+        let maxDistance = (scrollRef.current.scrollWidth / 2) + (scrollRef.current.offsetLeft * 2);
         let newDistance = direction === "RIGHT" ? scrollDistance + 300 : scrollDistance - 300;
         if (newDistance < 0) {
             newDistance = maxDistance;
