@@ -12,6 +12,16 @@ export const Container = styled.div`
     box-shadow: 0px 20px 7px rgba(0, 0, 0, 0.25);
     border-radius: 50px;
     border: 5px solid #077187;
+
+    @media(max-width: 768px) {
+        margin: 0 auto;
+        grid-template-areas:
+        "image"
+        "header"
+        "information"
+        "button";
+    }
+
 `;
 
 export const CardImage = styled.img`
@@ -37,6 +47,10 @@ export const CardHeader = styled.div`
         font-size: 1.3rem;
         display: inline-block;
     }
+
+    @media(max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 export const CardInformation = styled.div`
@@ -46,12 +60,31 @@ export const CardInformation = styled.div`
         font-weight: bold;
         font-size: 1.3rem;
     }
+
+    & > p {
+        font-size: 1.1rem;
+    }
+
+    
+    @media(max-width: 768px) {
+        text-align: center;
+        
+        & > h3 {
+            margin-top: 1em;
+        }
+    }
 `;
 
 export const ButtonSection = styled.div`
     grid-area: button;
     display: flex;
     justify-content: space-around;
+    @media(max-width: 768px) {
+        margin-top: 1em;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
 `;
 
 export const ActionButton = styled.button`
@@ -59,5 +92,11 @@ export const ActionButton = styled.button`
     border-radius: 5px;
     color: white;
     width: 100px;
+    font-size: 1rem;
+    font-weight: bold;
     padding: 0.5em;
+    @media(max-width: 768px) {
+        width: 60%;
+        margin: 0.5em 0;
+    }
 `;

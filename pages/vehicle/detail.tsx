@@ -23,7 +23,7 @@ const Container = styled.div`
     }
 `;
 
-export default function EditVehicle() {
+export default function DetailVehicle() {
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>

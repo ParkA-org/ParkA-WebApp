@@ -15,7 +15,9 @@ export default function ParkingCard() {
             <CardImage src="../placeholders/image-placeholder.png" alt="parking lot" />
             <CardHeader>
                 <h2>Alma Rosa I</h2>
-                <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />   <BsStarFill color="goldenrod" /> <BsStar />
+                <div>
+                    <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />   <BsStarFill color="goldenrod" /> <BsStar />
+                </div>
                 <h4>(4.20)</h4>
             </CardHeader>
             <CardInformation>
@@ -26,7 +28,7 @@ export default function ParkingCard() {
             </CardInformation>
             <ButtonSection>
                 <ActionButton>Compartir</ActionButton>
-                <ActionButton>Ver en mapa</ActionButton>
+                <ActionButton>Mapa</ActionButton>
                 <ActionButton>Editar</ActionButton>
             </ButtonSection>
         </Container>
