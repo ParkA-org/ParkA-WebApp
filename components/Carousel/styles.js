@@ -25,8 +25,8 @@ export const ScrollSection = styled.section`
     width: auto;
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
-    -ms-overflow-style: none;  /* IE and Edge */
-    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
     &::-webkit-scrollbar {
         display: none;
     }
@@ -36,14 +36,8 @@ export const LeftSide = styled.div`
     width: 100%;
     height: 100%;
     grid-column: 1;
-    //background-color: rgba(33, 33, 33, 0.4);
     grid-row: 1;
     z-index: 5;
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
 `;
 
 export const LeftButton = styled.button`
@@ -66,7 +60,7 @@ export const RightSide = styled.div`
     align-items: center;
     grid-column: 3;
     grid-row: 1;
-    z-index: 10;
+    z-index: 5;
 `;
 
 export const RightButton = styled.button`

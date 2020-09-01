@@ -1,7 +1,7 @@
 import { useRef, useState } from "react"
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
-import ReservationCard from "components/ReservationCard"
+import { BiLeftArrow, BiRightArrow } from "react-icons/bi"
 import { Container, CarouselContainer, ScrollSection, LeftSide, RightSide, LeftButton, RightButton } from "./styles"
+
 export default function Carousel({ title, children }: { title: string, children: React.ReactNode }) {
     const scrollRef = useRef(null)
     const [scrollDistance, setScrollDistance] = useState(0)

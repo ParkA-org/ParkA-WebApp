@@ -5,9 +5,11 @@ import {
     MetadataSection,
     CostSection,
     ButtonSection,
+    ReservationsButton,
+    ActionButtonsSection,
     Item
 } from "./styles"
-export default function ReservationCard() {
+export default function ReservationCard({ isCancelable }: { isCancelable?: boolean }) {
     return (
         <Container>
             <ReservationImage src="../placeholders/image-placeholder.png" />
@@ -30,8 +32,12 @@ export default function ReservationCard() {
                 <p>350.00 $RD</p>
             </CostSection>
             <ButtonSection>
-                <Button>Detalles</Button>
-                <Button>Mensajear</Button>
+                {isCancelable ?
+                    <ReservationsButton isCancelable>Cancelar</ReservationsButton> : ""}
+                <ActionButtonsSection>
+                    <ReservationsButton>Detalles</ReservationsButton>
+                    <ReservationsButton>Mensajear</ReservationsButton>
+                </ActionButtonsSection>
             </ButtonSection>
         </Container>
 

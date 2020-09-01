@@ -12,7 +12,7 @@ export const Container = styled.div`
     grid-template-areas:
     "image metadata"
     "image cost"
-    "image buttons";
+    "buttons buttons";
     row-gap: 10px;
     width: 35vw;
     @media(max-width: 768px) {
@@ -62,6 +62,24 @@ export const CostSection = styled.section`
 
 export const ButtonSection = styled.section`
     grid-area: buttons;
+    display: grid;
+    justify-items: space-evenly;
+    grid-template-areas:
+    "cancel . rest rest";
+`;
+
+export const ActionButtonsSection = styled.div`
     display: flex;
-    justify-content: center;
+    grid-area: rest;
+    justify-content: space-around;
+`;
+
+export const ReservationsButton = styled.button`
+    grid-area: ${props => props.isCancelable ? "cancel" : ""};
+    justify-self: ${props => props.isCancelable ? "end" : ""};
+    background-color: ${props => props.isCancelable ? "#BC3F3F" : "#077187"};
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 0.5em;
 `;

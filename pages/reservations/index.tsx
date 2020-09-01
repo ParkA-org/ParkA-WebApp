@@ -20,11 +20,11 @@ export default function Reservations() {
                     <NewLink><BiPlusCircle size="1.5em" /> Nueva Reserva</NewLink>
                 </NavigationLink>
                 <Carousel title="Reservas Pendientes">
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
+                    <ReservationCard isCancelable />
+                    <ReservationCard isCancelable />
+                    <ReservationCard isCancelable />
+                    <ReservationCard isCancelable />
+                    <ReservationCard isCancelable />
                 </Carousel>
                 <Carousel title="Reservas Pasadas">
                     <ReservationCard />
