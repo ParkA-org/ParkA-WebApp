@@ -8,12 +8,13 @@ export const Container = styled.div`
 `;
 
 export const CarouselContainer = styled.div`
-    width: 1080px;
+    max-width: 1080px;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
+    width: 100%;
 `;
 
 export const ScrollSection = styled.section`
@@ -30,6 +31,11 @@ export const ScrollSection = styled.section`
     &::-webkit-scrollbar {
         display: none;
     }
+    @media(max-width: 768px) {
+        overflow-x: scroll;
+        scrollbar-width: auto; 
+       
+    }
 `;
 
 export const LeftSide = styled.div`
@@ -38,6 +44,9 @@ export const LeftSide = styled.div`
     grid-column: 1;
     grid-row: 1;
     z-index: 5;
+    @media(max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const LeftButton = styled.button`
@@ -50,6 +59,9 @@ export const LeftButton = styled.button`
     padding: 0.5em;
     border: 2px solid #333;
     z-index: 10;
+    @media(max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const RightSide = styled.div`
@@ -61,6 +73,9 @@ export const RightSide = styled.div`
     grid-column: 3;
     grid-row: 1;
     z-index: 5;
+    @media(max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const RightButton = styled.button`
@@ -69,4 +84,7 @@ export const RightButton = styled.button`
     height: 65px;
     padding: 0.5em;
     border: 2px solid #333;
+    @media(max-width: 768px) {
+        display: none;
+    }
 `;

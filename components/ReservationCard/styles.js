@@ -16,6 +16,7 @@ export const Container = styled.div`
     row-gap: 10px;
     width: 35vw;
     @media(max-width: 768px) {
+        width: 200px;
         grid-template-areas:
         "image"
         "metadata"
@@ -32,23 +33,28 @@ export const ReservationImage = styled.img`
     justify-self: center;
 `;
 
-export const Item = styled.div``;
-
-export const MetadataSection = styled.section`
-grid-area: metadata;
-    display: flex;
-    justify-content: space-around;
-    @media(max-width: 768px) {
-        flex-direction: column;
-    }
-
-    & > p {
-        font-size: 1.2em;
+export const Item = styled.div`
+    @media(max-width: 768px) {    
+        margin: 0.5em 0;
     }
 `;
 
+export const MetadataSection = styled.section`
+    grid-area: metadata;
+    display: flex;
+    justify-content: space-around;
+    
+    & > p {
+        font-size: 1.2rem;
+    }
+    @media(max-width: 768px) {
+        flex-direction: column;
+    }
+    
+    `;
+
 export const CostSection = styled.section`
-    font-size: 1.5em;
+    font-size: 1.5rem;
     grid-area: cost;  
     & > h3 {
         display: inline-block;
@@ -58,6 +64,13 @@ export const CostSection = styled.section`
         margin-left: 0.5em;
         display: inline;
     }
+
+    @media(max-width: 768px) {
+        & > p {
+            display: block;
+        }
+    }
+
 `;
 
 export const ButtonSection = styled.section`
@@ -66,12 +79,26 @@ export const ButtonSection = styled.section`
     justify-items: space-evenly;
     grid-template-areas:
     "cancel . rest rest";
+    
+    @media(max-width: 768px) {
+        grid-template-areas:
+        "rest"
+        "rest"
+        "."
+        "cancel";
+    }
 `;
 
 export const ActionButtonsSection = styled.div`
     display: flex;
     grid-area: rest;
     justify-content: space-around;
+    @media(max-width: 768px) {
+        height: 100px;
+        align-items: center;
+        justify-content: space-around;
+        flex-direction: column;
+    }
 `;
 
 export const ReservationsButton = styled.button`
@@ -82,4 +109,7 @@ export const ReservationsButton = styled.button`
     color: white;
     width: 100px;
     padding: 0.5em;
+    @media(max-width: 768px) {
+        justify-self: center;
+    }
 `;
