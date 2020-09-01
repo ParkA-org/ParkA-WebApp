@@ -2,7 +2,7 @@ import { useRef, useState } from "react"
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import ReservationCard from "components/ReservationCard"
 import { Container, CarouselContainer, ScrollSection, LeftSide, RightSide, LeftButton, RightButton } from "./styles"
-export default function Carousel() {
+export default function Carousel({ title, children }: { title: string, children: React.ReactNode }) {
     const scrollRef = useRef(null)
     const [scrollDistance, setScrollDistance] = useState(0)
     const scrollAction = (direction: string) => {
@@ -22,16 +22,12 @@ export default function Carousel() {
 
     return (
         <Container>
-            <h1>Historial de Reservas</h1>
+            <h1>{title}</h1>
             <CarouselContainer>
                 <LeftSide />
                 <LeftButton onClick={() => scrollAction("LEFT")}><BiLeftArrow size="3em" /></LeftButton>
                 <ScrollSection ref={scrollRef} id="scrollSection">
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
-                    <ReservationCard />
+                    {children}
                 </ScrollSection>
                 <RightSide>
                     <RightButton onClick={() => scrollAction("RIGHT")}><BiRightArrow size="3em" /></RightButton>

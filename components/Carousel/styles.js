@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
+    margin: 1em 0;
     & > h1 {
         margin-bottom: 1em;
     }

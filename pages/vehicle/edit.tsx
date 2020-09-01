@@ -43,7 +43,13 @@ export default function EditVehicle() {
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>
                 </section>
                 <section>
-                    <Carousel />
+                    <Carousel title="Historial de Reservas">
+                        <ReservationCard />
+                        <ReservationCard />
+                        <ReservationCard />
+                        <ReservationCard />
+                        <ReservationCard />
+                    </Carousel>
                 </section>
             </Container>
         </Layout>

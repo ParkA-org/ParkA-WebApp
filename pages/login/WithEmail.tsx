@@ -20,8 +20,8 @@ export default function SignWithEmail(): JSX.Element {
   const [, setJWT] = useLocalStorage("token", "")
   const router = useRouter()
   const [LoginUser, { error }] = useMutation(LOGIN_USER, {
-    onCompleted({ LoginUser }) {
-      const { jwt: token } = LoginUser
+    onCompleted({ login }) {
+      const { jwt: token, user } = login
       setJWT(token)
       router.push("/")
     }
