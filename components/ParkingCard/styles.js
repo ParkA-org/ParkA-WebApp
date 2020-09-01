@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
     display: grid;
-    width: 60vw;
+    width: 80%;
     grid-template-areas:
     "image header header ."
     "image information . ."

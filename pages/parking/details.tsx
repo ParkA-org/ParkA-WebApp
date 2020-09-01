@@ -3,9 +3,8 @@ import DeleteIcon from "components/Icons/Delete";
 import ParkingCard from "components/ParkingCard"
 import Carousel from "components/Carousel"
 import ReviewCard from "components/ReviewCard"
+import ParkingStats from "components/ParkingStats"
 import Layout from "../layout"
-
-
 
 export default function ParkingDetail() {
 
@@ -17,7 +16,12 @@ export default function ParkingDetail() {
                     <DeleteIcon />
                 </IconButton>
             </section>
+            <ParkingStats />
+
             <Carousel title="Reseñas">
+                <ReviewCard />
+                <ReviewCard />
+                <ReviewCard />
                 <ReviewCard />
                 <ReviewCard />
                 <ReviewCard />
@@ -28,6 +32,7 @@ export default function ParkingDetail() {
                     display: flex;
                     width: 100%;
                     justify-content: space-between;
+                    margin-bottom: 1.5em;
                 }
             `}
             </style>
