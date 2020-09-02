@@ -1,24 +1,32 @@
-import React from "react";
-import * as Yup from "yup";
 import { Formik, Form } from "formik";
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
+import { SignInSchema } from "utils/schemas"
+import { useMutation } from "@apollo/client"
+import { LOGIN_USER } from "mutations"
+import useLocalStorage from "hooks/useLocalStorage";
+import { useRouter } from "next/router"
+import Layout from "../layout";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "../styles/formStyles";
-
-const SignInSchema = Yup.object().shape({
-  email: Yup.string().email("Email inválido").required("Requerido"),
-  password: Yup.string().required("Requerido"),
-});
+} from "styles/formStyles";
 
 export default function SignWithEmail(): JSX.Element {
+  const [, setJWT] = useLocalStorage("token", "")
+  const router = useRouter()
+  const [LoginUser, { error }] = useMutation(LOGIN_USER, {
+    onCompleted({ login }) {
+      const { jwt: token, user } = login
+      setJWT(token)
+      router.push("/")
+    }
+  })
+
   return (
     <Layout pageTitle="Sign in with email">
       <MainFormContainer>
@@ -29,7 +37,20 @@ export default function SignWithEmail(): JSX.Element {
             password: "",
           }}
           validationSchema={SignInSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+
+            LoginUser({
+              variables: {
+                loggedUser: {
+                  identifier: values.email,
+                  password: values.password
+                }
+              }
+            })
+
+            if (error)
+              alert(error)
+          }}
         >
           {({ errors, touched }) => (
             <Form>
@@ -53,22 +74,24 @@ export default function SignWithEmail(): JSX.Element {
                   />
                   <NavigationLink
                     href="/forgotPassword"
-                    text="Olvidaste tu contraseña?"
-                  />
+                  >Olvidaste tu contraseña?
+                    </NavigationLink>
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./images/porjectLogo.png"
+                    src="../images/projectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
                 <Button>
-                  <NavigationLink href="/login" text="Atrás" />
+                  <NavigationLink href="/login">
+                    Atrás
+                  </NavigationLink>
                 </Button>
                 <Button submit={true}>
-                  <NavigationLink href="#" text="Iniciar Sesión" />
+                  Iniciar Sesión
                 </Button>
               </ActionSection>
             </Form>

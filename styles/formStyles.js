@@ -7,6 +7,7 @@ export const FormContainer = styled.div`
   height: auto;
   width: auto;
   justify-items: center;
+  background-color: #fff;
   align-items: center;
   grid-template-areas:
     "field information"
@@ -48,6 +49,7 @@ export const MainFormContainer = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 3em;
   border-radius: 50px;
+  background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);

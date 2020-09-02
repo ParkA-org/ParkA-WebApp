@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import * as Yup from "yup";
+import { useState, useEffect } from "react";
+import { ForgotPasswordSchema } from "utils/schemas"
 import { Formik, Form } from "formik";
 import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
 import {
   MainFormContainer,
   FormContainer,
@@ -13,11 +13,6 @@ import {
   ActionSection,
   AdditionalInfo,
 } from "../styles/formStyles";
-
-const ForgotPasswordSchema = Yup.object().shape({
-  email: Yup.string().email("Email inválido").required("Requerido"),
-  code: Yup.string().required("Requerido"),
-});
 
 const Timer = (props: any) => {
   const { initialMinute = 0, initialSeconds = 0 } = props;
@@ -110,7 +105,7 @@ export default function ForgotPassword(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   <img
-                    src="./images/porjectLogo.png"
+                    src="./../images/projectLogo.png"
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
@@ -118,11 +113,12 @@ export default function ForgotPassword(): JSX.Element {
               <ActionSection>
                 <NavigationLink
                   href="/signWithEmail"
-                  text="Atrás"
                   styled={true}
-                />
+                >
+                  Atrás
+                  </NavigationLink>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink href="#" text="Iniciar Sesión" />
+                  <NavigationLink href="#">Iniciar Sesión</NavigationLink>
                 </Button>
               </ActionSection>
             </Form>

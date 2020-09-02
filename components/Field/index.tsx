@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage } from "./styles";
-import Button from "../Button";
+import Button from "components/Button";
 
 type FieldProps = {
   type?: string;
@@ -67,12 +67,17 @@ export function SelectField({
   );
 }
 
-export function FileUploader(): JSX.Element {
+type FileUploaderProps = {
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+}
+
+export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element {
   const imgEl = useRef(null),
     inputEl = useRef(null);
   const handleChange = (event) => {
     event.persist();
     const file = event.target.files[0];
+    setFieldValue("file", file, false);
     const reader = new FileReader();
     reader.addEventListener(
       "load",
@@ -95,7 +100,7 @@ export function FileUploader(): JSX.Element {
   return (
     <>
       <img
-        src="./images/porjectLogo.png"
+        src="../placeholders/image-placeholder.png"
         ref={imgEl}
         alt="uploaded by the user"
         style={{ width: "100%", height: "100%" }}
@@ -105,6 +110,8 @@ export function FileUploader(): JSX.Element {
         id="input"
         onChange={handleChange}
         style={{ display: "none" }}
+        accept="image/*"
+
         ref={inputEl}
       />
       <Button onClick={handleClick}>Upload a photo</Button>
