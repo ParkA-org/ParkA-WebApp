@@ -1,4 +1,4 @@
-import React from "react";
+
 import { StyledButton } from "./styles";
 import { HandlerFunction } from "@storybook/addon-actions";
 

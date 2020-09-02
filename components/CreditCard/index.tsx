@@ -1,4 +1,4 @@
-import React from "react";
+
 import {
   Container,
   CardNumbers,
@@ -37,12 +37,12 @@ export default function CreditCard({
       <Logo
         src={
           cardNumber[0] === "4"
-            ? "./images/visaLogo.jpg"
-            : "./images/mastercardLogo.png"
+            ? "../images/visaLogo.jpg"
+            : "../images/mastercardLogo.png"
         }
         alt="card logo"
       />
-      <Chip src="./images/cardChip.png" alt="card chip" />
+      <Chip src="../images/cardChip.png" alt="card chip" />
       <CardNumbers>
         {cardNumber.length === 0
           ? "•••• •••• •••• ••••"

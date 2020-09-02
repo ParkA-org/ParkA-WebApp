@@ -29,8 +29,7 @@ const ListItemVariants = {
 export const Menu = styled(motion.ul)`
   padding: 1em 1em 0 1em;
   display: flex;
-  width: 80vw;
-  max-width: 1380px;
+  width: 100vw;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -76,8 +75,8 @@ export const ListItem = styled(motion.li).attrs(() => ({
   @media (max-width: 768px) {
     margin: 1em 0;
     ${(props) =>
-      props.hide &&
-      css`
+    props.hide &&
+    css`
         display: none;
       `}
   }

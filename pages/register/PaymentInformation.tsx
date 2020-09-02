@@ -1,11 +1,16 @@
-import React from "react";
-import * as Yup from "yup";
+import { useState, useEffect } from "react";
 import { Formik, Form } from "formik";
-import Layout from "./layout";
-import NavigationLink from "../components/NavigationLink";
-import Field from "../components/Field";
-import Button from "../components/Button";
-import CreditCard from "../components/CreditCard";
+import { useMutation } from '@apollo/client';
+import { PaymentInformationSchema } from "utils/schemas"
+import { CREATE_PAYMENTINFO } from "mutations"
+import { useRouter } from "next/router";
+import Layout from "pages/layout";
+import NavigationLink from "components/NavigationLink";
+import Field from "components/Field";
+import Button from "components/Button";
+import CreditCard from "components/CreditCard";
+import Spinner from "components/Spinner"
+import ModalPortal from "components/Modal"
 import {
   MainFormContainer,
   FormContainer,
@@ -13,20 +18,19 @@ import {
   InformationSection,
   ActionSection,
   CompactActionSection,
-} from "../styles/formStyles";
-
-const PaymentInformationSchema = Yup.object().shape({
-  cardNumber: Yup.string()
-    .length(16, "Los números de tarjeta solo son 16")
-    .required("Requerido"),
-  cardHolder: Yup.string().required("Requerido"),
-  expirationDate: Yup.date().required("Requerido"),
-  cvv: Yup.string()
-    .length(3, "El CVV debe contener solo 3 dígitos")
-    .required("Requerido"),
-});
+} from "styles/formStyles";
+import useLocalStorage from "hooks/useLocalStorage";
 
 export default function RegisterPaymentInformation(): JSX.Element {
+  const [showModal, setShowModal] = useState(false)
+  const router = useRouter()
+  const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
+  const [accountId,] = useLocalStorage("account-id", "")
+
+  useEffect(() => {
+    console.log(`Account ID id ${accountId}`)
+  })
+
   return (
     <Layout pageTitle="Información Crediticia">
       <MainFormContainer>
@@ -39,7 +43,26 @@ export default function RegisterPaymentInformation(): JSX.Element {
             cvv: "",
           }}
           validationSchema={PaymentInformationSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+            setShowModal(true)
+            CreatePaymentInfo({
+              variables: {
+                userPaymentInfo: {
+                  data: {
+                    digit: parseInt(values.cardNumber),
+                    name: values.cardHolder,
+                    expirationdate: values.expirationDate,
+                    type_card: "5f20dee0b1b8d80017e0d686",
+                    account_data: accountId
+                  }
+                }
+              }
+            })
+            if (!loading && !error) {
+              setShowModal(false)
+              router.push("/")
+            }
+          }}
         >
           {({ values, errors, touched }) => (
             <Form>
@@ -82,20 +105,27 @@ export default function RegisterPaymentInformation(): JSX.Element {
               <ActionSection>
                 <CompactActionSection>
                   <NavigationLink
-                    href="/registerPersonalIdentification"
-                    text="Atrás"
+                    href="/register/PersonalIdentification"
                     styled={true}
-                  />
-                  <NavigationLink href="/" text="Omitir" styled={true} />
+                  >
+                    Atrás
+                    </NavigationLink>
+                  <NavigationLink href="/" styled={true} >
+                    Omitir
+                    </NavigationLink>
                 </CompactActionSection>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink href="/" text="Continuar" />
+                  Continuar
                 </Button>
               </ActionSection>
             </Form>
           )}
         </Formik>
       </MainFormContainer>
+      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+        <Spinner />
+        <h3>Loading...</h3>
+      </ModalPortal>}
     </Layout>
   );
 }
