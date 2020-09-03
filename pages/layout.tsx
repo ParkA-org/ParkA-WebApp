@@ -48,7 +48,6 @@ export default function Layout({
           justify-content: flex-start;
           align-items: center;
           text-align: center;
-          margin-top: 2em;
         }
 
         footer {

@@ -31,7 +31,7 @@ export const TimingContainer = styled.div`
 
 export const Item = styled.div`
     margin-bottom: 0.5em;
-
+    width: 210px;
     & > h3 {
         display: flex;
         justify-content: flex-start;
