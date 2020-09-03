@@ -29,6 +29,7 @@ export default function ParkingDetail() {
             </Carousel>
             <style jsx>{`
                 .main-section {
+                    margin-top: 1.5em;
                     display: flex;
                     width: 100%;
                     justify-content: space-between;

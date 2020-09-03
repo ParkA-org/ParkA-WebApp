@@ -1,29 +1,28 @@
 import Head from "next/head";
 import Navbar from "../components/Navbar";
-import Layout from "./layout";
 
-function Header(){
-  return(
-    
+function Header() {
+  return (
+
     <div id="header">
-      <link 
-            rel="stylesheet" 
-            href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous"/>
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous" />
       <div className="container">
         <div className="row">
           <div className="col-md-10 inner-text">
-            <p className="h1" style={{color:"white"}}>Buscar y alquilar</p>
-            <p className="h1" style={{color:"white"}}>parqueos</p>
-            <p className="h3" style={{color:"white"}} >Nunca fue tan</p>
-            <p><span className="h2" style={{color:"#084C7C"}}>Fácil</span> <span className="h2" style={{color:"#077187"}}>Rápido</span> <span className="h2" style={{color:"#59BCA7"}}>Seguro</span></p>
+            <p className="h1" style={{ color: "white" }}>Buscar y alquilar</p>
+            <p className="h1" style={{ color: "white" }}>parqueos</p>
+            <p className="h3" style={{ color: "white" }} >Nunca fue tan</p>
+            <p><span className="h2" style={{ color: "#084C7C" }}>Fácil</span> <span className="h2" style={{ color: "#077187" }}>Rápido</span> <span className="h2" style={{ color: "#59BCA7" }}>Seguro</span></p>
           </div>
           <div className="col-md-2">
-            <br/>
-            <br/>
+            <br />
+            <br />
             <button className="btn"><img src="/images/botonParqueo.svg" /></button>
             <button className="text-button">Alquilar Parqueo</button>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <button className="btn"><img src="/images/botonCarro.svg" /></button>
             <button className="text-button">Buscar Parqueo</button>
           </div>
@@ -33,40 +32,40 @@ function Header(){
   )
 }
 
-function Services(){
-  return(
+function Services() {
+  return (
     <div id="services">
       <div className="container">
         <div className="row justify-content-md-center">
           <div className="col-md-3 text-center inner-text">
-            <img src="/images/image map.svg"/>
+            <img src="/images/image map.svg" />
             <h3>Busca parqueo</h3>
             <p>Localiza el parqueo más cercano a tu destino dentro del mapa de la aplicación al mejor precio</p>
           </div>
           <div className="col-md-4 text-center inner-text">
-            <img src="/images/image calendar.svg"/>
+            <img src="/images/image calendar.svg" />
             <h3>Reserva</h3>
             <p>Verifica la disponibilidad de los posibles parqueos alrededor de la zona</p>
           </div>
           <div className="col-md-3 text-center inner-text">
-            <img src="/images/image car.svg"/>
+            <img src="/images/image car.svg" />
             <h3>Llega a la cita</h3>
             <p>Dirigete al parqueo en la hora establecida y confia que tu vehiculo se encuentra en un lugar seguro</p>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   )
 }
 
-function Benefits(){
-  return(
+function Benefits() {
+  return (
     <div id="benefits">
       <div id="benefits-1">
         <div className="container">
           <div className="row">
             <div className="col-md-6 text-center">
-              <img src="/images/image map.svg"/>
+              <img src="/images/image map.svg" />
             </div>
             <div className="col-md-6 inner-text">
               <h3 className="text-center">Gana dinero extra</h3>
@@ -83,7 +82,7 @@ function Benefits(){
               <p className="text-center">Utiliza la aplicación disponible tanto en Web, iOS y Android encontrando parqueo sin importar el sistema que utilices.</p>
             </div>
             <div className="col-md-6 text-center">
-              <img src="/images/computer.svg"/>
+              <img src="/images/computer.svg" />
             </div>
           </div>
         </div>
@@ -98,15 +97,15 @@ function Benefits(){
               <h3 className="text-center">Mantén tu vehículo seguro</h3>
               <p className="text-center">Utiliza un parqueo seguro en donde no te debas preocupar por robos o daños a tu vehículo mientras lo parqueas lejos de casa</p>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
-    </div>  
+    </div>
   )
 }
 
-function Download(){
-  return(
+function Download() {
+  return (
     <div id="download">
       <div className="container">
         <div className="row">
@@ -114,30 +113,30 @@ function Download(){
         </div>
         <div className="row justify-content-md-center">
           <div className="col-md-2 col-sm-6">
-          <button type="button" className="btn">
-            Empezar
+            <button type="button" className="btn">
+              Empezar
           </button>
           </div>
           <div className="col-md-2 col-sm-6">
-          <button type="button" className="btn">
-            <img src="/images/android.svg" />
+            <button type="button" className="btn">
+              <img src="/images/android.svg" />
             Android
           </button>
           </div>
           <div className="col-md-2 col-sm-6">
-          <button type="button" className="btn">
-            <img src="/images/apple.svg" />
+            <button type="button" className="btn">
+              <img src="/images/apple.svg" />
             iOS
           </button>
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   )
 }
 
-function Footer(){
-  return(
+function Footer() {
+  return (
     <div id="footer">
       <div className="container-fluid">
         <div className="row">
@@ -155,7 +154,7 @@ function Footer(){
           </div>
         </div>
       </div>
-    </div>  
+    </div>
   )
 }
 
@@ -163,11 +162,11 @@ export default function Home(): JSX.Element {
   return (
     <div>
       <div className="containerLayout">
-      <Head>
-        <title>Index</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Navbar />
+        <Head>
+          <title>Index</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
+        <Navbar />
       </div>
       <Header />
       <Services />
