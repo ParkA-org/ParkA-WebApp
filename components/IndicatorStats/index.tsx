@@ -17,7 +17,7 @@ export default function IndicatorStats() {
             </div>
             <style jsx>{`
                 .container {
-                    margin: 1.5em 0;
+                    margin: 1.5em 1em;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;

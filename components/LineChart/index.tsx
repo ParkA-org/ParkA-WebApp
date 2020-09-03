@@ -30,9 +30,10 @@ export default function LineChart() {
             },
             options: {
                 showLines: true,
+                responsive: true,
                 title: {
                     display: true,
-                    fontSize: 24,
+                    fontSize: 20,
                     position: 'top',
                     text: 'Ganancias de parqueos últimos 6 meses'
                 },
@@ -50,13 +51,14 @@ export default function LineChart() {
     return (
         <>
             <div className="charContainer">
-                <canvas ref={canvaRef} height="400" width="500" />
+                <canvas ref={canvaRef} />
             </div>
             <style jsx>
                 {`
                 .charContainer {
-                    width: 500px;
-                    height: 350px;
+                    position: relative;
+                    height: 100%;
+                    width: 60vw;
                 }
             `}
             </style>
