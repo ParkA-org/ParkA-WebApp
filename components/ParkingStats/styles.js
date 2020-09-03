@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
 export const Container = styled.section`
-    magin: 1em 0;
+    magin: 2em 0;
     display: flex;
     justify-content: space-around;
     width: 100%;
@@ -11,12 +11,22 @@ export const Container = styled.section`
 `;
 
 export const ItemsContainer = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: flex-start;
-    flex-wrap: wrap;
-    width: 50%;
+    display: grid;
+    grid-template-areas:
+    "earning timings"
+    "earning timings";
+    justify-items: center;
+    align-items: start;
+    grid-gap: 20px;
+    width: 60%;
+`;
+
+export const EarningsContainer = styled.div`
+    grid-area: earning;
+`;
+
+export const TimingContainer = styled.div`
+    grid-area: timings;
 `;
 
 export const Item = styled.div`
@@ -24,7 +34,7 @@ export const Item = styled.div`
 
     & > h3 {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         align-items: center;
     }
 
