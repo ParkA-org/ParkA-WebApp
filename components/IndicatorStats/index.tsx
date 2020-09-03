@@ -17,12 +17,13 @@ export default function IndicatorStats() {
             </div>
             <style jsx>{`
                 .container {
-                    margin: 1.5em;
+                    margin: 1.5em 0;
                     display: flex;
                     flex-direction: column;
                     justify-content: space-around;
                     align-items: center;
                     padding: 0.5em;
+                    width: auto;
                     border: 3px solid #0B768C;
                     border-radius: 25px;
                 }
