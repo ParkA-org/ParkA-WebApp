@@ -35,6 +35,10 @@ export const FieldSection = styled.div`
   width: 20vw;
   min-width: 275px;
   text-align: left;
+<<<<<<< HEAD
+=======
+  border-right: 1px solid rgba(0, 0, 0, 0.5);
+>>>>>>> 2645d64... made progress
   border-bottom: none;
   @media (max-width: 768px) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
@@ -95,6 +99,12 @@ export const CompactActionSection = styled.div`
   & > a:nth-child(2) {
     color: #023944;
   }
+`;
+
+export const AdditionalInfo = styled.p`
+  overflow-wrap: break-word;
+  max-width: 250px;
+  margin: 0.25em 0;
 `;
 
 export const AdditionalInfo = styled.p`

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
+=======
+import React from "react";
+>>>>>>> 2645d64... made progress
 import * as Yup from "yup";
 import { Formik, Form } from "formik";
 import Layout from "./layout";
@@ -19,6 +23,7 @@ const ForgotPasswordSchema = Yup.object().shape({
   code: Yup.string().required("Requerido"),
 });
 
+<<<<<<< HEAD
 const Timer = (props: any) => {
   const { initialMinute = 0, initialSeconds = 0 } = props;
   const [minutes, setMinutes] = useState(initialMinute);
@@ -57,6 +62,13 @@ const Timer = (props: any) => {
 
 export default function ForgotPassword(): JSX.Element {
   const [sendCode, setSendCode] = useState(false);
+=======
+const sendCode = (email) => {
+  console.log(`Enviando denuevo a ${email}`);
+};
+
+export default function ForgotPassword(): JSX.Element {
+>>>>>>> 2645d64... made progress
   return (
     <Layout pageTitle="Forgot password">
       <MainFormContainer>
@@ -94,11 +106,16 @@ export default function ForgotPassword(): JSX.Element {
                   />
 
                   <AdditionalInfo>
+<<<<<<< HEAD
                     {sendCode && <Timer initialMinute={5} initialSeconds={0} />}
+=======
+                    El código debería llegar en no más de 5:00...
+>>>>>>> 2645d64... made progress
                   </AdditionalInfo>
                   <Button
                     onClick={(event) => {
                       event.preventDefault();
+<<<<<<< HEAD
                       if (values.email) {
                         setSendCode(true);
                       }
@@ -106,22 +123,39 @@ export default function ForgotPassword(): JSX.Element {
                     rank="secondary"
                   >
                     Enviar código
+=======
+                      sendCode(values.email);
+                    }}
+                  >
+                    Reenviar código
+>>>>>>> 2645d64... made progress
                   </Button>
                 </FieldSection>
                 <InformationSection>
                   <img
+<<<<<<< HEAD
                     src="./images/porjectLogo.png"
+=======
+                    src="./projectLogo.png"
+>>>>>>> 2645d64... made progress
                     style={{ width: "100%", height: "100%" }}
                   />
                 </InformationSection>
               </FormContainer>
               <ActionSection>
+<<<<<<< HEAD
                 <NavigationLink
                   href="/signWithEmail"
                   text="Atrás"
                   styled={true}
                 />
                 <Button submit={true} rank="secondary">
+=======
+                <Button onClick={(event) => event.preventDefault()}>
+                  <NavigationLink href="/" text="Cancelar" />
+                </Button>
+                <Button type="submit">
+>>>>>>> 2645d64... made progress
                   <NavigationLink href="#" text="Iniciar Sesión" />
                 </Button>
               </ActionSection>
