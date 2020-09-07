@@ -15,17 +15,26 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
+import { useContext, useEffect } from "react";
+import { UserContext } from "context/UserContext";
 
 export default function SignWithEmail(): JSX.Element {
   const [, setJWT] = useLocalStorage("token", "")
   const router = useRouter()
+  const { setUser } = useContext(UserContext)
   const [LoginUser, { error }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { jwt: token, user } = login
       setJWT(token)
+      setUser(user)
       router.push("/")
     }
   })
+
+  useEffect(() => {
+    console.log('Tipo de setUser')
+    console.log(typeof setUser)
+  }, [])
 
   return (
     <Layout pageTitle="Sign in with email">
@@ -97,6 +106,7 @@ export default function SignWithEmail(): JSX.Element {
             </Form>
           )}
         </Formik>
+        <button type="button" onClick={() => setUser({ id: "1234134" })}> Actualizar Context</button>
       </MainFormContainer>
     </Layout>
   );
