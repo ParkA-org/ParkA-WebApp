@@ -11,7 +11,6 @@ export default function useUser() {
         }
         console.log('User ', user)
         console.log('Is Logged ', isLogged)
-        setLoading(false)
     }, [user])
 
     const logout = () => {

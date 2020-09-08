@@ -36,7 +36,7 @@ export const UserContext = React.createContext<ContextInterface>({
 })
 
 export function UserProvider({ children }: { children: React.ReactNode | React.ReactNode[] | null; value?: ContextInterface }) {
-    const [user, setUser] = React.useState<User>()
+    const [user, setUser] = React.useState<User>({})
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
     const [loading, setLoading] = useState(true)

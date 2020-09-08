@@ -13,7 +13,13 @@ margin: 0 auto;
 
 export default function Profile(): JSX.Element {
     const router = useRouter()
+    const { isLogged } = useUser()
 
+    useEffect(() => {
+        if (!isLogged) {
+            router.push("/login")
+        }
+    }, [isLogged])
     return (
         <Layout pageTitle="Profile">
             <Container>

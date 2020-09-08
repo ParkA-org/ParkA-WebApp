@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import useUser from "hooks/useUser"
 import Button from "components/Button";
 import NavigationLink from "components/NavigationLink";

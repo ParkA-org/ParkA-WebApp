@@ -15,6 +15,14 @@ export const StyledField = styled(Field)`
   }
 `;
 
+export const UploaderImage = styled.img`
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 50%;
+`;
+
 export const StyledLabel = styled.label`
   font-weight: bolder;
   font-size: 1.25em;

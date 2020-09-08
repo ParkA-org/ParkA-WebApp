@@ -67,7 +67,7 @@ export const InformationSection = styled.div`
   grid-area: information;
   height: 80%;
   display: flex;
-  max-width: 450px;
+  max-width: 550px;
   max-height: 400px;
   min-width: 275px;
   flex-direction: column;
