@@ -333,6 +333,7 @@ export default function Home(): JSX.Element {
       <Footer />
       <style jsx>{`
             .containerLayout {
+              overflow-x: hidden;
               display: flex;
               margin: 0 auto;
               flex-direction: column;
