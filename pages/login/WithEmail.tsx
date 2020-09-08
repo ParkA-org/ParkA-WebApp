@@ -1,3 +1,4 @@
+import { useContext, useEffect } from "react";
 import { Formik, Form } from "formik";
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
@@ -15,17 +16,15 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
-import { useContext, useEffect } from "react";
 import { UserContext } from "context/UserContext";
 
 export default function SignWithEmail(): JSX.Element {
-  const [, setJWT] = useLocalStorage("token", "")
   const router = useRouter()
-  const { setUser } = useContext(UserContext)
+  const { setUser, setToken } = useContext(UserContext)
   const [LoginUser, { error }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { jwt: token, user } = login
-      setJWT(token)
+      setToken(token)
       setUser(user)
       router.push("/")
     }

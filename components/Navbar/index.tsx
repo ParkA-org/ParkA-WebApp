@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react";
-import { UserContext } from "context/UserContext"
-
+import useUser from "hooks/useUser"
 import Button from "components/Button";
 import NavigationLink from "components/NavigationLink";
 import {
@@ -14,22 +13,18 @@ import {
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
-  const { user } = useContext(UserContext)
-  const [isLogged, setIsLogged] = useState(false)
+  const { isLogged, logout } = useUser()
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) setIsOpen(true);
     };
     window.addEventListener("resize", handleResize);
-    if (Boolean(user.id)) {
-      setIsLogged(true)
-    }
     console.log('Is logged ', isLogged)
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
-  }, [user]);
+  }, [isLogged]);
 
   return (
     <>
@@ -45,13 +40,21 @@ export default function Navbar(): JSX.Element {
           <ListItem>
             <NavigationLink href="/help">Ayuda</NavigationLink>
           </ListItem>
-          <Button>
-            <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
+          {isLogged ? <Button onClick={() => {
+            logout()
+          }}>
+            <NavigationLink href="/login">Logout</NavigationLink>
           </Button>
-          <Button>
-            <NavigationLink href="/register">Registrate</NavigationLink>
-          </Button>
-          {isLogged ? <button>Adentro</button> : <button>Afuera</button>}
+            :
+            <>
+              <Button>
+                <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
+              </Button>
+              <Button>
+                <NavigationLink href="/register">Registrate</NavigationLink>
+              </Button>
+            </>
+          }
         </HiddenContainer>
       </Menu>
       <ColorBar />
