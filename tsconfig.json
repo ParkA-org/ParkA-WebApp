@@ -27,6 +27,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/_app.js",
-    "lib/apolloClient.js"
+    "lib/apolloClient.js",
+    "context/UserContext.tsx"
   ]
 }

@@ -19,6 +19,7 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
+import useUser from "hooks/useUser";
 
 function UpdateImage(file: any, success, state) {
   const apiBaseURL = "https://parka-api.herokuapp.com/upload";
@@ -42,12 +43,12 @@ function UpdateImage(file: any, success, state) {
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
+  const { setUser } = useUser()
   const [image, setImage] = useLocalStorage("image", "")
-  const [userId, setUserId] = useLocalStorage("user-id", "")
   const [createUser, { error }] = useMutation(CREATE_USER, {
     onCompleted({ createUser }) {
       const { user } = createUser
-      setUserId(user?.id)
+      setUser(user)
       setShowModal(false)
       router.push('/register/PersonalIdentification')
     }

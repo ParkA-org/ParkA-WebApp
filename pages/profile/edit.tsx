@@ -2,15 +2,13 @@ import { useState } from "react"
 import axios from "axios"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
-import { useLocalStorage } from "hooks/useLocalStorage"
+import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
 import { UPDATE_USER } from "mutations"
 import { EditProfileSchema } from "utils/schemas"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
-import Button from "components/Button";
-import IconButtom from "components/IconButton"
 import Logo from "components/Icons/Logo"
 import SaveIcon from "components/Icons/Save"
 import DeleteIcon from "components/Icons/Delete"

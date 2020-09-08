@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import useUser from "hooks/useUser"
 import Button from "components/Button";
 import NavigationLink from "components/NavigationLink";
 import {
@@ -13,17 +14,18 @@ import Link from "next/link";
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
+  const { isLogged, logout } = useUser()
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) setIsOpen(true);
     };
     window.addEventListener("resize", handleResize);
-
+    console.log('Is logged ', isLogged)
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isLogged]);
 
   return (
     <>
@@ -39,12 +41,21 @@ export default function Navbar(): JSX.Element {
           <ListItem>
             <Link href="/help"><span className="normal-span">Ayuda</span></Link>
           </ListItem>
-          <Button>
-            <Link href="/login"><span className="active-span">Iniciar Sesión</span></Link>
+          {isLogged ? <Button onClick={() => {
+            logout()
+          }}>
+            <NavigationLink href="/login">Logout</NavigationLink>
           </Button>
-          <Button>
-            <Link href="/register"><span className="active-span">Registrate</span></Link>
-          </Button>
+            :
+            <>
+              <Button>
+                <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
+              </Button>
+              <Button>
+                <NavigationLink href="/register">Registrate</NavigationLink>
+              </Button>
+            </>
+          }
         </HiddenContainer>
       </Menu>
       <ColorBar />

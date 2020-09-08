@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage } from "./styles";
+import { StyledLabel, StyledField, ErrorMessage, UploaderImage } from "./styles";
 import Button from "components/Button";
 
 type FieldProps = {
@@ -99,11 +99,10 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
 
   return (
     <>
-      <img
+      <UploaderImage
         src="../placeholders/image-placeholder.png"
         ref={imgEl}
         alt="uploaded by the user"
-        style={{ width: "100%", height: "100%" }}
       />
       <input
         type="file"

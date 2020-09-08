@@ -51,7 +51,9 @@ mutation loginUser($loggedUser: UsersPermissionsLoginInput!) {
   login(input: $loggedUser) {
     jwt
     user {
+      id
       username
+      email
     }
   }
 }
