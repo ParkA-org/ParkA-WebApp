@@ -47,7 +47,7 @@ export default function registerPersonalAccount(): JSX.Element {
   const [createUser, { error }] = useMutation(CREATE_USER, {
     onCompleted({ createUser }) {
       const { user } = createUser
-      setUserId(user.id)
+      setUserId(user?.id)
       setShowModal(false)
       router.push('/register/PersonalIdentification')
     }
@@ -85,7 +85,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     username: values.name,
                     email: values.email,
                     lastname: values.lastName,
-                    password: values.password
+                    password: values.password,
+                    confirmed: true
                   }
                 }
               }

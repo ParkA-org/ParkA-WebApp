@@ -45,6 +45,7 @@ export const FieldSection = styled.div`
 `;
 
 export const MainFormContainer = styled.div`
+  margin-top: 2em;
   width: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 3em;
