@@ -21,7 +21,6 @@ export default function Navbar(): JSX.Element {
       if (window.innerWidth > 768) setIsOpen(true);
     };
     window.addEventListener("resize", handleResize);
-    console.log('Is logged ', isLogged)
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
@@ -44,15 +43,15 @@ export default function Navbar(): JSX.Element {
           {isLogged ? <Button onClick={() => {
             logout()
           }}>
-            <NavigationLink href="/login">Logout</NavigationLink>
+            <Link href="/"><span className="active-span">Logout</span></Link>
           </Button>
             :
             <>
               <Button>
-                <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
+                <Link href="/login"><span className="active-span">Iniciar Sesión</span></Link>
               </Button>
               <Button>
-                <NavigationLink href="/register">Registrate</NavigationLink>
+                <Link href="/register"><span className="active-span">Registrate</span></Link>
               </Button>
             </>
           }
