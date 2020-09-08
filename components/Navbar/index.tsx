@@ -9,6 +9,7 @@ import {
   HiddenContainer,
   ColorBar,
 } from "./styles";
+import Link from "next/link";
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
@@ -33,20 +34,36 @@ export default function Navbar(): JSX.Element {
         </Logo>
         <HiddenContainer animate={isOpen ? "open" : "closed"} inherit="false">
           <ListItem>
-            <NavigationLink href="/contact">Contacto</NavigationLink>
+            <Link href="/contact"><span className="normal-span">Contacto</span></Link>
           </ListItem>
           <ListItem>
-            <NavigationLink href="/help">Ayuda</NavigationLink>
+            <Link href="/help"><span className="normal-span">Ayuda</span></Link>
           </ListItem>
           <Button>
-            <NavigationLink href="/login">Iniciar Sesión</NavigationLink>
+            <Link href="/login"><span className="active-span">Iniciar Sesión</span></Link>
           </Button>
           <Button>
-            <NavigationLink href="/register">Registrate</NavigationLink>
+            <Link href="/register"><span className="active-span">Registrate</span></Link>
           </Button>
         </HiddenContainer>
       </Menu>
       <ColorBar />
+      <style jsx>
+        {`
+          span {
+            font-size: 1.3rem;
+          }
+
+          .active-span {
+            color: white; 
+          }
+
+          .normal-span {
+            font-size: 1.6rem;
+            color: #084C7C;
+          }
+        `}
+      </style>
     </>
   );
 }

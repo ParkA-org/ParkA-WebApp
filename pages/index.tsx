@@ -369,9 +369,7 @@ export default function Home(): JSX.Element {
       <Download />
       <Footer />
       <style jsx>{`
-            .containerLayout > a{
-              color:#037185;
-            }
+           
             .containerLayout {
               display: flex;
               margin: 0 auto;
