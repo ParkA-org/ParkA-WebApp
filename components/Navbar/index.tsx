@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
-import Button from "../Button";
-import NavigationLink from "../NavigationLink";
+import { useState, useEffect } from "react";
+import useUser from "hooks/useUser"
+import Button from "components/Button";
+import NavigationLink from "components/NavigationLink";
 import {
   Menu,
   Logo,
@@ -9,44 +10,70 @@ import {
   HiddenContainer,
   ColorBar,
 } from "./styles";
+import Link from "next/link";
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
+  const { isLogged, logout } = useUser()
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) setIsOpen(true);
     };
     window.addEventListener("resize", handleResize);
-
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [isLogged]);
 
   return (
     <>
       <Menu>
         <Logo>
           <Hamburger onClick={() => setIsOpen(!isOpen)} />
-          <NavigationLink href="/" text="ParkA" />
+          <NavigationLink href="/">ParkA</NavigationLink>
         </Logo>
         <HiddenContainer animate={isOpen ? "open" : "closed"} inherit="false">
           <ListItem>
-            <NavigationLink href="/contact" text="Contacto" />
+            <Link href="/contact"><span className="normal-span">Contacto</span></Link>
           </ListItem>
           <ListItem>
-            <NavigationLink href="/help" text="Ayuda" />
+            <Link href="/help"><span className="normal-span">Ayuda</span></Link>
           </ListItem>
-          <Button>
-            <NavigationLink href="/login" text="Iniciar Sesión" />
+          {isLogged ? <Button onClick={() => {
+            logout()
+          }}>
+            <Link href="/"><span className="active-span">Logout</span></Link>
           </Button>
-          <Button>
-            <NavigationLink href="/register" text="Registrate" />
-          </Button>
+            :
+            <>
+              <Button>
+                <Link href="/login"><span className="active-span">Iniciar Sesión</span></Link>
+              </Button>
+              <Button>
+                <Link href="/register"><span className="active-span">Registrate</span></Link>
+              </Button>
+            </>
+          }
         </HiddenContainer>
       </Menu>
       <ColorBar />
+      <style jsx>
+        {`
+          span {
+            font-size: 1.3rem;
+          }
+
+          .active-span {
+            color: white; 
+          }
+
+          .normal-span {
+            font-size: 1.6rem;
+            color: #084C7C;
+          }
+        `}
+      </style>
     </>
   );
 }

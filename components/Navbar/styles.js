@@ -28,9 +28,9 @@ const ListItemVariants = {
 
 export const Menu = styled(motion.ul)`
   padding: 1em 1em 0 1em;
+  margin: 0;
   display: flex;
-  width: 80vw;
-  max-width: 1380px;
+  width: 100vw;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -46,7 +46,6 @@ export const ColorBar = styled.div`
   -webkit-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
   -moz-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
   box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
-  margin-bottom: 2em;
 `;
 
 export const HiddenContainer = styled(motion.div).attrs(() => ({
@@ -77,8 +76,8 @@ export const ListItem = styled(motion.li).attrs(() => ({
   @media (max-width: 768px) {
     margin: 1em 0;
     ${(props) =>
-      props.hide &&
-      css`
+    props.hide &&
+    css`
         display: none;
       `}
   }
@@ -95,7 +94,14 @@ export const Logo = styled(motion.li)`
   color: #037185;
   &:hover {
     cursor: pointer;
+    filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));
   }
+
+  & > a {
+    text-decoration: none;
+    color: #077187;
+  }
+
 `;
 
 export const Hamburger = styled.i`

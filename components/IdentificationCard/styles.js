@@ -4,6 +4,7 @@ export const Title = styled.h3`
   color: #084c7c;
   text-align: left;
   margin-bottom: 0.5em;
+  font-size: 1.4rem;
 `;
 
 export const Content = styled.p`
@@ -18,7 +19,8 @@ export const Content = styled.p`
 export const Image = styled.img`
   width: 100px;
   height: 100px;
-  margin-right: 0.5em;
+  margin-right: 2em;
+  border-radius: 50%;
 `;
 
 export const HeaderContainer = styled.div`

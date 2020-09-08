@@ -7,6 +7,7 @@ export const FormContainer = styled.div`
   height: auto;
   width: auto;
   justify-items: center;
+  background-color: #fff;
   align-items: center;
   grid-template-areas:
     "field information"
@@ -44,10 +45,12 @@ export const FieldSection = styled.div`
 `;
 
 export const MainFormContainer = styled.div`
+  margin-top: 2em;
   width: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
   padding: 3em;
   border-radius: 50px;
+  background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
@@ -65,7 +68,7 @@ export const InformationSection = styled.div`
   grid-area: information;
   height: 80%;
   display: flex;
-  max-width: 450px;
+  max-width: 550px;
   max-height: 400px;
   min-width: 275px;
   flex-direction: column;
