@@ -332,7 +332,6 @@ export default function Home(): JSX.Element {
       <Download />
       <Footer />
       <style jsx>{`
-           
             .containerLayout {
               display: flex;
               margin: 0 auto;

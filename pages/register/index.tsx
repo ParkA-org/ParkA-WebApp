@@ -92,8 +92,10 @@ export default function registerPersonalAccount(): JSX.Element {
                 }
               }
             })
-            if (error)
+            if (error) {
+              setShowModal(false)
               alert(error)
+            }
 
           }}
         >

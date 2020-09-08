@@ -85,7 +85,7 @@ export const ListItem = styled(motion.li).attrs(() => ({
 
 export const Logo = styled(motion.li)`
   list-style: none;
-  font-size: 2.5em;
+  font-size: 2.5rem;
   font-weight: 900;
   flex-grow: 2;
   font-family: "Righteous";
@@ -98,6 +98,7 @@ export const Logo = styled(motion.li)`
   }
 
   & > a {
+    font-size: 3rem;
     text-decoration: none;
     color: #077187;
   }
