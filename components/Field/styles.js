@@ -6,6 +6,7 @@ export const StyledField = styled(Field)`
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
+  max-width: 350px;
   line-height: 1.5em;
   width: 100%;
   text-align: left;
@@ -13,6 +14,14 @@ export const StyledField = styled(Field)`
   @media (max-width: 768px) {
     width: auto;
   }
+`;
+
+export const UploaderImage = styled.img`
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  border-radius: 50%;
 `;
 
 export const StyledLabel = styled.label`
@@ -25,4 +34,11 @@ export const StyledLabel = styled.label`
 export const ErrorMessage = styled.p`
   color: red;
   margin-bottom: 0.25em;
+`;
+
+export const FieldContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
 `;

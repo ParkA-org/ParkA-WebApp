@@ -1,3 +1,4 @@
+import { useContext, useEffect, useState } from "react";
 import { Formik, Form } from "formik";
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
@@ -15,17 +16,28 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles";
+import { UserContext } from "context/UserContext";
+import ModalPortal from "components/Modal";
+import Spinner from "components/Spinner";
 
 export default function SignWithEmail(): JSX.Element {
-  const [, setJWT] = useLocalStorage("token", "")
   const router = useRouter()
+  const [showModal, setShowModal] = useState(false)
+  const { setUser, setToken } = useContext(UserContext)
   const [LoginUser, { error }] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { jwt: token, user } = login
-      setJWT(token)
+      setToken(token)
+      setUser(user)
+      setShowModal(false)
       router.push("/")
     }
   })
+
+  useEffect(() => {
+    console.log('Tipo de setUser')
+    console.log(typeof setUser)
+  }, [])
 
   return (
     <Layout pageTitle="Sign in with email">
@@ -38,7 +50,7 @@ export default function SignWithEmail(): JSX.Element {
           }}
           validationSchema={SignInSchema}
           onSubmit={(values) => {
-
+            setShowModal(true)
             LoginUser({
               variables: {
                 loggedUser: {
@@ -49,13 +61,16 @@ export default function SignWithEmail(): JSX.Element {
             })
 
             if (error)
-              alert(error)
+              setShowModal(false)
+            alert(error)
           }}
         >
           {({ errors, touched }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
+                  <h3>Bienvenido!</h3>
+                  <p>Ingresa tus credenciales para iniciar sesión!</p>
                   <Field
                     type="email"
                     name="email"
@@ -74,8 +89,10 @@ export default function SignWithEmail(): JSX.Element {
                   />
                   <NavigationLink
                     href="/forgotPassword"
-                  >Olvidaste tu contraseña?
-                    </NavigationLink>
+                  >
+                    <span>Olvidaste tu contraseña?
+                  </span>
+                  </NavigationLink>
                 </FieldSection>
                 <InformationSection>
                   <img
@@ -85,12 +102,12 @@ export default function SignWithEmail(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button>
-                  <NavigationLink href="/login">
+                <Button rank="secondary">
+                  <NavigationLink href="/login" styled>
                     Atrás
                   </NavigationLink>
                 </Button>
-                <Button submit={true}>
+                <Button rank="secondary" submit={true}>
                   Iniciar Sesión
                 </Button>
               </ActionSection>
@@ -98,6 +115,19 @@ export default function SignWithEmail(): JSX.Element {
           )}
         </Formik>
       </MainFormContainer>
+      <style jsx>
+        {`
+          span {
+            align-self: flex-end;
+            color: #59BCA7;
+          }
+        `}
+      </style>
+
+      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+        <Spinner />
+        <h3>Loading...</h3>
+      </ModalPortal>}
     </Layout>
   );
 }

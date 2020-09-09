@@ -24,7 +24,12 @@ import useLocalStorage from "hooks/useLocalStorage";
 export default function RegisterPaymentInformation(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
-  const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
+  const [CreatePaymentInfo, { error }] = useMutation(CREATE_PAYMENTINFO, {
+    onCompleted() {
+      setShowModal(false)
+      router.push('/profile')
+    }
+  })
   const [accountId,] = useLocalStorage("account-id", "")
 
   useEffect(() => {
@@ -58,9 +63,8 @@ export default function RegisterPaymentInformation(): JSX.Element {
                 }
               }
             })
-            if (!loading && !error) {
-              setShowModal(false)
-              router.push("/")
+            if (error) {
+              alert(error)
             }
           }}
         >

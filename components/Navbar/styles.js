@@ -28,6 +28,7 @@ const ListItemVariants = {
 
 export const Menu = styled(motion.ul)`
   padding: 1em 1em 0 1em;
+  margin: 0;
   display: flex;
   width: 100vw;
   justify-content: space-between;
@@ -41,6 +42,7 @@ export const Menu = styled(motion.ul)`
 export const ColorBar = styled.div`
   width: 100vw;
   height: 30px;
+  overflow-x: hidden;
   background-color: #63c7b2;
   -webkit-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
   -moz-box-shadow: 0px 5px 12px 0px rgba(0, 0, 0, 0.37);
@@ -84,7 +86,7 @@ export const ListItem = styled(motion.li).attrs(() => ({
 
 export const Logo = styled(motion.li)`
   list-style: none;
-  font-size: 2.5em;
+  font-size: 2.5rem;
   font-weight: 900;
   flex-grow: 2;
   font-family: "Righteous";
@@ -93,7 +95,15 @@ export const Logo = styled(motion.li)`
   color: #037185;
   &:hover {
     cursor: pointer;
+    filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));
   }
+
+  & > a {
+    font-size: 3rem;
+    text-decoration: none;
+    color: #077187;
+  }
+
 `;
 
 export const Hamburger = styled.i`
