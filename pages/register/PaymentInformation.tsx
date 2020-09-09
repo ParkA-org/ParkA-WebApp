@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
-import { useMutation } from '@apollo/client';
+import { useState } from "react"
+import { Formik, Form } from "formik"
+import { useMutation } from '@apollo/client'
 import { PaymentInformationSchema } from "utils/schemas"
 import { CREATE_PAYMENTINFO } from "mutations"
-import { useRouter } from "next/router";
-import Layout from "pages/layout";
-import NavigationLink from "components/NavigationLink";
-import Field from "components/Field";
-import Button from "components/Button";
-import CreditCard from "components/CreditCard";
+import { useRouter } from "next/router"
+import Layout from "pages/layout"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import Button from "components/Button"
+import CreditCard from "components/CreditCard"
 import Spinner from "components/Spinner"
 import ModalPortal from "components/Modal"
 import {
@@ -18,8 +18,8 @@ import {
   InformationSection,
   ActionSection,
   CompactActionSection,
-} from "styles/formStyles";
-import useLocalStorage from "hooks/useLocalStorage";
+} from "styles/formStyles"
+import useLocalStorage from "hooks/useLocalStorage"
 
 export default function RegisterPaymentInformation(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
@@ -31,10 +31,6 @@ export default function RegisterPaymentInformation(): JSX.Element {
     }
   })
   const [accountId,] = useLocalStorage("account-id", "")
-
-  useEffect(() => {
-    console.log(`Account ID id ${accountId}`)
-  })
 
   return (
     <Layout pageTitle="Información Crediticia">

@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react"
-import { Formik, Form } from "formik";
-import { useQuery, useMutation } from '@apollo/client';
+import { useState } from "react"
+import { Formik, Form } from "formik"
+import { useQuery, useMutation } from '@apollo/client'
 import { GET_COUNTRIES } from "queries"
 import { CREATE_ACCOUNT } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
 import useLocalStorage from "hooks/useLocalStorage"
-import Layout from "../layout";
-import NavigationLink from "components/NavigationLink";
-import Field, { SelectField } from "components/Field";
+import Layout from "../layout"
+import NavigationLink from "components/NavigationLink"
+import Field, { SelectField } from "components/Field"
 import ModalPortal from "components/Modal"
-import Button from "components/Button";
+import Button from "components/Button"
 import Spinner from "components/Spinner"
-import IdentificationCard from "components/IdentificationCard";
+import IdentificationCard from "components/IdentificationCard"
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "styles/formStyles";
+} from "styles/formStyles"
 
 type Country = {
   __typename: string;
@@ -45,10 +45,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
       setShowModal(false)
       router.push('/register/PaymentInformation')
     }
-  })
-
-  useEffect(() => {
-    console.log(`User id ${userId}`)
   })
 
   if (countryError) return <pre>`Error ${JSON.stringify(countryError)}`</pre>
