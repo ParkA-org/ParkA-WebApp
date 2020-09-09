@@ -2,7 +2,8 @@ import { useEffect, useState, useContext } from "react"
 import { UserContext } from "context/UserContext";
 
 export default function useUser() {
-    const { user, setUser, token, setToken, loading, setLoading } = useContext(UserContext)
+    const { user, setUser, token, setToken, setUserId } = useContext(UserContext)
+    const [loading, setLoading] = useState(true)
     const [isLogged, setIsLogged] = useState(Object.keys(user).length === 0 ? false : true)
 
     useEffect(() => {
@@ -17,6 +18,7 @@ export default function useUser() {
         setUser({})
         setToken("")
         setIsLogged(false)
+        setUserId("")
     }
 
     return {
