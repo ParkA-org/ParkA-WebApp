@@ -54,9 +54,10 @@ export default function SignWithEmail(): JSX.Element {
               }
             })
 
-            if (error)
+            if (error) {
               setShowModal(false)
-            alert(error)
+              alert(error)
+            }
           }}
         >
           {({ errors, touched }) => (

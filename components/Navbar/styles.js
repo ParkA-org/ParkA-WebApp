@@ -60,6 +60,27 @@ export const HiddenContainer = styled(motion.div).attrs(() => ({
   }
 `;
 
+export const LoggedHiddenContainer = styled(HiddenContainer)`  
+  width: 100%;
+
+  & > li:first-child {
+    padding-left: 2em;
+  }
+
+  & > li {
+    color: #0B768C;
+    font-weight: 500;
+    font-family: "Righteous";
+    font-size: 1.4rem;
+  }
+
+  & > button {
+    position: absolute;
+    right: 20px;
+  }
+`;
+
+
 export const ListItem = styled(motion.li).attrs(() => ({
   initial: "open",
   variants: ListItemVariants,
