@@ -40,6 +40,12 @@ export const Tag = styled.span`
     border-radius: 25px; 
     margin-right: 0.5em;
     margin-top: 0.5em;
+
+    &:hover {
+        background-color: #077187;
+        color: white;
+        cursor: pointer;
+    }
 `;
 
 export const CharacteristicContainer = styled.ul`
@@ -56,35 +62,9 @@ export const Characteristic = styled.li`
     }
 `
 
-export const Slider = styled.input`
-    margin-top: 1em;
-    -webkit-appearance: none;
-    width: 100%;
-    height: 15px;
-    border-radius: 5px;  
-    background: #D3D3D3;
-    outline: none;
-    opacity: 0.7;
-    -webkit-transition: .2s;
-    transition: opacity .2s;
-    
-    &::-webkit-slider-thumb{
-        -webkit-appearance: none;
-        appearance: none;
-        width: 25px;
-        height: 25px;
-        border-radius: 50%; 
-        background: #0B768C;
-        cursor: pointer;
-    }
-    
-    &::-moz-range-thumb{
-        width: 25px;
-        height: 25px;
-        border-radius: 50%;
-        background: #0B768C;
-        cursor: pointer;
-    }
+export const Slider = styled.div`
+  padding: 1em;
+  height: 5rem;
 `;
 
 export const TimeFields = styled.input`

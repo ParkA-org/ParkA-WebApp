@@ -1,4 +1,6 @@
-
+import { useState } from "react"
+import sliderStyles from "styles/Slider.module.css"
+import InputRange from 'react-input-range'
 import {
     Container,
     Section,
@@ -10,13 +12,47 @@ import {
     TimeFields
 } from "./styles"
 
+export interface Range {
+    max: number;
+    min: number;
+}
+
+function PriceSlider() {
+
+    const [stateValue, setStateValue] = useState<Range | number>({ min: 25, max: 100 })
+
+    return (
+        <Slider>
+            <InputRange maxValue={100} minValue={25} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
+                console.log('On change completed')
+                console.log(val)
+            }}
+                step={5}
+                classNames={{
+                    activeTrack: sliderStyles.inputRangeTrackActive,
+                    disabledInputRange: sliderStyles.inputRangeDisabled,
+                    inputRange: sliderStyles.inputRange,
+                    labelContainer: sliderStyles.labelContainer,
+                    maxLabel: sliderStyles.labelMax,
+                    minLabel: sliderStyles.labelMin,
+                    slider: sliderStyles.inputRangeSlider,
+                    sliderContainer: sliderStyles.sliderContainer,
+                    track: sliderStyles.inputRangeTrackBackground,
+                    valueLabel: sliderStyles.valueLabel,
+                }}
+            />
+        </Slider>
+    )
+}
+
 export default function FilterSideBar() {
     return (
         <Container>
             <h2>Filtros</h2>
             <Section>
                 <h3>Precio</h3>
-                <Slider type="range" id="priceRange" name="priceRange" min="0" max="1000" step="50" />
+                {/* <Slider type="range" id="priceRange" name="priceRange" min="0" max="1000" step="50" /> */}
+                <PriceSlider />
             </Section>
             <Section>
                 <h3>Tipo de Reserva</h3>
