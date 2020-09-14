@@ -5,9 +5,24 @@ export default function Checkout() {
 
     return (
         <Layout pageTitle="Parking Checkout">
-            <h2>Checkout</h2>
-            <ReservationDetail />
-            <PaymentMethod />
+            <div className="container">
+                <h2>Checkout</h2>
+                <ReservationDetail />
+                <PaymentMethod />
+            </div>
+            <style jsx>
+                {`
+                    .container {
+                        display: grid;
+                        grid-gap: 20px;
+                        justify-items: space-around;
+                        text-align: center;
+                        width: 80vw;
+                        margin: 2em auto;
+                    }
+                `}
+            </style>
         </Layout>
+
     )
 }
