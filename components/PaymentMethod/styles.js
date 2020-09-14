@@ -21,5 +21,6 @@ export const DataContainer = styled.div`
 
     & > select {
         width: 200px;
+        background-color: #e5e4e4;
     }
 `;
