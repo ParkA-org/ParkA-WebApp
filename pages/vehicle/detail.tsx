@@ -1,11 +1,11 @@
 import styled from "styled-components"
-import Layout from "pages/layout";
+import Layout from "pages/layout"
 import DeleteIcon from "components/Icons/Delete"
-import VehicleCard from "components/VehicleCard";
+import VehicleCard from "components/VehicleCard"
 import ReservationCard from "components/ReservationCard"
-import { CircularButton } from "components/ProfileSection/styles";
-import IconButton from "components/IconButton";
-import Carousel from "components/Carousel";
+import { CircularButton } from "components/ProfileSection/styles"
+import IconButton from "components/IconButton"
+import Carousel from "components/Carousel"
 
 const Container = styled.div`
     display: flex;

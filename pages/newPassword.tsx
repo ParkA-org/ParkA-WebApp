@@ -1,8 +1,8 @@
-import React from "react";
+import React from "react"
 import { CreatePasswordSchema } from "utils/schemas"
-import { Formik, Form } from "formik";
+import { Formik, Form } from "formik"
 import styled from "styled-components"
-import Layout from "./layout";
+import Layout from "./layout"
 import Button from "components/Button"
 import {
   MainFormContainer,
@@ -10,27 +10,10 @@ import {
   FieldSection,
   InformationSection,
   ActionSection,
-  CompactActionSection,
-} from "../styles/formStyles";
-import NavigationLink from "components/NavigationLink";
-import Field, { FileUploader } from "components/Field";
-import { motion } from "framer-motion";
-
-
-
-const StyledField = styled(Field)`
-  border: 1px solid #333;
-  border-radius: 0.25em;
-  margin-bottom: 1em;
-  resize: none;
-  line-height: 1.5em;
-  width: 15vw;
-  text-align: right;
-  padding: 0.5em;
-  @media (max-width: 768px) {
-    width: auto;
-  }
-`;
+} from "../styles/formStyles"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import { motion } from "framer-motion"
 
 const Logo = styled(motion.li)`
   list-style: none;
@@ -57,12 +40,8 @@ export default function Login(): JSX.Element {
 
         <Formik
           initialValues={{
-            name: "",
-            lastName: "",
-            email: "",
             password: "",
-            confirmPassword: "",
-            file: "",
+            confirmPassword: ""
           }}
           validationSchema={CreatePasswordSchema}
           onSubmit={(values) => console.log(values)}

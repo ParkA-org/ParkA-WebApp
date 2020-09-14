@@ -1,8 +1,10 @@
 import { useEffect, useState, useContext } from "react"
-import { UserContext } from "context/UserContext";
+import { UserContext } from "context/UserContext"
+import { useRouter } from "next/router"
 
 export default function useUser() {
     const { user, setUser, token, setToken, setUserId } = useContext(UserContext)
+    const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [isLogged, setIsLogged] = useState(Object.keys(user).length === 0 ? false : true)
 
@@ -10,8 +12,6 @@ export default function useUser() {
         if (Object.keys(user).length !== 0) {
             setIsLogged(true)
         }
-        console.log('User ', user)
-        console.log('Is Logged ', isLogged)
     }, [user])
 
     const logout = () => {
@@ -19,6 +19,7 @@ export default function useUser() {
         setToken("")
         setIsLogged(false)
         setUserId("")
+        router.push("/")
     }
 
     return {

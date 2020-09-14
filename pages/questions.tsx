@@ -1,9 +1,8 @@
-import React from "react";
-import Layout from "./layout";
-import styled from "styled-components";
+import Layout from "./layout"
+import styled from "styled-components"
 import {
   MainFormContainer
-} from "styles/formStyles";
+} from "styles/formStyles"
 
 export const Container = styled.div`
   display: grid;

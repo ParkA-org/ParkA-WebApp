@@ -1,24 +1,23 @@
-import { useContext, useEffect, useState } from "react";
-import { Formik, Form } from "formik";
+import { useContext, useState } from "react"
+import { Formik, Form } from "formik"
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
 import { LOGIN_USER } from "mutations"
-import useLocalStorage from "hooks/useLocalStorage";
 import { useRouter } from "next/router"
-import Layout from "../layout";
-import NavigationLink from "components/NavigationLink";
-import Field from "components/Field";
-import Button from "components/Button";
+import Layout from "../layout"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import Button from "components/Button"
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "styles/formStyles";
-import { UserContext } from "context/UserContext";
-import ModalPortal from "components/Modal";
-import Spinner from "components/Spinner";
+} from "styles/formStyles"
+import { UserContext } from "context/UserContext"
+import ModalPortal from "components/Modal"
+import Spinner from "components/Spinner"
 
 export default function SignWithEmail(): JSX.Element {
   const router = useRouter()
@@ -33,11 +32,6 @@ export default function SignWithEmail(): JSX.Element {
       router.push("/")
     }
   })
-
-  useEffect(() => {
-    console.log('Tipo de setUser')
-    console.log(typeof setUser)
-  }, [])
 
   return (
     <Layout pageTitle="Sign in with email">
@@ -60,9 +54,10 @@ export default function SignWithEmail(): JSX.Element {
               }
             })
 
-            if (error)
+            if (error) {
               setShowModal(false)
-            alert(error)
+              alert(error)
+            }
           }}
         >
           {({ errors, touched }) => (

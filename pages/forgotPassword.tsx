@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"
 import { ForgotPasswordSchema } from "utils/schemas"
-import { Formik, Form } from "formik";
-import Layout from "./layout";
-import NavigationLink from "components/NavigationLink";
-import Field from "components/Field";
-import Button from "components/Button";
+import { Formik, Form } from "formik"
+import Layout from "./layout"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import Button from "components/Button"
 import {
   MainFormContainer,
   FormContainer,
@@ -12,7 +12,7 @@ import {
   InformationSection,
   ActionSection,
   AdditionalInfo,
-} from "../styles/formStyles";
+} from "../styles/formStyles"
 
 const Timer = (props: any) => {
   const { initialMinute = 0, initialSeconds = 0 } = props;

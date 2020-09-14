@@ -1,15 +1,14 @@
 import { useState } from "react"
-import axios from "axios"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
 import { CREATE_USER } from "mutations"
 import { CreateAccountSchema } from "utils/schemas"
-import Layout from "../layout";
-import NavigationLink from "components/NavigationLink";
-import Field, { FileUploader } from "components/Field";
-import Button from "components/Button";
+import Layout from "../layout"
+import NavigationLink from "components/NavigationLink"
+import Field, { FileUploader } from "components/Field"
+import Button from "components/Button"
 import ModalPortal from "components/Modal"
 import Spinner from "components/Spinner"
 import {
@@ -18,27 +17,9 @@ import {
   FieldSection,
   InformationSection,
   ActionSection,
-} from "styles/formStyles";
-import useUser from "hooks/useUser";
-
-function UpdateImage(file: any, success, state) {
-  const apiBaseURL = "https://parka-api.herokuapp.com/upload";
-  const formData = new FormData()
-  formData.append("files", file)
-  axios({
-    method: "POST",
-    url: apiBaseURL,
-    data: formData
-  }).then(res => {
-    success(res.data['0'].url)
-    state(prevState => {
-      return { ...prevState, loading: false }
-    })
-  })
-    .catch(err => state(prevState => {
-      return { ...prevState, error: err }
-    }))
-}
+} from "styles/formStyles"
+import useUser from "hooks/useUser"
+import UploadImageService from "services/uploadImage"
 
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
@@ -77,7 +58,7 @@ export default function registerPersonalAccount(): JSX.Element {
               return { ...prevState, loading: true }
             })
 
-            UpdateImage(values.file, setImage, setImageStatus)
+            UploadImageService(values.file, setImage, setImageStatus)
 
             createUser({
               variables: {
