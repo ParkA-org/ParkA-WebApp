@@ -17,6 +17,8 @@ export const ModalContent = styled.div`
     padding: 10px 20px;
     height: 40vh;
     margin: 20vh auto;
+    min-width: 300px;
+    min-height: 250px;
     position: relative;
     border-radius: 50px;
     -webkit-box-shadow: 5px 5px 20px 0px rgba(0,0,0,0.35);
