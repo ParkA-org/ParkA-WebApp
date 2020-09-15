@@ -5,6 +5,8 @@ mutation CreateUser($user: createUserInput!) {
   createUser(input: $user) {
     user {
         id
+        username
+        email
     }
   }
 }
@@ -26,9 +28,7 @@ mutation createNewAccount($userAccount: createAccountDatumInput) {
     accountDatum {
       id
       document
-      document_type {
-        name
-      }
+      document_type
       placeofbirth
     }
   }

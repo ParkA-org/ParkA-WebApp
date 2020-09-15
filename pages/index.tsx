@@ -1,5 +1,5 @@
-import Head from "next/head";
-import Navbar from "components/Navbar";
+import Head from "next/head"
+import Navbar from "components/Navbar"
 import Footer from "components/Footer"
 
 function Header() {
@@ -332,8 +332,8 @@ export default function Home(): JSX.Element {
       <Download />
       <Footer />
       <style jsx>{`
-           
             .containerLayout {
+              overflow-x: hidden;
               display: flex;
               margin: 0 auto;
               flex-direction: column;

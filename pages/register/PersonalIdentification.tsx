@@ -1,25 +1,25 @@
-import { useState, useEffect } from "react"
-import { Formik, Form } from "formik";
-import { useQuery, useMutation } from '@apollo/client';
+import { useState } from "react"
+import { Formik, Form } from "formik"
+import { useQuery, useMutation } from '@apollo/client'
 import { GET_COUNTRIES } from "queries"
 import { CREATE_ACCOUNT } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
 import useLocalStorage from "hooks/useLocalStorage"
-import Layout from "../layout";
-import NavigationLink from "components/NavigationLink";
-import Field, { SelectField } from "components/Field";
+import Layout from "../layout"
+import NavigationLink from "components/NavigationLink"
+import Field, { SelectField } from "components/Field"
 import ModalPortal from "components/Modal"
-import Button from "components/Button";
+import Button from "components/Button"
 import Spinner from "components/Spinner"
-import IdentificationCard from "components/IdentificationCard";
+import IdentificationCard from "components/IdentificationCard"
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "styles/formStyles";
+} from "styles/formStyles"
 
 type Country = {
   __typename: string;
@@ -33,22 +33,24 @@ interface CountriesData {
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
   const [accountId, setAccountId] = useLocalStorage("account-id", "")
+  const [requestError, setRequestError] = useState(null)
   const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
   const [userId,] = useLocalStorage("user-id", "")
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
   const { loading: countryLoading, error: countryError, data } = useQuery<CountriesData>(GET_COUNTRIES);
-  const [CreateAccount, { error }] = useMutation(CREATE_ACCOUNT, {
+  const [CreateAccount] = useMutation(CREATE_ACCOUNT, {
     onCompleted({ createAccountDatum }) {
       const { accountDatum } = createAccountDatum
       setAccountId(accountDatum.id)
       setShowModal(false)
       router.push('/register/PaymentInformation')
+    },
+    onError(error) {
+      console.log('Using mutation on error')
+      setRequestError(error)
+      setShowModal(false)
     }
-  })
-
-  useEffect(() => {
-    console.log(`User id ${userId}`)
   })
 
   if (countryError) return <pre>`Error ${JSON.stringify(countryError)}`</pre>
@@ -82,10 +84,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 }
               }
             })
-
-            if (error)
-              alert(error)
-
           }}
         >
           {({ values, errors, touched }) => (
@@ -99,8 +97,8 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     errorMessage={errors.typeOfDocument}
                     isTouched={touched.typeOfDocument}
                   >
-                    <option value="5f356c47f1a9ffdb504f404e">Cédula</option>
-                    <option value="5f356c60f1a9ffdb504f404f">Pasaporte</option>
+                    <option value="Cedula">Cédula</option>
+                    <option value="Pasaporte">Pasaporte</option>
                   </SelectField>
 
                   <Field
@@ -126,7 +124,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                       errorMessage={errors.nationality}
                       isTouched={touched.nationality}
                     >
-                      {data.countries.map((country: Country) => <option value={country.id} key={country.name}>{country.name}</option>)}
+                      {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)}
                     </SelectField>}
                   <Field
                     type="date"
@@ -151,6 +149,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 <Button submit={true} rank="secondary">
                   Continuar
                 </Button>
+                {requestError && <p style={{ color: "red" }}>Ocurrio un error</p>}
               </ActionSection>
             </Form>
           )}

@@ -1,17 +1,17 @@
-import Layout from "../layout";
+import Layout from "../layout"
 import Carousel from "components/Carousel"
 import styled from "styled-components"
-import ReservationCard from "components/ReservationCard";
-import { NewLink } from "components/VehicleSection/styles";
-import NavigationLink from "components/NavigationLink";
-import { BiPlusCircle } from "react-icons/bi";
+import ReservationCard from "components/ReservationCard"
+import { NewLink } from "components/VehicleSection/styles"
+import NavigationLink from "components/NavigationLink"
+import { BiPlusCircle } from "react-icons/bi"
 const Container = styled.div`
     width: 100%;
     margin: 0 auto;
     text-align: left;
 `;
-export default function Reservations() {
 
+export default function Reservations() {
     return (
         <Layout>
             <Container>

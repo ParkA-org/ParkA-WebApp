@@ -1,39 +1,44 @@
-import { useContext, useEffect } from "react";
-import { Formik, Form } from "formik";
+import { useContext, useState } from "react"
+import { Formik, Form } from "formik"
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
 import { LOGIN_USER } from "mutations"
-import useLocalStorage from "hooks/useLocalStorage";
 import { useRouter } from "next/router"
-import Layout from "../layout";
-import NavigationLink from "components/NavigationLink";
-import Field from "components/Field";
-import Button from "components/Button";
+import Layout from "../layout"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import Button from "components/Button"
 import {
   MainFormContainer,
   FormContainer,
   FieldSection,
   InformationSection,
   ActionSection,
-} from "styles/formStyles";
-import { UserContext } from "context/UserContext";
+} from "styles/formStyles"
+import { UserContext } from "context/UserContext"
+import ModalPortal from "components/Modal"
+import Spinner from "components/Spinner"
 
 export default function SignWithEmail(): JSX.Element {
   const router = useRouter()
+  const [showModal, setShowModal] = useState(false)
+  const [requestError, setRequestError] = useState(null)
   const { setUser, setToken } = useContext(UserContext)
-  const [LoginUser, { error }] = useMutation(LOGIN_USER, {
+  const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { jwt: token, user } = login
       setToken(token)
       setUser(user)
+      setShowModal(false)
+      setRequestError(null)
       router.push("/")
+    },
+    onError(error) {
+      console.log('Using mutation on error')
+      setRequestError(error)
+      setShowModal(false)
     }
   })
-
-  useEffect(() => {
-    console.log('Tipo de setUser')
-    console.log(typeof setUser)
-  }, [])
 
   return (
     <Layout pageTitle="Sign in with email">
@@ -46,7 +51,7 @@ export default function SignWithEmail(): JSX.Element {
           }}
           validationSchema={SignInSchema}
           onSubmit={(values) => {
-
+            setShowModal(true)
             LoginUser({
               variables: {
                 loggedUser: {
@@ -55,15 +60,14 @@ export default function SignWithEmail(): JSX.Element {
                 }
               }
             })
-
-            if (error)
-              alert(error)
           }}
         >
           {({ errors, touched }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
+                  <h3>Bienvenido!</h3>
+                  <p>Ingresa tus credenciales para iniciar sesión!</p>
                   <Field
                     type="email"
                     name="email"
@@ -82,8 +86,12 @@ export default function SignWithEmail(): JSX.Element {
                   />
                   <NavigationLink
                     href="/forgotPassword"
-                  >Olvidaste tu contraseña?
-                    </NavigationLink>
+                  >
+                    <span>Olvidaste tu contraseña?
+                  </span>
+                  </NavigationLink>
+
+                  {requestError && <span style={{ width: "100%", color: "red", margin: "0 auto" }}>Ocurrio un error</span>}
                 </FieldSection>
                 <InformationSection>
                   <img
@@ -93,20 +101,32 @@ export default function SignWithEmail(): JSX.Element {
                 </InformationSection>
               </FormContainer>
               <ActionSection>
-                <Button>
-                  <NavigationLink href="/login">
+                <Button rank="secondary">
+                  <NavigationLink href="/login" styled>
                     Atrás
                   </NavigationLink>
                 </Button>
-                <Button submit={true}>
+                <Button rank="secondary" submit={true}>
                   Iniciar Sesión
                 </Button>
               </ActionSection>
             </Form>
           )}
         </Formik>
-        <button type="button" onClick={() => setUser({ id: "1234134" })}> Actualizar Context</button>
       </MainFormContainer>
+      <style jsx>
+        {`
+          span {
+            align-self: flex-end;
+            color: #59BCA7;
+          }
+        `}
+      </style>
+
+      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+        <Spinner />
+        <h3>Loading...</h3>
+      </ModalPortal>}
     </Layout>
   );
 }

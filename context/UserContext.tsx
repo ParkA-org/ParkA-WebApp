@@ -1,5 +1,8 @@
 import * as React from "react"
-import { Dispatch, SetStateAction, useState } from "react"
+import { Dispatch, SetStateAction, useState, useEffect } from "react"
+import { GET_USER } from "queries"
+import { useLazyQuery } from '@apollo/client'
+
 import useLocalStorage from "hooks/useLocalStorage"
 
 type User = {
@@ -16,8 +19,6 @@ type ProviderProps = {
 interface ContextInterface {
     user: User | undefined;
     userId: "";
-    loading: boolean;
-    setLoading: Dispatch<SetStateAction<boolean>>;
     setUserId: Dispatch<SetStateAction<String>>;
     setUser: (user: User) => void;
     setToken: (authToken: String) => void;
@@ -30,16 +31,25 @@ export const UserContext = React.createContext<ContextInterface>({
     setUserId: undefined,
     setUser: undefined,
     setToken: undefined,
-    token: "",
-    loading: true,
-    setLoading: undefined
+    token: ""
 })
 
 export function UserProvider({ children }: { children: React.ReactNode | React.ReactNode[] | null; value?: ContextInterface }) {
-    const [user, setUser] = React.useState<User>({})
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
-    const [loading, setLoading] = useState(true)
+    const [getUser, { data }] = useLazyQuery(GET_USER)
+    const [user, setUser] = useState<User>({})
+
+    useEffect(() => {
+        if (userId && userId.length > 0) {
+            getUser({ variables: { id: userId } })
+        }
+        if (data) {
+            console.log('Data from provider')
+            console.log(data.user)
+            setUser(data.user)
+        }
+    }, [data])
 
     const modifyUser: (user: User) => void = function (user: User): void {
         setUser(user)
@@ -59,8 +69,6 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken: modifyToken,
         userId: userId,
         setUserId: setUserId,
-        loading: loading,
-        setLoading: setLoading
     }
 
     return (
