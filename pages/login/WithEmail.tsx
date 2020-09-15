@@ -30,6 +30,7 @@ export default function SignWithEmail(): JSX.Element {
       setToken(token)
       setUser(user)
       setShowModal(false)
+      setRequestError(null)
       router.push("/")
     },
     onError(error) {

@@ -23,20 +23,26 @@ import UploadImageService from "services/uploadImage"
 
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
+  const [requestError, setRequestError] = useState(null)
   const router = useRouter()
   const { setUser } = useUser()
   const [image, setImage] = useLocalStorage("image", "")
-  const [createUser, { error }] = useMutation(CREATE_USER, {
+  const [imageStatus, setImageStatus] = useState({
+    loading: false,
+    error: undefined
+  })
+  const [createUser] = useMutation(CREATE_USER, {
     onCompleted({ createUser }) {
       const { user } = createUser
       setUser(user)
       setShowModal(false)
       router.push('/register/PersonalIdentification')
+    },
+    onError(error) {
+      console.log('Using mutation on error')
+      setRequestError(error)
+      setShowModal(false)
     }
-  })
-  const [imageStatus, setImageStatus] = useState({
-    loading: false,
-    error: undefined
   })
   return (
     <Layout pageTitle="Registro Datos Personales">
@@ -73,11 +79,6 @@ export default function registerPersonalAccount(): JSX.Element {
                 }
               }
             })
-            if (error) {
-              setShowModal(false)
-              alert(error)
-            }
-
           }}
         >
           {({ setFieldValue, errors, touched }) => (
@@ -131,6 +132,7 @@ export default function registerPersonalAccount(): JSX.Element {
                 <Button submit={true} rank="secondary">
                   Continuar
                 </Button>
+                {requestError && <p style={{ color: "red" }}>Ocurrio un error</p>}
               </ActionSection>
             </Form>
           )}

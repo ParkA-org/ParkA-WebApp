@@ -38,7 +38,7 @@ export default function IdentificationCard({
     if (countries !== undefined && currentCountry !== "") {
       console.log('Countries')
       console.log(countries)
-      returnValue = countries.filter(country => country.id === currentCountry)[0].name
+      returnValue = countries.filter(country => country.name === currentCountry)[0].name
     }
     return returnValue
   }
@@ -66,7 +66,7 @@ export default function IdentificationCard({
       </DataContainer>
       <DataContainer>
         <Title>Tipo Documento</Title>
-        <Content>{typeOfDocument === "5f356c60f1a9ffdb504f404f" ? "Pasaporte" : "Cédula"}</Content>
+        <Content>{typeOfDocument}</Content>
       </DataContainer>
     </Container>
   );
