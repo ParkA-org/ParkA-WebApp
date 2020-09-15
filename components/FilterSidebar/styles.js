@@ -1,8 +1,12 @@
 import styled from "styled-components"
 
 export const Container = styled.section`
-    width: 300px;
-    height: 80vh;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    top: 205px;
+    width: 320px;
+    height: auto;
     padding: 1em;
     background-color: #F5F5F5;
     text-align: left;

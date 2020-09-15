@@ -51,7 +51,6 @@ export default function FilterSideBar() {
             <h2>Filtros</h2>
             <Section>
                 <h3>Precio</h3>
-                {/* <Slider type="range" id="priceRange" name="priceRange" min="0" max="1000" step="50" /> */}
                 <PriceSlider />
             </Section>
             <Section>
