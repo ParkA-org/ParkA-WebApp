@@ -108,9 +108,3 @@ export const AdditionalInfo = styled.p`
   max-width: 250px;
   margin: 0.25em 0;
 `;
-
-export const AdditionalInfo = styled.p`
-  overflow-wrap: break-word;
-  max-width: 250px;
-  margin: 0.25em 0;
-`;
