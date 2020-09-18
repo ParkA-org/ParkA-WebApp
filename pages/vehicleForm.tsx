@@ -16,39 +16,58 @@ export const Container = styled.div`
   background-color:white;
   border-radius: 1.2em;
   padding:10px;
-  justify-items:stretch;
   text-align:left;
   column-gap:10px;
+  row-gap: 10px;
+  align-items: center;
 `;
 export const Label = styled.h2`
-
+  padding:10px;
 `;
 export const InputText = styled.input`
+  padding:10px;
+  border:solid;
+  border-width: 0 0 3px 0;
+  border-color: #077187;
+
 `;
 
 export const Select = styled.select`
+  padding:10px;
+  border:solid;
+  border-width: 0 0 3px 0;
+  border-color: #077187;
+
 `;
 
 export const TextArea = styled.textarea`
   background-color: #EBEBEB;
-`;
+  resize:none;
+  height:100px;
 
-export const BtnSave = styled.button`
+  border-radius: 1em;
 `;
 
 export const BtnCancel = styled.button`
+  color: #B60000;
+`;
+
+export const BtnSave = styled.button`
+  color: #077187;
 `;
 
 export const RadioButton = styled.input`
-  &[type="radio"]{
-
-  }
+  margin-right:5px;
 `;
 
 export default function vehicleFrom(): JSX.Element {
+  const mystyle = {
+    gridArea: "tipo1",
+    
+  }
   return (
     <Layout pageTitle="Formulario de Vehiculos">
-        <h1 style={{ textAlign:"left"}}>Formulario de Vehiculos</h1>
+        <h1>Formulario de Vehiculos</h1>
         <Container>
             <Label style={{gridArea:"alias1"}}>Alias</Label>
             <InputText style={{gridArea:"alias2"}}></InputText>
@@ -62,7 +81,7 @@ export default function vehicleFrom(): JSX.Element {
             <Select style={{gridArea:"año2"}}></Select>
             <Label style={{gridArea:"color1"}}>Color</Label>
             <Select style={{gridArea:"color2"}}></Select>
-            <Label style={{gridArea:"tipo1"}}>Tipo</Label>
+            <Label style={{ gridArea:"tipo1"}}>Tipo</Label>
             <div style={{gridArea:"tipo2"}}>
               <RadioButton type="radio" />
               <label>Propio</label>
@@ -75,10 +94,25 @@ export default function vehicleFrom(): JSX.Element {
             </div>
             <h4 style={{gridArea:"detalles1"}}>Detalles adicionales</h4>
             <TextArea style={{gridArea:"detalles2"}}></TextArea>
-            <BtnCancel style={{gridArea:"cancelar"}}></BtnCancel>
-            <BtnSave style={{gridArea:"guardar"}}></BtnSave>
+            <BtnCancel style={{gridArea:"cancelar"}}>
+              <img src="/images/mdi_delete.svg"/>
+              <h2>Cancelar</h2>
+            </BtnCancel>
+            <BtnSave style={{gridArea:"guardar"}}>
+              <img src="/images/mdi_save.svg"/>
+              <h2>Guardar</h2>
+            </BtnSave>
         </Container>
-        <h1 style={{ textAlign:"left"}}>Imagenes</h1>
+        <h1>Imagenes</h1>
+        <style jsx>{`
+          h1{
+            margin-top:20px;
+            margin-bottom:10px;
+            text-align:left;
+          }
+        
+        `}
+        </style>
     </Layout>
   );
 }
