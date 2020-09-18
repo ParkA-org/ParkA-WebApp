@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import {
     GoogleMap,
     useLoadScript,
@@ -65,6 +65,18 @@ export default function MapViewer(): JSX.Element {
             mapRef.current.setZoom(16);
         }
     }, []);
+
+    useEffect(() => {
+        navigator && navigator.geolocation.getCurrentPosition(
+            (position) => {
+                panTo({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            },
+            () => null
+        );
+    }, [])
 
     if (loadError) return <h2>Error</h2>;
     if (!isLoaded) return <h2>"Loading..."</h2>;
@@ -142,27 +154,6 @@ export default function MapViewer(): JSX.Element {
                 </style>
             </Container>
         </div>
-    );
-}
-
-function Locate({ panTo }) {
-    return (
-        <button
-            className="locate"
-            onClick={() => {
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        panTo({
-                            lat: position.coords.latitude,
-                            lng: position.coords.longitude,
-                        });
-                    },
-                    () => null
-                );
-            }}
-        >
-            Obtener locación
-        </button>
     );
 }
 
