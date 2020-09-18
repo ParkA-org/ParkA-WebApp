@@ -2,11 +2,12 @@ import styled from "styled-components"
 
 export const Container = styled.section`
     position: absolute;
-    z-index: 100;
+    top: 50px;
     left: 0;
-    top: 205px;
-    width: 320px;
-    height: auto;
+    z-index: 30;
+    width: 325px;
+    height: 100vh;
+    overflow-y: scroll;
     padding: 1em;
     background-color: #F5F5F5;
     text-align: left;

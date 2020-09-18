@@ -16,15 +16,18 @@ import {
     ComboboxList,
     ComboboxOption,
 } from "@reach/combobox";
-
+import FilterSideBar from "components/FilterSidebar"
+import { Container, ButtonsContainer, ButtonSection, ControllersContainer, MapContainer, Legend, LegendContainer } from "./styles"
 
 const libraries = ["places"];
-const mapContainerStyle = {
-    height: "80vh",
-    width: "100vw",
+const mapStyle = {
+    height: "100%",
+    width: "100%",
 };
 const options = {
     zoomControl: true,
+    mapTypeControl: false,
+    fullscreenControl: false
 };
 const center = {
     lat: 18.487876,
@@ -38,6 +41,7 @@ export default function MapViewer(): JSX.Element {
     });
     const [markers, setMarkers] = useState([]);
     const [selected, setSelected] = useState(null);
+    const [showFilters, setShowFilters] = useState(false)
 
     const onMapClick = useCallback((e) => {
         setMarkers((current) => [
@@ -67,65 +71,76 @@ export default function MapViewer(): JSX.Element {
 
     return (
         <div>
-            <div className="controllers">
-                <Locate panTo={panTo} />
-                <Search panTo={panTo} />
-            </div>
-            <GoogleMap
-                id="map"
-                mapContainerStyle={mapContainerStyle}
-                zoom={16}
-                center={center}
-                options={options}
-                onClick={onMapClick}
-                onLoad={onMapLoad}
-            >
-                {markers.map((marker) => {
-                    return process.browser ? (
-                        <Marker
-                            key={`${marker.lat}-${marker.lng}`}
-                            position={{ lat: marker.lat, lng: marker.lng }}
-                            onClick={() => {
-                                setSelected(marker);
-                            }}
-                            icon={{
-                                url: `/icons/availableIcon.svg`,
-                                origin: new window.google.maps.Point(0, 0),
-                                anchor: new window.google.maps.Point(15, 15),
-                                scaledSize: new window.google.maps.Size(30, 30),
-                            }}
-                        />
-                    ) : (marker)
-                })}
-
-                {selected ? (
-                    <InfoWindow
-                        position={{ lat: selected.lat, lng: selected.lng }}
-                        onCloseClick={() => {
-                            setSelected(null);
-                        }}
+            <Container>
+                <ControllersContainer>
+                    <ButtonsContainer>
+                        <ButtonSection>
+                            <button onClick={() => { setShowFilters(!showFilters) }}>Filtros</button>
+                            <Search panTo={panTo} />
+                        </ButtonSection>
+                        {showFilters && <FilterSideBar />}
+                    </ButtonsContainer>
+                    <LegendContainer>
+                        <Legend>
+                            <p><img className="img" src="/icons/unavailableIcon.svg" alt="Icono Ocupado" />Ocupado</p>
+                            <p><img className="img" src="/icons/availableIcon.svg" alt="Icono Disponible" />Disponible</p>
+                        </Legend>
+                    </LegendContainer>
+                </ControllersContainer>
+                <MapContainer>
+                    <GoogleMap
+                        id="map"
+                        mapContainerStyle={mapStyle}
+                        zoom={16}
+                        center={center}
+                        options={options}
+                        onClick={onMapClick}
+                        onLoad={onMapLoad}
                     >
-                        <div>
-                            <h2>Parqueo!</h2>
-                            <p>Parqueo disponible</p>
-                        </div>
-                    </InfoWindow>
-                ) : null}
-            </GoogleMap>
-            <style jsx>
-                {
-                    `
-                        .controllers {
-                            display: flex;
-                            justify-content: space-between;
-                            padding: 1em;
-                            width: 100%;
-                            height: auto;
-                            background-color: #333;
+                        {markers.map((marker) => {
+                            return process.browser ? (
+                                <Marker
+                                    key={`${marker.lat}-${marker.lng}`}
+                                    position={{ lat: marker.lat, lng: marker.lng }}
+                                    onClick={() => {
+                                        setSelected(marker);
+                                    }}
+                                    icon={{
+                                        url: `/icons/availableIcon.svg`,
+                                        origin: new window.google.maps.Point(0, 0),
+                                        anchor: new window.google.maps.Point(15, 15),
+                                        scaledSize: new window.google.maps.Size(30, 30),
+                                    }}
+                                />
+                            ) : (marker)
+                        })}
+
+                        {selected ? (
+                            <InfoWindow
+                                position={{ lat: selected.lat, lng: selected.lng }}
+                                onCloseClick={() => {
+                                    setSelected(null);
+                                }}
+                            >
+                                <div>
+                                    <h2>Parqueo!</h2>
+                                    <p>Parqueo disponible</p>
+                                </div>
+                            </InfoWindow>
+                        ) : null}
+                    </GoogleMap>
+                </MapContainer>
+                <style jsx>
+                    {
+                        `
+                        .img {
+                            width: 55px;
+                            height: 55px;
                         }
                     `
-                }
-            </style>
+                    }
+                </style>
+            </Container>
         </div>
     );
 }
@@ -191,7 +206,12 @@ function Search({ panTo }) {
                     value={value}
                     onChange={handleInput}
                     disabled={!ready}
-                    placeholder="Search your location"
+                    placeholder="Buscar en zona"
+                    style={{
+                        padding: "0.25em",
+                        borderRadius: "10px",
+                        border: "none"
+                    }}
                 />
                 <ComboboxPopover>
                     <ComboboxList>

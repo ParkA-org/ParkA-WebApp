@@ -64,7 +64,8 @@ export default function registerPersonalAccount(): JSX.Element {
               variables: {
                 user: {
                   data: {
-                    username: values.name,
+                    name: values.name,
+                    username: values.email,
                     email: values.email,
                     lastname: values.lastName,
                     password: values.password,

@@ -30,7 +30,7 @@ export const Menu = styled(motion.ul)`
   padding: 1em 1em 0 1em;
   margin: 0;
   display: flex;
-  width: 100vw;
+  width: 99vw;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
@@ -40,7 +40,7 @@ export const Menu = styled(motion.ul)`
 `;
 
 export const ColorBar = styled.div`
-  width: 100vw;
+  width: 99vw;
   height: 30px;
   overflow-x: hidden;
   background-color: #63c7b2;
