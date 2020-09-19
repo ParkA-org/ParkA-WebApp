@@ -8,18 +8,19 @@ export const Container = styled.div`
 `;
 
 export const ButtonsContainer = styled.div`
-    align-self: start;
+    margin-top: 0.7em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    background-color: lightblue;
+    background-color: #fff;
     position: relative;
 `;
 
 export const ButtonSection = styled.section`
     display: flex;
     height: 50px;
-    width: 325px;
+    padding: 0.5em;
+    width: auto;
     justify-content: space-around;
     align-items: center;
     & > button {
@@ -35,9 +36,21 @@ export const ControllersContainer = styled.div`
     padding-top: 1em;
     height: 90px;
     grid-row: 1;
+    width: 80vw;
+    margin: 0 auto;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
     z-index: 10;
+`;
+
+export const SearchContainer = styled.div`
+    width: 300px;
+    z-index: 10;
+
+    & > input {
+        width: 100%;
+    }
 `;
 
 export const MapContainer = styled.div`
@@ -56,12 +69,12 @@ export const LegendContainer = styled.div`
 `;
 
 export const Legend = styled.div`
-    border: 2px solid blue;
+    border: 2px solid #cecece;
     padding: 0.5em;
     height: auto;
     width: auto;
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: 2rem;
+    font-weight: 600;
     background-color: #fff;
     width: auto;
     border-radius: 20px;

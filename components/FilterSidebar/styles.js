@@ -6,10 +6,10 @@ export const Container = styled.section`
     left: 0;
     z-index: 30;
     width: 325px;
-    height: 100vh;
+    height: 70vh;
     overflow-y: scroll;
     padding: 1em;
-    background-color: #F5F5F5;
+    background-color: #fff;
     text-align: left;
     display: flex;
     flex-direction: column;

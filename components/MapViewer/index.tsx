@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import { BsSearch } from "react-icons/bs"
+import { AiOutlineMenu } from "react-icons/ai"
 import {
     GoogleMap,
     useLoadScript,
@@ -17,17 +19,28 @@ import {
     ComboboxOption,
 } from "@reach/combobox";
 import FilterSideBar from "components/FilterSidebar"
-import { Container, ButtonsContainer, ButtonSection, ControllersContainer, MapContainer, Legend, LegendContainer } from "./styles"
+import { Container, ButtonsContainer, ButtonSection, ControllersContainer, MapContainer, Legend, LegendContainer, SearchContainer } from "./styles"
 
 const libraries = ["places"];
 const mapStyle = {
     height: "100%",
     width: "100%",
 };
+
+const mapExtraStyles = [
+    {
+        "featureType": "poi",
+        "stylers": [
+            { "visibility": "off" }
+        ]
+    }
+]
+
 const options = {
     zoomControl: true,
     mapTypeControl: false,
-    fullscreenControl: false
+    fullscreenControl: false,
+    styles: mapExtraStyles
 };
 const center = {
     lat: 18.487876,
@@ -87,8 +100,10 @@ export default function MapViewer(): JSX.Element {
                 <ControllersContainer>
                     <ButtonsContainer>
                         <ButtonSection>
-                            <button onClick={() => { setShowFilters(!showFilters) }}>Filtros</button>
+                            <button onClick={() => { setShowFilters(!showFilters) }} style={{ backgroundColor: "transparent" }}>
+                                <AiOutlineMenu color="#333" size="1.5rem" /></button>
                             <Search panTo={panTo} />
+                            <BsSearch color="#cecccd" size="1.5rem" />
                         </ButtonSection>
                         {showFilters && <FilterSideBar />}
                     </ButtonsContainer>
@@ -168,6 +183,9 @@ function Search({ panTo }) {
         requestOptions: {
             location: { lat: () => 43.6532, lng: () => -79.3832 },
             radius: 100 * 1000,
+            componentRestrictions: {
+                country: "do"
+            }
         },
     });
 
@@ -191,8 +209,8 @@ function Search({ panTo }) {
     };
 
     return (
-        <div className="search">
-            <Combobox onSelect={handleSelect}>
+        <SearchContainer>
+            <Combobox onSelect={handleSelect} aria-e>
                 <ComboboxInput
                     value={value}
                     onChange={handleInput}
@@ -200,19 +218,21 @@ function Search({ panTo }) {
                     placeholder="Buscar en zona"
                     style={{
                         padding: "0.25em",
-                        borderRadius: "10px",
-                        border: "none"
+                        height: "100%",
+                        border: "none",
+                        width: "90%"
                     }}
                 />
-                <ComboboxPopover>
+                <ComboboxPopover style={{ zIndex: 15, marginTop: "0.35em", border: "none" }}>
                     <ComboboxList>
                         {status === "OK" &&
-                            data.map(({ id, description }) => (
-                                <ComboboxOption key={id} value={description} />
-                            ))}
+                            data.map(({ place_id, description }) => (
+                                <ComboboxOption key={place_id} value={description} />
+                            ))
+                        }
                     </ComboboxList>
                 </ComboboxPopover>
             </Combobox>
-        </div>
+        </SearchContainer>
     );
 }
