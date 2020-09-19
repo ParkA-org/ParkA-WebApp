@@ -39,6 +39,7 @@ export const CardNumbers = styled.pre`
   font-family: "Mulish";
   grid-area: numbers;
   font-weight: bold;
+  color: #fff;
   font-size: 1.5rem;
   height: 30px;
   justify-self: center;

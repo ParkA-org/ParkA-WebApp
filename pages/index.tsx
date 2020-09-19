@@ -318,7 +318,7 @@ function Download() {
 
 export default function Home(): JSX.Element {
   return (
-    <div>
+    <div className="landing">
       <div className="containerLayout">
         <Head>
           <title>Index</title>
@@ -339,6 +339,9 @@ export default function Home(): JSX.Element {
               flex-direction: column;
               justify-content: flex-start;
               align-items: center;
+            }
+            .landing {
+              overflow-x: hidden;
             }
           `}</style>
     </div>

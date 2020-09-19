@@ -27,10 +27,11 @@ const ListItemVariants = {
 };
 
 export const Menu = styled(motion.ul)`
-  padding: 1em 1em 0 1em;
+  padding: 1em 0 0 0;
   margin: 0;
   display: flex;
-  width: 99vw;
+  width: 100vw;
+  overflox-x: hidden;
   justify-content: space-between;
   align-items: center;
   background-color: #fff;
