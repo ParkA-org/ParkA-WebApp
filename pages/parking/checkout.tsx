@@ -6,7 +6,7 @@ export default function Checkout() {
     return (
         <Layout pageTitle="Parking Checkout">
             <div className="container">
-                <h2>Checkout</h2>
+                <img src="/images/carsParked.webp" alt="parked cars" />
                 <ReservationDetail />
                 <PaymentMethod />
             </div>
@@ -14,11 +14,16 @@ export default function Checkout() {
                 {`
                     .container {
                         display: grid;
-                        grid-gap: 20px;
                         justify-items: space-around;
                         text-align: center;
                         width: 80vw;
                         margin: 2em auto;
+                    }
+
+                    img {
+                        width: 100%;
+                        height: 50vh;
+                        min-height: 400px;
                     }
                 `}
             </style>

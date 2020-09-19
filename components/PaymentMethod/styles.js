@@ -33,12 +33,15 @@ export const DataContainer = styled.div`
 `;
 
 export const CTASection = styled.div`
-    margin: 3em auto;
+    margin: 2em auto 0 auto;
     text-align: center;
+    width: 100%;
+    padding: 3em;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    background-color: #fff;
     h3 {
         display: inline-block;
         margin-right: 1em;

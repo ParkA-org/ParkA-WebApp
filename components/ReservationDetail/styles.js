@@ -7,9 +7,10 @@ export const Container = styled.div`
     justify-items: center;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto; 
-    width: 70vw;
+    width: 100%;
+    padding-top: 1.5em;
     height: auto;
-
+    background-color: #fff;
     label {
         font-size: 1.3rem;
     }
