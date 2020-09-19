@@ -1,5 +1,7 @@
+import { useState } from "react"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
+import { DatePicker } from "rsuite";
 import { BsArrowRight } from "react-icons/bs"
 
 type ElementProps = {
@@ -8,7 +10,6 @@ type ElementProps = {
 }
 
 function SectionElement({ name, children }: ElementProps) {
-
     return (
         <ElementContainer>
             <label><b>{name}</b></label>
@@ -18,6 +19,60 @@ function SectionElement({ name, children }: ElementProps) {
 }
 
 export default function ReservationDetail() {
+
+    const hourPicker = (
+        <div className="container">
+            <p>
+                <b>Desde</b>
+                <DatePicker
+                    format="HH:mm"
+                    ranges={[]}
+                    disabledHours={(hour) => {
+                        if (hour === 16) return true;
+                        else return false;
+                    }}
+                />
+            </p>
+            <BsArrowRight size="2em" />
+            <p>
+                <b>Hasta</b>
+                <DatePicker
+                    format="HH:mm"
+                    ranges={[]}
+                    disabledHours={(hour) => {
+                        if (hour === 16) return true;
+                        else return false;
+                    }}
+                    onOk={event => console.log(event)}
+                />
+            </p>
+            <style jsx>
+                {`
+                    p {
+                        display: flex;
+                        flex-direction: column;
+                        width: 8vw;
+                        height: auto
+                        margin-right: 0.5em;
+                    }
+
+                    b {
+                        margin-bottom: 0.5em;
+                    }
+
+                    .container {
+                        text-align: center;
+                        display: flex;
+                        justify-content: space-around;
+                        align-items: center;
+                    }
+                `}
+            </style>
+        </div>
+    )
+
+
+
     return (
         <Container>
             <LeftSection>
@@ -25,9 +80,8 @@ export default function ReservationDetail() {
                 <SectionElement name="Fecha" />
                 <ElementContainer>
                     <label><b>Horas</b></label>
+                    {hourPicker}
 
-                    <b>Desde</b> <input type="time" /><BsArrowRight size="2em" />
-                    <b>Hasta</b> <input type="time" />
                 </ElementContainer>
                 <ElementContainer>
                     <label><b>Caracteristicas</b></label>
