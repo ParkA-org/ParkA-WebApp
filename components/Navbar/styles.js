@@ -41,7 +41,7 @@ export const Menu = styled(motion.ul)`
 `;
 
 export const ColorBar = styled.div`
-  width: 100vw;
+  width: 99vw;
   height: 30px;
   overflow-x: hidden;
   background-color: #63c7b2;

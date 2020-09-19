@@ -11,7 +11,7 @@ export const CreateAccountSchema = Yup.object().shape({
 
 export const PaymentInformationSchema = Yup.object().shape({
     cardNumber: Yup.string()
-        .length(5, "Los números de tarjeta solo son 5")
+        .length(16, "Los números de tarjeta solo son 16")
         .required("Requerido"),
     cardHolder: Yup.string().required("Requerido"),
     expirationDate: Yup.date().required("Requerido"),
