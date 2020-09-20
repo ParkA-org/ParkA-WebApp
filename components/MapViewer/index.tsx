@@ -49,7 +49,7 @@ const center = {
 
 export default function MapViewer(): JSX.Element {
     const { isLoaded, loadError } = useLoadScript({
-        googleMapsApiKey: 'AIzaSyA2qh5V5bOl9h1f2h9RiPNgb9hQxDZtMkU',
+        googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
         libraries,
     });
     const [markers, setMarkers] = useState([]);
@@ -74,8 +74,10 @@ export default function MapViewer(): JSX.Element {
 
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
-            mapRef.current.panTo({ lat, lng });
-            mapRef.current.setZoom(16);
+            if (mapRef.current) {
+                mapRef.current.panTo({ lat, lng });
+                mapRef.current.setZoom(16);
+            }
         }
     }, []);
 
