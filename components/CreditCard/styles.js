@@ -43,6 +43,7 @@ export const CardNumbers = styled.pre`
   font-size: 1.5rem;
   height: 30px;
   justify-self: center;
+  overflow-y: hidden;
 `;
 
 export const ValidationMessage = styled.h4`

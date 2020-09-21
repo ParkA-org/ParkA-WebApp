@@ -59,11 +59,13 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
         <ListItem>
           <Link href="/map"><span className="normal-span">Mapa</span></Link>
         </ListItem>
-        <Button onClick={() => {
-          logout()
-        }}>
-          <Link href="/"><span className="active-span">Logout</span></Link>
-        </Button>
+        <ListItem>
+          <Button onClick={() => {
+            logout()
+          }}>
+            <Link href="/"><span className="active-span">Logout</span></Link>
+          </Button>
+        </ListItem>
       </LoggedHiddenContainer>
     </Menu>
   )
