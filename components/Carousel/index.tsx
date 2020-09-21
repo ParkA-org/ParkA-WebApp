@@ -1,6 +1,7 @@
 import { useRef, useState } from "react"
 import { BiLeftArrow, BiRightArrow } from "react-icons/bi"
-import { Container, CarouselContainer, ScrollSection, LeftSide, RightSide, LeftButton, RightButton } from "./styles"
+import { MdPlayArrow } from "react-icons/md"
+import { Container, CarouselContainer, ScrollSection, LeftSide, RightSide, LeftButton, RightButton, LeftSideBack, RightSideBack } from "./styles"
 
 export default function Carousel({ title, children }: { title: string, children: React.ReactNode }) {
     const scrollRef = useRef(null)
@@ -24,13 +25,22 @@ export default function Carousel({ title, children }: { title: string, children:
         <Container>
             <h1>{title}</h1>
             <CarouselContainer>
-                <LeftSide />
-                <LeftButton onClick={() => scrollAction("LEFT")}><BiLeftArrow size="3em" /></LeftButton>
+                <LeftSideBack />
+                <LeftSide>
+                    <LeftButton onClick={() => scrollAction("LEFT")}>
+                        <MdPlayArrow size="3em" color="#0B768C" style={{ transform: "rotate(180deg)" }} />
+                        {/* <BiLeftArrow size="4em" color="#0B768C" /> */}
+                    </LeftButton>
+                </LeftSide>
                 <ScrollSection ref={scrollRef} id="scrollSection">
                     {children}
                 </ScrollSection>
+                <RightSideBack />
                 <RightSide>
-                    <RightButton onClick={() => scrollAction("RIGHT")}><BiRightArrow size="3em" /></RightButton>
+                    <RightButton onClick={() => scrollAction("RIGHT")}>
+                        {/* <BiRightArrow size="4em" color="#0B768C"/> */}
+                        <MdPlayArrow size="3em" color="#0B768C" />
+                    </RightButton>
                 </RightSide>
             </CarouselContainer>
         </Container>

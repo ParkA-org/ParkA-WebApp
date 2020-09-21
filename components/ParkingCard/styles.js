@@ -28,8 +28,8 @@ export const Container = styled.div`
 export const CardImage = styled.img`
     grid-area: image;    
     width: 200px;
-    height: 150px;
-    margin: 0 auto;
+    height: 180px;
+    margin: auto;
 `;
 
 export const CardHeader = styled.div`
