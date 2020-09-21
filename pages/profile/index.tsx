@@ -5,6 +5,7 @@ import VehicleSection from "components/VehicleSection"
 import styled from "styled-components"
 import useUser from "hooks/useUser";
 import { useRouter } from "next/router";
+import { USER_STATES } from "utils/constants"
 
 const Container = styled.div`
 width: 100%;
@@ -16,7 +17,9 @@ export default function Profile(): JSX.Element {
     const { isLogged } = useUser()
 
     useEffect(() => {
-        if (!isLogged) {
+        if (isLogged === USER_STATES.NOT_KNOWN) {
+            console.log('waiting')
+        } else if (isLogged === USER_STATES.LOGGED_OUT) {
             router.push("/login")
         }
     }, [isLogged])
