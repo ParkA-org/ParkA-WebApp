@@ -3,17 +3,26 @@ import styled from "styled-components";
 
 export const Container = styled.div`
     display:grid;
-    
+    grid-template-areas:
+        "images form"
+        "images buttons";
+        column-gap: 20px;
 `;
 
 export const ParkingImages = styled.div`
+    grid-area: images;
 `;
 
 export const Form = styled.div`
-
+    grid-area: form;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 50% 50%;
+    align-items:center;
 `;
 
 export const FormItem = styled.div`
+    text-align:left;
     & > input{
         background-color: #E5E4E4;
         border-radius: 0.7em;
@@ -22,8 +31,11 @@ export const FormItem = styled.div`
 `;
 
 export const ButtonGroup = styled.div`
+    grid-area:buttons;
     display:flex;
     flex-wrap:nowrap;
+    justify-content: space-around;
+    align-items:center;
 `;
 
 export const Button = styled.div`
@@ -43,8 +55,8 @@ export const Carousel = styled.div`
 export default function ParkingDetail():JSX.Element{
     return(
         <Layout pageTitle="Detalle del Parqueo">
+            <h1>Agora Mall II</h1>
             <Container>
-                <h1>Agora Mall II</h1>
                 <ParkingImages>
                     <img src="/images/parkimage.png"/>
                     <div className="subimages">
@@ -76,8 +88,8 @@ export default function ParkingDetail():JSX.Element{
                     <Button>Disponibilidad</Button>
                     <Button>Compartir</Button>
                 </ButtonGroup>
-                <Carousel></Carousel>
             </Container>
+            <Carousel></Carousel>
         </Layout>
     );
 }
