@@ -28,7 +28,7 @@ export default function Footer() {
                 footer {
                     overflow-x: hidden;
                     margin-top: 2em;
-                    width: 99vw;
+                    width: 98vw;
                     background-color: white;
                 }
 

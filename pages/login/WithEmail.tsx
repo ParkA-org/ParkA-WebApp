@@ -22,14 +22,21 @@ import Spinner from "components/Spinner"
 export default function SignWithEmail(): JSX.Element {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
+  const [requestError, setRequestError] = useState(null)
   const { setUser, setToken } = useContext(UserContext)
-  const [LoginUser, { error }] = useMutation(LOGIN_USER, {
+  const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { jwt: token, user } = login
       setToken(token)
       setUser(user)
       setShowModal(false)
+      setRequestError(null)
       router.push("/")
+    },
+    onError(error) {
+      console.log('Using mutation on error')
+      setRequestError(error)
+      setShowModal(false)
     }
   })
 
@@ -53,11 +60,6 @@ export default function SignWithEmail(): JSX.Element {
                 }
               }
             })
-
-            if (error) {
-              setShowModal(false)
-              alert(error)
-            }
           }}
         >
           {({ errors, touched }) => (
@@ -88,6 +90,8 @@ export default function SignWithEmail(): JSX.Element {
                     <span>Olvidaste tu contraseña?
                   </span>
                   </NavigationLink>
+
+                  {requestError && <span style={{ width: "100%", color: "red", margin: "0 auto" }}>Ocurrio un error</span>}
                 </FieldSection>
                 <InformationSection>
                   <img
