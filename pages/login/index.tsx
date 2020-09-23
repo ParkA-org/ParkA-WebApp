@@ -6,7 +6,7 @@ import {
   FieldSection,
   InformationSection,
 } from "styles/formStyles";
-import NavigationLink from "components/NavigationLink";
+import { useRouter } from "next/router"
 
 const LoginButton = styled.button`
   background-color: white;
@@ -22,6 +22,13 @@ const LoginButton = styled.button`
   & > b {
     margin-left: 3px;
   }
+  &:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #63C7B2;
+    border: none;
+    border: 1px solid transparent;
+  }
 `;
 
 const Icon = styled.img`
@@ -31,6 +38,8 @@ const Icon = styled.img`
 `;
 
 export default function Login(): JSX.Element {
+  const router = useRouter()
+
   return (
     <Layout pageTitle="Login">
       <MainFormContainer>
@@ -39,15 +48,11 @@ export default function Login(): JSX.Element {
           <FieldSection>
             <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
             <LoginButton> <Icon src="/icons/googleLogo.png" alt="Google Logo" />Continuar con <b>Google </b></LoginButton>
-            <LoginButton>
-              <NavigationLink href="login/WithEmail">
-                Iniciar sesión con mi correo electrónico
-                </NavigationLink>
+            <LoginButton onClick={() => router.push("/login/WithEmail")}>
+              Iniciar sesión con mi correo electrónico
             </LoginButton>
-            <LoginButton>
-              <NavigationLink href="/register">
-                Crear cuenta con mi correo electrónico
-                </NavigationLink>
+            <LoginButton onClick={() => router.push("/register")}>
+              Crear cuenta con mi correo electrónico
             </LoginButton>
           </FieldSection>
           <InformationSection>
