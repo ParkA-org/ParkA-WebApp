@@ -1,5 +1,4 @@
 import { useRef, useState } from "react"
-import { BiLeftArrow, BiRightArrow } from "react-icons/bi"
 import { MdPlayArrow } from "react-icons/md"
 import { Container, CarouselContainer, ScrollSection, LeftSide, RightSide, LeftButton, RightButton, LeftSideBack, RightSideBack } from "./styles"
 
@@ -29,7 +28,6 @@ export default function Carousel({ title, children }: { title: string, children:
                 <LeftSide>
                     <LeftButton onClick={() => scrollAction("LEFT")}>
                         <MdPlayArrow size="3em" color="#0B768C" style={{ transform: "rotate(180deg)" }} />
-                        {/* <BiLeftArrow size="4em" color="#0B768C" /> */}
                     </LeftButton>
                 </LeftSide>
                 <ScrollSection ref={scrollRef} id="scrollSection">
@@ -38,7 +36,6 @@ export default function Carousel({ title, children }: { title: string, children:
                 <RightSideBack />
                 <RightSide>
                     <RightButton onClick={() => scrollAction("RIGHT")}>
-                        {/* <BiRightArrow size="4em" color="#0B768C"/> */}
                         <MdPlayArrow size="3em" color="#0B768C" />
                     </RightButton>
                 </RightSide>

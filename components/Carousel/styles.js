@@ -18,7 +18,7 @@ export const CarouselContainer = styled.div`
 `;
 
 export const ScrollSection = styled.section`
-    grid-column: 1 / span 3;
+    grid-column: 2;
     grid-row: 1;
     place-self: center stretch;
     display: flex;
