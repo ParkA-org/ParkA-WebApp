@@ -27,23 +27,18 @@ export default function ReservationDetail() {
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    disabledHours={(hour) => {
-                        if (hour === 16) return true;
-                        else return false;
-                    }}
+                    hideMinutes={minute => minute % 15 !== 0}
+                    onOk={console.log}
                 />
             </p>
-            <BsArrowRight size="2em" />
+            <BsArrowRight size="2em" style={{ alignSelf: "center" }} />
             <p>
                 <b>Hasta</b>
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    disabledHours={(hour) => {
-                        if (hour === 16) return true;
-                        else return false;
-                    }}
-                    onOk={event => console.log(event)}
+                    hideMinutes={minute => minute % 15 !== 0}
+                    onOk={console.log}
                 />
             </p>
             <style jsx>
@@ -61,10 +56,9 @@ export default function ReservationDetail() {
                     }
 
                     .container {
-                        text-align: center;
+                        width: 100%;
                         display: flex;
                         justify-content: space-around;
-                        align-items: center;
                     }
                 `}
             </style>
@@ -84,7 +78,7 @@ export default function ReservationDetail() {
 
                 </ElementContainer>
                 <ElementContainer>
-                    <label><b>Caracteristicas</b></label>
+                    <label><b>Características</b></label>
                     <CheckboxContainer>
                         <input type="checkbox" id="vehicle1" name="vehicle1" value="Cámara de vigilancia"></input>
                         <label><b>Cámara de vigilancia</b></label>
