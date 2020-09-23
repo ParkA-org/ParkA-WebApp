@@ -1,8 +1,18 @@
 import { useRef, useEffect } from "react"
+import styled from "styled-components"
 import { Chart } from "chart.js"
 
 export default function LineChart() {
+    const ChartContainer = styled.div`
+        position: relative;
+        height: 60vh;
+        width: 60vw;
 
+        @media(max-width: 768px) {
+            height: 500px;
+            width: 320px;
+        }
+    `
     const canvaRef = useRef(null)
     useEffect(() => {
         let ctx = canvaRef.current;
@@ -47,22 +57,11 @@ export default function LineChart() {
         });
     }, [])
 
-
     return (
         <>
-            <div className="charContainer">
+            <ChartContainer>
                 <canvas ref={canvaRef} />
-            </div>
-            <style jsx>
-                {`
-                .charContainer {
-                    position: relative;
-                    height: 100%;
-                    width: 60vw;
-                }
-            `}
-            </style>
+            </ChartContainer>
         </>
     )
-
 }
