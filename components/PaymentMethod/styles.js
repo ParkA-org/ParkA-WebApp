@@ -6,10 +6,10 @@ export const Container = styled.div`
 `;
 
 export const MainContainer = styled.div`
-    margin-top: 2em;
-    background-color: #F6F6F6;
+    background-color: #fff;
+    padding-top: 2em;
     display: flex;
-    width: 70vw;
+    width: 100%;
     align-items: center;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -33,7 +33,7 @@ export const DataContainer = styled.div`
 `;
 
 export const CTASection = styled.div`
-    margin: 2em auto 0 auto;
+    padding: 2em auto 0 auto;
     text-align: center;
     width: 100%;
     padding: 3em;
@@ -47,3 +47,9 @@ export const CTASection = styled.div`
         margin-right: 1em;
     }
 `;
+
+export const StyledInput = styled.input`
+    background-color: #f6f6f6;
+    padding: 0.5em;
+    border-radius: 5px;
+`;  

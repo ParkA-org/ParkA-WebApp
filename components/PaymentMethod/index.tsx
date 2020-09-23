@@ -1,7 +1,7 @@
 import { BiDollar } from "react-icons/bi"
 import CreditCard from "components/CreditCard"
 import Button from "components/Button"
-import { Container, MainContainer, DataContainer, CTASection } from "./styles"
+import { Container, MainContainer, DataContainer, CTASection, StyledInput } from "./styles"
 
 export default function PaymentMethod() {
     return (
@@ -22,7 +22,7 @@ export default function PaymentMethod() {
             </MainContainer>
             <CTASection>
                 <div>
-                    <h3>Total: <BiDollar color="#077187" /></h3> <input type="text" />
+                    <h3>Total: <BiDollar color="#077187" /></h3> <StyledInput type="text" style={{ backgroundColor: "#F6F6F6" }} />
                 </div>
                 <Button rank="secondary">Procesar Pago</Button>
             </CTASection>
