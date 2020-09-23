@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-    width: 98vw;
-    height: 90vh;
+    width: 99vw;
+    height: 85vh;
     display: grid;
     grid-template-columns: 3fr 1fr 3fr 1fr;
 `;
@@ -41,12 +41,12 @@ export const ControllersContainer = styled.div`
     display: flex;
     justify-content: space-around;
     align-items: center;
-    z-index: 10;
+    z-index: 3;
 `;
 
 export const SearchContainer = styled.div`
     width: 300px;
-    z-index: 10;
+    z-index: 3;
 
     & > input {
         width: 100%;
@@ -58,7 +58,7 @@ export const MapContainer = styled.div`
     height: 100%;
     grid-column: 1 / span 4;
     grid-row: 1 / span 5;
-    z-index: 5;
+    z-index: 2;
 `;
 
 export const LegendContainer = styled.div`

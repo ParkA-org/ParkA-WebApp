@@ -106,8 +106,8 @@ export default function MapViewer(): JSX.Element {
                                 <AiOutlineMenu color="#333" size="1.5rem" /></button>
                             <Search panTo={panTo} />
                             <BsSearch color="#cecccd" size="1.5rem" />
+                            {showFilters && <FilterSideBar />}
                         </ButtonSection>
-                        {showFilters && <FilterSideBar />}
                     </ButtonsContainer>
                     <LegendContainer>
                         <Legend>

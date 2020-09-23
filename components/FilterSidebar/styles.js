@@ -4,7 +4,7 @@ export const Container = styled.section`
     position: absolute;
     top: 50px;
     left: 0;
-    z-index: 30;
+    z-index: 4;
     width: 325px;
     height: 70vh;
     overflow-y: scroll;
