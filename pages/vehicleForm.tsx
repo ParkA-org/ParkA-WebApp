@@ -15,11 +15,12 @@ export const Container = styled.div`
   border-color: #59BCA7;
   background-color:white;
   border-radius: 1.2em;
-  padding:10px;
+  padding:10px 30px 10px 30px;
   text-align:left;
   column-gap:10px;
   row-gap: 10px;
   align-items: center;
+
 `;
 export const Label = styled.h2`
   padding:10px;
@@ -44,29 +45,70 @@ export const TextArea = styled.textarea`
   background-color: #EBEBEB;
   resize:none;
   height:100px;
-
+  width:90%;
+  justify-self: center;
   border-radius: 1em;
 `;
 
 export const BtnCancel = styled.button`
+  display:flex;
+  flex-wrap:nowrap;
+  align-items: center;
+  justify-content:center;
   color: #B60000;
+  background-color:white;
+  font-size: 20px;
+
+  & img{
+    height: 70px;
+  }
+
+  & h2{
+    margin-left: 10px;
+  }
 `;
 
 export const BtnSave = styled.button`
+  display:flex;
+  flex-wrap:nowrap;
+  justify-content:center; 
+  align-items: center;
+  background-color:white;
   color: #077187;
+  font-size: 20px;
+
+  & img{
+    height: 70px;
+  }
+
+  & h2{
+    margin-left: 10px;
+  }
 `;
 
 export const RadioButton = styled.input`
   margin-right:5px;
 `;
 
-export default function vehicleFrom(): JSX.Element {
-  const mystyle = {
-    gridArea: "tipo1",
-    
+export const CarImages = styled.div`
+  display:flex;
+  flex-wrap: nowrap;
+  & > img{
+    width: 200px;
+    height:100%;
+    margin: 20px;
+    border-radius: 1.5em;
   }
+  & > img:last-child{
+    align-self:center;
+    width: 100px;
+  }
+`;
+
+export default function vehicleFrom(): JSX.Element {
   return (
     <Layout pageTitle="Formulario de Vehiculos">
+      <div style={{textAlign:"left"}}>
         <h1>Formulario de Vehiculos</h1>
         <Container>
             <Label style={{gridArea:"alias1"}}>Alias</Label>
@@ -103,14 +145,23 @@ export default function vehicleFrom(): JSX.Element {
               <h2>Guardar</h2>
             </BtnSave>
         </Container>
+        
+        <div>
         <h1>Imagenes</h1>
+        <CarImages>
+          <img src="/images/car test.png"/>
+          <img src="/images/car test.png"/>
+          <img src="/images/car test.png"/>
+          <img src="/images/mdi_add.svg"/>
+        </CarImages>
+        </div>
+        </div>
         <style jsx>{`
           h1{
             margin-top:20px;
             margin-bottom:10px;
             text-align:left;
           }
-        
         `}
         </style>
     </Layout>
