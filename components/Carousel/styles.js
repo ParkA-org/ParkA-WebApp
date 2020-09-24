@@ -34,7 +34,6 @@ export const ScrollSection = styled.section`
     @media(max-width: 768px) {
         overflow-x: scroll;
         scrollbar-width: auto; 
-       
     }
 `;
 
