@@ -7,7 +7,7 @@ export default function ChatContact() {
             <ContactImage src="/placeholders/image-placeholder.png" />
             <ContentContainer>
                 <h4>David Bujosa</h4>
-                <p>Buenos días, tengo una pregunta</p>
+                <p>Buenos días, tengo una pregunta alskdnlkasndlkandklnakldnakldkaaslkdalkdklasdklasldkasdkaksldkals</p>
             </ContentContainer>
         </Container>
     )

@@ -8,10 +8,16 @@ export const Container = styled.div`
 `;
 
 export const TopNav = styled.section`
-    width: 100%;
-    background-color: #f6f6f6;
+    background-color: #d2d6d3;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
+    padding: 0.5em;
+    & >  img {
+        width: 50px;
+        height: 50px;
+        margin-right: 2em;
+    }
 `;
 
 export const ContentContainer = styled.section`
@@ -21,10 +27,18 @@ export const ContentContainer = styled.section`
 
 export const ChatButtons = styled.section`
     display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #d2d6d3;
+    padding: 0.25em;
+
+    & > * {
+        cursor: pointer;
+    }
 `;
 
 export const ChatInput = styled.input`
-    flex-grow: 2;
     border-radius: 15px;
     padding: 0.5em;
+    width: 85%;
 `;

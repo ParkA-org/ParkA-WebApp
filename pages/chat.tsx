@@ -1,4 +1,4 @@
-
+import { BsSearch } from "react-icons/bs"
 import Layout from "./layout"
 import ChatContact from "components/ChatContact"
 import ChatWindow from "components/ChatWindow"
@@ -9,6 +9,10 @@ export default function Chat() {
         <Layout>
             <div className="container">
                 <div className="chatContactsContainer">
+                    <div className="searchSection">
+                        <BsSearch color="#cecccd" size="1rem" />
+                        <input type="text" style={{ width: "80%", marginLeft: "0.5em" }} placeholder="Buscar en chats" />
+                    </div>
                     <ChatContact />
                     <ChatContact />
                     <ChatContact />
@@ -32,8 +36,14 @@ export default function Chat() {
                         display: flex;
                         width: 98vw;
                         height: 80vh;
-                        outline: 1px solid red;
                         padding: 0;
+                        margin-top: 2em;
+                    }
+
+                    .searchSection {
+                        display: flex;
+                        background-color: #fff;
+                        padding: 0.25em;
                     }
 
                     .chatContactsContainer {

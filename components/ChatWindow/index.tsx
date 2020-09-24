@@ -6,7 +6,10 @@ import { Container, TopNav, ContentContainer, ChatButtons, ChatInput } from "./s
 export default function ChatWindow() {
     return (
         <Container>
-            <TopNav />
+            <TopNav>
+                <img src="../placeholders/image-placeholder.png" alt="current user profile pic" />
+                <h3>Probando</h3>
+            </TopNav >
             <ContentContainer />
             <ChatButtons>
                 <FaRegSmile size="2em" />
