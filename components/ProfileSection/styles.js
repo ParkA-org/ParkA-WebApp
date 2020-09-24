@@ -41,8 +41,8 @@ export const CircularButton = styled.button`
     border: 5px solid ${props => props.color};
     color: ${props => props.color};
     filter: drop-shadow(0px 20px 10px rgba(0,0,0,0.25));
-    width: 150px;
-    height: 150px;
+    width: 170px;
+    height: 170px;
     font-size: 1.2em;
 
     & > p {

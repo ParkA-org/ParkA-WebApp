@@ -6,6 +6,14 @@ export const DropdownMenu = styled.div`
   border-width: 2px;
   border-radius: 1.5em;
   background-color: white;
+  min-width:205px;
+  position:absolute;
+  top: 30px;
+  right:30px;
+  z-index:2;
+  & h4{
+    font-size: 1em;
+  }
 `;
 
 export const DropdownButton = styled.div`
@@ -38,6 +46,7 @@ export const DropdownButton = styled.div`
 export const DropdownContent = styled.div`
   display:none;
   position:relative;
+  z-index:3;
   &:hover{
     display:block;
   }

@@ -3,10 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-image: url("../images/cardBackground.png");
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
+  border-radius: 20px;
   background-position: center;
   color: white;
-  width: 350px;
+  width: 450px;
   height: 270px;
   display: grid;
   justify-items: center;
@@ -23,7 +24,7 @@ export const Logo = styled.img`
   align-self: end;
   object-fit: contain;
   grid-area: logo;
-  margin-top: 1em;
+  margin-top: 2em;
 `;
 
 export const Chip = styled.img`
@@ -37,7 +38,9 @@ export const Chip = styled.img`
 export const CardNumbers = styled.pre`
   font-family: "Mulish";
   grid-area: numbers;
-  font-size: 1.5em;
+  font-weight: bold;
+  font-size: 1.5rem;
+  height: 30px;
   justify-self: center;
 `;
 

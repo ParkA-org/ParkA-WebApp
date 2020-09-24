@@ -1,16 +1,13 @@
 import { useState } from "react"
-import axios from "axios"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
-import { useLocalStorage } from "hooks/useLocalStorage"
+import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
 import { UPDATE_USER } from "mutations"
 import { EditProfileSchema } from "utils/schemas"
 import Layout from "../layout";
 import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader } from "components/Field";
-import Button from "components/Button";
-import IconButtom from "components/IconButton"
 import Logo from "components/Icons/Logo"
 import SaveIcon from "components/Icons/Save"
 import DeleteIcon from "components/Icons/Delete"
@@ -22,25 +19,7 @@ import {
     ActionSection,
 } from "styles/formStyles";
 import IconButton from "components/IconButton";
-
-function UpdateImage(file: any, success, error) {
-    const apiBaseURL = "https://parka-api.herokuapp.com/upload";
-    const formData = new FormData()
-    formData.append("files", file)
-    axios({
-        method: "POST",
-        url: apiBaseURL,
-        data: formData
-    }).then(res => {
-        success(res.data['0'].url)
-        error(prevState => {
-            return { ...prevState, loading: false }
-        })
-    })
-        .catch(err => error(prevState => {
-            return { ...prevState, error: err }
-        }))
-}
+import UploadImageService from "services/uploadImage"
 
 export default function EditProfile(): JSX.Element {
     const [updateUser, { loading, error }] = useMutation(UPDATE_USER)
@@ -67,7 +46,7 @@ export default function EditProfile(): JSX.Element {
                         setImageStatus(prevState => {
                             return { ...prevState, loading: true }
                         })
-                        UpdateImage(values.file, setImage, setImageStatus)
+                        UploadImageService(values.file, setImage, setImageStatus)
                         updateUser({
                             variables: {
                                 where: {

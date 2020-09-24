@@ -1,6 +1,5 @@
-import React from "react";
-import Layout from "./layout";
-import styled from "styled-components";
+import Layout from "./layout"
+import styled from "styled-components"
 
 const ContainerText = styled.div`
   margin: 40px;
@@ -42,15 +41,15 @@ const ColaboratorImage = styled.img`
   
 `;
 
-export default function AboutUs():JSX.Element{
-    return(
+export default function AboutUs(): JSX.Element {
+    return (
         <Layout pageTitle="About Us">
             <ContainerText>
                 <h2>
                     Sobre nosotros
                 </h2>
                 <p>
-                ParkA esta compuesto por un grupo de amigos capacitados en sus respectivos roles para brindar la mayor calidad posible permitiendo lograr el objetivo primordial de ayudar a solventar la problematica de alquiler de parqueos dentro del Gran Santo Domingo teniendo como producto final una plataforma que permita de manera rápida, fácil y segura la reservación de estos.
+                    ParkA esta compuesto por un grupo de amigos capacitados en sus respectivos roles para brindar la mayor calidad posible permitiendo lograr el objetivo primordial de ayudar a solventar la problematica de alquiler de parqueos dentro del Gran Santo Domingo teniendo como producto final una plataforma que permita de manera rápida, fácil y segura la reservación de estos.
                 </p>
             </ContainerText>
             <ContainerImages>
@@ -72,7 +71,7 @@ export default function AboutUs():JSX.Element{
                 </Colaborator>
                 <Colaborator>
                     <ColaboratorImage src="/images/Cesar.png" alt="image" />
-                    <h3>César González</h3>  
+                    <h3>César González</h3>
                 </Colaborator>
             </ContainerImages>
         </Layout>

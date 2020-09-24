@@ -1,14 +1,14 @@
-import { useState, useEffect } from "react";
-import { Formik, Form } from "formik";
-import { useMutation } from '@apollo/client';
+import { useState } from "react"
+import { Formik, Form } from "formik"
+import { useMutation } from '@apollo/client'
 import { PaymentInformationSchema } from "utils/schemas"
 import { CREATE_PAYMENTINFO } from "mutations"
-import { useRouter } from "next/router";
-import Layout from "pages/layout";
-import NavigationLink from "components/NavigationLink";
-import Field from "components/Field";
-import Button from "components/Button";
-import CreditCard from "components/CreditCard";
+import { useRouter } from "next/router"
+import Layout from "pages/layout"
+import NavigationLink from "components/NavigationLink"
+import Field from "components/Field"
+import Button from "components/Button"
+import CreditCard from "components/CreditCard"
 import Spinner from "components/Spinner"
 import ModalPortal from "components/Modal"
 import {
@@ -18,18 +18,25 @@ import {
   InformationSection,
   ActionSection,
   CompactActionSection,
-} from "styles/formStyles";
-import useLocalStorage from "hooks/useLocalStorage";
+} from "styles/formStyles"
+import useLocalStorage from "hooks/useLocalStorage"
 
 export default function RegisterPaymentInformation(): JSX.Element {
-  const [showModal, setShowModal] = useState(false)
   const router = useRouter()
-  const [CreatePaymentInfo, { loading, error }] = useMutation(CREATE_PAYMENTINFO)
-  const [accountId,] = useLocalStorage("account-id", "")
-
-  useEffect(() => {
-    console.log(`Account ID id ${accountId}`)
+  const [showModal, setShowModal] = useState(false)
+  const [requestError, setRequestError] = useState(null)
+  const [CreatePaymentInfo] = useMutation(CREATE_PAYMENTINFO, {
+    onCompleted() {
+      setShowModal(false)
+      router.push('/')
+    },
+    onError(error) {
+      console.log('Using mutation on error')
+      setRequestError(error)
+      setShowModal(false)
+    }
   })
+  const [accountId,] = useLocalStorage("account-id", "")
 
   return (
     <Layout pageTitle="Información Crediticia">
@@ -49,19 +56,15 @@ export default function RegisterPaymentInformation(): JSX.Element {
               variables: {
                 userPaymentInfo: {
                   data: {
-                    digit: parseInt(values.cardNumber),
+                    digit: values.cardNumber,
                     name: values.cardHolder,
                     expirationdate: values.expirationDate,
-                    type_card: "5f20dee0b1b8d80017e0d686",
+                    type_card: "VISA",
                     account_data: accountId
                   }
                 }
               }
             })
-            if (!loading && !error) {
-              setShowModal(false)
-              router.push("/")
-            }
           }}
         >
           {({ values, errors, touched }) => (
@@ -117,6 +120,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
                 <Button submit={true} rank="secondary">
                   Continuar
                 </Button>
+                {requestError && <p style={{ color: "red" }}>Ocurrio un error</p>}
               </ActionSection>
             </Form>
           )}

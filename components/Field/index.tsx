@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage } from "./styles";
+import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
 import Button from "components/Button";
 
 type FieldProps = {
@@ -22,7 +22,7 @@ export default function Field({
   placeholder,
 }: FieldProps): JSX.Element {
   return (
-    <>
+    <FieldContainer>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField
         type={type}
@@ -33,7 +33,7 @@ export default function Field({
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : null}
-    </>
+    </FieldContainer>
   );
 }
 
@@ -55,7 +55,7 @@ export function SelectField({
   isTouched,
 }: SelectFieldProps): JSX.Element {
   return (
-    <>
+    <FieldContainer>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField component="select" name={name} placeholder={placeholder}>
         {children}
@@ -63,7 +63,7 @@ export function SelectField({
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : null}
-    </>
+    </FieldContainer>
   );
 }
 
@@ -99,11 +99,10 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
 
   return (
     <>
-      <img
+      <UploaderImage
         src="../placeholders/image-placeholder.png"
         ref={imgEl}
         alt="uploaded by the user"
-        style={{ width: "100%", height: "100%" }}
       />
       <input
         type="file"
@@ -115,6 +114,13 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
         ref={inputEl}
       />
       <Button onClick={handleClick}>Upload a photo</Button>
+      <style jsx>
+        {`
+          button {
+            font-size: 4rem;
+          }
+        `}
+      </style>
     </>
   );
 }

@@ -1,27 +1,58 @@
 import styled from "styled-components";
 
+export const MainFormContainer = styled.div`
+  margin-top: 2em;
+  width: 60vw;
+  height: auto;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  padding: 3em;
+  border-radius: 50px;
+  background-color: #fff;
+  -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
+  -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  & > * {
+    width: 100%;
+  }
+  & > h1 {
+    font-size: 3rem;
+    color: #0B768C;
+    font-family: "Righteous";
+  }
+  
+  @media (max-width: 768px) {
+    padding: 1em;
+    border: none;
+    box-shadow: none;
+  }
+`;
+
 export const FormContainer = styled.div`
   background-color: white;
   padding: 1em;
-  display: grid;
   height: auto;
-  width: auto;
+  width: 100%;
+  display: grid;
   justify-items: center;
-  background-color: #fff;
   align-items: center;
+  background-color: #fff;
   grid-template-areas:
     "field information"
     "field information"
     "field information"
     "actions actions";
 
-  column-gap: 2em;
-  row-gap: 1em;
+  column-gap: 1em;
+  row-gap: 0.5em;
 
   @media (max-width: 768px) {
     grid-template-areas:
       "field"
-      "information";
+      "information"
+      "acitons";
     width: auto;
     column-gap: 1.5em;
     row-gap: 1.5em;
@@ -32,12 +63,18 @@ export const FieldSection = styled.div`
   grid-area: field;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-between;
-  width: 20vw;
+  width: 100%;
+  max-width: 400px;
   min-width: 275px;
   text-align: left;
-  border-right: 1px solid rgba(0, 0, 0, 0.5);
   border-bottom: none;
+  
+  & > a {
+    align-self: center;
+  }
+
   @media (max-width: 768px) {
     border-bottom: 1px solid rgba(0, 0, 0, 0.5);
     width: 100%;
@@ -45,38 +82,20 @@ export const FieldSection = styled.div`
   }
 `;
 
-export const MainFormContainer = styled.div`
-  width: auto;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 3em;
-  border-radius: 50px;
-  background-color: #fff;
-  -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-  -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  @media (max-width: 768px) {
-    padding: 1em;
-    border: none;
-    box-shadow: none;
-  }
-`;
-
 export const InformationSection = styled.div`
   grid-area: information;
   height: 80%;
   display: flex;
-  max-width: 450px;
+  width: 100%;
+  max-width: 550px;
   max-height: 400px;
   min-width: 275px;
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-
+  
   & > h3 {
-    width: 200px;
+    width: 100%;
   }
 
   @media (max-width: 768px) {
@@ -85,6 +104,7 @@ export const InformationSection = styled.div`
 `;
 
 export const ActionSection = styled.div`
+  grid-area: actions;
   display: flex;
   justify-content: space-around;
   align-items: center;
