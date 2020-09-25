@@ -43,7 +43,7 @@ export default function ReservationDetail() {
             </p>
             <style jsx>
                 {`
-                    p {
+                    .container > p {
                         display: flex;
                         flex-direction: column;
                         width: 8vw;
@@ -64,8 +64,6 @@ export default function ReservationDetail() {
             </style>
         </div>
     )
-
-
 
     return (
         <Container>
