@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
+import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer } from "./styles"
 import MoneyIcon from "components/Icons/Money"
 import { DatePicker } from "rsuite";
 import { BsArrowRight } from "react-icons/bs"
@@ -8,6 +8,13 @@ type ElementProps = {
     name: string;
     children?: JSX.Element;
 }
+
+type DayCheckProps = {
+    name: string;
+    value: number;
+}
+
+const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
 
 function SectionElement({ name, children }: ElementProps) {
     return (
@@ -18,10 +25,19 @@ function SectionElement({ name, children }: ElementProps) {
     )
 }
 
-export default function ReservationDetail() {
+function CheckElement({ name, value }: DayCheckProps) {
+    return (
+        <DayCheckboxContainer>
+            <input type="checkbox" id={name} name={name} value={value} />
+            <label>{name.substr(0, 2)}</label>
+        </DayCheckboxContainer>
+    )
+}
+
+export default function ParkingForm() {
 
     const hourPicker = (
-        <div className="container">
+        <HourPickerContainer>
             <p>
                 <b>Desde</b>
                 <DatePicker
@@ -41,40 +57,28 @@ export default function ReservationDetail() {
                     onOk={console.log}
                 />
             </p>
-            <style jsx>
-                {`
-                    p {
-                        display: flex;
-                        flex-direction: column;
-                        width: 8vw;
-                        height: auto
-                        margin-right: 0.5em;
-                    }
-
-                    b {
-                        margin-bottom: 0.5em;
-                    }
-
-                    .container {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-around;
-                    }
-                `}
-            </style>
-        </div>
+        </HourPickerContainer>
     )
 
     return (
         <Container>
             <LeftSection>
-                <SectionElement name="Parqueo" />
-                <SectionElement name="Fecha" />
+                <SectionElement name="Propietario" />
+                <SectionElement name="Direccion" />
                 <ElementContainer>
-                    <label><b>Horas</b></label>
+                    <label><b>Disponibilidad</b></label>
+                    <b>Dias</b>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        {days.map((day, idx) => CheckElement({ name: day, value: idx }))}
+                    </div>
                     {hourPicker}
-
                 </ElementContainer>
+            </LeftSection>
+            <RightSection>
+                <SectionElement name="Sector" />
+                <SectionElement name="Costo por hora">
+                    <MoneyIcon />
+                </SectionElement>
                 <ElementContainer>
                     <label><b>Características</b></label>
                     <CheckboxContainer>
@@ -98,24 +102,6 @@ export default function ReservationDetail() {
                         <label><b>Cargador de vehículos electricos</b></label>
                     </CheckboxContainer>
                 </ElementContainer>
-            </LeftSection>
-            <RightSection>
-                <ElementContainer>
-                    <label><b>Vehiculos</b></label>
-                    <StyledSelect>
-                        <option>Audi</option>
-                        <option>BMW</option>
-                        <option>Mustang</option>
-                    </StyledSelect>
-                    <StyledImage src="../placeholders/image-placeholder.png" />
-                </ElementContainer>
-                <SectionElement name="Costo por hora">
-                    <MoneyIcon />
-                </SectionElement>
-                <SectionElement name="Horas Totales" />
-                <SectionElement name="Subtotal">
-                    <MoneyIcon />
-                </SectionElement>
             </RightSection>
         </Container>
     )
