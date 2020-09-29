@@ -8,6 +8,7 @@ type FieldProps = {
   name: string;
   errorMessage: string;
   isTouched: boolean;
+  placement?: string;
   component?: string;
   placeholder?: string;
 };
@@ -20,9 +21,10 @@ export default function Field({
   isTouched,
   component,
   placeholder,
+  placement = "vertical"
 }: FieldProps): JSX.Element {
   return (
-    <FieldContainer>
+    <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField
         type={type}
@@ -113,7 +115,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
 
         ref={inputEl}
       />
-      <Button onClick={handleClick}>Upload a photo</Button>
+      <Button onClick={handleClick}>Subir una imagen</Button>
       <style jsx>
         {`
           button {
