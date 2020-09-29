@@ -8,7 +8,7 @@ export const Container = styled.div`
 `;
 
 export const TopNav = styled.section`
-    background-color: #d2d6d3;
+    background-color: #f0f0f0;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -60,7 +60,7 @@ export const ChatButtons = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: #d2d6d3;
+    background-color: #f0f0f0;
     padding: 0.5em;
 
     & > * {
