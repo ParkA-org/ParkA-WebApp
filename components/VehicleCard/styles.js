@@ -9,6 +9,7 @@ export const Card = styled.div`
     border-radius: 20px;
     padding: 1em;
     margin-top: 1em;
+    font-size: 1.2rem;
 
     @media (max-width: 768px) {
         flex-direction: column;
@@ -16,21 +17,27 @@ export const Card = styled.div`
         height: 400px;
         width: 100%;
     }
-
 `;
 
 export const CardImage = styled.img`
-    width: 150px;
+    width: 180px;
     height: 100px;
     border-radius: 20px;
-    margin-left: 2em;
+    margin-left: 1em;
 `;
+
+export const CardBrandImage = styled.img`
+    width: 60px;
+    height: 40px;
+    margin: 0 auto;
+`;
+
 
 export const CardDetails = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    text-align: left;
+    text-align: center;
     
     & > h3 {
         font-size: 1.5em;

@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
     flex: 0 0 auto;
     padding: 1em;
+    color: #333;
     margin-right: 2em;
     border: 2px solid #0B768C;
     border-radius: 20px;
@@ -34,6 +35,7 @@ export const ReservationImage = styled.img`
 `;
 
 export const Item = styled.div`
+   
     @media(max-width: 768px) {    
         margin: 0.5em 0;
     }

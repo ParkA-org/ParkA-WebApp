@@ -13,6 +13,7 @@ import {
   HiddenContainer,
   ColorBar,
 } from "./styles"
+import { USER_STATES } from "utils/constants"
 
 function StandardNavbar({ setIsOpen, isOpen }): JSX.Element {
   return (
@@ -61,12 +62,6 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
           <Link href="/map"><span className="normal-span">Mapa</span></Link>
         </ListItem>
         <ProfileDropDownMenu username="Cesar" logout={logout}/>
-        {/* <Button onClick={() => {
-          logout()
-        }}>
-          
-          <Link href="/"><span className="active-span">Logout</span></Link>
-        </Button> */}
       </LoggedHiddenContainer>
     </Menu>
   )
@@ -88,7 +83,7 @@ export default function Navbar(): JSX.Element {
 
   return (
     <>
-      {isLogged ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isLogged === USER_STATES.LOGGED_IN ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
       <ColorBar />
       <style jsx>
         {`

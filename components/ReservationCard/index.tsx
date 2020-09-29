@@ -11,7 +11,7 @@ import {
 export default function ReservationCard({ isCancelable }: { isCancelable?: boolean }) {
     return (
         <Container>
-            <ReservationImage src="../placeholders/image-placeholder.png" />
+            <ReservationImage src="../placeholders/park-placeholder.png" />
             <MetadataSection>
                 <Item>
                     <h3>Fecha</h3>

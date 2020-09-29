@@ -5,15 +5,19 @@ import {
     Card,
     CardImage,
     CardDetails,
-    AdditionalInfo
+    AdditionalInfo,
+    CardBrandImage
 } from "./styles"
 
 export default function VehicleCard() {
     return (
         <Card>
-            <CardImage alt="user car" src="../placeholders/image-placeholder.png" />
+            <CardImage alt="user car" src="../placeholders/car-placeholder.png" />
             <CardDetails>
-                <h3>Tesla</h3>
+                <>
+                    <CardBrandImage alt="user car brand" src="../placeholders/car-brand-placeholder.png" />
+                    <h3>Tesla</h3>
+                </>
                 <h3>Model S</h3>
             </CardDetails>
 

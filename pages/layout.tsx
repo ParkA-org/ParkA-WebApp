@@ -21,8 +21,6 @@ export default function Layout({
       </Head>
       <Navbar />
       {children}
-      <Footer />
-        
       <style jsx>{`
         a{
           color:unset;
@@ -32,7 +30,6 @@ export default function Layout({
           padding: 0 0.5rem;
           display: flex;
           margin: 0 auto;
-          max-width: 1080px;
           flex-direction: column;
           justify-content: flex-start;
           align-items: center;

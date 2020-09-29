@@ -58,12 +58,12 @@ export default function ContactForm(): JSX.Element {
                   isTouched={touched.message}
                 />
               </FieldSection>
-              <InformationSection>
+              <InformationSection className="information">
                 <h3>
                   Respondemos en un tiempo estimado de alrededor 48 horas
                   laborables, con lo cual espera saber pronto de nosotros.
                 </h3>
-                <Button submit={true}>Enviar</Button>
+                <Button submit={true} styles={{ fontSize: "1.8rem" }}>Enviar</Button>
               </InformationSection>
             </FormContainer>
           </Form>
