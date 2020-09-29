@@ -51,18 +51,8 @@ export default function FilterSideBar() {
         <Container>
             <h2>Filtros</h2>
             <Section>
-                <h3>Disponibilidad</h3>
-                <p>Fecha <DatePicker style={{ width: "auto" }} /> </p>
-                <p>Desde   <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                /></p>
-                <p>Hasta  <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                /></p>
+                <h3>Precio</h3>
+                <PriceSlider />
             </Section>
             <Section>
                 <h3>Tipo de Reserva</h3>
@@ -74,8 +64,20 @@ export default function FilterSideBar() {
                 </TagContainer>
             </Section>
             <Section>
-                <h3>Precio</h3>
-                <PriceSlider />
+                <h3>Disponibilidad</h3>
+                <p>Fecha <DatePicker style={{ width: "auto" }} placement="topStart" /> </p>
+                <p>Desde   <DatePicker
+                    format="HH:mm"
+                    ranges={[]}
+                    hideMinutes={minute => minute % 15 !== 0}
+                    placement="topStart"
+                /></p>
+                <p>Hasta  <DatePicker
+                    format="HH:mm"
+                    ranges={[]}
+                    hideMinutes={minute => minute % 15 !== 0}
+                    placement="topStart"
+                /></p>
             </Section>
             <Section>
                 <h3>Características</h3>

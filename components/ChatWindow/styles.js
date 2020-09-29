@@ -1,14 +1,14 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-    width: 70%;
+    width: 100%;
     height: 80vh;
     display: flex;
     flex-direction: column;
 `;
 
 export const TopNav = styled.section`
-    background-color: #d2d6d3;
+    background-color: #f0f0f0;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -48,10 +48,11 @@ export const OverflowContent = styled.div`
         flex-shrink: 0;
         height: auto;
         max-height: 75px;
-        width: 40%;
+        width: auto;
+        max-width: 40%;
         overflow: hidden;
         text-overflow: ellipsis;
-        padding: 0.5em;
+        padding: 1em;
         border-radius: 15px;
     }
 `;
@@ -60,7 +61,7 @@ export const ChatButtons = styled.section`
     display: flex;
     align-items: center;
     justify-content: space-around;
-    background-color: #d2d6d3;
+    background-color: #f0f0f0;
     padding: 0.5em;
 
     & > * {

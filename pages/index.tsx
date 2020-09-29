@@ -9,7 +9,7 @@ function Header() {
         <div className="row">
           <div className="col-md-9 inner-text">
             <h1>Buscar y alquilar parqueos</h1>
-            <p>Nunca fue tan</p>
+            <p style={{ marginTop: "0.5em" }}>Nunca fue tan</p>
             <p><span className="h2" style={{ color: "#084C7C" }}>Fácil</span> <span className="h2" style={{ color: "#077187" }}>Rápido</span> <span className="h2" style={{ color: "#59BCA7" }}>Seguro</span></p>
           </div>
           <div className="col-md-3">
@@ -163,7 +163,7 @@ function Benefits() {
         <div className="container">
           <div className="row">
             <div className="col-md-6 text-center">
-              <img src="/images/imageMap.svg" />
+              <img src="/images/money.svg" style={{ width: "40%" }} />
             </div>
             <div className="col-md-6 inner-text">
               <h3>Gana dinero extra</h3>

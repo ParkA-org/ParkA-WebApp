@@ -7,6 +7,19 @@ export const Container = styled.div`
     grid-template-columns: 3fr 1fr 3fr 1fr;
 `;
 
+export const ControllersContainer = styled.div`
+    grid-column: 1 / span 4;
+    height: 90px;
+    grid-row: 1;
+    width: 80vw;
+    display: flex;
+    justify-content: start;
+    align-items: start;
+    padding: 0.5em 0 0 0.5em;
+    z-index: 3;
+`;
+
+
 export const ButtonsContainer = styled.div`
     margin-top: 0.7em;
     display: flex;
@@ -29,19 +42,6 @@ export const ButtonSection = styled.section`
         width: auto;
         border-radius: 20px;
     }
-`;
-
-export const ControllersContainer = styled.div`
-    grid-column: 1 / span 4;
-    padding-top: 1em;
-    height: 90px;
-    grid-row: 1;
-    width: 80vw;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 3;
 `;
 
 export const SearchContainer = styled.div`

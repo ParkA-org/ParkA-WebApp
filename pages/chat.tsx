@@ -7,7 +7,7 @@ export default function Chat() {
 
     return (
         <Layout>
-            <div className="container">
+            <div className="chatContainer">
                 <div className="chatContactsContainer">
                     <div className="searchSection">
                         <BsSearch color="#cecccd" size="1rem" />
@@ -32,12 +32,11 @@ export default function Chat() {
             </div>
             <style jsx>
                 {`
-                    .container {
+                    .chatContainer {
                         display: flex;
-                        width: 98vw;
+                        width: 99vw;
                         height: 80vh;
                         padding: 0;
-                        margin-top: 2em;
                     }
 
                     .searchSection {
@@ -49,6 +48,7 @@ export default function Chat() {
                     .chatContactsContainer {
                         display: flex;
                         flex-direction: column;
+                        width: 40%;
                         height: 100%;
                         overflow-y: scroll;
                         overflow-x: hidden;

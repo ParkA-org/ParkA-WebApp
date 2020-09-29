@@ -2,11 +2,11 @@ import styled from "styled-components";
 
 export const MainFormContainer = styled.div`
   margin-top: 2em;
-  width: 60vw;
+  padding: 2em 0.5em;
+  width: 100%;
   height: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  padding: 3em;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
@@ -14,20 +14,38 @@ export const MainFormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   & > * {
     width: 100%;
   }
-  & > h1 {
-    font-size: 3rem;
-    color: #0B768C;
-    font-family: "Righteous";
-  }
-  
-  @media (max-width: 768px) {
-    padding: 1em;
-    border: none;
+
+
+  @media (min-width: 768px) {
+    width: 80vw;
+    max-width: 1000px;
     box-shadow: none;
   }
+`;
+
+export const FormHeading = styled.div`
+  width: 100%;
+  text-align: left;
+  padding-left: 1em;
+  & > h2 {
+    font-family: "Mulish";
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  img {
+    width: 200px;
+  }
+  
+  @media(min-width: 768px) {
+    width: 80%;
+    padding-left: 3em;
+  }
+
 `;
 
 export const FormContainer = styled.div`

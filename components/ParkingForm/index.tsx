@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
+import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer } from "./styles"
 import MoneyIcon from "components/Icons/Money"
 import { DatePicker } from "rsuite";
 import { BsArrowRight } from "react-icons/bs"
@@ -9,19 +9,37 @@ type ElementProps = {
     children?: JSX.Element;
 }
 
+type DayCheckProps = {
+    id: string;
+    value: number;
+}
+
+const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+
 function SectionElement({ name, children }: ElementProps) {
     return (
         <ElementContainer>
             <label><b>{name}</b></label>
-            {children}<StyledInput type="text" />
+            <div>
+                {children}<StyledInput type="text" />
+            </div>
         </ElementContainer>
     )
 }
 
-export default function ReservationDetail() {
+function CheckElement({ id, value }: DayCheckProps) {
+    return (
+        <DayCheckboxContainer>
+            <input type="checkbox" id={id} name={id} value={value} />
+            <label>{id.substr(0, 2)}</label>
+        </DayCheckboxContainer>
+    )
+}
+
+export default function ParkingForm() {
 
     const hourPicker = (
-        <div className="container">
+        <HourPickerContainer>
             <p>
                 <b>Desde</b>
                 <DatePicker
@@ -41,40 +59,32 @@ export default function ReservationDetail() {
                     onOk={console.log}
                 />
             </p>
-            <style jsx>
-                {`
-                    p {
-                        display: flex;
-                        flex-direction: column;
-                        width: 8vw;
-                        height: auto
-                        margin-right: 0.5em;
-                    }
-
-                    b {
-                        margin-bottom: 0.5em;
-                    }
-
-                    .container {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-around;
-                    }
-                `}
-            </style>
-        </div>
+            <p>
+                <button type="button">X</button>
+            </p>
+            <button>Agregar mas horas</button>
+        </HourPickerContainer>
     )
 
     return (
         <Container>
             <LeftSection>
-                <SectionElement name="Parqueo" />
-                <SectionElement name="Fecha" />
+                <SectionElement name="Propietario" />
+                <SectionElement name="Direccion" />
                 <ElementContainer>
-                    <label><b>Horas</b></label>
+                    <label><b>Disponibilidad</b></label>
+                    <b>Dias</b>
+                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        {days.map((day, idx) => CheckElement({ id: day, value: idx }))}
+                    </div>
                     {hourPicker}
-
                 </ElementContainer>
+            </LeftSection>
+            <RightSection>
+                <SectionElement name="Sector" />
+                <SectionElement name="Costo por hora">
+                    <MoneyIcon />
+                </SectionElement>
                 <ElementContainer>
                     <label><b>Características</b></label>
                     <CheckboxContainer>
@@ -98,24 +108,6 @@ export default function ReservationDetail() {
                         <label><b>Cargador de vehículos electricos</b></label>
                     </CheckboxContainer>
                 </ElementContainer>
-            </LeftSection>
-            <RightSection>
-                <ElementContainer>
-                    <label><b>Vehiculos</b></label>
-                    <StyledSelect>
-                        <option>Audi</option>
-                        <option>BMW</option>
-                        <option>Mustang</option>
-                    </StyledSelect>
-                    <StyledImage src="../placeholders/image-placeholder.png" />
-                </ElementContainer>
-                <SectionElement name="Costo por hora">
-                    <MoneyIcon />
-                </SectionElement>
-                <SectionElement name="Horas Totales" />
-                <SectionElement name="Subtotal">
-                    <MoneyIcon />
-                </SectionElement>
             </RightSection>
         </Container>
     )
