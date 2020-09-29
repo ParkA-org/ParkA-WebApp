@@ -1,5 +1,6 @@
 .containerLayout a{
     color:unset;
+
 }
 #header  {
     background-image: url("..\\public\\images\\header-svg.svg");
@@ -121,4 +122,4 @@
 }
 #footer .inner-text{
     padding-top: 80px;
-}
+}s
