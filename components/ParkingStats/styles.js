@@ -32,10 +32,12 @@ export const TimingContainer = styled.div`
 export const Item = styled.div`
     margin-bottom: 0.5em;
     width: 210px;
+    text-align: left;
     & > h3 {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        font-size: 1.5rem;
     }
 
     & > h3 > svg {

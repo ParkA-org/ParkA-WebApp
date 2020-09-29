@@ -25,7 +25,7 @@ export const StyledButton = styled(motion.button).attrs(() => ({
     margin: 1em;
     padding: 0.5em 1em;
     display: inline-block;
-    font-size: 1.1em;
+    font-size: 1.1rem;
 
     &:hover {
       background-color: #037185;

@@ -31,7 +31,7 @@ export const StyledInput = styled.input`
     border-radius: 10px;
     border: none;
     padding: 0.25em;
-    max-width: 300px;
+    width: 100%;
 `;
 
 export const ElementContainer = styled.div`
@@ -40,6 +40,11 @@ export const ElementContainer = styled.div`
 
     & > label {
         display: block;
+    }
+
+    & > div {
+        display: flex;
+        align-items: center;
     }
 
     & > svg {

@@ -10,7 +10,7 @@ type ElementProps = {
 }
 
 type DayCheckProps = {
-    name: string;
+    id: string;
     value: number;
 }
 
@@ -20,16 +20,18 @@ function SectionElement({ name, children }: ElementProps) {
     return (
         <ElementContainer>
             <label><b>{name}</b></label>
-            {children}<StyledInput type="text" />
+            <div>
+                {children}<StyledInput type="text" />
+            </div>
         </ElementContainer>
     )
 }
 
-function CheckElement({ name, value }: DayCheckProps) {
+function CheckElement({ id, value }: DayCheckProps) {
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={name} name={name} value={value} />
-            <label>{name.substr(0, 2)}</label>
+            <input type="checkbox" id={id} name={id} value={value} />
+            <label>{id.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
 }
@@ -57,6 +59,10 @@ export default function ParkingForm() {
                     onOk={console.log}
                 />
             </p>
+            <p>
+                <button type="button">X</button>
+            </p>
+            <button>Agregar mas horas</button>
         </HourPickerContainer>
     )
 
@@ -69,7 +75,7 @@ export default function ParkingForm() {
                     <label><b>Disponibilidad</b></label>
                     <b>Dias</b>
                     <div style={{ display: "flex", justifyContent: "space-between" }}>
-                        {days.map((day, idx) => CheckElement({ name: day, value: idx }))}
+                        {days.map((day, idx) => CheckElement({ id: day, value: idx }))}
                     </div>
                     {hourPicker}
                 </ElementContainer>

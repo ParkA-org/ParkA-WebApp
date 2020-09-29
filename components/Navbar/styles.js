@@ -99,7 +99,7 @@ export const ListItem = styled(motion.li).attrs(() => ({
   color: #084c7c;
   display: inline-block;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   &:hover {
     cursor: pointer;
     filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));
