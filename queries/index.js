@@ -12,6 +12,7 @@ query GetUser($id: ID!){
   user(id: $id) {
     username
     lastname
+    name
     email
     profilepicture
     confirmed

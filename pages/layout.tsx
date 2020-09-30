@@ -29,6 +29,7 @@ export default function Layout({
           min-height: 100vh;
           padding: 0 0.5rem;
           display: flex;
+          width: 80vw;
           margin: 0 auto;
           flex-direction: column;
           justify-content: flex-start;

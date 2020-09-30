@@ -10,6 +10,7 @@ type User = {
     username?: String;
     profilepicture?: String;
     email?: String;
+    name?: String;
 }
 
 type ProviderProps = {

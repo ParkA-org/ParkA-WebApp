@@ -2,6 +2,7 @@ import Layout from "./layout"
 import styled from "styled-components"
 
 const ContainerText = styled.div`
+width: 70vw;
   margin: 40px;
   & > h2{
       color: #59BCA7;
@@ -10,6 +11,7 @@ const ContainerText = styled.div`
   & > p{
     text-align: left;
     margin-top: 40px;
+    font-size: 1.2rem;
   }
 `;
 
@@ -17,6 +19,7 @@ const ContainerImages = styled.div`
   display:flex;
   flex-wrap:wrap;
   justify-content: space-around;
+  width: 70vw;
 `;
 
 const Colaborator = styled.div`

@@ -6,11 +6,11 @@ export const DropdownMenu = styled.div`
   border-width: 2px;
   border-radius: 1.5em;
   background-color: white;
-  min-width:205px;
+  min-width:260px;
   position:absolute;
   top: 30px;
   right:30px;
-  z-index:2;
+  z-index: 4;
   & h4{
     font-size: 1em;
   }
@@ -27,7 +27,8 @@ export const DropdownButton = styled.div`
   align-items: center;
   padding: 2px 5px 2px 5px;
   position:relative;
-  z-index:2;
+  min-width:260px;
+  z-index: 4;
 
   & > img:first-child {
     margin-right: 10px;
@@ -46,7 +47,8 @@ export const DropdownButton = styled.div`
 export const DropdownContent = styled.div`
   display:none;
   position:relative;
-  z-index:3;
+  min-width:260px;
+  z-index: 4;
   &:hover{
     display:block;
   }
@@ -59,6 +61,7 @@ export const DropdownContent = styled.div`
 export const DropdownItem = styled.div`
   display: flex;
   flex-wrap: nowrap;
+  z-index: 4;
   padding: 15px 5px 10px 15px;
   & img{
     padding-right: 15px;
