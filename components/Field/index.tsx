@@ -1,13 +1,14 @@
 import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
 import Button from "components/Button";
+import { FormikErrors, FormikTouched } from "formik/dist/types";
 
 type FieldProps = {
   type?: string;
   label: string;
   name: string;
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
   placement?: string;
   component?: string;
   placeholder?: string;
@@ -102,7 +103,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="../placeholders/vector-image-placeholder.svg"
+        src="../icons/cameraIcon.svg"
         ref={imgEl}
         alt="uploaded by the user"
       />

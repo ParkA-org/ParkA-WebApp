@@ -6,7 +6,7 @@ export const Container = styled.div`
     align-items: start;
     justify-items: center;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto; 
+    grid-template-rows: 1fr 0.fr; 
     width: 100%;
     padding-top: 1.5em;
     height: auto;
@@ -26,12 +26,22 @@ export const RightSection = styled.div`
     grid-row: 1 / 1;
 `;
 
+export const CenterSection = styled.div`
+    grid-column: 1 / 3;
+    grid-row: 2;
+    width: 75%;
+    place-self: center center;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+`;
+
 export const StyledInput = styled.input`
     background-color: #e5e4e4;
     border-radius: 10px;
     border: none;
     padding: 0.25em;
-    width: 100%;
+    width: 300px;
 `;
 
 export const ElementContainer = styled.div`
@@ -56,7 +66,9 @@ export const ElementContainer = styled.div`
 `;
 
 export const CheckboxContainer = styled.div`
-    display: block;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     & > input[type="checkbox"] {
         display: inline-block;
         margin-right: 0.5em;
@@ -93,16 +105,35 @@ export const HourPickerContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: space-around;
-
-    & > p {
-        display: flex;
-        flex-direction: column;
-        width: 8vw;
-        height: auto
-        margin-right: 0.5em;
-    }
+    align-items: center;
 
     & > b {
         margin-bottom: 0.5em;
     }
+`;
+
+export const StyledButton = styled.button`
+    padding: 0.5em;
+    font-size: 1.1rem;
+    background-color: #59BCA7;
+    color: white;
+    width: auto;
+    border-radius: 60px;
+`;
+
+export const ScheduleHeaderContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    width: 295px;
+    margin-bottom: 1em;
+
+    & > p {
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+`;
+
+export const ImageSquare = styled.img`
+    width: 150px;
+    height: 150px;
 `;
