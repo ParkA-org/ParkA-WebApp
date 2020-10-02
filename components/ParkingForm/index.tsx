@@ -1,12 +1,13 @@
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react"
 import { DatePicker } from "rsuite"
 import { Formik, Form } from "formik";
 import { ImCancelCircle } from "react-icons/im"
 import { BsArrowRight } from "react-icons/bs"
 import MoneyIcon from "components/Icons/Money"
+import SchedulePicker from "components/SchedulePicker"
 import { CreateParkingSchema } from "utils/schemas"
-import Field, { FileUploader } from "components/Field"
-import { Container, StyledInput, StyledButton, ElementContainer, CheckboxContainer, CenterSection, StyledSelect, StyledImage, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer, ScheduleHeaderContainer, ImageSquare } from "./styles"
+import Field from "components/Field"
+import { Container, StyledButton, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer, ScheduleHeaderContainer, ImageSquare } from "./styles"
 
 type ElementProps = {
     name: string;
@@ -16,25 +17,23 @@ type ElementProps = {
 type DayCheckProps = {
     id: string;
     value: number;
+    onChecked: Dispatch<SetStateAction<string[]>>;
 }
 
-const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
-
-function SectionElement({ name, children }: ElementProps) {
-    return (
-        <ElementContainer>
-            <label><b>{name}</b></label>
-            <div>
-                {children}<StyledInput type="text" />
-            </div>
-        </ElementContainer>
-    )
-}
-
-function CheckElement({ id, value }: DayCheckProps) {
+function CheckElement({ id, value, onChecked }: DayCheckProps) {
+    const handleChange = (event) => {
+        const target = event.target
+        const value = target.checked
+        const name = target.name
+        if (value) {
+            onChecked(prevWeek => [...prevWeek, name])
+        } else {
+            onChecked(prevWeek => prevWeek.filter(day => day !== name))
+        }
+    }
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} />
+            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} />
             <label>{id.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
@@ -71,9 +70,9 @@ function ImagePreview({ file }: { file: File }) {
 
 export default function ParkingForm() {
 
-    const ScheduleHeader = (
+    const ScheduleHeader = ({ day }: { day: String }) => (
         <ScheduleHeaderContainer>
-            <p>Domingo</p> <StyledButton>Agregar más horas</StyledButton>
+            <p>{day}</p> <StyledButton>Agregar más horas</StyledButton>
         </ScheduleHeaderContainer>
     )
 
@@ -103,8 +102,6 @@ export default function ParkingForm() {
     )
 
     const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
-    const [task, setTask] = useState(null)
-    const [imgURL, setImgURL] = useState(null)
     const [previewImages, setPreviewImages] = useState([])
     const handleDragEnter = (e) => {
         e.preventDefault()
@@ -120,12 +117,20 @@ export default function ParkingForm() {
         e.preventDefault()
         setDrag(DRAG_IMAGE_STATES.NONE)
         let images = []
-        for (let i = 0; i < e.dataTransfer.files.length; i++) {
+        for (let i = 0; i < e.dataTransfer.files.length && i < 5; i++) {
             let file = e.dataTransfer.files[i]
             images = [...images, <ImagePreview file={file} />]
         }
         setPreviewImages(images)
     }
+
+    const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+
+    const [weekButtons, setWeekButtons] = useState<string[]>([])
+
+    useEffect(() => {
+        console.log(`Week buttons ${weekButtons}`)
+    }, [weekButtons])
 
     return (
         <Formik
@@ -161,10 +166,9 @@ export default function ParkingForm() {
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {days.map((day, idx) => <CheckElement id={day} value={idx} />)}
+                                    {week.map((day, idx) => <CheckElement id={day} value={idx} onChecked={setWeekButtons} />)}
                                 </div>
-                                {ScheduleHeader}
-                                {hourPicker}
+                                <SchedulePicker week={weekButtons} />
                             </ElementContainer>
                         </LeftSection>
                         <RightSection>

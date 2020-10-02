@@ -75,12 +75,6 @@ export const CheckboxContainer = styled.div`
     }
 `;
 
-export const StyledSelect = styled.select`
-    width: 200px;
-    background-color: #e5e4e4;
-    padding: 0.5em; 
-`;
-
 export const StyledImage = styled.img`
     display: block;
     border-radius: 20%;
