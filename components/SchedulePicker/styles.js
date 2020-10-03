@@ -32,3 +32,10 @@ export const HourPickerContainer = styled.div`
         margin-bottom: 0.5em;
     }
 `;
+
+export const HourElement = styled.li`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5em;
+`;

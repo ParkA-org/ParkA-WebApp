@@ -2,52 +2,7 @@ import { useReducer, useEffect, useState } from "react";
 import { DatePicker } from "rsuite"
 import { ImCancelCircle } from "react-icons/im"
 import { BsArrowRight, BsCheck } from "react-icons/bs"
-import { ScheduleHead, StyledButton, HourPickerContainer } from "./styles"
-
-function initState(week: string[]) {
-    let obj = {}
-    for (let day of week) {
-        obj[day] = []
-    }
-    return obj
-}
-
-const getRandomInt = (max) => Math.floor(Math.random() * max)
-
-function reducer(state, action) {
-    switch (action.type) {
-        case "add_range":
-            return {
-                ...state,
-                [action.payload.day]: [...state[action.payload.day], {
-                    id: action.payload.id,
-                    start: "",
-                    end: ""
-                }]
-            }
-        case "update_range":
-            return {
-                ...state,
-                [action.payload.day]: state[action.payload.day].map(range => {
-                    if (range.id === action.payload.id) {
-                        return { ...action.payload.value }
-                    }
-                    return range
-                })
-            }
-        case "remove_range":
-            return {
-                ...state,
-                [action.payload.day]: state[action.payload.day].filter(
-                    (item) => item.id !== action.payload.id
-                )
-            };
-        case "reset":
-            return initState(action.payload.week)
-        default:
-            return state;
-    }
-}
+import { ScheduleHead, StyledButton, HourPickerContainer, HourElement } from "./styles"
 
 type RangeObject = {
     id: number;
@@ -55,10 +10,32 @@ type RangeObject = {
     end?: string;
 }
 
+type StateObject = {
+    "Domingo"?: Array<RangeObject>;
+    "Lunes"?: Array<RangeObject>;
+    "Martes"?: Array<RangeObject>;
+    "Miercoles"?: Array<RangeObject>;
+    "Jueves"?: Array<RangeObject>;
+    "Viernes"?: Array<RangeObject>;
+    "Sábado"?: Array<RangeObject>;
+}
+
+
 function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, dispatch: any }) {
     const [value, setValue] = useState<RangeObject>(item)
     return (
         <HourPickerContainer>
+            <div>
+                <ImCancelCircle size="2em" color="rgb(255,0,0)" onClick={() => {
+                    dispatch({
+                        type: "remove_range",
+                        payload: {
+                            day: day,
+                            id: value.id
+                        }
+                    });
+                }} />
+            </div>
             <div>
                 <DatePicker
                     format="HH:mm"
@@ -87,17 +64,8 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 />
             </div>
             <div>
-                <ImCancelCircle size="2em" color="rgb(255,0,0)" style={{ marginBottom: "0.5em" }} onClick={() => {
-                    dispatch({
-                        type: "remove_range",
-                        payload: {
-                            day: day,
-                            id: value.id
-                        }
-                    });
-                }} />
-                <button type="button" style={{ marginBottom: "0.5em" }} onClick={() => {
-                    console.log('CLICK EN CHECK')
+
+                <button type="button" style={{ border: "transparent", background: "transparent" }} onClick={() => {
                     dispatch({
                         type: "update_range",
                         payload: {
@@ -106,12 +74,13 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                             value: value
                         }
                     });
-                }}>Actualizar</button>
+                }}> <BsCheck size="2em" color="rgb(255,0,0)" /></button>
             </div>
         </HourPickerContainer>
     )
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
 
 function ScheduleHeader({ day, dispatch, size }: { day: String, dispatch: any, size: number }) {
     return (
@@ -133,17 +102,16 @@ function ScheduleHeader({ day, dispatch, size }: { day: String, dispatch: any, s
 
 
 
-export default function SchedulePicker({ week }: { week: string[] }) {
-    const [state, dispatch] = useReducer(reducer, {}, () => initState(week));
+export default function SchedulePicker({ dispatch, state }: { dispatch: any, state: StateObject }) {
 
-    useEffect(() => {
-        dispatch({
-            type: "reset",
-            payload: {
-                week: week
-            }
-        })
-    }, [week])
+    // useEffect(() => {
+    //     dispatch({
+    //         type: "reset",
+    //         payload: {
+    //             week: week
+    //         }
+    //     })
+    // }, [week])
 
     return (
         <div className="scheduleContainer">
@@ -152,11 +120,11 @@ export default function SchedulePicker({ week }: { week: string[] }) {
                     <div key={item[0]}>
                         <ScheduleHeader day={item[0]} dispatch={dispatch} size={item[1].length} />
                         <ul>
-                            {item[1].map((rangos, indice) => {
+                            {item[1].map((rangos) => {
                                 return (
-                                    <li key={getRandomInt(1000)}>
+                                    <HourElement key={getRandomInt(1000)}>
                                         <HourPicker day={item[0]} item={rangos} dispatch={dispatch} />
-                                    </li>
+                                    </HourElement>
                                 )
                             })}
                         </ul>

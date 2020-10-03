@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, Dispatch, SetStateAction } from "react"
+import { useState, useEffect, useRef, Dispatch, SetStateAction, useReducer } from "react"
 import { DatePicker } from "rsuite"
 import { Formik, Form } from "formik";
 import { ImCancelCircle } from "react-icons/im"
@@ -18,17 +18,30 @@ type DayCheckProps = {
     id: string;
     value: number;
     onChecked: Dispatch<SetStateAction<string[]>>;
+    dispatch: any;
 }
 
-function CheckElement({ id, value, onChecked }: DayCheckProps) {
+function CheckElement({ id, value, onChecked, dispatch }: DayCheckProps) {
     const handleChange = (event) => {
         const target = event.target
         const value = target.checked
         const name = target.name
         if (value) {
-            onChecked(prevWeek => [...prevWeek, name])
+            dispatch({
+                type: 'add_day',
+                payload: {
+                    day: name
+                }
+            })
+            // onChecked(prevWeek => [...prevWeek, name])
         } else {
-            onChecked(prevWeek => prevWeek.filter(day => day !== name))
+            // onChecked(prevWeek => prevWeek.filter(day => day !== name))
+            dispatch({
+                type: 'remove_day',
+                payload: {
+                    day: name
+                }
+            })
         }
     }
     return (
@@ -67,39 +80,78 @@ function ImagePreview({ file }: { file: File }) {
     )
 }
 
+function initState(week: string[]) {
+    let obj = {}
+    for (let day of week) {
+        obj[day] = []
+    }
+    return obj
+}
+
+function reducer(state, action) {
+    switch (action.type) {
+        case "add_range":
+            return {
+                ...state,
+                [action.payload.day]: [...state[action.payload.day], {
+                    id: action.payload.id,
+                    start: "",
+                    end: ""
+                }]
+            }
+        case "update_range":
+            return {
+                ...state,
+                [action.payload.day]: state[action.payload.day].map(range => {
+                    if (range.id === action.payload.id) {
+                        return { ...action.payload.value }
+                    }
+                    return range
+                })
+            }
+        case "remove_range":
+            return {
+                ...state,
+                [action.payload.day]: state[action.payload.day].filter(
+                    (item) => item.id !== action.payload.id
+                )
+            }
+        case "add_day":
+            return {
+                ...state,
+                [action.payload.day]: []
+            }
+        case "remove_day":
+            let { [action.payload.day]: omit, ...res } = state
+            return res
+        case "reset":
+            return initState(action.payload.week)
+        default:
+            return state;
+    }
+}
+
+type RangeObject = {
+    id: number;
+    start?: string;
+    end?: string;
+}
+
+type StateObject = {
+    "Domingo"?: Array<RangeObject>;
+    "Lunes"?: Array<RangeObject>;
+    "Martes"?: Array<RangeObject>;
+    "Miercoles"?: Array<RangeObject>;
+    "Jueves"?: Array<RangeObject>;
+    "Viernes"?: Array<RangeObject>;
+    "Sábado"?: Array<RangeObject>;
+}
 
 export default function ParkingForm() {
 
-    const ScheduleHeader = ({ day }: { day: String }) => (
-        <ScheduleHeaderContainer>
-            <p>{day}</p> <StyledButton>Agregar más horas</StyledButton>
-        </ScheduleHeaderContainer>
-    )
+    const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
 
-    const hourPicker = (
-        <HourPickerContainer>
-            <p>
-                <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
-                />
-            </p>
-            <BsArrowRight size="2em" style={{ alignSelf: "center" }} />
-            <p>
-                <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
-                />
-            </p>
-            <p>
-                <ImCancelCircle size="2em" color="rgb(255,0,0)" style={{ marginBottom: "0.5em" }} />
-            </p>
-        </HourPickerContainer>
-    )
+    const [state, dispatch] = useReducer(reducer, {}, () => initState(week));
 
     const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
     const [previewImages, setPreviewImages] = useState([])
@@ -123,8 +175,6 @@ export default function ParkingForm() {
         }
         setPreviewImages(images)
     }
-
-    const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
 
     const [weekButtons, setWeekButtons] = useState<string[]>([])
 
@@ -166,9 +216,9 @@ export default function ParkingForm() {
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement id={day} value={idx} onChecked={setWeekButtons} />)}
+                                    {week.map((day, idx) => <CheckElement id={day} value={idx} onChecked={setWeekButtons} dispatch={dispatch} />)}
                                 </div>
-                                <SchedulePicker week={weekButtons} />
+                                <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
                         </LeftSection>
                         <RightSection>
