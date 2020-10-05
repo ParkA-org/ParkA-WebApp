@@ -12,8 +12,10 @@ export default function useUser() {
     useEffect(() => {
         if (user && Object.keys(user).length > 0) {
             setIsLogged(USER_STATES.LOGGED_IN)
+            setLoading(false)
         } else if (user) {
             setIsLogged(USER_STATES.LOGGED_OUT)
+            setLoading(false)
         }
         console.log('Usuario')
         console.log(user)

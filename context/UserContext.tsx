@@ -10,6 +10,9 @@ type User = {
     username?: String;
     profilepicture?: String;
     email?: String;
+    lastname?: String;
+    name?: String;
+    confirmed?: Boolean;
 }
 
 type ProviderProps = {
@@ -41,10 +44,13 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const [user, setUser] = useState<User>(USER_STATES.NOT_KNOWN)
 
     useEffect(() => {
+        console.log('Se ejecuto en el provider')
         if (!userId) {
             setUser(USER_STATES.LOGGED_OUT)
         }
         if (userId && userId.length > 0) {
+
+            console.log('Se ejecuto en donde queremos')
             getUser({ variables: { id: userId } })
         }
         if (data) {
@@ -52,7 +58,7 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
             console.log(data.user)
             setUser(data.user)
         }
-    }, [data])
+    }, [data, userId])
 
     const modifyUser: (user: User) => void = function (user: User): void {
         setUser(user)

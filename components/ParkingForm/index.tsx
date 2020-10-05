@@ -1,27 +1,19 @@
-import { useState, useEffect, useRef, Dispatch, SetStateAction, useReducer } from "react"
-import { DatePicker } from "rsuite"
+import { useState, useRef, useReducer, useEffect } from "react"
 import { Formik, Form } from "formik";
-import { ImCancelCircle } from "react-icons/im"
-import { BsArrowRight } from "react-icons/bs"
+import useUser from "hooks/useUser"
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, StyledButton, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer, ScheduleHeaderContainer, ImageSquare } from "./styles"
-
-type ElementProps = {
-    name: string;
-    children?: JSX.Element;
-}
+import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, ImageSquare } from "./styles"
 
 type DayCheckProps = {
     id: string;
     value: number;
-    onChecked: Dispatch<SetStateAction<string[]>>;
     dispatch: any;
 }
 
-function CheckElement({ id, value, onChecked, dispatch }: DayCheckProps) {
+function CheckElement({ id, value, dispatch }: DayCheckProps) {
     const handleChange = (event) => {
         const target = event.target
         const value = target.checked
@@ -33,9 +25,7 @@ function CheckElement({ id, value, onChecked, dispatch }: DayCheckProps) {
                     day: name
                 }
             })
-            // onChecked(prevWeek => [...prevWeek, name])
         } else {
-            // onChecked(prevWeek => prevWeek.filter(day => day !== name))
             dispatch({
                 type: 'remove_day',
                 payload: {
@@ -82,8 +72,10 @@ function ImagePreview({ file }: { file: File }) {
 
 function initState(week: string[]) {
     let obj = {}
-    for (let day of week) {
-        obj[day] = []
+    if (week.length > 0) {
+        for (let day of week) {
+            obj[day] = []
+        }
     }
     return obj
 }
@@ -137,21 +129,18 @@ type RangeObject = {
     end?: string;
 }
 
-type StateObject = {
-    "Domingo"?: Array<RangeObject>;
-    "Lunes"?: Array<RangeObject>;
-    "Martes"?: Array<RangeObject>;
-    "Miercoles"?: Array<RangeObject>;
-    "Jueves"?: Array<RangeObject>;
-    "Viernes"?: Array<RangeObject>;
-    "Sábado"?: Array<RangeObject>;
+type Parking = {
+    owner?: string;
+    address?: string;
+    sector?: string;
 }
 
 export default function ParkingForm() {
-
+    const { user, loading } = useUser()
+    const [park, setPark] = useState<Parking>({ owner: "", address: "", sector: "" })
     const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
 
-    const [state, dispatch] = useReducer(reducer, {}, () => initState(week));
+    const [state, dispatch] = useReducer(reducer, {}, initState);
 
     const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
     const [previewImages, setPreviewImages] = useState([])
@@ -176,11 +165,14 @@ export default function ParkingForm() {
         setPreviewImages(images)
     }
 
-    const [weekButtons, setWeekButtons] = useState<string[]>([])
-
     useEffect(() => {
-        console.log(`Week buttons ${weekButtons}`)
-    }, [weekButtons])
+        if (!loading) {
+            setPark({ ...park, owner: `${user.name} ${user.lastname}` })
+            console.log('Cargo?')
+        } else {
+            console.log('No ha cargado')
+        }
+    }, [loading, setPark])
 
     return (
         <Formik
@@ -188,7 +180,7 @@ export default function ParkingForm() {
                 owner: "",
                 address: "",
                 sector: "",
-                costPerHour: 1,
+                costPerHour: 50,
                 file: ""
             }}
             validationSchema={CreateParkingSchema}
@@ -203,20 +195,20 @@ export default function ParkingForm() {
                                 label="Propietario"
                                 errorMessage={errors.owner}
                                 isTouched={touched.owner}
-                                placeholder="Juan Perez"
+                                placeholder={park.owner || "Propietario"}
                             />
                             <Field
                                 name="address"
                                 label="Dirección"
                                 errorMessage={errors.address}
                                 isTouched={touched.address}
-                                placeholder="Probando"
+                                placeholder={park.address || "Dirección"}
                             />
                             <ElementContainer>
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement id={day} value={idx} onChecked={setWeekButtons} dispatch={dispatch} />)}
+                                    {week.map((day, idx) => <CheckElement id={day} value={idx} dispatch={dispatch} />)}
                                 </div>
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
@@ -227,7 +219,7 @@ export default function ParkingForm() {
                                 label="Sector"
                                 errorMessage={errors.sector}
                                 isTouched={touched.sector}
-                                placeholder="Sector"
+                                placeholder={park.sector || "Sector"}
                             />
                             <div className="iconInput">
                                 <MoneyIcon />
@@ -270,7 +262,7 @@ export default function ParkingForm() {
                                 onDragLeave={handleDragLeave}
                                 onDragOver={(event) => event.preventDefault()}
                                 onDrop={handleDrop}
-                                placeholder="Introduce fotos del parqueo"
+                                placeholder="Arrastre hasta 5 imágenes de su parqueo"
                             ></textarea>
                             <div className="imagezone">
                                 {previewImages}
@@ -285,8 +277,7 @@ export default function ParkingForm() {
                     textarea {
                         border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
                                     ? "3px dashed #09f"
-                                    : "3px solid transparent"};
-                        border-radius: 10px;
+                                    : "3px solid #333"};
                         font-size: 21px;
                         min-height: 200px;
                         padding: 15px;

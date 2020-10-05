@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useState } from "react";
+import { useState } from "react";
 import { DatePicker } from "rsuite"
 import { ImCancelCircle } from "react-icons/im"
 import { BsArrowRight, BsCheck } from "react-icons/bs"
@@ -103,15 +103,6 @@ function ScheduleHeader({ day, dispatch, size }: { day: String, dispatch: any, s
 
 
 export default function SchedulePicker({ dispatch, state }: { dispatch: any, state: StateObject }) {
-
-    // useEffect(() => {
-    //     dispatch({
-    //         type: "reset",
-    //         payload: {
-    //             week: week
-    //         }
-    //     })
-    // }, [week])
 
     return (
         <div className="scheduleContainer">
