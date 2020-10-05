@@ -1,13 +1,14 @@
 import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
 import Button from "components/Button";
+import { FormikErrors, FormikTouched } from "formik/dist/types";
 
 type FieldProps = {
   type?: string;
   label: string;
   name: string;
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
   placement?: string;
   component?: string;
   placeholder?: string;
@@ -42,10 +43,10 @@ export default function Field({
 type SelectFieldProps = {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
   children: JSX.Element[];
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
 };
 
 export function SelectField({

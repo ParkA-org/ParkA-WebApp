@@ -1,16 +1,22 @@
 import styled from "styled-components";
+import { Formik, Form } from "formik"
+import { useRouter } from "next/router"
+import { useQuery, useMutation } from "@apollo/client"
+import { GET_COLORS, GET_MAKERS, GET_MODELS, GET_VEHICLE_TYPES } from "queries"
+import { CreateVehicleSchema } from "utils/schemas"
+import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData } from "utils/types"
 import Layout from "../layout";
+import Field, { SelectField } from "components/Field"
+import Spinner from "components/Spinner"
 
-export const Container = styled.div`
+// STYLES 
+const Container = styled.div`
   display: grid;
   grid-template-areas:
-    "alias1 alias2 . placa1 placa2"
-    "marca1 marca2 . modelo1 modelo2"
-    "año1 año2 . tipo1 tipo2"
-    "color1 color2 . tipo1 tipo2"
-    "detalles1 detalles1 detalles1 detalles1 detalles1"
-    "detalles2 detalles2 detalles2 detalles2 detalles2"
-    "cancelar cancelar . guardar guardar";
+    "leftSide rightSide"
+    "leftSide rightSide"
+    "details details"
+    "buttons buttons";
   border: solid;
   border-color: #59BCA7;
   background-color:white;
@@ -20,28 +26,37 @@ export const Container = styled.div`
   column-gap:10px;
   row-gap: 10px;
   align-items: center;
-
-`;
-export const Label = styled.h2`
-  padding:10px;
-`;
-export const InputText = styled.input`
-  padding:10px;
-  border:solid;
-  border-width: 0 0 3px 0;
-  border-color: #077187;
-
 `;
 
-export const Select = styled.select`
-  padding:10px;
-  border:solid;
-  border-width: 0 0 3px 0;
-  border-color: #077187;
-
+const RightSideContainer = styled.div`
+  grid-area: rightSide;
+  height: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
-export const TextArea = styled.textarea`
+const LeftSideContainer = styled.div`
+  grid-area: leftSide;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const DetailsContainer = styled.div`
+  grid-area: details;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonsContainer = styled.div`
+  grid-area: buttons;
+  height: auto;
+  display: flex;
+  justify-content: space-around;
+`;
+
+const TextArea = styled.textarea`
   background-color: #EBEBEB;
   resize:none;
   height:100px;
@@ -50,7 +65,7 @@ export const TextArea = styled.textarea`
   border-radius: 1em;
 `;
 
-export const BtnCancel = styled.button`
+const BtnCancel = styled.button`
   display:flex;
   flex-wrap:nowrap;
   align-items: center;
@@ -68,7 +83,7 @@ export const BtnCancel = styled.button`
   }
 `;
 
-export const BtnSave = styled.button`
+const BtnSave = styled.button`
   display:flex;
   flex-wrap:nowrap;
   justify-content:center; 
@@ -86,11 +101,11 @@ export const BtnSave = styled.button`
   }
 `;
 
-export const RadioButton = styled.input`
+const RadioButton = styled.input`
   margin-right:5px;
 `;
 
-export const CarImages = styled.div`
+const CarImages = styled.div`
   display:flex;
   flex-wrap: nowrap;
   & > img{
@@ -105,46 +120,100 @@ export const CarImages = styled.div`
   }
 `;
 
+
 export default function VehicleRegister(): JSX.Element {
+  const router = useRouter()
+  const { loading: colorsLoading, error: colorsError, data: colorsData } = useQuery<ColorsData>(GET_COLORS);
+  // const { loading: makersLoading, error: makersError, data: makersData } = useQuery<BasicEntityCollection>(GET_MAKERS);
+  const { loading: modelsLoading, error: modelsError, data: modelsData } = useQuery<ModelsData>(GET_MODELS);
+  const { loading: vehicleTypesLoading, error: vehicleTypesError, data: vehicleTypesData } = useQuery<TypeVehiclesData>(GET_VEHICLE_TYPES);
   return (
     <Layout pageTitle="Formulario de Vehiculos">
       <div style={{ textAlign: "left" }}>
         <h1>Formulario de Vehiculos</h1>
-        <Container>
-          <Label style={{ gridArea: "alias1" }}>Alias</Label>
-          <InputText style={{ gridArea: "alias2" }}></InputText>
-          <Label style={{ gridArea: "placa1" }}>Placa</Label>
-          <InputText style={{ gridArea: "placa2" }}></InputText>
-          <Label style={{ gridArea: "marca1" }}>Marca</Label>
-          <Select style={{ gridArea: "marca2" }}></Select>
-          <Label style={{ gridArea: "modelo1" }}>Modelo</Label>
-          <Select style={{ gridArea: "modelo2" }}></Select>
-          <Label style={{ gridArea: "año1" }}>Año</Label>
-          <Select style={{ gridArea: "año2" }}></Select>
-          <Label style={{ gridArea: "color1" }}>Color</Label>
-          <Select style={{ gridArea: "color2" }}></Select>
-          <Label style={{ gridArea: "tipo1" }}>Tipo</Label>
-          <div style={{ gridArea: "tipo2" }}>
-            <RadioButton type="radio" />
-            <label>Propio</label>
-            <br />
-            <RadioButton type="radio" />
-            <label>Rentado</label>
-            <br />
-            <RadioButton type="radio" />
-            <label>Amigo o Familiar</label>
-          </div>
-          <h4 style={{ gridArea: "detalles1" }}>Detalles adicionales</h4>
-          <TextArea style={{ gridArea: "detalles2" }}></TextArea>
-          <BtnCancel style={{ gridArea: "cancelar" }}>
-            <img src="/images/mdi_delete.svg" />
-            <h2>Cancelar</h2>
-          </BtnCancel>
-          <BtnSave style={{ gridArea: "guardar" }}>
-            <img src="/images/mdi_save.svg" />
-            <h2>Guardar</h2>
-          </BtnSave>
-        </Container>
+        <Formik initialValues={{
+          detail: "",
+          color_exterior: "",
+          model: "",
+          alias: "",
+          make: "",
+          year: "",
+          licenseplate: "",
+          type_vehicle: ""
+        }}
+          validationSchema={CreateVehicleSchema}
+          onSubmit={console.log}
+        >
+          {({ values, errors, touched }) => (
+            <Form>
+              <Container>
+                <LeftSideContainer>
+                  <Field
+                    label="Alias"
+                    name="alias"
+                    placeholder="Alias del vehículo"
+                    errorMessage={errors.alias}
+                    isTouched={touched.alias}
+                  />
+
+                  {colorsLoading ? <Spinner /> :
+                    <SelectField
+                      name="color_exterior"
+                      label="Color exterior"
+                      errorMessage={errors.color_exterior}
+                      isTouched={touched.color_exterior}
+                    >
+                      {colorsData.colorExteriors.map((color: BasicEntity) => <option value={color.id} key={color.name}>{color.name}</option>)}
+                    </SelectField>}
+                </LeftSideContainer>
+                <RightSideContainer>
+                  <Field
+                    label="Placa"
+                    name="licenseplate"
+                    placeholder="Placa del vehículo"
+                    errorMessage={errors.licenseplate}
+                    isTouched={touched.licenseplate}
+                  />
+
+                  {modelsLoading ? <Spinner /> :
+                    <SelectField
+                      name="model"
+                      label="Modelo del vehículo"
+                      errorMessage={errors.model}
+                      isTouched={touched.model}
+                    >
+                      {modelsData.models.map((modelo: BasicEntity) => <option value={modelo.id} key={modelo.name}>{modelo.name}</option>)}
+                    </SelectField>}
+
+                  <div style={{ gridArea: "tipo2" }}>
+                    <RadioButton type="radio" />
+                    <label>Propio</label>
+                    <br />
+                    <RadioButton type="radio" />
+                    <label>Rentado</label>
+                    <br />
+                    <RadioButton type="radio" />
+                    <label>Amigo o Familiar</label>
+                  </div>
+                </RightSideContainer>
+                <DetailsContainer>
+                  <h4 style={{ gridArea: "detalles1" }}>Detalles adicionales</h4>
+                  <TextArea style={{ gridArea: "detalles2" }}></TextArea>
+                </DetailsContainer>
+                <ButtonsContainer>
+                  <BtnCancel style={{ gridArea: "cancelar" }}>
+                    <img src="/images/mdi_delete.svg" />
+                    <h2>Cancelar</h2>
+                  </BtnCancel>
+                  <BtnSave style={{ gridArea: "guardar" }}>
+                    <img src="/images/mdi_save.svg" />
+                    <h2>Guardar</h2>
+                  </BtnSave>
+                </ButtonsContainer>
+              </Container>
+            </Form>
+          )}
+        </Formik>
 
         <div>
           <h1>Imagenes</h1>

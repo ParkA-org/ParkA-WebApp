@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { Formik, Form } from "formik"
 import { useQuery, useMutation } from '@apollo/client'
+import { useRouter } from "next/router"
 import { GET_COUNTRIES } from "queries"
 import { CREATE_ACCOUNT } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
-import { useRouter } from "next/router"
 import useLocalStorage from "hooks/useLocalStorage"
 import Layout from "../layout"
 import NavigationLink from "components/NavigationLink"
@@ -13,6 +13,7 @@ import ModalPortal from "components/Modal"
 import Button from "components/Button"
 import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
+import { BasicEntity, CountriesData } from "utils/types"
 import {
   MainFormContainer,
   FormContainer,
@@ -20,16 +21,6 @@ import {
   InformationSection,
   ActionSection,
 } from "styles/formStyles"
-
-type Country = {
-  __typename: string;
-  name: string;
-  id: string;
-}
-
-interface CountriesData {
-  countries: Country[]
-}
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
   const [accountId, setAccountId] = useLocalStorage("account-id", "")
@@ -124,7 +115,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                       errorMessage={errors.nationality}
                       isTouched={touched.nationality}
                     >
-                      {data.countries.map((country: Country) => <option value={country.name} key={country.name}>{country.name}</option>)}
+                      {data.countries.map((country: BasicEntity) => <option value={country.name} key={country.name}>{country.name}</option>)}
                     </SelectField>}
                   <Field
                     type="date"
@@ -137,7 +128,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   {countryLoading ? <Spinner /> :
-                    <IdentificationCard {...values} imageUrl={image} countries={data.countries} />}
+                    <IdentificationCard {...values} imageUrl={image} countries={data.results} />}
                 </InformationSection>
               </FormContainer>
               <ActionSection>
