@@ -16,7 +16,7 @@ export const DropdownMenu = styled.div`
   }
 `;
 
-export const DropdownButton = styled.div`
+export const DropdownButton = styled.button`
   display: flex;
   flex-wrap: nowrap;
   border: solid;
@@ -28,6 +28,7 @@ export const DropdownButton = styled.div`
   padding: 2px 5px 2px 5px;
   position:relative;
   min-width:260px;
+  background-color: transparent;
   z-index: 4;
 
   & > img:first-child {

@@ -8,9 +8,10 @@ import { USER_STATES } from "utils/constants"
 type User = {
     id?: String;
     username?: String;
+    name?: String;
+    lastname?: String;
     profilepicture?: String;
     email?: String;
-    name?: String;
 }
 
 type ProviderProps = {

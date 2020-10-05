@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import Layout from "./layout";
+import Layout from "../layout";
 
 export const Container = styled.div`
   display: grid;
@@ -105,65 +105,65 @@ export const CarImages = styled.div`
   }
 `;
 
-export default function vehicleFrom(): JSX.Element {
+export default function VehicleRegister(): JSX.Element {
   return (
     <Layout pageTitle="Formulario de Vehiculos">
-      <div style={{textAlign:"left"}}>
+      <div style={{ textAlign: "left" }}>
         <h1>Formulario de Vehiculos</h1>
         <Container>
-            <Label style={{gridArea:"alias1"}}>Alias</Label>
-            <InputText style={{gridArea:"alias2"}}></InputText>
-            <Label style={{gridArea:"placa1"}}>Placa</Label>
-            <InputText style={{gridArea:"placa2"}}></InputText>
-            <Label style={{gridArea:"marca1"}}>Marca</Label>
-            <Select style={{gridArea:"marca2"}}></Select>
-            <Label style={{gridArea:"modelo1"}}>Modelo</Label>
-            <Select style={{gridArea:"modelo2"}}></Select>
-            <Label style={{gridArea:"año1"}}>Año</Label>
-            <Select style={{gridArea:"año2"}}></Select>
-            <Label style={{gridArea:"color1"}}>Color</Label>
-            <Select style={{gridArea:"color2"}}></Select>
-            <Label style={{ gridArea:"tipo1"}}>Tipo</Label>
-            <div style={{gridArea:"tipo2"}}>
-              <RadioButton type="radio" />
-              <label>Propio</label>
-              <br/>
-              <RadioButton type="radio" />
-              <label>Rentado</label>
-              <br/>
-              <RadioButton type="radio"/>
-              <label>Amigo o Familiar</label>
-            </div>
-            <h4 style={{gridArea:"detalles1"}}>Detalles adicionales</h4>
-            <TextArea style={{gridArea:"detalles2"}}></TextArea>
-            <BtnCancel style={{gridArea:"cancelar"}}>
-              <img src="/images/mdi_delete.svg"/>
-              <h2>Cancelar</h2>
-            </BtnCancel>
-            <BtnSave style={{gridArea:"guardar"}}>
-              <img src="/images/mdi_save.svg"/>
-              <h2>Guardar</h2>
-            </BtnSave>
+          <Label style={{ gridArea: "alias1" }}>Alias</Label>
+          <InputText style={{ gridArea: "alias2" }}></InputText>
+          <Label style={{ gridArea: "placa1" }}>Placa</Label>
+          <InputText style={{ gridArea: "placa2" }}></InputText>
+          <Label style={{ gridArea: "marca1" }}>Marca</Label>
+          <Select style={{ gridArea: "marca2" }}></Select>
+          <Label style={{ gridArea: "modelo1" }}>Modelo</Label>
+          <Select style={{ gridArea: "modelo2" }}></Select>
+          <Label style={{ gridArea: "año1" }}>Año</Label>
+          <Select style={{ gridArea: "año2" }}></Select>
+          <Label style={{ gridArea: "color1" }}>Color</Label>
+          <Select style={{ gridArea: "color2" }}></Select>
+          <Label style={{ gridArea: "tipo1" }}>Tipo</Label>
+          <div style={{ gridArea: "tipo2" }}>
+            <RadioButton type="radio" />
+            <label>Propio</label>
+            <br />
+            <RadioButton type="radio" />
+            <label>Rentado</label>
+            <br />
+            <RadioButton type="radio" />
+            <label>Amigo o Familiar</label>
+          </div>
+          <h4 style={{ gridArea: "detalles1" }}>Detalles adicionales</h4>
+          <TextArea style={{ gridArea: "detalles2" }}></TextArea>
+          <BtnCancel style={{ gridArea: "cancelar" }}>
+            <img src="/images/mdi_delete.svg" />
+            <h2>Cancelar</h2>
+          </BtnCancel>
+          <BtnSave style={{ gridArea: "guardar" }}>
+            <img src="/images/mdi_save.svg" />
+            <h2>Guardar</h2>
+          </BtnSave>
         </Container>
-        
+
         <div>
-        <h1>Imagenes</h1>
-        <CarImages>
-          <img src="/images/car test.png"/>
-          <img src="/images/car test.png"/>
-          <img src="/images/car test.png"/>
-          <img src="/images/mdi_add.svg"/>
-        </CarImages>
+          <h1>Imagenes</h1>
+          <CarImages>
+            <img src="/images/car test.png" />
+            <img src="/images/car test.png" />
+            <img src="/images/car test.png" />
+            <img src="/images/mdi_add.svg" />
+          </CarImages>
         </div>
-        </div>
-        <style jsx>{`
+      </div>
+      <style jsx>{`
           h1{
             margin-top:20px;
             margin-bottom:10px;
             text-align:left;
           }
         `}
-        </style>
+      </style>
     </Layout>
   );
 }

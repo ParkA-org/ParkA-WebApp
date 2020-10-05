@@ -29,8 +29,8 @@ function SectionElement({ name, children }: ElementProps) {
 
 function CheckElement({ id, value }: DayCheckProps) {
     return (
-        <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} />
+        <DayCheckboxContainer key={id}>
+            <input type="checkbox" name={id} value={value} />
             <label>{id.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
