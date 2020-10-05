@@ -12,7 +12,7 @@ export default function VehicleSection() {
         <>
             <HeaderSection>
                 <h1>Vehículos</h1>
-                <NavigationLink href="/vehicle/new">
+                <NavigationLink href="/vehicle/register">
                     <NewLink><BiPlusCircle size="1.5em" /> Nuevo Vehículo</NewLink>
                 </NavigationLink>
             </HeaderSection>

@@ -20,6 +20,9 @@ export default function ProfileSection() {
             <h1>{!loading ? `${user.name} ${user.lastname}` : "Nombre"}  <AiFillCheckCircle color="blue" /></h1>
             <ContentContainer>
                 <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
+                <NavigationLink href="/profile/edit">
+                    <Button>Editar</Button>
+                </NavigationLink>
                 <ContentSection>
                     <ContentRow>
                         <h3>Email:</h3>
@@ -35,9 +38,7 @@ export default function ProfileSection() {
                 </ContentSection>
                 <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
             </ContentContainer>
-            <NavigationLink href="/profile/edit">
-                <Button>Editar</Button>
-            </NavigationLink>
+
         </ProfileContainer>
     )
 }
