@@ -49,7 +49,7 @@ export default function VehicleSection() {
                 </NavigationLink>
             </HeaderSection>
             <VehicleList>
-                {vehicles.map(vehicle => <VehicleCard key={vehicle.id} vehicle={vehicle} />)}
+                {vehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
                 <VehicleCard />
                 <VehicleCard />
             </VehicleList>

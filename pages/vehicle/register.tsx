@@ -147,6 +147,7 @@ export default function VehicleRegister(): JSX.Element {
 
   const [CreateVehicle] = useMutation(CREATE_VEHICLE, {
     onCompleted({ createVehicle }) {
+      router.prefetch('/profile')
       setShowModal(false)
       router.push('/profile')
     },

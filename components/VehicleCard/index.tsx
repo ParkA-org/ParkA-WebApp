@@ -17,14 +17,15 @@ type CardProps = {
 
 export default function VehicleCard({ vehicle }: CardProps) {
     const router = useRouter()
-
     return (
-        <Card onClick={() => router.push("/vehicle/detail")}>
+
+        <Card onClick={() => router.push("/vehicle/detail")
+        }>
             <CardImage alt="user car" src={vehicle?.mainpicture?.url ? vehicle?.mainpicture?.url : "../placeholders/car-placeholder.png"} />
             <CardDetails>
                 <>
-                    <CardBrandImage alt="user car brand" src={vehicle?.model?.make?.icon?.url ? vehicle?.model?.make?.icon?.url : "../placeholders/car-brand-placeholder.png"} />
-                    <h3>Tesla</h3>
+                    <CardBrandImage alt="car brand" src={vehicle?.model?.make?.icon?.url ? vehicle?.model?.make?.icon?.url : "../placeholders/car-brand-placeholder.png"} />
+                    <h3>{vehicle?.model?.make?.name ? vehicle?.model?.make?.name : "Tesla"}</h3>
                 </>
                 <h3>{vehicle?.model?.name ? vehicle?.model?.name : "Model S"}</h3>
             </CardDetails>
@@ -43,4 +44,5 @@ export default function VehicleCard({ vehicle }: CardProps) {
             </AdditionalInfo>
         </Card>
     )
+
 }
