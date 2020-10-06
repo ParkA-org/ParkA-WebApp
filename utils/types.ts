@@ -6,6 +6,24 @@ export type BasicEntity = {
     id: string;
 }
 
+export type MakerIcon = {
+    __typename: string;
+    name: string;
+    alternativeText: string;
+    previewUrl: string;
+    url: string;
+}
+
+export type Maker = {
+    id: string;
+    name: string;
+    icon: MakerIcon;
+}
+
+export interface MakersData {
+    makes: Maker[]
+}
+
 export interface CountriesData {
     countries: BasicEntity[]
 }

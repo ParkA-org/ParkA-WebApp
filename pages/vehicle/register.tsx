@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import { useQuery, useMutation } from "@apollo/client"
 import { GET_COLORS, GET_MAKERS, GET_MODELS, GET_VEHICLE_TYPES } from "queries"
 import { CreateVehicleSchema } from "utils/schemas"
-import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData } from "utils/types"
+import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData, MakersData, Maker } from "utils/types"
 import Layout from "../layout";
 import Field, { SelectField } from "components/Field"
 import Spinner from "components/Spinner"
@@ -24,8 +24,9 @@ const Container = styled.div`
   padding:10px 30px 10px 30px;
   text-align:left;
   column-gap:10px;
-  row-gap: 10px;
-  align-items: center;
+  row-gap: 20px;
+  align-items: start;
+  padding: 2em;
 `;
 
 const RightSideContainer = styled.div`
@@ -61,6 +62,7 @@ const TextArea = styled.textarea`
   resize:none;
   height:100px;
   width:90%;
+  padding: 0.5em;
   justify-self: center;
   border-radius: 1em;
 `;
@@ -124,7 +126,7 @@ const CarImages = styled.div`
 export default function VehicleRegister(): JSX.Element {
   const router = useRouter()
   const { loading: colorsLoading, error: colorsError, data: colorsData } = useQuery<ColorsData>(GET_COLORS);
-  // const { loading: makersLoading, error: makersError, data: makersData } = useQuery<BasicEntityCollection>(GET_MAKERS);
+  const { loading: makersLoading, error: makersError, data: makersData } = useQuery<MakersData>(GET_MAKERS);
   const { loading: modelsLoading, error: modelsError, data: modelsData } = useQuery<ModelsData>(GET_MODELS);
   const { loading: vehicleTypesLoading, error: vehicleTypesError, data: vehicleTypesData } = useQuery<TypeVehiclesData>(GET_VEHICLE_TYPES);
   return (
@@ -155,6 +157,16 @@ export default function VehicleRegister(): JSX.Element {
                     errorMessage={errors.alias}
                     isTouched={touched.alias}
                   />
+                  {makersLoading ? <Spinner /> :
+                    <SelectField
+                      name="make"
+                      label="Marca"
+                      errorMessage={errors.make}
+                      isTouched={touched.make}
+                    >
+                      {makersData.makes.map((make: Maker) => <option value={make.id} key={make.name}>{make.name}</option>)}
+                    </SelectField>}
+
 
                   {colorsLoading ? <Spinner /> :
                     <SelectField
@@ -185,27 +197,62 @@ export default function VehicleRegister(): JSX.Element {
                       {modelsData.models.map((modelo: BasicEntity) => <option value={modelo.id} key={modelo.name}>{modelo.name}</option>)}
                     </SelectField>}
 
-                  <div style={{ gridArea: "tipo2" }}>
-                    <RadioButton type="radio" />
+                  <div role="group" id="vehicle-type-group">
+                    <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
+
+                    {vehicleTypesLoading ? <Spinner /> :
+                      vehicleTypesData.typeVehicles.map((vehicleType: BasicEntity) => (
+                        <Field
+                          key={vehicleType.name}
+                          type="radio"
+                          label={vehicleType.name}
+                          name="type_vehicle"
+                          value={vehicleType.id}
+                        />
+                      ))
+                    }
+                    {/* <Field
+                      type="radio"
+                      label="Propio"
+                      name="type_vehicle"
+                    />
+                    <Field
+                      type="radio"
+                      label="Rentado"
+                      name="type_vehicle"
+                    />
+                    <Field
+                      type="radio"
+                      label="Amigo o Familiar"
+                      name="type_vehicle"
+                    /> */}
+                    {/* <RadioButton type="radio" />
                     <label>Propio</label>
                     <br />
                     <RadioButton type="radio" />
                     <label>Rentado</label>
                     <br />
                     <RadioButton type="radio" />
-                    <label>Amigo o Familiar</label>
+                    <label>Amigo o Familiar</label> */}
                   </div>
                 </RightSideContainer>
                 <DetailsContainer>
-                  <h4 style={{ gridArea: "detalles1" }}>Detalles adicionales</h4>
-                  <TextArea style={{ gridArea: "detalles2" }}></TextArea>
+                  <Field
+                    label="Detalles adicionales"
+                    name="detail"
+                    placeholder="Detalles adicionales..."
+                    component={TextArea}
+                    errorMessage={errors.detail}
+                    isTouched={touched.detail}
+                  />
+                  {/* <TextArea style={{ gridArea: "detalles2" }}></TextArea> */}
                 </DetailsContainer>
                 <ButtonsContainer>
-                  <BtnCancel style={{ gridArea: "cancelar" }}>
+                  <BtnCancel style={{ gridArea: "cancelar" }} type="button">
                     <img src="/images/mdi_delete.svg" />
                     <h2>Cancelar</h2>
                   </BtnCancel>
-                  <BtnSave style={{ gridArea: "guardar" }}>
+                  <BtnSave style={{ gridArea: "guardar" }} type="submit">
                     <img src="/images/mdi_save.svg" />
                     <h2>Guardar</h2>
                   </BtnSave>
