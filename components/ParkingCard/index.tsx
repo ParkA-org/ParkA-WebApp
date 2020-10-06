@@ -12,7 +12,7 @@ export default function ParkingCard() {
 
     return (
         <Container>
-            <CardImage src="../placeholders/image-placeholder.png" alt="parking lot" />
+            <CardImage src="../placeholders/park-placeholder.png" alt="parking lot" />
             <CardHeader>
                 <h2>Alma Rosa I</h2>
                 <div>

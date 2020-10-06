@@ -12,6 +12,8 @@ export const Container = styled.div`
   & > p{
     text-align:left;
     margin:20px;
+    font-size: 1.2rem;
+    text-align: justify;
   }
 
   & > h1{
@@ -31,7 +33,7 @@ export default function AboutUs(): JSX.Element {
     <Layout pageTitle="Preguntas Frecuentes">
       <MainFormContainer>
         <Container>
-          <h1 style={{ gridArea: "1 / 1 / 2 / 3" }}>Preguntas Frecuentes</h1>
+          <h1 style={{ gridArea: "1 / 1 / 2 / 3", color: "#084c7c" }}>Preguntas Frecuentes</h1>
           <h4 style={{ gridArea: "2 / 1 / 3 / 2" }}>¿Permiten el pago en efectivo?</h4>
           <p style={{ gridArea: "3 / 1 / 4 / 2" }}>Durante esta primera versión el único pago aceptado es por tarjeta de crédito/débito. Se tiene planteado más adelante agregar esta funcionalidad al sistema.</p>
           <h4 style={{ gridArea: "2 / 2 / 3 / 3" }}>Una vez hecha la reserva ¿puedo extenderla? </h4>

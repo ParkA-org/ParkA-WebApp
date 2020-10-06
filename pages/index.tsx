@@ -327,6 +327,7 @@ export default function Home(): JSX.Element {
       <link
             rel="stylesheet"
             href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous" />
+    <div className="landing">
       <div className="containerLayout">
         <Head>
           <title>Index</title>
@@ -347,6 +348,9 @@ export default function Home(): JSX.Element {
               flex-direction: column;
               justify-content: flex-start;
               align-items: center;
+            }
+            .landing {
+              overflow-x: hidden;
             }
           `}</style>
     </div>
