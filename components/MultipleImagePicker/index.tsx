@@ -22,8 +22,11 @@ function ImagePreview({ file }: { file: File }) {
     )
 }
 
+type ImagePickerProps = {
+    setFiles: (files: any[]) => void
+}
 
-export default function MultipleImagePicker() {
+export default function MultipleImagePicker({ setFiles }: ImagePickerProps) {
 
     const DRAG_IMAGE_STATES = {
         ERROR: -1,
@@ -32,7 +35,6 @@ export default function MultipleImagePicker() {
         UPLOADING: 2,
         COMPLETE: 3,
     }
-
 
     const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
     const [previewImages, setPreviewImages] = useState([])
@@ -50,26 +52,36 @@ export default function MultipleImagePicker() {
         e.preventDefault()
         setDrag(DRAG_IMAGE_STATES.NONE)
         let images = []
+        setFiles(e.dataTransfer.files)
         for (let i = 0; i < e.dataTransfer.files.length && i < 5; i++) {
             let file = e.dataTransfer.files[i]
             images = [...images, <ImagePreview file={file} />]
         }
         setPreviewImages(images)
     }
+
     return (
-        <div style={{ width: "100%" }}>
-            <h2>Agregar imágenes</h2>
-            <textarea
-                onDragEnter={handleDragEnter}
-                onDragLeave={handleDragLeave}
-                onDragOver={(event) => event.preventDefault()}
-                onDrop={handleDrop}
-                placeholder="Arrastre hasta 5 imágenes de su parqueo"
-            ></textarea>
+        <div className="container">
+            <div>
+                <h2>Agregar imágenes</h2>
+                <textarea
+                    onDragEnter={handleDragEnter}
+                    onDragLeave={handleDragLeave}
+                    onDragOver={(event) => event.preventDefault()}
+                    onDrop={handleDrop}
+                    placeholder="Arrastre hasta 5 imágenes de su parqueo"
+                ></textarea>
+            </div>
             <div className="imagezone">
                 {previewImages}
             </div>
+
             <style jsx>{`
+            .container {
+              display: flex;
+              justify-content: space-around;
+              width: 100%;
+            }
            textarea {
             border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
                     ? "3px dashed #09f"
@@ -82,10 +94,11 @@ export default function MultipleImagePicker() {
             width: 100%;
           }
           .imagezone {
-              width: 100%;
+              width: 50%;
               height: auto;
               display: flex;
               justify-content: space-around;
+              flex-wrap: wrap;
           }`}</style>
         </div>
     )

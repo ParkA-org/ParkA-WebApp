@@ -6,7 +6,7 @@ export default function ParkingRegister() {
         <Layout>
             <div className="container">
                 <h2>Registro de Parqueo</h2>
-                {/* <LocationPicker /> */}
+                <LocationPicker />
                 <ParkingForm />
             </div>
             <style jsx>

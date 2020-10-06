@@ -61,3 +61,13 @@ query GetMakers {
   }
 }
 `
+
+export const GET_USER_ACCOUNT_DATA = gql`
+query GetUserAccountData($id: ID!){
+  user(id: $id){
+    account_data {
+      id
+    }
+  }
+}
+`

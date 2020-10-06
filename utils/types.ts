@@ -6,6 +6,10 @@ export type BasicEntity = {
     id: string;
 }
 
+export interface CountriesData {
+    countries: BasicEntity[]
+}
+
 export type MakerIcon = {
     __typename: string;
     name: string;
@@ -24,10 +28,6 @@ export interface MakersData {
     makes: Maker[]
 }
 
-export interface CountriesData {
-    countries: BasicEntity[]
-}
-
 export interface ColorsData {
     colorExteriors: BasicEntity[]
 }
@@ -38,4 +38,10 @@ export interface TypeVehiclesData {
 
 export interface ModelsData {
     models: BasicEntity[]
+}
+
+export type Vehicle = {
+    __typename: string;
+    id: string;
+    alias: string;
 }

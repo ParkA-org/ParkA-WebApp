@@ -4,7 +4,7 @@ import { useRouter } from "next/router"
 import { USER_STATES } from "utils/constants"
 
 export default function useUser() {
-    const { user, setUser, token, setToken, setUserId } = useContext(UserContext)
+    const { user, setUser, token, setToken, setUserId, userId } = useContext(UserContext)
     const router = useRouter()
     const [loading, setLoading] = useState(true)
     const [isLogged, setIsLogged] = useState(USER_STATES.NOT_KNOWN)
@@ -29,6 +29,7 @@ export default function useUser() {
 
     return {
         user,
+        userId,
         setUser,
         token,
         setToken,

@@ -67,9 +67,8 @@ export const CreateParkingSchema = Yup.object().shape({
 
 export const CreateVehicleSchema = Yup.object().shape({
     model: Yup.string().required("Requerido"),
-    make: Yup.string().required("Requerido"),
     year: Yup.string().required("Requerido"),
-    licenseplate: Yup.string().required("Requerido"),
+    licenseplate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
     type_vehicle: Yup.string().required("Requerido"),
     detail: Yup.string(),
     color_exterior: Yup.string(),
