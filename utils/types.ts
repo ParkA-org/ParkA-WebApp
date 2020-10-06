@@ -44,4 +44,34 @@ export type Vehicle = {
     __typename: string;
     id: string;
     alias: string;
+    detail: string;
+    year: string;
+    licenseplate: string;
+    mainpicture: UploadFile;
+    type_vehicle: BasicEntity;
+    color_exterior: BasicEntity;
+    model: Model;
+    verified: Boolean;
+}
+
+export type Make = {
+    __typename: string;
+    id: string;
+    name: string;
+    icon: UploadFile;
+}
+
+export type Model = {
+    __typename: string;
+    id: string;
+    name: string;
+    make: Make;
+}
+
+export type UploadFile = {
+    __typename: string;
+    alternativeText: string;
+    url: string;
+    name: string;
+    previewUrl: string;
 }

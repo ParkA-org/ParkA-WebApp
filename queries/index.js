@@ -71,3 +71,34 @@ query GetUserAccountData($id: ID!){
   }
 }
 `
+
+export const GET_USER_VEHICLES = gql`
+query GetAccountVehicles($id: ID!){
+  accountDatum(id: $id){
+    vehicles{
+      mainpicture {
+        alternativeText
+        url
+      }
+      model {
+        name
+        make {
+          icon {
+            alternativeText
+            url
+          }
+          name
+        }
+      }
+      id
+      detail
+      licenseplate
+      year
+      color_exterior {
+        name
+      }
+      verified
+    }
+  }
+}
+`

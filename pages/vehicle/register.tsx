@@ -7,7 +7,7 @@ import { GET_COLORS, GET_MODELS, GET_USER_ACCOUNT_DATA, GET_VEHICLE_TYPES } from
 import { CREATE_VEHICLE } from "mutations"
 import useUser from "hooks/useUser"
 import { CreateVehicleSchema } from "utils/schemas"
-import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData, MakersData, Maker } from "utils/types"
+import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData } from "utils/types"
 import Layout from "../layout";
 import { default as OwnField } from "components/Field"
 import { SelectField } from "components/Field"
@@ -140,22 +140,21 @@ export default function VehicleRegister(): JSX.Element {
       getUserAccount({ variables: { id: userId } })
     }
     if (data) {
+      console.log('User accountdata id ', data.user.account_data.id)
       setAccountId(data.user.account_data.id)
     }
-  }, [userId])
+  }, [data, userId])
 
   const [CreateVehicle] = useMutation(CREATE_VEHICLE, {
     onCompleted({ createVehicle }) {
       setShowModal(false)
-      setImagesStatus(prevState => {
-        return { ...prevState, loading: false }
-      })
       router.push('/profile')
     },
     onError(error) {
       console.log('Using mutation on error')
       setRequestError(error)
       setShowModal(false)
+      console.error(error)
     }
   })
 
@@ -303,7 +302,7 @@ export default function VehicleRegister(): JSX.Element {
           )}
         </Formik>
 
-        <div>
+        <div style={{ marginBottom: "2em" }}>
           <MultipleImagePicker setFiles={setFiles} />
         </div>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
