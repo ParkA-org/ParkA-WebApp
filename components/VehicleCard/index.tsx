@@ -1,4 +1,5 @@
 import { AiFillCheckCircle } from "react-icons/ai"
+import { useRouter } from "next/router"
 import Button from "components/Button"
 import NavigationLink from "components/NavigationLink"
 import {
@@ -10,8 +11,11 @@ import {
 } from "./styles"
 
 export default function VehicleCard() {
+    const router = useRouter()
+
+
     return (
-        <Card>
+        <Card onClick={() => router.push("/vehicle/detail")}>
             <CardImage alt="user car" src="../placeholders/car-placeholder.png" />
             <CardDetails>
                 <>

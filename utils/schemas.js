@@ -64,3 +64,14 @@ export const CreateParkingSchema = Yup.object().shape({
     costPerHour: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
     file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
 });
+
+export const CreateVehicleSchema = Yup.object().shape({
+    model: Yup.string().required("Requerido"),
+    make: Yup.string().required("Requerido"),
+    year: Yup.string().required("Requerido"),
+    licenseplate: Yup.string().required("Requerido"),
+    type_vehicle: Yup.string().required("Requerido"),
+    detail: Yup.string(),
+    color_exterior: Yup.string(),
+    alias: Yup.string()
+})

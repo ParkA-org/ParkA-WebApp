@@ -7,11 +7,12 @@ type FieldProps = {
   type?: string;
   label: string;
   name: string;
-  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
-  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched?: boolean | FormikTouched<any> | FormikTouched<any>[];
   placement?: string;
   component?: string;
   placeholder?: string;
+  value?: string;
 };
 
 export default function Field({
@@ -22,6 +23,7 @@ export default function Field({
   isTouched,
   component,
   placeholder,
+  value,
   placement = "vertical"
 }: FieldProps): JSX.Element {
   return (
@@ -32,6 +34,7 @@ export default function Field({
         name={name}
         component={component}
         placeholder={placeholder}
+        value={value}
       />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -43,10 +46,11 @@ export default function Field({
 type SelectFieldProps = {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
+  placement?: string;
   children: JSX.Element[];
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
 };
 
 export function SelectField({
@@ -54,11 +58,12 @@ export function SelectField({
   label,
   placeholder,
   children,
+  placement = "vertical",
   errorMessage,
   isTouched,
 }: SelectFieldProps): JSX.Element {
   return (
-    <FieldContainer>
+    <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField component="select" name={name} placeholder={placeholder}>
         {children}

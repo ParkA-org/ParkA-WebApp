@@ -27,6 +27,11 @@ function Header() {
         </div>
       </div>
       <style jsx>{`
+      
+      .containerLayout a{
+        color:unset !important;
+      }
+
       h1, p {
         color: white;
       }
@@ -127,11 +132,11 @@ function Services() {
       </div>
       <style jsx>
         {`
-          #services{
-            background-image: url("../images/services-svg.svg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 100%;
+        #services{
+          background-image: url("../images/services-svg.svg");
+          background-size: cover;
+          background-repeat: no-repeat;
+          width: 100%;
         }
         
         img {
@@ -318,19 +323,24 @@ function Download() {
 
 export default function Home(): JSX.Element {
   return (
-    <div className="landing">
-      <div className="containerLayout">
-        <Head>
-          <title>Index</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Navbar />
+    <div>
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous" />
+      <div className="landing">
+        <div className="containerLayout">
+          <Head>
+            <title>Index</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <Navbar />
+        </div>
+        <Header />
+        <Services />
+        <Benefits />
+        <Download />
+        <Footer />
       </div>
-      <Header />
-      <Services />
-      <Benefits />
-      <Download />
-      <Footer />
       <style jsx>{`
             .containerLayout {
               overflow-x: hidden;

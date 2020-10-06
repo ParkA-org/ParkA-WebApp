@@ -8,6 +8,7 @@ export const Container = styled.div`
 `;
 
 export const CarouselContainer = styled.div`
+    margin: 0 auto;
     max-width: 1080px;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;

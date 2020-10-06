@@ -3,6 +3,7 @@ import Link from "next/link"
 import useUser from "hooks/useUser"
 import Button from "components/Button"
 import NavigationLink from "components/NavigationLink"
+import ProfileDropDownMenu from "components/ProfileDropDownMenu"
 import {
   Menu,
   Logo,
@@ -62,13 +63,7 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
         <ListItem>
           <Link href="/map"><span className="normal-span">Mapa</span></Link>
         </ListItem>
-        <ListItem>
-          <Button onClick={() => {
-            logout()
-          }}>
-            <Link href="/"><span className="active-span">Logout</span></Link>
-          </Button>
-        </ListItem>
+        <ProfileDropDownMenu logout={logout} />
       </LoggedHiddenContainer>
     </Menu>
   )
