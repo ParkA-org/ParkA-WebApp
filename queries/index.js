@@ -11,10 +11,10 @@ export const GET_USER = gql`
 query GetUser($id: ID!){
   user(id: $id) {
     username
+    profilepicture
+    email
     lastname
     name
-    email
-    profilepicture
     confirmed
   }
 }

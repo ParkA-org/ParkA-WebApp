@@ -57,6 +57,14 @@ export const EditProfileSchema = Yup.object().shape({
     file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
 });
 
+export const CreateParkingSchema = Yup.object().shape({
+    owner: Yup.string().required("Requerido"),
+    address: Yup.string().required("Requerido"),
+    sector: Yup.string().required("Requerido"),
+    costPerHour: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+});
+
 export const CreateVehicleSchema = Yup.object().shape({
     model: Yup.string().required("Requerido"),
     make: Yup.string().required("Requerido"),

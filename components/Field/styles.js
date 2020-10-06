@@ -19,8 +19,10 @@ export const StyledField = styled(Field)`
 export const UploaderImage = styled.img`
   width: 80%;
   height: 100%;
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 250px;
+  max-height: 250px;
+  padding: 1.5em;
+  border: 2px solid #077187;
   border-radius: 50%;
 `;
 

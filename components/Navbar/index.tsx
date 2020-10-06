@@ -14,6 +14,8 @@ import {
   ColorBar,
 } from "./styles"
 import { USER_STATES } from "utils/constants"
+import { useLazyQuery } from "@apollo/client"
+import { GET_USER } from "queries"
 
 function StandardNavbar({ setIsOpen, isOpen }): JSX.Element {
   return (
@@ -69,7 +71,8 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
-  const { isLogged, logout } = useUser()
+  const [getUser, { data }] = useLazyQuery(GET_USER)
+  const { isLogged, logout, token, setUser, } = useUser()
 
   useEffect(() => {
     const handleResize = () => {
