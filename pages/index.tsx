@@ -355,5 +355,6 @@ export default function Home(): JSX.Element {
             }
           `}</style>
     </div>
+    </div>
   );
 }
