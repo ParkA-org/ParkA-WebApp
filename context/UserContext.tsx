@@ -8,8 +8,6 @@ import { USER_STATES } from "utils/constants"
 type User = {
     id?: String;
     username?: String;
-    name?: String;
-    lastname?: String;
     profilepicture?: String;
     email?: String;
     lastname?: String;
@@ -46,18 +44,13 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const [user, setUser] = useState<User>(USER_STATES.NOT_KNOWN)
 
     useEffect(() => {
-        console.log('Se ejecuto en el provider')
         if (!userId) {
             setUser(USER_STATES.LOGGED_OUT)
         }
         if (userId && userId.length > 0) {
-
-            console.log('Se ejecuto en donde queremos')
             getUser({ variables: { id: userId } })
         }
         if (data) {
-            console.log('Data from provider')
-            console.log(data.user)
             setUser(data.user)
         }
     }, [data, userId])

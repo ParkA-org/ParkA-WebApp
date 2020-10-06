@@ -127,8 +127,3 @@ export const ScheduleHeaderContainer = styled.div`
         font-weight: bold;
     }
 `;
-
-export const ImageSquare = styled.img`
-    width: 150px;
-    height: 150px;
-`;

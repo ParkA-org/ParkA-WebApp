@@ -1,11 +1,12 @@
-import { useState, useRef, useReducer, useEffect } from "react"
+import { useState, useReducer, useEffect } from "react"
 import { Formik, Form } from "formik";
 import useUser from "hooks/useUser"
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
+import MultipleImagePicker from "components/MultipleImagePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, ImageSquare } from "./styles"
+import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
 
 type DayCheckProps = {
     id: string;
@@ -39,34 +40,6 @@ function CheckElement({ id, value, dispatch }: DayCheckProps) {
             <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} />
             <label>{id.substr(0, 2)}</label>
         </DayCheckboxContainer>
-    )
-}
-
-const DRAG_IMAGE_STATES = {
-    ERROR: -1,
-    NONE: 0,
-    DRAG_OVER: 1,
-    UPLOADING: 2,
-    COMPLETE: 3,
-}
-
-function ImagePreview({ file }: { file: File }) {
-    const imgEl = useRef(null)
-    const reader = new FileReader()
-    reader.addEventListener(
-        "load",
-        function () {
-            imgEl.current.src = reader.result
-        },
-        false
-    )
-    if (file)
-        reader.readAsDataURL(file);
-    else
-        console.log('No file')
-
-    return (
-        <ImageSquare ref={imgEl} alt="uploaded image" src="../icons/cameraIcon.svg" />
     )
 }
 
@@ -142,29 +115,6 @@ export default function ParkingForm() {
 
     const [state, dispatch] = useReducer(reducer, {}, initState);
 
-    const [drag, setDrag] = useState(DRAG_IMAGE_STATES.NONE)
-    const [previewImages, setPreviewImages] = useState([])
-    const handleDragEnter = (e) => {
-        e.preventDefault()
-        setDrag(DRAG_IMAGE_STATES.DRAG_OVER)
-    }
-
-    const handleDragLeave = (e) => {
-        e.preventDefault()
-        setDrag(DRAG_IMAGE_STATES.NONE)
-    }
-
-    const handleDrop = (e) => {
-        e.preventDefault()
-        setDrag(DRAG_IMAGE_STATES.NONE)
-        let images = []
-        for (let i = 0; i < e.dataTransfer.files.length && i < 5; i++) {
-            let file = e.dataTransfer.files[i]
-            images = [...images, <ImagePreview file={file} />]
-        }
-        setPreviewImages(images)
-    }
-
     useEffect(() => {
         if (!loading) {
             setPark({ ...park, owner: `${user.name} ${user.lastname}` })
@@ -208,7 +158,7 @@ export default function ParkingForm() {
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement id={day} value={idx} dispatch={dispatch} />)}
+                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} />)}
                                 </div>
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
@@ -256,17 +206,7 @@ export default function ParkingForm() {
                             </ElementContainer>
                         </RightSection>
                         <CenterSection>
-                            <h2>Agregar imágenes</h2>
-                            <textarea
-                                onDragEnter={handleDragEnter}
-                                onDragLeave={handleDragLeave}
-                                onDragOver={(event) => event.preventDefault()}
-                                onDrop={handleDrop}
-                                placeholder="Arrastre hasta 5 imágenes de su parqueo"
-                            ></textarea>
-                            <div className="imagezone">
-                                {previewImages}
-                            </div>
+                            <MultipleImagePicker />
                         </CenterSection>
                         <style jsx>
                             {`
@@ -274,23 +214,6 @@ export default function ParkingForm() {
                         display: flex;
                         align-items: center;
                     }
-                    textarea {
-                        border: ${drag === DRAG_IMAGE_STATES.DRAG_OVER
-                                    ? "3px dashed #09f"
-                                    : "3px solid #333"};
-                        font-size: 21px;
-                        min-height: 200px;
-                        padding: 15px;
-                        outline: 0;
-                        resize: none;
-                        width: 100%;
-                      }
-                      .imagezone {
-                          width: 100%;
-                          height: auto;
-                          display: flex;
-                          justify-content: space-around;
-                      }
                 `}
                         </style>
                     </Container>
