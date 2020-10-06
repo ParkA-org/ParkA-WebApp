@@ -9,6 +9,8 @@ export default function UploadImageService(file, success, error) {
         url: apiBaseURL,
         data: formData
     }).then(res => {
+        console.log('Resultado subiendo multiples imagenes')
+        console.log(res.data)
         success(res.data['0'].url)
         error(prevState => {
             return { ...prevState, loading: false }

@@ -17,9 +17,6 @@ export default function useUser() {
             setIsLogged(USER_STATES.LOGGED_OUT)
             setLoading(false)
         }
-        console.log('Usuario')
-        console.log(user)
-        console.log(`Dentro de useUser esta loggeado es ${isLogged}`)
     }, [user])
 
     const logout = () => {

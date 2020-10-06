@@ -8,6 +8,7 @@ import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData, MakersData, Make
 import Layout from "../layout";
 import Field, { SelectField } from "components/Field"
 import Spinner from "components/Spinner"
+import UploadImageService from "services/uploadImage"
 
 // STYLES 
 const Container = styled.div`

@@ -1,5 +1,4 @@
-import { useState } from "react"
-import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer } from "./styles"
+import { Container, StyledInput, ElementContainer, CheckboxContainer, LeftSection, RightSection, DayCheckboxContainer, HourPickerContainer } from "./styles"
 import MoneyIcon from "components/Icons/Money"
 import { DatePicker } from "rsuite";
 import { BsArrowRight } from "react-icons/bs"
