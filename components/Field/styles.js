@@ -17,10 +17,12 @@ export const StyledField = styled(Field)`
 `;
 
 export const UploaderImage = styled.img`
-  width: 100%;
+  width: 80%;
   height: 100%;
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 250px;
+  max-height: 250px;
+  padding: 1.5em;
+  border: 2px solid #077187;
   border-radius: 50%;
 `;
 
@@ -28,7 +30,7 @@ export const StyledLabel = styled.label`
   font-weight: bolder;
   font-size: 1.25em;
   text-align: left;
-  margin: 0.5em 0;
+  margin: 0.5em 1em 0.5em 0;
 `;
 
 export const ErrorMessage = styled.p`
@@ -39,6 +41,6 @@ export const ErrorMessage = styled.p`
 export const FieldContainer = styled.div`
   width: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  flex-direction: ${props => props.placement === "vertical" ? "column" : "row"};
+  justify-content: ${props => props.placement === "vertical" ? "flex-start" : "space-between"};
 `;

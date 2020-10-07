@@ -2,14 +2,17 @@ import * as React from "react"
 import { Dispatch, SetStateAction, useState, useEffect } from "react"
 import { GET_USER } from "queries"
 import { useLazyQuery } from '@apollo/client'
-
 import useLocalStorage from "hooks/useLocalStorage"
+import { USER_STATES } from "utils/constants"
 
 type User = {
     id?: String;
     username?: String;
     profilepicture?: String;
     email?: String;
+    lastname?: String;
+    name?: String;
+    confirmed?: Boolean;
 }
 
 type ProviderProps = {
@@ -38,18 +41,19 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
     const [getUser, { data }] = useLazyQuery(GET_USER)
-    const [user, setUser] = useState<User>({})
+    const [user, setUser] = useState<User>(USER_STATES.NOT_KNOWN)
 
     useEffect(() => {
+        if (!userId) {
+            setUser(USER_STATES.LOGGED_OUT)
+        }
         if (userId && userId.length > 0) {
             getUser({ variables: { id: userId } })
         }
         if (data) {
-            console.log('Data from provider')
-            console.log(data.user)
             setUser(data.user)
         }
-    }, [data])
+    }, [data, userId])
 
     const modifyUser: (user: User) => void = function (user: User): void {
         setUser(user)

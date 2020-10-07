@@ -1,4 +1,5 @@
 import styled from "styled-components"
+import useUser from "hooks/useUser"
 import Layout from "pages/layout"
 import DeleteIcon from "components/Icons/Delete"
 import VehicleCard from "components/VehicleCard"
@@ -13,6 +14,7 @@ const Container = styled.div`
     width: 100%;
     margin: 0 auto;
     overflow-x: hidden;
+    text-align: left;
     & > section {
         margin-bottom: 2em;
         text-align: left;
@@ -24,10 +26,11 @@ const Container = styled.div`
 `;
 
 export default function DetailVehicle() {
+    const { user, loading } = useUser()
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>
-                <h1>Editar Vehículo</h1>
+                <h2>Detalle Vehiculo</h2>
                 <section>
                     <VehicleCard />
                     <IconButton color="#AB1414" text="  ">
@@ -37,7 +40,7 @@ export default function DetailVehicle() {
                 <section>
                     <blockquote>
                         <h1>Propietario</h1>
-                        <h2>Sebastiano Faiella</h2>
+                        <h2>{loading ? "Cargando..." : `${user.name} ${user.lastname}`}</h2>
                     </blockquote>
                     <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>

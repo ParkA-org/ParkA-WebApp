@@ -77,3 +77,17 @@ mutation resetPassword($password: String!, $passwordConfirmation: String!, $code
   }
 }
 `
+
+export const CREATE_VEHICLE = gql`
+mutation CreateVehicle($newVehicle: createVehicleInput){
+  createVehicle(input: $newVehicle){
+    vehicle {
+      id
+      year
+      detail
+      licenseplate
+      alias
+    }
+  }
+}
+`

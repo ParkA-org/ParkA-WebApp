@@ -1,15 +1,18 @@
 import { useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
 import Button from "components/Button";
+import { FormikErrors, FormikTouched } from "formik/dist/types";
 
 type FieldProps = {
   type?: string;
   label: string;
   name: string;
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage?: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched?: boolean | FormikTouched<any> | FormikTouched<any>[];
+  placement?: string;
   component?: string;
   placeholder?: string;
+  value?: string;
 };
 
 export default function Field({
@@ -20,15 +23,18 @@ export default function Field({
   isTouched,
   component,
   placeholder,
+  value,
+  placement = "vertical"
 }: FieldProps): JSX.Element {
   return (
-    <FieldContainer>
+    <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField
         type={type}
         name={name}
         component={component}
         placeholder={placeholder}
+        value={value}
       />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -40,10 +46,11 @@ export default function Field({
 type SelectFieldProps = {
   name: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
+  placement?: string;
   children: JSX.Element[];
-  errorMessage: string;
-  isTouched: boolean;
+  errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
+  isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
 };
 
 export function SelectField({
@@ -51,11 +58,12 @@ export function SelectField({
   label,
   placeholder,
   children,
+  placement = "vertical",
   errorMessage,
   isTouched,
 }: SelectFieldProps): JSX.Element {
   return (
-    <FieldContainer>
+    <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField component="select" name={name} placeholder={placeholder}>
         {children}
@@ -100,7 +108,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="../placeholders/image-placeholder.png"
+        src="../icons/cameraIcon.svg"
         ref={imgEl}
         alt="uploaded by the user"
       />
@@ -113,7 +121,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
 
         ref={inputEl}
       />
-      <Button onClick={handleClick}>Upload a photo</Button>
+      <Button onClick={handleClick}>Subir una imagen</Button>
       <style jsx>
         {`
           button {

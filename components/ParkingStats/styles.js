@@ -5,7 +5,7 @@ export const Container = styled.section`
     display: flex;
     justify-content: space-around;
     width: 100%;
-    height: 20vh;
+    height: auto;
     background-color: #f4f4f4;   
     padding: 1em;
 `;
@@ -32,10 +32,12 @@ export const TimingContainer = styled.div`
 export const Item = styled.div`
     margin-bottom: 0.5em;
     width: 210px;
+    text-align: left;
     & > h3 {
         display: flex;
         justify-content: flex-start;
         align-items: center;
+        font-size: 1.5rem;
     }
 
     & > h3 > svg {

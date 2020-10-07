@@ -14,7 +14,18 @@ export default function UploadImageService(file, success, error) {
             return { ...prevState, loading: false }
         })
     })
-        .catch(err => error(prevState => {
-            return { ...prevState, error: err }
-        }))
+        .catch(err => { return err })
+}
+
+export async function uploadMultipleImages(param) {
+    const apiBaseURL = "https://parka-api.herokuapp.com/upload";
+    const formData = new FormData()
+    for (let i = 0; i < param.length; i++) {
+        formData.append("files", param[i])
+    }
+    return axios({
+        method: "POST",
+        url: apiBaseURL,
+        data: formData
+    })
 }

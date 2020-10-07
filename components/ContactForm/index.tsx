@@ -21,9 +21,9 @@ const ContactSchema = Yup.object().shape({
 export default function ContactForm(): JSX.Element {
   return (
     <MainFormContainer>
-      <h2>
+      <p style={{ fontWeight: "bold", fontSize: "1.6rem" }}>
         Para comunicarte con nosotros, puedes usar el siguiente formulario.
-      </h2>
+      </p>
       <Formik
         initialValues={{
           email: "",
@@ -36,7 +36,7 @@ export default function ContactForm(): JSX.Element {
         {({ errors, touched }) => (
           <Form>
             <FormContainer>
-              <FieldSection>
+              <FieldSection style={{ paddingLeft: "1em" }}>
                 <Field
                   type="email"
                   name="email"
@@ -58,12 +58,12 @@ export default function ContactForm(): JSX.Element {
                   isTouched={touched.message}
                 />
               </FieldSection>
-              <InformationSection>
-                <h3>
+              <InformationSection className="information">
+                <h3 style={{ fontSize: "1.5rem" }}>
                   Respondemos en un tiempo estimado de alrededor 48 horas
                   laborables, con lo cual espera saber pronto de nosotros.
                 </h3>
-                <Button submit={true}>Enviar</Button>
+                <Button submit={true} styles={{ fontSize: "1.6rem" }}>Enviar</Button>
               </InformationSection>
             </FormContainer>
           </Form>

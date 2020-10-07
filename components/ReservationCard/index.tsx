@@ -8,10 +8,12 @@ import {
     ActionButtonsSection,
     Item
 } from "./styles"
+import Link from "next/link"
+import NavigationLink from "components/NavigationLink"
 export default function ReservationCard({ isCancelable }: { isCancelable?: boolean }) {
     return (
         <Container>
-            <ReservationImage src="../placeholders/image-placeholder.png" />
+            <ReservationImage src="../placeholders/park-placeholder.png" />
             <MetadataSection>
                 <Item>
                     <h3>Fecha</h3>
@@ -34,8 +36,8 @@ export default function ReservationCard({ isCancelable }: { isCancelable?: boole
                 {isCancelable ?
                     <ReservationsButton isCancelable>Cancelar</ReservationsButton> : ""}
                 <ActionButtonsSection>
-                    <ReservationsButton>Detalles</ReservationsButton>
-                    <ReservationsButton>Mensajear</ReservationsButton>
+                    <ReservationsButton> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                    <ReservationsButton><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                 </ActionButtonsSection>
             </ButtonSection>
         </Container>

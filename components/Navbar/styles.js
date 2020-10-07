@@ -27,7 +27,7 @@ const ListItemVariants = {
 };
 
 export const Menu = styled(motion.ul)`
-  padding: 1em 1em 0 1em;
+  padding: 1em 0 0 0;
   margin: 0;
   display: flex;
   width: 99vw;
@@ -55,6 +55,7 @@ export const HiddenContainer = styled(motion.div).attrs(() => ({
 }))`
   display: flex;
   align-items: center;
+  font-size: 1.4rem;
   @media (max-width: 768px) {
     flex-direction: column;
   }
@@ -74,9 +75,17 @@ export const LoggedHiddenContainer = styled(HiddenContainer)`
     font-size: 1.4rem;
   }
 
-  & > button {
-    position: absolute;
-    right: 20px;
+  & > li:last-child {
+    flex-grow: 2;
+    margin: 0;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  @media (max-width: 768px) {
+    & > li:first-child {
+      padding: 0;
+    }
   }
 `;
 
@@ -90,7 +99,7 @@ export const ListItem = styled(motion.li).attrs(() => ({
   color: #084c7c;
   display: inline-block;
   font-weight: bold;
-  font-size: 1.2em;
+  font-size: 1.2rem;
   &:hover {
     cursor: pointer;
     filter: drop-shadow(2px 2px 4px hsla(0deg, 0%, 0%, 0.5));

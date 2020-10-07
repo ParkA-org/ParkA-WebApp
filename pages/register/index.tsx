@@ -17,6 +17,7 @@ import {
   FieldSection,
   InformationSection,
   ActionSection,
+  FormHeading
 } from "styles/formStyles"
 import useUser from "hooks/useUser"
 import UploadImageService from "services/uploadImage"
@@ -47,7 +48,10 @@ export default function registerPersonalAccount(): JSX.Element {
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
-        <h1>Crea una cuenta para continuar</h1>
+        <FormHeading>
+          <img src="images/logo1.svg" alt="ParkA logo" />
+          <h2>Crea una cuenta para continuar</h2>
+        </FormHeading>
         <Formik
           initialValues={{
             name: "",
@@ -70,7 +74,8 @@ export default function registerPersonalAccount(): JSX.Element {
               variables: {
                 user: {
                   data: {
-                    username: values.name,
+                    name: values.name,
+                    username: values.email,
                     email: values.email,
                     lastname: values.lastName,
                     password: values.password,
@@ -91,6 +96,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.name}
                     isTouched={touched.name}
                     placeholder="Nombre"
+                    placement="horizontal"
                   />
                   <Field
                     name="lastName"
@@ -98,6 +104,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.lastName}
                     isTouched={touched.lastName}
                     placeholder="Apellido"
+                    placement="horizontal"
                   />
                   <Field
                     name="email"
@@ -105,6 +112,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.email}
                     isTouched={touched.email}
                     placeholder="Correo electrónico"
+                    placement="horizontal"
                   />
                   <Field
                     type="password"
@@ -112,6 +120,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     name="password"
                     placeholder="Contraseña"
                     errorMessage={errors.password}
+                    placement="horizontal"
                     isTouched={touched.password}
                   />
                   <Field
@@ -121,6 +130,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     placeholder="Contraseña denuevo"
                     errorMessage={errors.confirmPassword}
                     isTouched={touched.confirmPassword}
+                    placement="horizontal"
                   />
                 </FieldSection>
                 <InformationSection>

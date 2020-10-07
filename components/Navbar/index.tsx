@@ -3,6 +3,7 @@ import Link from "next/link"
 import useUser from "hooks/useUser"
 import Button from "components/Button"
 import NavigationLink from "components/NavigationLink"
+import ProfileDropDownMenu from "components/ProfileDropDownMenu"
 import {
   Menu,
   Logo,
@@ -12,6 +13,9 @@ import {
   HiddenContainer,
   ColorBar,
 } from "./styles"
+import { USER_STATES } from "utils/constants"
+import { useLazyQuery } from "@apollo/client"
+import { GET_USER } from "queries"
 
 function StandardNavbar({ setIsOpen, isOpen }): JSX.Element {
   return (
@@ -59,11 +63,7 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
         <ListItem>
           <Link href="/map"><span className="normal-span">Mapa</span></Link>
         </ListItem>
-        <Button onClick={() => {
-          logout()
-        }}>
-          <Link href="/"><span className="active-span">Logout</span></Link>
-        </Button>
+        <ProfileDropDownMenu logout={logout} />
       </LoggedHiddenContainer>
     </Menu>
   )
@@ -71,7 +71,8 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
-  const { isLogged, logout } = useUser()
+  const [getUser, { data }] = useLazyQuery(GET_USER)
+  const { isLogged, logout, token, setUser, } = useUser()
 
   useEffect(() => {
     const handleResize = () => {
@@ -85,7 +86,7 @@ export default function Navbar(): JSX.Element {
 
   return (
     <>
-      {isLogged ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {isLogged === USER_STATES.LOGGED_IN ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
       <ColorBar />
       <style jsx>
         {`

@@ -8,6 +8,7 @@ export const Container = styled.div`
 `;
 
 export const CarouselContainer = styled.div`
+    margin: 0 auto;
     max-width: 1080px;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
@@ -18,7 +19,7 @@ export const CarouselContainer = styled.div`
 `;
 
 export const ScrollSection = styled.section`
-    grid-column: 1 / span 3;
+    grid-column: 2;
     grid-row: 1;
     place-self: center stretch;
     display: flex;
@@ -34,7 +35,6 @@ export const ScrollSection = styled.section`
     @media(max-width: 768px) {
         overflow-x: scroll;
         scrollbar-width: auto; 
-       
     }
 `;
 
@@ -44,20 +44,31 @@ export const LeftSide = styled.div`
     grid-column: 1;
     grid-row: 1;
     z-index: 5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     @media(max-width: 768px) {
         display: none;
     }
 `;
 
+export const LeftSideBack = styled.div`
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-color: rgba(255,255,255, 0.6);
+    width: 100%;
+    height: 100%;
+    grid-column: 1;
+    grid-row: 1;
+`;
+
 export const LeftButton = styled.button`
-    backdrop-filter: blur(2px);
     grid-column: 1;
     grid-row: 1;
     border-radius: 50%;
     width: 65px;
     height: 65px;
     padding: 0.5em;
-    border: 2px solid #333;
     z-index: 10;
     @media(max-width: 768px) {
         display: none;
@@ -78,12 +89,22 @@ export const RightSide = styled.div`
     }
 `;
 
+
+export const RightSideBack = styled.div`
+    filter: blur(8px);
+    -webkit-filter: blur(8px);
+    background-color: rgba(255,255,255, 0.6);
+    width: 100%;
+    height: 100%;
+    grid-column: 3;
+    grid-row: 1;
+`;
+
 export const RightButton = styled.button`
     border-radius: 50%;
     width: 65px;
     height: 65px;
     padding: 0.5em;
-    border: 2px solid #333;
     @media(max-width: 768px) {
         display: none;
     }

@@ -9,7 +9,7 @@ function Header() {
         <div className="row">
           <div className="col-md-9 inner-text">
             <h1>Buscar y alquilar parqueos</h1>
-            <p>Nunca fue tan</p>
+            <p style={{ marginTop: "0.5em" }}>Nunca fue tan</p>
             <p><span className="h2" style={{ color: "#084C7C" }}>Fácil</span> <span className="h2" style={{ color: "#077187" }}>Rápido</span> <span className="h2" style={{ color: "#59BCA7" }}>Seguro</span></p>
           </div>
           <div className="col-md-3">
@@ -27,6 +27,11 @@ function Header() {
         </div>
       </div>
       <style jsx>{`
+      
+      .containerLayout a{
+        color:unset !important;
+      }
+
       h1, p {
         color: white;
       }
@@ -127,11 +132,11 @@ function Services() {
       </div>
       <style jsx>
         {`
-          #services{
-            background-image: url("../images/services-svg.svg");
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 100%;
+        #services{
+          background-image: url("../images/services-svg.svg");
+          background-size: cover;
+          background-repeat: no-repeat;
+          width: 100%;
         }
         
         img {
@@ -158,7 +163,7 @@ function Benefits() {
         <div className="container">
           <div className="row">
             <div className="col-md-6 text-center">
-              <img src="/images/imageMap.svg" />
+              <img src="/images/money.svg" style={{ width: "40%" }} />
             </div>
             <div className="col-md-6 inner-text">
               <h3>Gana dinero extra</h3>
@@ -319,18 +324,23 @@ function Download() {
 export default function Home(): JSX.Element {
   return (
     <div>
-      <div className="containerLayout">
-        <Head>
-          <title>Index</title>
-          <link rel="icon" href="/favicon.ico" />
-        </Head>
-        <Navbar />
+      <link
+        rel="stylesheet"
+        href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossOrigin="anonymous" />
+      <div className="landing">
+        <div className="containerLayout">
+          <Head>
+            <title>Index</title>
+            <link rel="icon" href="/favicon.ico" />
+          </Head>
+          <Navbar />
+        </div>
+        <Header />
+        <Services />
+        <Benefits />
+        <Download />
+        <Footer />
       </div>
-      <Header />
-      <Services />
-      <Benefits />
-      <Download />
-      <Footer />
       <style jsx>{`
             .containerLayout {
               overflow-x: hidden;
@@ -340,7 +350,10 @@ export default function Home(): JSX.Element {
               justify-content: flex-start;
               align-items: center;
             }
+            .landing {
+              overflow-x: hidden;
+            }
           `}</style>
     </div>
-  );
+  )
 }

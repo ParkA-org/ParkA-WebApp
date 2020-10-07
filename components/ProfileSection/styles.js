@@ -1,6 +1,7 @@
 import styled from "styled-components"
 
 export const ProfileContainer = styled.div`
+    margin-top: 2em;
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -9,6 +10,7 @@ export const ProfileContainer = styled.div`
         align-items: center;
         text-align: center;
     }
+
 `;
 
 export const ContentContainer = styled.div`
@@ -65,11 +67,11 @@ export const ContentSection = styled.section`
 export const ContentRow = styled.div`
 margin-bottom: 1em;
     & > h3 {
-        font-size: 1.5em;
+        font-size: 2rem;
         font-weight: 800;
     }
     & > h4 {
-        font-size: 1.2em;
+        font-size: 1.5rem;
         font-weight: normal;
     }
 `;
