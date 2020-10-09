@@ -128,7 +128,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   {countryLoading ? <Spinner /> :
-                    <IdentificationCard {...values} imageUrl={image} countries={data.results} />}
+                    <IdentificationCard {...values} imageUrl={image} countries={data.countries} />}
                 </InformationSection>
               </FormContainer>
               <ActionSection>

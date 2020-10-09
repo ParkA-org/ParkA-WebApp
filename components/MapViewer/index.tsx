@@ -183,7 +183,7 @@ function Search({ panTo }) {
         clearSuggestions,
     } = usePlacesAutocomplete({
         requestOptions: {
-            location: { lat: () => 43.6532, lng: () => -79.3832 },
+            location: { lat: () => 43.6532, lng: () => -79.3832, equals: null, toUrlValue: null, toJSON: null },
             radius: 100 * 1000,
             componentRestrictions: {
                 country: "do"

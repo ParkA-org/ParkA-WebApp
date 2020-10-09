@@ -1,22 +1,10 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import { Coordinates } from "utils/types"
 import {
     GoogleMap,
     useLoadScript,
     Marker,
 } from "@react-google-maps/api";
-
-import usePlacesAutocomplete, {
-    getGeocode,
-    getLatLng,
-} from "use-places-autocomplete";
-
-import {
-    Combobox,
-    ComboboxInput,
-    ComboboxPopover,
-    ComboboxList,
-    ComboboxOption,
-} from "@reach/combobox";
 
 import { MapContainer } from "./styles"
 
@@ -47,13 +35,6 @@ const center = {
 };
 
 
-type Coordinates = {
-    lat?: number;
-    lng?: number;
-    time?: Date;
-}
-
-
 export default function LocationPicker() {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
@@ -81,7 +62,7 @@ export default function LocationPicker() {
 
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
-            if (mapRef && mapRef.current) {
+            if (mapRef.current) {
                 mapRef.current!.panTo({ lat, lng });
                 mapRef.current!.setZoom(16);
             }
@@ -114,7 +95,7 @@ export default function LocationPicker() {
                 onClick={onMapClick}
                 onLoad={onMapLoad}
             >
-                {process.browser && marker && (
+                {process.browser && marker !== {} && (
                     <Marker
                         key={`${marker.lat}-${marker.lng}`}
                         position={{ lat: marker.lat, lng: marker.lng }}
