@@ -118,7 +118,7 @@ const BtnSave = styled.button`
 
 export default function VehicleRegister(): JSX.Element {
   const router = useRouter()
-  const { userId } = useUser()
+  const { userId } = useContext(UserContext)
   const [accountId, setAccountId] = useState("")
   const [files, setFiles] = useState([])
   const [imagesUrl, setImagesUrl] = useState([])

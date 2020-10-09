@@ -1,5 +1,6 @@
+import { useContext } from "react";
+import { UserContext } from "context/UserContext";
 import { useRouter } from "next/router"
-import useUser from "hooks/useUser"
 import {
     DropdownButton,
     DropdownContent,
@@ -8,7 +9,7 @@ import {
 } from "./styles";
 
 export default function ProfileDropDownMenu({ logout }): JSX.Element {
-    const { user, loading } = useUser()
+    const { user, loading } = useContext(UserContext)
     const router = useRouter()
     return (
         <DropdownMenu>

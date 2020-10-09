@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import useUser from "hooks/useUser";
+import { UserContext } from "context/UserContext";
+import { useContext, useEffect, useState } from "react";
 import { useLazyQuery } from "@apollo/client"
 import { GET_USER_ACCOUNT_DATA, GET_USER_VEHICLES } from "queries";
 import { Vehicle } from "utils/types"
@@ -13,7 +13,7 @@ import {
 } from "./styles"
 
 export default function VehicleSection() {
-    const { userId } = useUser()
+    const { userId } = useContext(UserContext)
     const [accountId, setAccountId] = useState("")
     const [getUserAccount, { data }] = useLazyQuery(GET_USER_ACCOUNT_DATA)
     const [getUserVehicles, { data: vehiclesData }] = useLazyQuery(GET_USER_VEHICLES)

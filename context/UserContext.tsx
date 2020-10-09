@@ -4,6 +4,7 @@ import { GET_USER } from "queries"
 import { useLazyQuery } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
 import { USER_STATES } from "utils/constants"
+import { useRouter } from "next/router"
 
 type User = {
     id?: String;
@@ -26,6 +27,9 @@ interface ContextInterface {
     setUser: (user: User) => void;
     setToken: (authToken: String) => void;
     token: String;
+    loading: Boolean;
+    logout: () => void;
+    userStatus: undefined | false | true;
 }
 
 export const UserContext = React.createContext<ContextInterface>({
@@ -34,24 +38,34 @@ export const UserContext = React.createContext<ContextInterface>({
     setUserId: undefined,
     setUser: undefined,
     setToken: undefined,
-    token: ""
+    token: "",
+    loading: true,
+    logout: undefined,
+    userStatus: USER_STATES.NOT_KNOWN
 })
 
 export function UserProvider({ children }: { children: React.ReactNode | React.ReactNode[] | null; value?: ContextInterface }) {
+    const router = useRouter()
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
     const [getUser, { data }] = useLazyQuery(GET_USER)
-    const [user, setUser] = useState<User>(USER_STATES.NOT_KNOWN)
+    const [user, setUser] = useState<User>(undefined)
+    const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         if (!userId) {
-            setUser(USER_STATES.LOGGED_OUT)
+            setUser(undefined)
+            setUserStatus(USER_STATES.LOGGED_OUT)
         }
         if (userId && userId.length > 0) {
             getUser({ variables: { id: userId } })
-        }
-        if (data) {
-            setUser(data.user)
+            if (data) {
+                console.log('Llegue aqui')
+                setUser(data.user)
+                setUserStatus(USER_STATES.LOGGED_IN)
+                setLoading(false)
+            }
         }
     }, [data, userId])
 
@@ -66,6 +80,15 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken(authToken)
     }
 
+    const logout = () => {
+        setUser({})
+        setToken("")
+        setUserId("")
+        setUserStatus(USER_STATES.LOGGED_OUT)
+        router.push("/")
+    }
+
+
     const ContextValue = {
         user: user,
         token: token,
@@ -73,6 +96,9 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken: modifyToken,
         userId: userId,
         setUserId: setUserId,
+        loading,
+        logout,
+        userStatus
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
@@ -19,14 +19,14 @@ import {
   ActionSection,
   FormHeading
 } from "styles/formStyles"
-import useUser from "hooks/useUser"
 import UploadImageService from "services/uploadImage"
+import { UserContext } from "context/UserContext";
 
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
   const router = useRouter()
-  const { setUser } = useUser()
+  const { setUser } = useContext(UserContext)
   const [image, setImage] = useLocalStorage("image", "")
   const [imageStatus, setImageStatus] = useState({
     loading: false,

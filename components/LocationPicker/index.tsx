@@ -47,12 +47,19 @@ const center = {
 };
 
 
+type Coordinates = {
+    lat?: number;
+    lng?: number;
+    time?: Date;
+}
+
+
 export default function LocationPicker() {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
         libraries,
     });
-    const [marker, setMarker] = useState({});
+    const [marker, setMarker] = useState<Coordinates>({});
     const [selected, setSelected] = useState(null);
 
     const onMapClick = useCallback((e) => {
@@ -67,16 +74,16 @@ export default function LocationPicker() {
         );
     }, []);
 
-    const mapRef = useRef();
+    const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
     }, []);
 
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
-            if (mapRef.current) {
-                mapRef.current.panTo({ lat, lng });
-                mapRef.current.setZoom(16);
+            if (mapRef && mapRef.current) {
+                mapRef.current!.panTo({ lat, lng });
+                mapRef.current!.setZoom(16);
             }
         }
     }, []);
@@ -113,9 +120,9 @@ export default function LocationPicker() {
                         position={{ lat: marker.lat, lng: marker.lng }}
                         icon={{
                             url: `/icons/availableIcon.svg`,
-                            origin: new window.google.maps.Point(0, 0),
-                            anchor: new window.google.maps.Point(15, 15),
-                            scaledSize: new window.google.maps.Size(30, 30),
+                            origin: new (window as any).google.maps.Point(0, 0),
+                            anchor: new (window as any).google.maps.Point(15, 15),
+                            scaledSize: new (window as any).google.maps.Size(30, 30),
                         }}
                     />
                 )}

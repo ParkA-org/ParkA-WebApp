@@ -1,5 +1,4 @@
 import styled from "styled-components"
-import useUser from "hooks/useUser"
 import Layout from "pages/layout"
 import DeleteIcon from "components/Icons/Delete"
 import VehicleCard from "components/VehicleCard"
@@ -7,6 +6,8 @@ import ReservationCard from "components/ReservationCard"
 import { CircularButton } from "components/ProfileSection/styles"
 import IconButton from "components/IconButton"
 import Carousel from "components/Carousel"
+import { UserContext } from "context/UserContext"
+import { useContext } from "react"
 
 const Container = styled.div`
     display: flex;
@@ -26,7 +27,7 @@ const Container = styled.div`
 `;
 
 export default function DetailVehicle() {
-    const { user, loading } = useUser()
+    const { user, loading } = useContext(UserContext)
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>

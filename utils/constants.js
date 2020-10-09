@@ -1,5 +1,5 @@
 export const USER_STATES = {
     NOT_KNOWN: undefined,
-    LOGGED_OUT: {},
+    LOGGED_OUT: false,
     LOGGED_IN: true
 }

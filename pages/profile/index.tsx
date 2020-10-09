@@ -1,11 +1,11 @@
-import { useEffect } from "react"
+import { useContext, useEffect } from "react"
 import Layout from "../layout";
 import ProfileSection from "components/ProfileSection"
 import VehicleSection from "components/VehicleSection"
 import styled from "styled-components"
-import useUser from "hooks/useUser";
 import { useRouter } from "next/router";
 import { USER_STATES } from "utils/constants"
+import { UserContext } from "context/UserContext";
 
 const Container = styled.div`
 width: 100%;
@@ -14,15 +14,15 @@ margin: 0 auto;
 
 export default function Profile(): JSX.Element {
     const router = useRouter()
-    const { isLogged } = useUser()
+    const { userStatus } = useContext(UserContext)
 
     useEffect(() => {
-        if (isLogged === USER_STATES.NOT_KNOWN) {
+        if (userStatus === USER_STATES.NOT_KNOWN) {
             console.log('waiting')
-        } else if (isLogged === USER_STATES.LOGGED_OUT) {
+        } else if (userStatus === USER_STATES.LOGGED_OUT) {
             router.push("/login")
         }
-    }, [isLogged])
+    }, [userStatus])
     return (
         <Layout pageTitle="Profile">
             <Container>

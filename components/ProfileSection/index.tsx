@@ -1,5 +1,4 @@
 import { BsStarFill, BsStarHalf } from 'react-icons/bs';
-import useUser from "hooks/useUser"
 import NavigationLink from "components/NavigationLink"
 import {
     ProfileContainer,
@@ -12,9 +11,11 @@ import {
 
 import Button from "components/Button"
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { useContext } from 'react';
+import { UserContext } from 'context/UserContext';
 
 export default function ProfileSection() {
-    const { user, loading } = useUser()
+    const { user, loading } = useContext(UserContext)
     return (
         <ProfileContainer>
             <h1>{!loading ? `${user.name} ${user.lastname}` : "Nombre"}  <AiFillCheckCircle color="blue" /></h1>
