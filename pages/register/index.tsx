@@ -49,7 +49,7 @@ export default function registerPersonalAccount(): JSX.Element {
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
         <FormHeading>
-          <img src="images/logo1.svg" alt="ParkA logo" />
+          <img src="/images/logo1.svg" alt="ParkA logo" />
           <h2>Crea una cuenta para continuar</h2>
         </FormHeading>
         <Formik
@@ -97,6 +97,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.name}
                     placeholder="Nombre"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     name="lastName"
@@ -105,6 +106,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.lastName}
                     placeholder="Apellido"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     name="email"
@@ -113,6 +115,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.email}
                     placeholder="Correo electrónico"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     type="password"
@@ -122,6 +125,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.password}
                     placement="horizontal"
                     isTouched={touched.password}
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     type="password"
@@ -131,6 +135,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.confirmPassword}
                     isTouched={touched.confirmPassword}
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                 </FieldSection>
                 <InformationSection>

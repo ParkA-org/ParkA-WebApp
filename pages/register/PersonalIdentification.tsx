@@ -20,6 +20,7 @@ import {
   FieldSection,
   InformationSection,
   ActionSection,
+  FormHeading
 } from "styles/formStyles"
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
@@ -48,7 +49,10 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
   return (
     <Layout pageTitle="Identificación Personal">
       <MainFormContainer>
-        <h1>Identificación Personal</h1>
+        <FormHeading>
+          <img src="/images/logo1.svg" alt="ParkA logo" />
+          <h2>Identificación Personal</h2>
+        </FormHeading>
         <Formik
           initialValues={{
             typeOfDocument: "",
@@ -128,7 +132,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 </FieldSection>
                 <InformationSection>
                   {countryLoading ? <Spinner /> :
-                    <IdentificationCard {...values} imageUrl={image} countries={data.results} />}
+                    <IdentificationCard {...values} imageUrl={image} countries={data.countries} />}
                 </InformationSection>
               </FormContainer>
               <ActionSection>

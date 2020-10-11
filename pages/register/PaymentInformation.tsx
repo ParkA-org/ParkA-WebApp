@@ -18,6 +18,7 @@ import {
   InformationSection,
   ActionSection,
   CompactActionSection,
+  FormHeading
 } from "styles/formStyles"
 import useLocalStorage from "hooks/useLocalStorage"
 
@@ -41,7 +42,10 @@ export default function RegisterPaymentInformation(): JSX.Element {
   return (
     <Layout pageTitle="Información Crediticia">
       <MainFormContainer>
-        <h1>Información Crediticia</h1>
+        <FormHeading>
+          <img src="/images/logo1.svg" alt="ParkA logo" />
+          <h2>Crea una cuenta para continuar</h2>
+        </FormHeading>
         <Formik
           initialValues={{
             cardNumber: "",

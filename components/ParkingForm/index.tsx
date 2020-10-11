@@ -112,7 +112,7 @@ export default function ParkingForm() {
     const { user, loading } = useContext(UserContext)
     const [park, setPark] = useState<Parking>({ owner: "", address: "", sector: "" })
     const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
-
+    const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
 
     useEffect(() => {
@@ -206,7 +206,7 @@ export default function ParkingForm() {
                             </ElementContainer>
                         </RightSection>
                         <CenterSection>
-                            <MultipleImagePicker />
+                            <MultipleImagePicker setFiles={setFiles} />
                         </CenterSection>
                         <style jsx>
                             {`

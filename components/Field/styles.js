@@ -6,7 +6,7 @@ export const StyledField = styled(Field)`
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
-  max-width: 350px;
+  max-width: 260px;
   line-height: 1.5em;
   width: 100%;
   text-align: left;

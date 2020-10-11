@@ -131,3 +131,34 @@ query GetAccountVehicles($id: ID!){
   }
 }
 `
+
+export const GET_ALL_VEHICLES = gql`
+query GetVehicles{
+  vehicles(limit: 10){
+    id
+    alias
+    detail
+    year
+    licenseplate
+    mainpicture {
+      id
+      url
+    }
+    type_vehicle {
+      name
+    }
+    color_exterior {
+      name
+    }
+    model {
+      make {
+        icon {
+          url
+        }
+        name
+      }
+    }
+    verified
+  }
+}
+`;
