@@ -1,11 +1,10 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik"
 import { useRouter } from "next/router"
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client"
 import { GET_COLORS, GET_MODELS, GET_USER_ACCOUNT_DATA, GET_VEHICLE_TYPES } from "queries"
 import { CREATE_VEHICLE } from "mutations"
-import useUser from "hooks/useUser"
 import { CreateVehicleSchema } from "utils/schemas"
 import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData } from "utils/types"
 import Layout from "../layout";
@@ -15,6 +14,7 @@ import Spinner from "components/Spinner"
 import MultipleImagePicker from "components/MultipleImagePicker"
 import ModalPortal from "components/Modal"
 import { uploadMultipleImages } from "services/uploadImage"
+import { UserContext } from "context/UserContext";
 
 // STYLES 
 const Container = styled.div`

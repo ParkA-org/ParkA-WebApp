@@ -36,8 +36,6 @@ export default function IdentificationCard({
   const getCountry = (currentCountry = "") => {
     let returnValue = ""
     if (countries !== undefined && currentCountry !== "") {
-      console.log('Countries')
-      console.log(countries)
       returnValue = countries.filter(country => country.name === currentCountry)[0].name
     }
     return returnValue

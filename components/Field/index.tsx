@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { CSSProperties, useRef } from "react";
 import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
 import Button from "components/Button";
 import { FormikErrors, FormikTouched } from "formik/dist/types";
@@ -13,6 +13,7 @@ type FieldProps = {
   component?: string;
   placeholder?: string;
   value?: string;
+  inputStyles?: CSSProperties;
 };
 
 export default function Field({
@@ -24,7 +25,8 @@ export default function Field({
   component,
   placeholder,
   value,
-  placement = "vertical"
+  placement = "vertical",
+  inputStyles,
 }: FieldProps): JSX.Element {
   return (
     <FieldContainer placement={placement}>
@@ -35,6 +37,7 @@ export default function Field({
         component={component}
         placeholder={placeholder}
         value={value}
+        {...inputStyles}
       />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>

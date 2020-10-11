@@ -1,3 +1,4 @@
+import { useContext } from "react"
 import styled from "styled-components"
 import Layout from "pages/layout"
 import DeleteIcon from "components/Icons/Delete"
@@ -7,7 +8,6 @@ import { CircularButton } from "components/ProfileSection/styles"
 import IconButton from "components/IconButton"
 import Carousel from "components/Carousel"
 import { UserContext } from "context/UserContext"
-import { useContext } from "react"
 
 const Container = styled.div`
     display: flex;
