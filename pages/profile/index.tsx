@@ -6,6 +6,8 @@ import styled from "styled-components"
 import { useRouter } from "next/router";
 import { USER_STATES } from "utils/constants"
 import { UserContext } from "context/UserContext";
+import { initializeApollo } from "lib/apolloClient";
+import { GET_ALL_VEHICLES } from "queries"
 
 const Container = styled.div`
 width: 100%;
@@ -31,4 +33,17 @@ export default function Profile(): JSX.Element {
             </Container>
         </Layout>
     );
+}
+
+export async function getStaticProps() {
+    const apolloClient = initializeApollo()
+
+    await apolloClient.query({ query: GET_ALL_VEHICLES })
+
+    return {
+        props: {
+            initialApolloState: apolloClient.cache.extract()
+        }
+    }
+
 }
