@@ -3,7 +3,7 @@ import { Formik, Form } from "formik"
 import { useQuery, useMutation } from '@apollo/client'
 import { useRouter } from "next/router"
 import { GET_BIRTH_PLACES, GET_NATIONALITIES } from "queries"
-import { CREATE_ACCOUNT } from "mutations"
+import { CREATE_USER, CREATE_USER_INFO } from "mutations"
 import { PersonalIdentificationSchema } from "utils/schemas"
 import useLocalStorage from "hooks/useLocalStorage"
 import Layout from "../layout"
@@ -14,6 +14,8 @@ import Button from "components/Button"
 import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
 import { BasicEntity, BirthPlaceData, NationalityData } from "utils/types"
+import { UserInformation, CreateUserInformationInput, User, CreateUserInput } from "utils/types/user"
+import UploadImageService from "services/uploadImage"
 import {
   MainFormContainer,
   FormContainer,
@@ -27,6 +29,7 @@ import {
 export default function RegisterPersonalIdentificacion(): JSX.Element {
   const [accountId, setAccountId] = useLocalStorage("account-id", "")
   const [requestError, setRequestError] = useState(null)
+  const [imageUrl, setImageUrl] = useState("")
   const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
   const [userId,] = useLocalStorage("user-id", "")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
@@ -49,6 +52,10 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     nationality: "",
   })
 
+  const [CreateUserInfo, { data: userInfoData, error: userInfoError }] = useMutation<UserInformation, CreateUserInformationInput>(CREATE_USER_INFO)
+
+  const [CreateUser] = useMutation<User, CreateUserInput>(CREATE_USER)
+
   useEffect(() => {
     console.log('Se ejecuto')
     for (const key in userValues) {
@@ -58,20 +65,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     }
     setInitialUserValues(userValues)
   }, [localUser])
-
-  const [CreateAccount] = useMutation(CREATE_ACCOUNT, {
-    onCompleted({ createAccountDatum }) {
-      const { accountDatum } = createAccountDatum
-      setAccountId(accountDatum.id)
-      setShowModal(false)
-      router.push('/register/PaymentInformation')
-    },
-    onError(error) {
-      console.log('Using mutation on error')
-      setRequestError(error)
-      setShowModal(false)
-    }
-  })
 
   if (birthPlaceError) return <pre>`Error ${JSON.stringify(birthPlaceError)}`</pre>
 
@@ -86,10 +79,39 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           enableReinitialize={true}
           initialValues={initialUserValues}
           validationSchema={PersonalIdentificationSchema}
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             setLocalUser({ ...localUser, ...values })
-            router.push('/register/PaymentInformation')
-            // setShowModal(true)
+            console.log('Nueva fecha')
+            let newDate = new Date(values.dateOfBirth).toISOString()
+            setShowModal(true)
+
+            await CreateUserInfo({
+              variables: {
+                birthDate: newDate,
+                documentNumber: values.documentCode,
+                nationality: values.nationality,
+                placeOfBirth: values.birthPlace,
+                paymentInformation: "cc78a504-aafe-4917-afe9-f3a3ecee8b07",
+              }
+            })
+            const { id } = userInfoData
+
+            await UploadImageService(localUser.file, setImageUrl, setRequestError)
+
+            if (!userInfoError) {
+              CreateUser({
+                variables: {
+                  email: localUser.email,
+                  lastName: localUser.lastName,
+                  name: localUser.name,
+                  origin: "web",
+                  password: localUser.password,
+                  profilePicture: imageUrl ? imageUrl : "",
+                  userInformation: id,
+                  confirmed: false
+                }
+              })
+            }
 
             // CreateAccount({
             //   variables: {
@@ -105,6 +127,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
             //     }
             //   }
             // })
+            router.push('/register/PaymentInformation')
           }}
         >
           {({ values, errors, touched }) => (

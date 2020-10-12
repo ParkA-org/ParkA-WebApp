@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client"
 
 export const CREATE_USER = gql`
-mutation CreateUser($user: createUserInput!) {
-  createUser(input: $user) {
-    user {
-        id
-        username
-        email
-    }
+mutation CreateUser($cuInput: createUserInput!){
+  createUser(createUserInput: $cuInput){
+    id
+    name
+    lastName
+    email
+    origin
+    confirmed
   }
 }
 `
@@ -22,14 +23,19 @@ export const UPDATE_USER = gql`
   }
 `
 
-export const CREATE_ACCOUNT = gql`
-mutation createNewAccount($userAccount: createAccountDatumInput) {
-  createAccountDatum(input: $userAccount) {
-    accountDatum {
+export const CREATE_USER_INFO = gql`
+mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
+  createUserInformation(createUserInformationInpuType: $cuiInput){
+    id
+    birthDate
+    telephoneNumber
+    nationality {
       id
-      document
-      document_type
-      placeofbirth
+      name
+    }
+    placeOfBirth {
+      id
+      name
     }
   }
 }

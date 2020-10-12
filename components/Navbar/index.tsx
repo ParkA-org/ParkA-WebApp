@@ -1,6 +1,5 @@
 import { useState, useEffect, useContext } from "react"
 import Link from "next/link"
-import useUser from "hooks/useUser"
 import Button from "components/Button"
 import NavigationLink from "components/NavigationLink"
 import ProfileDropDownMenu from "components/ProfileDropDownMenu"
@@ -14,8 +13,6 @@ import {
   ColorBar,
 } from "./styles"
 import { USER_STATES } from "utils/constants"
-import { useLazyQuery } from "@apollo/client"
-import { GET_USER } from "queries"
 import { UserContext } from "context/UserContext"
 
 function StandardNavbar({ setIsOpen, isOpen }): JSX.Element {
