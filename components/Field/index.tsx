@@ -51,6 +51,7 @@ type SelectFieldProps = {
   label: string;
   placeholder?: string;
   placement?: string;
+  value?: string;
   children: JSX.Element[];
   errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
@@ -64,11 +65,12 @@ export function SelectField({
   placement = "vertical",
   errorMessage,
   isTouched,
+  value
 }: SelectFieldProps): JSX.Element {
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField component="select" name={name} placeholder={placeholder}>
+      <StyledField component="select" name={name} placeholder={placeholder} value={value}>
         {children}
       </StyledField>
       {errorMessage && isTouched ? (

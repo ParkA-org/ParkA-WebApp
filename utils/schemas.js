@@ -6,7 +6,10 @@ export const CreateAccountSchema = Yup.object().shape({
     email: Yup.string().email("Email inválido").required("Requerido"),
     password: Yup.string().required("Requerido"),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir'),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => {
+     if(!value.length) return true
+        return value && value.size <= 500000
+    }),
 });
 
 export const PaymentInformationSchema = Yup.object().shape({

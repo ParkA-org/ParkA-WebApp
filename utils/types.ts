@@ -6,8 +6,12 @@ export type BasicEntity = {
     id: string;
 }
 
-export interface CountriesData {
-    countries: BasicEntity[]
+export interface BirthPlaceData {
+    getAllCountries: BasicEntity[]
+}
+
+export interface NationalityData {
+    getAllNationalities: BasicEntity[]
 }
 
 export type MakerIcon = {

@@ -1,7 +1,16 @@
 import { gql } from "@apollo/client"
-export const GET_COUNTRIES = gql`
+
+export const GET_BIRTH_PLACES = gql`
 query GetCountries {
-  countries {
+  getAllCountries {
+    id
+    name
+  }
+}`
+
+export const GET_NATIONALITIES = gql`
+query GetNationalities {
+  getAllNationalities {
     id
     name
   }
