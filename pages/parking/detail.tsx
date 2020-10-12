@@ -2,7 +2,10 @@ import Layout from "../layout";
 import styled from "styled-components";
 import Carousel from "components/Carousel";
 import ReviewCard from "components/ReviewCard";
+import { useRouter } from "next/router"
 import { BiDollar } from "react-icons/bi";
+import useUser from "hooks/useUser"
+import { useEffect, useState } from "react";
 
 export const Container = styled.div`
     display:grid;
@@ -60,7 +63,7 @@ export const ButtonGroup = styled.div`
     align-items:center;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
     border:solid;
     border-color:#077187;
     color: #077187;
@@ -73,6 +76,9 @@ export const Button = styled.div`
 `;
 
 export default function ParkingDetail(): JSX.Element {
+    const router = useRouter()
+    const { userId } = useUser()
+    const [accountId, setAccountId] = useState("")
     return (
         <Layout pageTitle="Detalle del Parqueo">
             <div>

@@ -17,7 +17,7 @@ export default function Reservations() {
         <Layout>
             <Container>
                 <h1 style={{ textAlign: "center", fontSize: "3rem", margin: "0.5em 0" }}>Historial de Reservas</h1>
-                <NavigationLink href="/reservations/new">
+                <NavigationLink href="/map">
                     <NewLink style={{ color: "#084C7C" }}><AiFillPlusCircle size="1.5em" color="#084C7C" /> Nueva Reserva</NewLink>
                 </NavigationLink>
                 <Carousel title="Reservas Pendientes">
