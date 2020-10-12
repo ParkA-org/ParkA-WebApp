@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import { Formik, Form } from "formik";
 import { useMutation } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
@@ -19,14 +19,14 @@ import {
   ActionSection,
   FormHeading
 } from "styles/formStyles"
-import useUser from "hooks/useUser"
 import UploadImageService from "services/uploadImage"
+import { UserContext } from "context/UserContext";
 
 export default function registerPersonalAccount(): JSX.Element {
   const [showModal, setShowModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
   const router = useRouter()
-  const { setUser } = useUser()
+  const { setUser } = useContext(UserContext)
   const [image, setImage] = useLocalStorage("image", "")
   const [imageStatus, setImageStatus] = useState({
     loading: false,
@@ -49,7 +49,7 @@ export default function registerPersonalAccount(): JSX.Element {
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
         <FormHeading>
-          <img src="images/logo1.svg" alt="ParkA logo" />
+          <img src="/images/logo1.svg" alt="ParkA logo" />
           <h2>Crea una cuenta para continuar</h2>
         </FormHeading>
         <Formik
@@ -97,6 +97,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.name}
                     placeholder="Nombre"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     name="lastName"
@@ -105,6 +106,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.lastName}
                     placeholder="Apellido"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     name="email"
@@ -113,6 +115,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.email}
                     placeholder="Correo electrónico"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     type="password"
@@ -122,6 +125,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.password}
                     placement="horizontal"
                     isTouched={touched.password}
+                    inputStyles={{ width: "100px" }}
                   />
                   <Field
                     type="password"
@@ -131,6 +135,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.confirmPassword}
                     isTouched={touched.confirmPassword}
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
                   />
                 </FieldSection>
                 <InformationSection>

@@ -75,3 +75,11 @@ export type UploadFile = {
     name: string;
     previewUrl: string;
 }
+
+export type Coordinates = {
+    lat?: number;
+    lng?: number;
+    time?: Date;
+}
+
+

@@ -1,12 +1,12 @@
-import { useState, useReducer, useEffect } from "react"
+import { useState, useReducer, useEffect, useContext } from "react"
 import { Formik, Form } from "formik";
-import useUser from "hooks/useUser"
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
 import MultipleImagePicker from "components/MultipleImagePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
 import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
+import { UserContext } from "context/UserContext";
 
 type DayCheckProps = {
     id: string;
@@ -109,10 +109,10 @@ type Parking = {
 }
 
 export default function ParkingForm() {
-    const { user, loading } = useUser()
+    const { user, loading } = useContext(UserContext)
     const [park, setPark] = useState<Parking>({ owner: "", address: "", sector: "" })
     const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
-
+    const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
 
     useEffect(() => {
@@ -206,7 +206,7 @@ export default function ParkingForm() {
                             </ElementContainer>
                         </RightSection>
                         <CenterSection>
-                            <MultipleImagePicker />
+                            <MultipleImagePicker setFiles={setFiles} />
                         </CenterSection>
                         <style jsx>
                             {`

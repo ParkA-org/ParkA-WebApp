@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import Link from "next/link"
 import useUser from "hooks/useUser"
 import Button from "components/Button"
@@ -16,6 +16,7 @@ import {
 import { USER_STATES } from "utils/constants"
 import { useLazyQuery } from "@apollo/client"
 import { GET_USER } from "queries"
+import { UserContext } from "context/UserContext"
 
 function StandardNavbar({ setIsOpen, isOpen }): JSX.Element {
   return (
@@ -71,8 +72,7 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
 
 export default function Navbar(): JSX.Element {
   const [isOpen, setIsOpen] = useState(true);
-  const [getUser, { data }] = useLazyQuery(GET_USER)
-  const { isLogged, logout, token, setUser, } = useUser()
+  const { userStatus, logout } = useContext(UserContext)
 
   useEffect(() => {
     const handleResize = () => {
@@ -82,11 +82,11 @@ export default function Navbar(): JSX.Element {
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
-  }, [isLogged]);
+  }, []);
 
   return (
     <>
-      {isLogged === USER_STATES.LOGGED_IN ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
+      {userStatus === USER_STATES.LOGGED_IN ? <LoggedNavbar isOpen={isOpen} logout={logout} setIsOpen={setIsOpen} /> : <StandardNavbar isOpen={isOpen} setIsOpen={setIsOpen} />}
       <ColorBar />
       <style jsx>
         {`

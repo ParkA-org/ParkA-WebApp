@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
-import useUser from "hooks/useUser";
-import { useLazyQuery } from "@apollo/client"
-import { GET_USER_ACCOUNT_DATA, GET_USER_VEHICLES } from "queries";
-import { Vehicle } from "utils/types"
+import { useQuery } from "@apollo/client"
+import { GET_ALL_VEHICLES } from "queries";
 import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import VehicleCard from "components/VehicleCard"
@@ -13,32 +10,12 @@ import {
 } from "./styles"
 
 export default function VehicleSection() {
-    const { userId } = useUser()
-    const [accountId, setAccountId] = useState("")
-    const [getUserAccount, { data }] = useLazyQuery(GET_USER_ACCOUNT_DATA)
-    const [getUserVehicles, { data: vehiclesData }] = useLazyQuery(GET_USER_VEHICLES)
-    const [vehicles, setVehicles] = useState<Vehicle[]>([])
-    useEffect(() => {
-        if (userId) {
-            getUserAccount({ variables: { id: userId } })
-        }
-        if (data) {
-            setAccountId(data.user.account_data.id)
-            console.log('Account id ', accountId)
-        }
-    }, [data, userId])
+    const { loading, error, data } = useQuery(GET_ALL_VEHICLES)
 
-    useEffect(() => {
-        if (accountId) {
-            getUserVehicles({ variables: { id: accountId } })
-        }
+    if (error) return <h2>Error</h2>
+    if (loading) return <h2>Loading...</h2>
 
-        if (vehiclesData) {
-            console.log('DATA Vehiculos')
-            setVehicles(vehiclesData.accountDatum.vehicles)
-        }
-
-    }, [vehiclesData, accountId])
+    const { vehicles } = data
 
     return (
         <>
@@ -50,8 +27,6 @@ export default function VehicleSection() {
             </HeaderSection>
             <VehicleList>
                 {vehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
-                <VehicleCard />
-                <VehicleCard />
             </VehicleList>
         </>
     )

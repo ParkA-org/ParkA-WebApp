@@ -67,16 +67,16 @@ export default function MapViewer(): JSX.Element {
         ]);
     }, []);
 
-    const mapRef = useRef();
+    const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
     }, []);
 
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
-            if (mapRef.current) {
-                mapRef.current.panTo({ lat, lng });
-                mapRef.current.setZoom(16);
+            if (mapRef && mapRef.current) {
+                mapRef.current!.panTo({ lat, lng });
+                mapRef.current!.setZoom(16);
             }
         }
     }, []);
@@ -136,9 +136,9 @@ export default function MapViewer(): JSX.Element {
                                     }}
                                     icon={{
                                         url: `/icons/availableIcon.svg`,
-                                        origin: new window.google.maps.Point(0, 0),
-                                        anchor: new window.google.maps.Point(15, 15),
-                                        scaledSize: new window.google.maps.Size(30, 30),
+                                        origin: new (window as any).google.maps.Point(0, 0),
+                                        anchor: new (window as any).google.maps.Point(15, 15),
+                                        scaledSize: new (window as any).google.maps.Size(30, 30),
                                     }}
                                 />
                             ) : (marker)
@@ -183,7 +183,7 @@ function Search({ panTo }) {
         clearSuggestions,
     } = usePlacesAutocomplete({
         requestOptions: {
-            location: { lat: () => 43.6532, lng: () => -79.3832 },
+            location: { lat: () => 43.6532, lng: () => -79.3832, equals: null, toUrlValue: null, toJSON: null },
             radius: 100 * 1000,
             componentRestrictions: {
                 country: "do"

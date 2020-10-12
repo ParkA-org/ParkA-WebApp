@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const MainFormContainer = styled.div`
-  margin-top: 2em;
+  margin: 2em 0;
   padding: 2em 0.5em;
   width: 100%;
   height: auto;
@@ -42,15 +42,15 @@ export const FormHeading = styled.div`
   }
   
   @media(min-width: 768px) {
-    width: 80%;
-    padding-left: 3em;
+    width: 100%;
+    padding-left: 2em;
   }
 
 `;
 
 export const FormContainer = styled.div`
   background-color: white;
-  padding: 1em;
+  padding: 1em 1em 1em 2em;
   height: auto;
   width: 100%;
   display: grid;
@@ -79,6 +79,7 @@ export const FormContainer = styled.div`
 
 export const FieldSection = styled.div`
   grid-area: field;
+  justify-self: start;
   display: flex;
   flex-direction: column;
   align-items: center;
