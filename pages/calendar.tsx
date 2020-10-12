@@ -19,14 +19,14 @@ const schedulerData = [
 
 const Appointment = ({ children, style, data, resources, ...restProps }) => (
   <Appointments.Appointment
-    draggable={false}
-    data={data}
-    resources={resources}
     style={{
       ...style,
       backgroundColor: data.color,
       borderRadius: "8px"
     }}
+    draggable={false}
+    data={data}
+    resources={resources}
     {...restProps}
   >
     {children}
