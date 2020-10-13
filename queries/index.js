@@ -36,18 +36,29 @@ query GetModels {
 }
 `
 
+export const GET_MAKES = gql`
+query GetMakes{
+  getAllMakes{
+    models {
+      id
+      name
+    }
+  }
+}
+`
+
 export const GET_COLORS = gql`
-query GetColors {
-  colorExteriors{
+query GetColors{
+  getAllColors{
     id
     name
   }
 }
 `
 
-export const GET_VEHICLE_TYPES = gql`
-query GetVehicleTypes{
-  typeVehicles{
+export const GET_BODY_STYLES = gql`
+query GetBodyStyles{
+  getAllBodyStyles{
     id
     name
   }

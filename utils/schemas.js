@@ -75,12 +75,14 @@ export const CreateParkingSchema = Yup.object().shape({
     file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
 });
 
-export const CreateVehicleSchema = Yup.object().shape({
-    model: Yup.string().required("Requerido"),
-    year: Yup.string().required("Requerido"),
-    licenseplate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
-    type_vehicle: Yup.string().required("Requerido"),
-    detail: Yup.string(),
-    color_exterior: Yup.string(),
-    alias: Yup.string()
+export const CreateVehicleSchema = Yup.object().shape({    
+    licensePlate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
+    detail: Yup.string().required("Requerido"),
+    alias:  Yup.string().required("Requerido"),
+    bodyStyle:  Yup.string().required("Requerido"),
+    year:  Yup.string().required("Requerido"),
+    colorExterior:  Yup.string().required("Requerido"),
+    model:  Yup.string().required("Requerido"),
+    mainPicture:  Yup.string().required("Requerido"),
+    pictures: Yup.array().of(Yup.string())
 })

@@ -29,7 +29,6 @@ export default function ProfileSection() {
     })
     const [user, setUser] = useState<User | null>(null)
     useEffect(() => {
-        console.log('Token info')
         let obj = jwt_decode(token)
         getUser({ variables: { id: obj.id } })
         if (data)

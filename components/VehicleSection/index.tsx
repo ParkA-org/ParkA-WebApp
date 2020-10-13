@@ -25,7 +25,8 @@ export default function VehicleSection() {
     if (loading) return <h2>Loading...</h2>
 
     const { getAllUserVehicles } = data
-
+    console.log('All vehicles')
+    console.log(getAllUserVehicles)
     return (
         <>
             <HeaderSection>

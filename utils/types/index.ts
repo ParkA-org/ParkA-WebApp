@@ -29,15 +29,15 @@ export type Maker = {
 }
 
 export interface MakersData {
-    makes: Maker[]
+    getAllMakes: ModelsData[]
 }
 
 export interface ColorsData {
-    colorExteriors: BasicEntity[]
+    getAllColors: BasicEntity[]
 }
 
-export interface TypeVehiclesData {
-    typeVehicles: BasicEntity[]
+export interface BodyStylesData {
+    getAllBodyStyles: BasicEntity[]
 }
 
 export interface ModelsData {
