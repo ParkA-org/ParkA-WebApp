@@ -18,15 +18,19 @@ import {
 import { UserContext } from "context/UserContext"
 import ModalPortal from "components/Modal"
 import Spinner from "components/Spinner"
+import useLocalStorage from "hooks/useLocalStorage"
 
 export default function SignWithEmail(): JSX.Element {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
+  const [_, setUserId] = useLocalStorage("user-id", "")
   const { setUser, setToken } = useContext(UserContext)
   const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
-      const { jwt: token, user } = login
+      const { JWT: token, user } = login
+      const { id } = user
+      setUserId(id)
       setToken(token)
       setUser(user)
       setShowModal(false)
@@ -34,7 +38,6 @@ export default function SignWithEmail(): JSX.Element {
       router.push("/")
     },
     onError(error) {
-      console.log('Using mutation on error')
       setRequestError(error)
       setShowModal(false)
     }
@@ -54,8 +57,8 @@ export default function SignWithEmail(): JSX.Element {
             setShowModal(true)
             LoginUser({
               variables: {
-                loggedUser: {
-                  identifier: values.email,
+                logInfo: {
+                  email: values.email,
                   password: values.password
                 }
               }
@@ -91,7 +94,7 @@ export default function SignWithEmail(): JSX.Element {
                   </span>
                   </NavigationLink>
 
-                  {requestError && <span style={{ width: "100%", color: "red", margin: "0 auto" }}>Ocurrio un error</span>}
+                  {requestError && <span style={{ width: "100%", color: "red", margin: "0 auto" }}>{requestError.message}</span>}
                 </FieldSection>
                 <InformationSection>
                   <img

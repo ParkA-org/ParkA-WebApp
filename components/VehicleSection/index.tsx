@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { GET_ALL_VEHICLES } from "queries";
+import { GET_ALL_VEHICLES, GET_MAKES } from "queries";
 import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import VehicleCard from "components/VehicleCard"
@@ -8,15 +8,28 @@ import {
     VehicleList,
     NewLink
 } from "./styles"
+import { UserContext } from "context/UserContext";
+import { useContext } from "react";
+import { MakersData } from "utils/types";
 
 export default function VehicleSection() {
-    const { loading, error, data } = useQuery(GET_ALL_VEHICLES)
+    const { token } = useContext(UserContext)
+
+    const { loading: makersLoading, error: makersError, data: makersData } = useQuery<MakersData>(GET_MAKES);
+    const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        }
+    })
 
     if (error) return <h2>Error</h2>
     if (loading) return <h2>Loading...</h2>
 
-    const { vehicles } = data
-
+    const { getAllUserVehicles } = data
+    console.log('All vehicles')
+    console.log(getAllUserVehicles)
     return (
         <>
             <HeaderSection>
@@ -26,7 +39,10 @@ export default function VehicleSection() {
                 </NavigationLink>
             </HeaderSection>
             <VehicleList>
-                {vehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
+                {getAllUserVehicles.map(vehicle => {
+                    return <VehicleCard key={`${vehicle.id}${vehicle.alias}`
+                    } vehicle={vehicle} />
+                })}
             </VehicleList>
         </>
     )

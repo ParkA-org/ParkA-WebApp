@@ -1,21 +1,28 @@
 import { gql } from "@apollo/client"
-export const GET_COUNTRIES = gql`
+
+export const GET_BIRTH_PLACES = gql`
 query GetCountries {
-  countries {
+  getAllCountries {
+    id
+    name
+  }
+}`
+
+export const GET_NATIONALITIES = gql`
+query GetNationalities {
+  getAllNationalities {
     id
     name
   }
 }`
 
 export const GET_USER = gql`
-query GetUser($id: ID!){
-  user(id: $id) {
-    username
-    profilepicture
-    email
-    lastname
+query GetUser($id: String!){
+  getUserById(id: $id){
+    id
     name
-    confirmed
+    lastName
+    email
   }
 }
 `
@@ -29,18 +36,31 @@ query GetModels {
 }
 `
 
+export const GET_MAKES = gql`
+query GetMakes{
+  getAllMakes{
+    id
+    name
+    models {
+      id
+      name
+    }
+  }
+}
+`
+
 export const GET_COLORS = gql`
-query GetColors {
-  colorExteriors{
+query GetColors{
+  getAllColors{
     id
     name
   }
 }
 `
 
-export const GET_VEHICLE_TYPES = gql`
-query GetVehicleTypes{
-  typeVehicles{
+export const GET_BODY_STYLES = gql`
+query GetBodyStyles{
+  getAllBodyStyles{
     id
     name
   }
@@ -72,31 +92,27 @@ query GetUserAccountData($id: ID!){
 }
 `
 
-export const GET_VEHICLE = gql`
-query GetVehicle($id: ID!) {
-  vehicle(id: $id){
-    mainpicture {
-      alternativeText
-      url
+export const GET_VEHICLE_BY_ID = gql`
+query GetVehicle($vehicleId: getVehicleByIdInput!){
+  getVehicleById(getVehicleByIdInput: $vehicleId) {
+    id
+    licensePlate
+    detail
+    alias
+    bodyStyle {
+      id
+      name
+    }
+    year
+    colorExterior {
+      id
+      name
     }
     model {
-      name
-      make {
-        icon {
-          alternativeText
-          url
-        }
-        name
-      }
-    }
-    id
-    detail
-    licenseplate
-    year
-    color_exterior {
+      id
+      make
       name
     }
-    verified
   }
 }
 `;
@@ -134,31 +150,24 @@ query GetAccountVehicles($id: ID!){
 
 export const GET_ALL_VEHICLES = gql`
 query GetVehicles{
-  vehicles(limit: 10){
+  getAllUserVehicles {
     id
     alias
     detail
     year
-    licenseplate
-    mainpicture {
-      id
-      url
-    }
-    type_vehicle {
+    licensePlate
+    mainPicture 
+    bodyStyle {
       name
     }
-    color_exterior {
+    colorExterior {
       name
     }
     model {
-      make {
-        icon {
-          url
-        }
-        name
-      }
+      make 
+      name
     }
     verified
-  }
+    }
 }
 `;

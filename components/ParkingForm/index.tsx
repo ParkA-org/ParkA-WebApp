@@ -118,9 +118,7 @@ export default function ParkingForm() {
     useEffect(() => {
         if (!loading) {
             setPark({ ...park, owner: `${user.name} ${user.lastname}` })
-            console.log('Cargo?')
         } else {
-            console.log('No ha cargado')
         }
     }, [loading, setPark])
 
