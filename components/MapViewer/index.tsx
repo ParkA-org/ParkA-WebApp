@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/router"
 import { BsSearch } from "react-icons/bs"
 import { AiOutlineMenu } from "react-icons/ai"
+import Button from "components/Button"
 import {
     GoogleMap,
     useLoadScript,
@@ -166,7 +167,7 @@ export default function MapViewer(): JSX.Element {
                                     <h3>{selected.name}</h3>
                                     <p className="description">{selected.information}</p>
                                     <img className="img" src={selected.picture} alt="parking picture" />
-                                    <button onClick={() => router.push('/parking/checkout/[id]', `/parking/checkout/${selected.id}`)}>Ir al parqueo</button>
+                                    <Button onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${selected.id}`)}>Ir al parqueo</Button>
                                 </div>
                             </InfoWindow>
                         ) : null}

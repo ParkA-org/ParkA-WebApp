@@ -157,7 +157,7 @@ export default function EditVehicle(): JSX.Element {
             }
         }
     })
-
+    const [options, setOptions] = useState([])
     useEffect(() => {
         console.log('Router id')
         console.log(router.query.id)
@@ -174,6 +174,7 @@ export default function EditVehicle(): JSX.Element {
                 }
             }
             setInitialValues({ ...initialValues, ...obj })
+            makersData.getAllMakes.map(make => make.models.map(model => setOptions((prev) => [...prev, <option value={model.id} key={model.name}>{model.name}</option>])))
         }
     }, [data])
 
@@ -258,8 +259,7 @@ export default function EditVehicle(): JSX.Element {
                                             isTouched={touched.model}
                                             value={values.model}
                                         >
-                                            {makersData.getAllMakes.map(make => make.models.map(model => <option value={model.id} key={model.name}>{model.name}</option>))}
-
+                                            {options.length > 0 && options}
                                         </SelectField>}
 
                                     <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>

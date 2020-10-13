@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik"
 import { useRouter } from "next/router"
@@ -151,6 +151,12 @@ export default function VehicleRegister(): JSX.Element {
     }
   })
 
+  const [options, setOptions] = useState([])
+  useEffect(() => {
+    if (makersData)
+      makersData.getAllMakes.map(make => make.models.map(model => setOptions((prev) => [...prev, <option value={model.id} key={model.name}>{model.name}</option>])))
+  }, [makersData])
+
   return (
     <Layout pageTitle="Formulario de Vehiculos">
       <div style={{ textAlign: "left", width: "80%", margin: "0 auto" }}>
@@ -243,8 +249,7 @@ export default function VehicleRegister(): JSX.Element {
                       errorMessage={errors.model}
                       isTouched={touched.model}
                     >
-                      {makersData.getAllMakes.map(make => make.models.map(model => <option value={model.id} key={model.name}>{model.name}</option>))}
-
+                      {options}
                     </SelectField>}
 
                   <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
