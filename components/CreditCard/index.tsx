@@ -42,7 +42,7 @@ export default function CreditCard({
         }
         alt="card logo"
       />
-      <Chip src="../images/cardChip.png" alt="card chip" />
+      <Chip src="/images/cardChip.png" alt="card chip" />
       <CardNumbers>
         {cardNumber.length === 0
           ? "•••• •••• •••• ••••"

@@ -20,7 +20,6 @@ type CardProps = {
   dateOfBirth: string;
   nationality: string;
   imageUrl: string;
-  countries: Country[];
 };
 
 export default function IdentificationCard({
@@ -30,18 +29,15 @@ export default function IdentificationCard({
   dateOfBirth,
   nationality,
   imageUrl,
-  countries = []
 }: CardProps): JSX.Element {
 
-  const getCountry = (currentCountry = "") => {
-    let returnValue = ""
-    if (countries !== undefined && currentCountry !== "") {
-      console.log('Countries')
-      console.log(countries)
-      returnValue = countries.filter(country => country.name === currentCountry)[0].name
-    }
-    return returnValue
-  }
+  // const getCountry = (currentCountry = "") => {
+  //   let returnValue = ""
+  //   if (countries !== undefined && currentCountry !== "") {
+  //     returnValue = countries.filter(country => country.name === currentCountry)[0].name
+  //   }
+  //   return returnValue
+  // }
 
   return (
     <Container>
@@ -58,7 +54,7 @@ export default function IdentificationCard({
       </DataContainer>
       <DataContainer>
         <Title>Nacionalidad</Title>
-        <Content>{getCountry(nationality)}</Content>
+        <Content>{nationality}</Content>
       </DataContainer>
       <DataContainer>
         <Title>Lugar Nacimiento</Title>

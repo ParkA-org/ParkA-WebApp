@@ -4,6 +4,7 @@ import { GET_USER } from "queries"
 import { useLazyQuery } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
 import { USER_STATES } from "utils/constants"
+import { useRouter } from "next/router"
 
 type User = {
     id?: String;
@@ -26,6 +27,9 @@ interface ContextInterface {
     setUser: (user: User) => void;
     setToken: (authToken: String) => void;
     token: String;
+    loading: Boolean;
+    logout: () => void;
+    userStatus: undefined | false | true;
 }
 
 export const UserContext = React.createContext<ContextInterface>({
@@ -34,26 +38,54 @@ export const UserContext = React.createContext<ContextInterface>({
     setUserId: undefined,
     setUser: undefined,
     setToken: undefined,
-    token: ""
+    token: "",
+    loading: true,
+    logout: undefined,
+    userStatus: USER_STATES.NOT_KNOWN
 })
 
 export function UserProvider({ children }: { children: React.ReactNode | React.ReactNode[] | null; value?: ContextInterface }) {
+    const router = useRouter()
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
-    const [getUser, { data }] = useLazyQuery(GET_USER)
-    const [user, setUser] = useState<User>(USER_STATES.NOT_KNOWN)
+    const [getUser, { data }] = useLazyQuery(GET_USER, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        }
+    })
+    const [user, setUser] = useState<User>(undefined)
+    const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!userId) {
-            setUser(USER_STATES.LOGGED_OUT)
+        if (user === undefined) {
+            setLoading(true)
+            if (token && userId) {
+                getUser({ variables: { id: userId } })
+                if (data) {
+                    setUser(data.getUserById)
+                    setUserStatus(USER_STATES.LOGGED_IN)
+                }
+            }
+        } else {
+            if (!token || !userId) {
+                setUserStatus(USER_STATES.LOGGED_OUT)
+            }
+            if (user && user['name']) {
+                setUserStatus(USER_STATES.LOGGED_IN)
+            }
         }
-        if (userId && userId.length > 0) {
-            getUser({ variables: { id: userId } })
+        if (!token || !userId) {
+            setUserStatus(USER_STATES.LOGGED_OUT)
         }
-        if (data) {
-            setUser(data.user)
+        if (user && user['name']) {
+            setUserStatus(USER_STATES.LOGGED_IN)
         }
-    }, [data, userId])
+
+        setLoading(false)
+    }, [data, userId, token])
 
     const modifyUser: (user: User) => void = function (user: User): void {
         setUser(user)
@@ -66,6 +98,15 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken(authToken)
     }
 
+    const logout = () => {
+        setUser({})
+        setToken("")
+        setUserId("")
+        setUserStatus(USER_STATES.LOGGED_OUT)
+        router.push("/")
+    }
+
+
     const ContextValue = {
         user: user,
         token: token,
@@ -73,6 +114,9 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken: modifyToken,
         userId: userId,
         setUserId: setUserId,
+        loading,
+        logout,
+        userStatus
     }
 
     return (

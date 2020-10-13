@@ -104,10 +104,8 @@ export const ActionButtonsSection = styled.div`
 `;
 
 export const ReservationsButton = styled.button`
-    grid-area: ${props => props.isCancelable ? "cancel" : ""};
-    justify-self: ${props => props.isCancelable ? "end" : ""};
-    background-color: ${props => props.isCancelable ? "#BC3F3F" : "#077187"};
     border-radius: 5px;
+    background-color: #0B768C;
     color: white;
     width: 100px;
     padding: 0.5em;
@@ -115,3 +113,16 @@ export const ReservationsButton = styled.button`
         justify-self: center;
     }
 `;
+
+export const SpecialReservationsButton = styled(ReservationsButton)`
+    grid-area: cancel;
+    justify-self: end;
+    background-color: ${props => props.isCancelable ? "#BC3F3F" : "#33C3C3"};
+    border-radius: 5px;
+    color: white;
+    width: 100px;
+    padding: 0.5em;
+    @media(max-width: 768px) {
+        justify-self: center;
+    }
+`

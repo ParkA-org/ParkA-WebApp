@@ -1,4 +1,4 @@
-import useState from "react";
+import { useState, useEffect, useRef } from "react"
 import styled from "styled-components";
 import ModalPortal from "components/Modal";
 
@@ -16,6 +16,11 @@ const Starts = styled.button`
 
 export default function ReviewModal() {
     const [showModal, setShowModal] = useState(false)
+
+    useEffect(() => {
+        setShowModal(true)
+    })
+
     return (
         <div>
             {showModal && <ModalPortal onClose={() => setShowModal(false)}>

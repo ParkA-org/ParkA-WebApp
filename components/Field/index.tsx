@@ -1,5 +1,5 @@
-import { useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
+import { CSSProperties, useRef } from "react";
+import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer, CheckboxContainer } from "./styles";
 import Button from "components/Button";
 import { FormikErrors, FormikTouched } from "formik/dist/types";
 
@@ -13,6 +13,7 @@ type FieldProps = {
   component?: string;
   placeholder?: string;
   value?: string;
+  inputStyles?: CSSProperties;
 };
 
 export default function Field({
@@ -24,8 +25,19 @@ export default function Field({
   component,
   placeholder,
   value,
-  placement = "vertical"
+  placement = "vertical",
+  inputStyles,
 }: FieldProps): JSX.Element {
+  if (type === "checkbox") {
+    return (
+      <CheckboxContainer>
+        <StyledLabel htmlFor={name}>
+          {label}
+        </StyledLabel>
+        <StyledField type="checkbox" name={name} value={value} />
+      </CheckboxContainer>
+    )
+  }
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
@@ -35,6 +47,7 @@ export default function Field({
         component={component}
         placeholder={placeholder}
         value={value}
+        {...inputStyles}
       />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -48,6 +61,7 @@ type SelectFieldProps = {
   label: string;
   placeholder?: string;
   placement?: string;
+  value?: string;
   children: JSX.Element[];
   errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
@@ -61,11 +75,12 @@ export function SelectField({
   placement = "vertical",
   errorMessage,
   isTouched,
+  value
 }: SelectFieldProps): JSX.Element {
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField component="select" name={name} placeholder={placeholder}>
+      <StyledField component="select" name={name} placeholder={placeholder} value={value}>
         {children}
       </StyledField>
       {errorMessage && isTouched ? (
@@ -108,7 +123,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="../icons/cameraIcon.svg"
+        src="/icons/cameraIcon.svg"
         ref={imgEl}
         alt="uploaded by the user"
       />

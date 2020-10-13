@@ -6,7 +6,7 @@ export const StyledField = styled(Field)`
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
-  max-width: 350px;
+  max-width: 260px;
   line-height: 1.5em;
   width: 100%;
   text-align: left;
@@ -14,6 +14,16 @@ export const StyledField = styled(Field)`
   @media (max-width: 768px) {
     width: auto;
   }
+`;
+
+export const CheckboxContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    & > input[type="checkbox"] {
+        display: inline-block;
+        margin-right: 0.5em;
+    }
 `;
 
 export const UploaderImage = styled.img`

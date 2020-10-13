@@ -1,16 +1,11 @@
-import { useState } from "react"
 import { Formik, Form } from "formik";
-import { useMutation } from '@apollo/client'
 import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
-import { CREATE_USER } from "mutations"
 import { CreateAccountSchema } from "utils/schemas"
 import Layout from "../layout"
 import NavigationLink from "components/NavigationLink"
 import Field, { FileUploader } from "components/Field"
 import Button from "components/Button"
-import ModalPortal from "components/Modal"
-import Spinner from "components/Spinner"
 import {
   MainFormContainer,
   FormContainer,
@@ -19,74 +14,58 @@ import {
   ActionSection,
   FormHeading
 } from "styles/formStyles"
-import useUser from "hooks/useUser"
+import { useEffect, useState } from "react";
 import UploadImageService from "services/uploadImage"
 
 export default function registerPersonalAccount(): JSX.Element {
-  const [showModal, setShowModal] = useState(false)
-  const [requestError, setRequestError] = useState(null)
   const router = useRouter()
-  const { setUser } = useUser()
-  const [image, setImage] = useLocalStorage("image", "")
-  const [imageStatus, setImageStatus] = useState({
-    loading: false,
-    error: undefined
+  const [localUser, setLocalUser] = useLocalStorage("user", {})
+  const [_, setImage] = useLocalStorage("image", "")
+  const [initialUserValues, setInitialUserValues] = useState({
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    file: "",
   })
-  const [createUser] = useMutation(CREATE_USER, {
-    onCompleted({ createUser }) {
-      const { user } = createUser
-      setUser(user)
-      setShowModal(false)
-      router.push('/register/PersonalIdentification')
-    },
-    onError(error) {
-      console.log('Using mutation on error')
-      setRequestError(error)
-      setShowModal(false)
+  let userValues = {
+    name: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    file: "",
+  }
+
+  useEffect(() => {
+    for (const key in userValues) {
+      if (localUser[key]) {
+        userValues[key] = localUser[key]
+      }
     }
-  })
+    setInitialUserValues(userValues)
+  }, [localUser])
+
+
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
         <FormHeading>
-          <img src="images/logo1.svg" alt="ParkA logo" />
+          <img src="/images/logo1.svg" alt="ParkA logo" />
           <h2>Crea una cuenta para continuar</h2>
         </FormHeading>
         <Formik
-          initialValues={{
-            name: "",
-            lastName: "",
-            email: "",
-            password: "",
-            confirmPassword: "",
-            file: "",
-          }}
+          enableReinitialize={true}
+          initialValues={initialUserValues}
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => {
-            setShowModal(true)
-            setImageStatus(prevState => {
-              return { ...prevState, loading: true }
-            })
-
-            UploadImageService(values.file, setImage, setImageStatus)
-
-            createUser({
-              variables: {
-                user: {
-                  data: {
-                    name: values.name,
-                    username: values.email,
-                    email: values.email,
-                    lastname: values.lastName,
-                    password: values.password,
-                    confirmed: true
-                  }
-                }
-              }
-            })
+            setLocalUser({ ...localUser, ...values })
+            UploadImageService(values.file, setImage)
+            router.push('/register/PersonalIdentification')
           }}
         >
-          {({ setFieldValue, errors, touched }) => (
+          {({ setFieldValue, errors, touched, values }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
@@ -97,6 +76,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.name}
                     placeholder="Nombre"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
+                    value={values.name}
                   />
                   <Field
                     name="lastName"
@@ -105,6 +86,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.lastName}
                     placeholder="Apellido"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
+                    value={values.lastName}
                   />
                   <Field
                     name="email"
@@ -113,6 +96,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.email}
                     placeholder="Correo electrónico"
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
+                    value={values.email}
                   />
                   <Field
                     type="password"
@@ -122,6 +107,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.password}
                     placement="horizontal"
                     isTouched={touched.password}
+                    inputStyles={{ width: "100px" }}
+                    value={values.password}
                   />
                   <Field
                     type="password"
@@ -131,6 +118,8 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.confirmPassword}
                     isTouched={touched.confirmPassword}
                     placement="horizontal"
+                    inputStyles={{ width: "100px" }}
+                    value={values.confirmPassword}
                   />
                 </FieldSection>
                 <InformationSection>
@@ -142,17 +131,12 @@ export default function registerPersonalAccount(): JSX.Element {
                 <Button submit={true} rank="secondary">
                   Continuar
                 </Button>
-                {requestError && <p style={{ color: "red" }}>Ocurrio un error</p>}
               </ActionSection>
             </Form>
           )}
         </Formik>
       </MainFormContainer>
 
-      {showModal && <ModalPortal onClose={() => setShowModal(false)}>
-        <Spinner />
-        <h3>Loading...</h3>
-      </ModalPortal>}
     </Layout >
   );
 }

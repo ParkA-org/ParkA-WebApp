@@ -1,13 +1,14 @@
 import { gql } from "@apollo/client"
 
 export const CREATE_USER = gql`
-mutation CreateUser($user: createUserInput!) {
-  createUser(input: $user) {
-    user {
-        id
-        username
-        email
-    }
+mutation CreateUser($cuInput: createUserInput!){
+  createUser(createUserInput: $cuInput){
+    id
+    name
+    lastName
+    email
+    origin
+    confirmed
   }
 }
 `
@@ -22,14 +23,37 @@ export const UPDATE_USER = gql`
   }
 `
 
-export const CREATE_ACCOUNT = gql`
-mutation createNewAccount($userAccount: createAccountDatumInput) {
-  createAccountDatum(input: $userAccount) {
-    accountDatum {
+export const CONFIRM_EMAIL = gql`
+mutation ConfirmEmail($ceInput: ConfirmEmailInput!){
+  confirmEmail(confirmEmailInput: $ceInput){
+   	email
+  	origin
+  }
+}
+`
+
+export const VALIDATE_EMAIL = gql`
+mutation ValidateEmail($emInput: ValidateEmailCodeInput!){
+  validateEmailCode(validateEmailCodeInput: $emInput){
+    email
+    origin
+  }
+}
+`
+
+export const CREATE_USER_INFO = gql`
+mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
+  createUserInformation(createUserInformationInpuType: $cuiInput){
+    id
+    birthDate
+    telephoneNumber
+    nationality {
       id
-      document
-      document_type
-      placeofbirth
+      name
+    }
+    placeOfBirth {
+      id
+      name
     }
   }
 }
@@ -47,13 +71,16 @@ mutation createNewPayment($userPaymentInfo: createPaymentInformationInput) {
 `
 
 export const LOGIN_USER = gql`
-mutation loginUser($loggedUser: UsersPermissionsLoginInput!) {
-  login(input: $loggedUser) {
-    jwt
+mutation LogUser($logInfo: LoginUserInput!){
+  login(loginUserInput: $logInfo){
+    JWT
     user {
       id
-      username
+      name
+      lastName
       email
+      profilePicture
+      confirmed
     }
   }
 }
@@ -79,15 +106,43 @@ mutation resetPassword($password: String!, $passwordConfirmation: String!, $code
 `
 
 export const CREATE_VEHICLE = gql`
-mutation CreateVehicle($newVehicle: createVehicleInput){
-  createVehicle(input: $newVehicle){
-    vehicle {
-      id
-      year
-      detail
-      licenseplate
-      alias
-    }
+mutation CreateVehicle($cvInput: createVehicleInput!){
+  createVehicle(createVehicleInput: $cvInput) {
+    id
+    licensePlate
+    detail
+  }
+}
+`
+
+export const UPDATE_VEHICLE = gql`
+mutation UpdateVehicle($uvInput: updateVehicleInput!){
+  updateVehicle(
+    updateVehicleInput: $uvInput
+  ) {
+    id
+    licensePlate
+    verified
+    detail
+  }
+}
+`
+
+export const CREATE_PARKING = gql`
+mutation CreateParking($cpInput: CreateParkingInput!){
+  createParking(createParkingInput: $cpInput){
+    id
+    countParking
+    latitude
+    longitude
+    parkingName
+    calendar
+    priceHours
+    mainPicture
+    isAvailable
+    sector
+    direction
+    information
   }
 }
 `
