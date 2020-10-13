@@ -17,14 +17,12 @@ query GetNationalities {
 }`
 
 export const GET_USER = gql`
-query GetUser($id: ID!){
-  user(id: $id) {
-    username
-    profilepicture
-    email
-    lastname
+query GetUser($id: String!){
+  getUserById(id: $id){
+    id
     name
-    confirmed
+    lastName
+    email
   }
 }
 `
@@ -143,31 +141,24 @@ query GetAccountVehicles($id: ID!){
 
 export const GET_ALL_VEHICLES = gql`
 query GetVehicles{
-  vehicles(limit: 10){
+  getAllUserVehicles {
     id
     alias
     detail
     year
-    licenseplate
-    mainpicture {
-      id
-      url
-    }
-    type_vehicle {
+    licensePlate
+    mainPicture 
+    bodyStyle {
       name
     }
-    color_exterior {
+    colorExterior {
       name
     }
     model {
-      make {
-        icon {
-          url
-        }
-        name
-      }
+      make 
+      name
     }
     verified
-  }
+    }
 }
 `;

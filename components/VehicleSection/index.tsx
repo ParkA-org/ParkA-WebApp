@@ -8,14 +8,23 @@ import {
     VehicleList,
     NewLink
 } from "./styles"
+import { UserContext } from "context/UserContext";
+import { useContext } from "react";
 
 export default function VehicleSection() {
-    const { loading, error, data } = useQuery(GET_ALL_VEHICLES)
+    const { token } = useContext(UserContext)
+    const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        }
+    })
 
     if (error) return <h2>Error</h2>
     if (loading) return <h2>Loading...</h2>
 
-    const { vehicles } = data
+    const { getAllUserVehicles } = data
 
     return (
         <>
@@ -26,7 +35,7 @@ export default function VehicleSection() {
                 </NavigationLink>
             </HeaderSection>
             <VehicleList>
-                {vehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
+                {getAllUserVehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
             </VehicleList>
         </>
     )
