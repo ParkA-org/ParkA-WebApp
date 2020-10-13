@@ -1,12 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik"
 import { useRouter } from "next/router"
 import { useQuery, useMutation, useLazyQuery } from "@apollo/client"
-import { GET_COLORS, GET_MODELS, GET_USER_ACCOUNT_DATA, GET_VEHICLE_TYPES } from "queries"
+import { GET_MAKES, GET_COLORS, GET_BODY_STYLES } from "queries"
 import { CREATE_VEHICLE } from "mutations"
 import { CreateVehicleSchema } from "utils/schemas"
-import { BasicEntity, ColorsData, TypeVehiclesData, ModelsData } from "utils/types"
+import { BasicEntity, ColorsData, BodyStylesData, MakersData } from "utils/types"
 import Layout from "../layout";
 import { default as OwnField } from "components/Field"
 import { SelectField } from "components/Field"
@@ -118,7 +118,7 @@ const BtnSave = styled.button`
 
 export default function VehicleRegister(): JSX.Element {
   const router = useRouter()
-  const { userId } = useContext(UserContext)
+  const { token } = useContext(UserContext)
   const [accountId, setAccountId] = useState("")
   const [files, setFiles] = useState([])
   const [imagesUrl, setImagesUrl] = useState([])
@@ -126,36 +126,28 @@ export default function VehicleRegister(): JSX.Element {
     loading: false,
     error: null
   })
-
-  const [getUserAccount, { data }] = useLazyQuery(GET_USER_ACCOUNT_DATA)
+  const { loading: makersLoading, error: makersError, data: makersData } = useQuery<MakersData>(GET_MAKES);
   const { loading: colorsLoading, error: colorsError, data: colorsData } = useQuery<ColorsData>(GET_COLORS);
-  const { loading: modelsLoading, error: modelsError, data: modelsData } = useQuery<ModelsData>(GET_MODELS);
-  const { loading: vehicleTypesLoading, error: vehicleTypesError, data: vehicleTypesData } = useQuery<TypeVehiclesData>(GET_VEHICLE_TYPES);
+  const { loading: bodyStylesLoading, error: bodyStylesError, data: bodyStylesData } = useQuery<BodyStylesData>(GET_BODY_STYLES);
 
   const [showModal, setShowModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
 
-  useEffect(() => {
-    if (userId) {
-      getUserAccount({ variables: { id: userId } })
-    }
-    if (data) {
-      console.log('User accountdata id ', data.user.account_data.id)
-      setAccountId(data.user.account_data.id)
-    }
-  }, [data, userId])
-
   const [CreateVehicle] = useMutation(CREATE_VEHICLE, {
-    onCompleted({ createVehicle }) {
-      router.prefetch('/profile')
+    onCompleted() {
       setShowModal(false)
-      router.push('/profile')
+      // router.push('/profile')
     },
     onError(error) {
       console.log('Using mutation on error')
       setRequestError(error)
       setShowModal(false)
       console.error(error)
+    },
+    context: {
+      headers: {
+        authorization: token ? `Bearer ${token}` : ""
+      }
     }
   })
 
@@ -164,13 +156,15 @@ export default function VehicleRegister(): JSX.Element {
       <div style={{ textAlign: "left", width: "80%", margin: "0 auto" }}>
         <h1>Formulario de Vehiculos</h1>
         <Formik initialValues={{
+          licensePlate: "",
           detail: "",
-          color_exterior: "",
-          model: "",
           alias: "",
+          bodyStyle: "",
           year: "",
-          licenseplate: "",
-          type_vehicle: ""
+          colorExterior: "",
+          model: "",
+          mainPicture: "asd",
+          pictures: ["asd", "asd"]
         }}
           validationSchema={CreateVehicleSchema}
           onSubmit={async (values) => {
@@ -183,28 +177,25 @@ export default function VehicleRegister(): JSX.Element {
               .then(response => {
                 return response.data
               }).then(results => {
-                let ids = results?.map(obj => obj.id)
+                let urls = results?.map(obj => obj.url)
                 CreateVehicle({
                   variables: {
-                    newVehicle: {
-                      data: {
-                        detail: values.detail,
-                        color_exterior: values.color_exterior,
-                        model: values.model,
-                        alias: values.alias,
-                        year: values.year,
-                        licenseplate: values.licenseplate,
-                        type_vehicle: values.type_vehicle,
-                        account_data: accountId,
-                        pictures: ids,
-                        mainpicture: ids[0]
-                      }
+                    cvInput: {
+                      detail: values.detail,
+                      colorExterior: values.colorExterior,
+                      model: values.model,
+                      alias: values.alias,
+                      year: values.year,
+                      licensePlate: values.licensePlate,
+                      bodyStyle: values.bodyStyle,
+                      pictures: urls,
+                      mainPicture: urls[0]
                     }
                   }
                 })
+                router.push('/profile')
               })
               .catch(error => console.error(error))
-
           }}
         >
           {({ errors, touched }) => (
@@ -228,44 +219,45 @@ export default function VehicleRegister(): JSX.Element {
 
                   {colorsLoading ? <Spinner /> :
                     <SelectField
-                      name="color_exterior"
+                      name="colorExterior"
                       label="Color exterior"
-                      errorMessage={errors.color_exterior}
-                      isTouched={touched.color_exterior}
+                      errorMessage={errors.colorExterior}
+                      isTouched={touched.colorExterior}
                     >
-                      {colorsData.colorExteriors.map((color: BasicEntity) => <option value={color.id} key={color.name}>{color.name}</option>)}
+                      {colorsData.getAllColors.map((color: BasicEntity) => <option value={color.id} key={color.name}>{color.name}</option>)}
                     </SelectField>}
                 </LeftSideContainer>
                 <RightSideContainer>
                   <OwnField
                     label="Placa"
-                    name="licenseplate"
+                    name="licensePlate"
                     placeholder="Placa del vehículo"
-                    errorMessage={errors.licenseplate}
-                    isTouched={touched.licenseplate}
+                    errorMessage={errors.licensePlate}
+                    isTouched={touched.licensePlate}
                   />
 
-                  {modelsLoading ? <Spinner /> :
+                  {makersLoading ? <Spinner /> :
                     <SelectField
                       name="model"
                       label="Modelo del vehículo"
                       errorMessage={errors.model}
                       isTouched={touched.model}
                     >
-                      {modelsData.models.map((modelo: BasicEntity) => <option value={modelo.id} key={modelo.name}>{modelo.name}</option>)}
+                      {makersData.getAllMakes.map(make => make.models.map(model => <option value={model.id} key={model.name}>{model.name}</option>))}
+
                     </SelectField>}
 
                   <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
                     <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
                     <div style={{ display: "flex", flexDirection: "column" }}>
-                      {vehicleTypesLoading ? <Spinner /> :
-                        vehicleTypesData.typeVehicles.map((vehicleType: BasicEntity) => (
+                      {bodyStylesLoading ? <Spinner /> :
+                        bodyStylesData.getAllBodyStyles.map((vehicleType: BasicEntity) => (
                           <div className="radioContainer">
                             <Field
                               key={vehicleType.name}
                               type="radio"
                               label={vehicleType.name}
-                              name="type_vehicle"
+                              name="bodyStyle"
                               value={vehicleType.id}
                             />
                             <label>

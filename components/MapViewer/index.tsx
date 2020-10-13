@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from "react"
+import { useRouter } from "next/router"
 import { BsSearch } from "react-icons/bs"
 import { AiOutlineMenu } from "react-icons/ai"
 import {
@@ -20,6 +21,9 @@ import {
 } from "@reach/combobox";
 import FilterSideBar from "components/FilterSidebar"
 import { Container, ButtonsContainer, ButtonSection, ControllersContainer, MapContainer, Legend, LegendContainer, SearchContainer } from "./styles"
+import { useQuery } from "@apollo/client";
+import { GET_PARKINGS } from "queries";
+import { AllParkingData } from "utils/types";
 
 const libraries = ["places"];
 const mapStyle = {
@@ -42,12 +46,13 @@ const options = {
     fullscreenControl: false,
     styles: mapExtraStyles
 };
-const center = {
-    lat: 18.487876,
-    lng: -69.962292,
-};
 
 export default function MapViewer(): JSX.Element {
+    const router = useRouter()
+    const { loading, error, data } = useQuery<AllParkingData>(GET_PARKINGS, {
+        fetchPolicy: "network-only"
+    })
+
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
         libraries,
@@ -56,16 +61,23 @@ export default function MapViewer(): JSX.Element {
     const [selected, setSelected] = useState(null);
     const [showFilters, setShowFilters] = useState(false)
 
-    const onMapClick = useCallback((e) => {
-        setMarkers((current) => [
-            ...current,
-            {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date(),
-            },
-        ]);
-    }, []);
+    useEffect(() => {
+        if (data) {
+            let marks = []
+            data.getAllParkings.forEach(parking => {
+                marks.push({
+                    lat: parking.latitude,
+                    lng: parking.longitude,
+                    time: new Date(),
+                    name: parking.parkingName,
+                    information: parking.information,
+                    picture: parking.mainPicture,
+                    id: parking.id
+                })
+            })
+            setMarkers(marks)
+        }
+    }, [data])
 
     const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
@@ -121,17 +133,16 @@ export default function MapViewer(): JSX.Element {
                         id="map"
                         mapContainerStyle={mapStyle}
                         zoom={16}
-                        center={center}
                         options={options}
-                        onClick={onMapClick}
                         onLoad={onMapLoad}
                     >
                         {markers.map((marker) => {
                             return process.browser ? (
                                 <Marker
                                     key={`${marker.lat}-${marker.lng}`}
-                                    position={{ lat: marker.lat, lng: marker.lng }}
+                                    position={{ lat: parseFloat(marker.lat), lng: parseFloat(marker.lng) }}
                                     onClick={() => {
+                                        console.log(marker)
                                         setSelected(marker);
                                     }}
                                     icon={{
@@ -146,14 +157,16 @@ export default function MapViewer(): JSX.Element {
 
                         {selected ? (
                             <InfoWindow
-                                position={{ lat: selected.lat, lng: selected.lng }}
+                                position={{ lat: parseFloat(selected.lat), lng: parseFloat(selected.lng) }}
                                 onCloseClick={() => {
                                     setSelected(null);
                                 }}
                             >
-                                <div>
-                                    <h2>Parqueo!</h2>
-                                    <p>Parqueo disponible</p>
+                                <div className="windowContent">
+                                    <h3>{selected.name}</h3>
+                                    <p className="description">{selected.information}</p>
+                                    <img className="img" src={selected.picture} alt="parking picture" />
+                                    <button onClick={() => router.push('/parking/checkout/[id]', `/parking/checkout/${selected.id}`)}>Ir al parqueo</button>
                                 </div>
                             </InfoWindow>
                         ) : null}
@@ -162,9 +175,20 @@ export default function MapViewer(): JSX.Element {
                 <style jsx>
                     {
                         `
+                        .windowContent {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: space-around;
+                            align-items: center;
+                            height: auto
+                        }
+                        .description {
+                            margin: 0.5em;
+                        }
                         .img {
-                            width: 55px;
-                            height: 55px;
+                            width: 100px;
+                            height: 75px;
+                            border-radius: 5px;
                         }
                     `
                     }
@@ -212,7 +236,7 @@ function Search({ panTo }) {
 
     return (
         <SearchContainer>
-            <Combobox onSelect={handleSelect} aria-e>
+            <Combobox onSelect={handleSelect} aria-label="custom places demo">
                 <ComboboxInput
                     value={value}
                     onChange={handleInput}

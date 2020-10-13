@@ -16,6 +16,16 @@ export const StyledField = styled(Field)`
   }
 `;
 
+export const CheckboxContainer = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    & > input[type="checkbox"] {
+        display: inline-block;
+        margin-right: 0.5em;
+    }
+`;
+
 export const UploaderImage = styled.img`
   width: 80%;
   height: 100%;

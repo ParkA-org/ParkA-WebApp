@@ -48,26 +48,44 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const router = useRouter()
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
-    const [getUser, { data }] = useLazyQuery(GET_USER)
+    const [getUser, { data }] = useLazyQuery(GET_USER, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        }
+    })
     const [user, setUser] = useState<User>(undefined)
     const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN)
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!userId) {
-            setUser(undefined)
-            setUserStatus(USER_STATES.LOGGED_OUT)
-        }
-        if (userId && userId.length > 0) {
-            getUser({ variables: { id: userId } })
-            if (data) {
-                console.log('Llegue aqui')
-                setUser(data.user)
+        if (user === undefined) {
+            setLoading(true)
+            if (token && userId) {
+                getUser({ variables: { id: userId } })
+                if (data) {
+                    setUser(data.getUserById)
+                    setUserStatus(USER_STATES.LOGGED_IN)
+                }
+            }
+        } else {
+            if (!token || !userId) {
+                setUserStatus(USER_STATES.LOGGED_OUT)
+            }
+            if (user && user['name']) {
                 setUserStatus(USER_STATES.LOGGED_IN)
-                setLoading(false)
             }
         }
-    }, [data, userId])
+        if (!token || !userId) {
+            setUserStatus(USER_STATES.LOGGED_OUT)
+        }
+        if (user && user['name']) {
+            setUserStatus(USER_STATES.LOGGED_IN)
+        }
+
+        setLoading(false)
+    }, [data, userId, token])
 
     const modifyUser: (user: User) => void = function (user: User): void {
         setUser(user)

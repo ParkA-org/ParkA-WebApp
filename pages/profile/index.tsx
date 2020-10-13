@@ -19,11 +19,12 @@ export default function Profile(): JSX.Element {
     const { userStatus } = useContext(UserContext)
 
     useEffect(() => {
-        if (userStatus === USER_STATES.NOT_KNOWN) {
-            console.log('waiting')
-        } else if (userStatus === USER_STATES.LOGGED_OUT) {
-            router.push("/login")
-        }
+        // if (userStatus === USER_STATES.NOT_KNOWN) {
+        //     console.log('waiting')
+        // } else
+        // if (userStatus === USER_STATES.LOGGED_OUT) {
+        //     router.push("/login")
+        // }
     }, [userStatus])
     return (
         <Layout pageTitle="Profile">
@@ -35,15 +36,19 @@ export default function Profile(): JSX.Element {
     );
 }
 
-export async function getStaticProps() {
-    const apolloClient = initializeApollo()
+// export async function getStaticProps() {
+//     const apolloClient = initializeApollo()
 
-    await apolloClient.query({ query: GET_ALL_VEHICLES })
+//     await apolloClient.query({ query: GET_ALL_VEHICLES,  context: {
+//         headers: {
+//             'Authorization': 
+//         }
+//     }})
 
-    return {
-        props: {
-            initialApolloState: apolloClient.cache.extract()
-        }
-    }
+//     return {
+//         props: {
+//             initialApolloState: apolloClient.cache.extract()
+//         }
+//     }
 
-}
+// }

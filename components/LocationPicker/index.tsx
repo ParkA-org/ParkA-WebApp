@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect, useRef, useCallback, Dispatch, SetStateAction } from "react"
 import { Coordinates } from "utils/types"
 import {
     GoogleMap,
@@ -35,7 +35,11 @@ const center = {
 };
 
 
-export default function LocationPicker() {
+type LocationProps = {
+    setCoordinates: Dispatch<SetStateAction<Coordinates>>
+}
+
+export default function LocationPicker({ setCoordinates }: LocationProps) {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
         libraries,
@@ -44,8 +48,10 @@ export default function LocationPicker() {
     const [selected, setSelected] = useState(null);
 
     const onMapClick = useCallback((e) => {
-        console.log(`Latitud: ${e.latLng.lat()}`)
-        console.log(`Longitud: ${e.latLng.lng()}`)
+        setCoordinates({
+            lat: e.latLng.lat(),
+            lng: e.latLng.lng()
+        })
         setMarker(
             {
                 lat: e.latLng.lat(),

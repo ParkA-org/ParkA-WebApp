@@ -7,6 +7,14 @@ import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
 import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
 import { UserContext } from "context/UserContext";
+import { useQuery, useMutation } from "@apollo/client";
+import { GET_FEATURES } from "queries";
+import { CREATE_PARKING } from "mutations"
+import { FeaturesData, Coordinates } from "utils/types";
+import Spinner from "components/Spinner"
+import Button from "components/Button"
+import { uploadMultipleImages } from "services/uploadImage"
+import { useRouter } from "next/router";
 
 type DayCheckProps = {
     id: string;
@@ -102,57 +110,108 @@ type RangeObject = {
     end?: string;
 }
 
-type Parking = {
-    owner?: string;
-    address?: string;
-    sector?: string;
+type ParkingProps = {
+    coordinates: Coordinates
 }
 
-export default function ParkingForm() {
-    const { user, loading } = useContext(UserContext)
-    const [park, setPark] = useState<Parking>({ owner: "", address: "", sector: "" })
+export default function ParkingForm({ coordinates }: ParkingProps) {
+    const { token } = useContext(UserContext)
+    const router = useRouter()
     const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
+    const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
+    const [CreateParking] = useMutation(CREATE_PARKING, {
+        onCompleted() {
+            router.push('/parking')
+        },
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }
+    })
 
     useEffect(() => {
-        if (!loading) {
-            setPark({ ...park, owner: `${user.name} ${user.lastname}` })
-            console.log('Cargo?')
-        } else {
-            console.log('No ha cargado')
-        }
-    }, [loading, setPark])
+        console.log('Cambiaron coordenadas')
+        console.log(coordinates)
+    }, [coordinates])
 
     return (
         <Formik
             initialValues={{
-                owner: "",
-                address: "",
+                countParking: 1,
+                latitude: `${coordinates.lat}`,
+                longitude: `${coordinates.lng}`,
+                parkingName: "",
+                priceHours: 50,
+                pictures: ["as", "as"],
+                mainPicture: "asd",
                 sector: "",
-                costPerHour: 50,
-                file: ""
+                direction: "",
+                information: "",
+                features: []
             }}
             validationSchema={CreateParkingSchema}
-            onSubmit={console.log}
+            onSubmit={(values) => {
+                const daysAvailable = []
+
+                for (const key in state) {
+                    daysAvailable.push(key)
+                }
+
+                uploadMultipleImages(files)
+                    .then(response => {
+                        return response.data
+                    }).then(results => {
+                        let urls = results?.map(obj => obj.url)
+                        CreateParking({
+                            variables: {
+                                cpInput: {
+                                    "countParking": parseFloat(values.countParking.toString()),
+                                    "latitude": `${coordinates.lat}`,
+                                    "longitude": `${coordinates.lng}`,
+                                    "parkingName": values.parkingName,
+                                    "priceHours": `${values.priceHours}`,
+                                    "information": values.information,
+                                    "sector": values.sector,
+                                    "direction": values.direction,
+                                    "features": values.features,
+                                    "calendar": daysAvailable,
+                                    "pictures": urls,
+                                    "mainPicture": urls[0]
+                                }
+                            }
+                        })
+                    })
+                    .catch(error => console.error(error))
+            }}
         >
             {({ setFieldValue, errors, touched }) => (
                 <Form>
                     <Container>
                         <LeftSection>
+                            <h2>Registro de parqueos</h2>
                             <Field
-                                name="owner"
-                                label="Propietario"
-                                errorMessage={errors.owner}
-                                isTouched={touched.owner}
-                                placeholder={park.owner || "Propietario"}
+                                name="countParking"
+                                label="Cantidad de parqueos"
+                                errorMessage={errors.countParking}
+                                isTouched={touched.countParking}
+                                placeholder="Cantidad de parqueos"
                             />
                             <Field
-                                name="address"
+                                name="parkingName"
+                                label="Nombre de parqueo"
+                                errorMessage={errors.parkingName}
+                                isTouched={touched.parkingName}
+                                placeholder="Nombre de parqueo"
+                            />
+                            <Field
+                                name="direction"
                                 label="Dirección"
-                                errorMessage={errors.address}
-                                isTouched={touched.address}
-                                placeholder={park.address || "Dirección"}
+                                errorMessage={errors.direction}
+                                isTouched={touched.direction}
+                                placeholder="Dirección"
                             />
                             <ElementContainer>
                                 <label><b>Disponibilidad</b></label>
@@ -169,44 +228,49 @@ export default function ParkingForm() {
                                 label="Sector"
                                 errorMessage={errors.sector}
                                 isTouched={touched.sector}
-                                placeholder={park.sector || "Sector"}
+                                placeholder="Sector"
                             />
                             <div className="iconInput">
                                 <MoneyIcon />
                                 <Field
-                                    name="costPerHour"
+                                    name="priceHours"
                                     label="Costo por hora"
-                                    errorMessage={errors.costPerHour}
-                                    isTouched={touched.costPerHour}
+                                    errorMessage={errors.priceHours}
+                                    isTouched={touched.priceHours}
                                     placeholder="Costo por hora"
                                 />
                             </div>
-                            <ElementContainer>
-                                <label><b>Características</b></label>
-                                <CheckboxContainer>
-                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Cámara de vigilancia"></input>
-                                    <label><b>Cámara de vigilancia</b></label>
-                                </CheckboxContainer>
-                                <CheckboxContainer>
-                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Techado"></input>
-                                    <label><b>Techado</b></label>
-                                </CheckboxContainer>
-                                <CheckboxContainer>
-                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Seguridad 24/7"></input>
-                                    <label><b>Seguridad 24/7</b></label>
-                                </CheckboxContainer>
-                                <CheckboxContainer>
-                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Car wash"></input>
-                                    <label><b>Car wash</b></label>
-                                </CheckboxContainer>
-                                <CheckboxContainer>
-                                    <input type="checkbox" id="vehicle1" name="vehicle1" value="Cargador de vehículos electricos"></input>
-                                    <label><b>Cargador de vehículos electricos</b></label>
-                                </CheckboxContainer>
-                            </ElementContainer>
+
+                            <Field
+                                label="Informaciones adicionales"
+                                name="information"
+                                placeholder="Informaciones adicionales..."
+                                component="textarea"
+                            />
+
+                            {featuresLoading ? <Spinner /> :
+                                <>
+                                    <div id="checkbox-group">
+                                        <h4>Caracteristicas</h4>
+                                    </div>
+                                    <div role="group" aria-labelledby="checkbox-group">
+                                        {featuresData.getAllFeatures.map(feature => {
+                                            return (
+                                                <Field
+                                                    name="features"
+                                                    type="checkbox"
+                                                    label={feature.name}
+                                                    value={feature.id}
+                                                />
+                                            )
+                                        })}
+
+                                    </div>
+                                </>}
                         </RightSection>
                         <CenterSection>
                             <MultipleImagePicker setFiles={setFiles} />
+                            <Button submit={true}>Crear parqueo</Button>
                         </CenterSection>
                         <style jsx>
                             {`

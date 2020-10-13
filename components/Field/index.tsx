@@ -1,5 +1,5 @@
 import { CSSProperties, useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
+import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer, CheckboxContainer } from "./styles";
 import Button from "components/Button";
 import { FormikErrors, FormikTouched } from "formik/dist/types";
 
@@ -28,6 +28,16 @@ export default function Field({
   placement = "vertical",
   inputStyles,
 }: FieldProps): JSX.Element {
+  if (type === "checkbox") {
+    return (
+      <CheckboxContainer>
+        <StyledLabel htmlFor={name}>
+          {label}
+        </StyledLabel>
+        <StyledField type="checkbox" name={name} value={value} />
+      </CheckboxContainer>
+    )
+  }
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
@@ -51,6 +61,7 @@ type SelectFieldProps = {
   label: string;
   placeholder?: string;
   placement?: string;
+  value?: string;
   children: JSX.Element[];
   errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
@@ -64,11 +75,12 @@ export function SelectField({
   placement = "vertical",
   errorMessage,
   isTouched,
+  value
 }: SelectFieldProps): JSX.Element {
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField component="select" name={name} placeholder={placeholder}>
+      <StyledField component="select" name={name} placeholder={placeholder} value={value}>
         {children}
       </StyledField>
       {errorMessage && isTouched ? (
@@ -111,7 +123,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="../icons/cameraIcon.svg"
+        src="/icons/cameraIcon.svg"
         ref={imgEl}
         alt="uploaded by the user"
       />

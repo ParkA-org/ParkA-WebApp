@@ -6,8 +6,16 @@ export type BasicEntity = {
     id: string;
 }
 
-export interface CountriesData {
-    countries: BasicEntity[]
+export interface BirthPlaceData {
+    getAllCountries: BasicEntity[]
+}
+
+export interface NationalityData {
+    getAllNationalities: BasicEntity[]
+}
+
+export interface FeaturesData {
+    getAllFeatures: BasicEntity[]
 }
 
 export type MakerIcon = {
@@ -25,19 +33,50 @@ export type Maker = {
 }
 
 export interface MakersData {
-    makes: Maker[]
+    getAllMakes: {
+        id: string;
+        name: string;
+        models: ModelsData[]
+    }[]
 }
 
 export interface ColorsData {
-    colorExteriors: BasicEntity[]
+    getAllColors: BasicEntity[]
 }
 
-export interface TypeVehiclesData {
-    typeVehicles: BasicEntity[]
+export interface BodyStylesData {
+    getAllBodyStyles: BasicEntity[]
 }
 
 export interface ModelsData {
     models: BasicEntity[]
+}
+
+export type Parking = {
+    __typename: string;
+    id: string;
+    latitude: string;
+    longitude: string;
+    published: boolean;
+    parkingName: string;
+    calendar: string[];
+    priceHours: string;
+    pictures: string[];
+    mainPicture: string;
+    isAvailable: boolean;
+    sector: string;
+    direction: string;
+    information: string;
+    features: BasicEntity[];
+    verified: boolean;
+}
+
+export interface ParkingData {
+    getAllUserParkings: Parking[]
+}
+
+export interface AllParkingData {
+    getAllParkings: Parking[]
 }
 
 export type Vehicle = {
@@ -46,10 +85,11 @@ export type Vehicle = {
     alias: string;
     detail: string;
     year: string;
-    licenseplate: string;
-    mainpicture: UploadFile;
-    type_vehicle: BasicEntity;
-    color_exterior: BasicEntity;
+    licensePlate: string;
+    pictures: string[];
+    mainPicture: string;
+    bodyStyle: BasicEntity;
+    colorExterior: BasicEntity;
     model: Model;
     verified: Boolean;
 }

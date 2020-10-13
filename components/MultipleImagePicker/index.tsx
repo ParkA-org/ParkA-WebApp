@@ -18,7 +18,7 @@ function ImagePreview({ file }: { file: File }) {
         console.log('No file')
 
     return (
-        <ImageSquare ref={imgEl} alt="uploaded image" src="../icons/cameraIcon.svg" />
+        <ImageSquare ref={imgEl} alt="uploaded image" src="/icons/cameraIcon.svg" />
     )
 }
 

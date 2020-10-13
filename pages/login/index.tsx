@@ -57,7 +57,7 @@ export default function Login(): JSX.Element {
           </FieldSection>
           <InformationSection>
             <img
-              src="../../images/projectLogo.png"
+              src="/../images/projectLogo.png"
               style={{ width: "100%", height: "100%" }}
             />
             <h3>Utiliza uno de estos métodos para registrarte o iniciar sesión</h3>

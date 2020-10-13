@@ -6,8 +6,19 @@ export const CreateAccountSchema = Yup.object().shape({
     email: Yup.string().email("Email inválido").required("Requerido"),
     password: Yup.string().required("Requerido"),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir'),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    file: Yup.mixed().test({
+        name: "fileSize", 
+        message: "Su imagen es demasiado grande 5MB o menos", test: value => {
+        if(!value.length) return true
+        else return value && value.size <= 500000
+        }
+    }),
 });
+
+export const ValidateEmailSchema = Yup.object().shape({
+    code: Yup.string().required("Requerido"),
+    email: Yup.string().email("Email inválido").required("Requerido"),
+})
 
 export const PaymentInformationSchema = Yup.object().shape({
     cardNumber: Yup.string()
@@ -58,19 +69,27 @@ export const EditProfileSchema = Yup.object().shape({
 });
 
 export const CreateParkingSchema = Yup.object().shape({
-    owner: Yup.string().required("Requerido"),
-    address: Yup.string().required("Requerido"),
+    countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    latitude: Yup.string().required("Requerido"),
+    longitude: Yup.string().required("Requerido"),
+    parkingName: Yup.string().required("Requerido"),
+    priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    pictures: Yup.array().of(Yup.string()),
+    mainPicture:  Yup.string().required("Requerido"),
     sector: Yup.string().required("Requerido"),
-    costPerHour: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    direction: Yup.string().required("Requerido"),
+    information: Yup.string().required("Requerido"),
+    features: Yup.array().of(Yup.string())
 });
 
-export const CreateVehicleSchema = Yup.object().shape({
-    model: Yup.string().required("Requerido"),
-    year: Yup.string().required("Requerido"),
-    licenseplate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
-    type_vehicle: Yup.string().required("Requerido"),
-    detail: Yup.string(),
-    color_exterior: Yup.string(),
-    alias: Yup.string()
+export const CreateVehicleSchema = Yup.object().shape({    
+    licensePlate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
+    detail: Yup.string().required("Requerido"),
+    alias:  Yup.string().required("Requerido"),
+    bodyStyle:  Yup.string().required("Requerido"),
+    year:  Yup.string().required("Requerido"),
+    colorExterior:  Yup.string().required("Requerido"),
+    model:  Yup.string().required("Requerido"),
+    mainPicture:  Yup.string().required("Requerido"),
+    pictures: Yup.array().of(Yup.string())
 })
