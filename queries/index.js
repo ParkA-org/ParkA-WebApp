@@ -39,6 +39,8 @@ query GetModels {
 export const GET_MAKES = gql`
 query GetMakes{
   getAllMakes{
+    id
+    name
     models {
       id
       name

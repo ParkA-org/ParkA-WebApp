@@ -29,7 +29,11 @@ export type Maker = {
 }
 
 export interface MakersData {
-    getAllMakes: ModelsData[]
+    getAllMakes: {
+        id: string;
+        name: string;
+        models: ModelsData[]
+    }[]
 }
 
 export interface ColorsData {
@@ -50,10 +54,11 @@ export type Vehicle = {
     alias: string;
     detail: string;
     year: string;
-    licenseplate: string;
-    mainpicture: UploadFile;
-    type_vehicle: BasicEntity;
-    color_exterior: BasicEntity;
+    licensePlate: string;
+    pictures: string[];
+    mainPicture: string;
+    bodyStyle: BasicEntity;
+    colorExterior: BasicEntity;
     model: Model;
     verified: Boolean;
 }

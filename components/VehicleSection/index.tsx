@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { GET_ALL_VEHICLES } from "queries";
+import { GET_ALL_VEHICLES, GET_MAKES } from "queries";
 import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import VehicleCard from "components/VehicleCard"
@@ -10,9 +10,12 @@ import {
 } from "./styles"
 import { UserContext } from "context/UserContext";
 import { useContext } from "react";
+import { MakersData } from "utils/types";
 
 export default function VehicleSection() {
     const { token } = useContext(UserContext)
+
+    const { loading: makersLoading, error: makersError, data: makersData } = useQuery<MakersData>(GET_MAKES);
     const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
         context: {
             headers: {
@@ -36,7 +39,10 @@ export default function VehicleSection() {
                 </NavigationLink>
             </HeaderSection>
             <VehicleList>
-                {getAllUserVehicles.map(vehicle => <VehicleCard key={`${vehicle.id}${vehicle.alias}`} vehicle={vehicle} />)}
+                {getAllUserVehicles.map(vehicle => {
+                    return <VehicleCard key={`${vehicle.id}${vehicle.alias}`
+                    } vehicle={vehicle} />
+                })}
             </VehicleList>
         </>
     )

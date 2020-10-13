@@ -178,7 +178,7 @@ export default function VehicleRegister(): JSX.Element {
               .then(response => {
                 return response.data
               }).then(results => {
-                let ids = results?.map(obj => obj.id)
+                let urls = results?.map(obj => obj.url)
                 CreateVehicle({
                   variables: {
                     cvInput: {
@@ -189,8 +189,8 @@ export default function VehicleRegister(): JSX.Element {
                       year: values.year,
                       licensePlate: values.licensePlate,
                       bodyStyle: values.bodyStyle,
-                      pictures: ids,
-                      mainPicture: ids[0]
+                      pictures: urls,
+                      mainPicture: urls[0]
                     }
                   }
                 })
