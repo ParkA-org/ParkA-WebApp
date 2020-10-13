@@ -35,7 +35,7 @@ export default function ProfileSection() {
             setUser(data.getUserById)
     }, [data])
     if (loading) return <h2>Loading...</h2>
-    if (user === null) return <h2>No entiendo que pasa</h2>
+    if (error) return <h2>Ocurrio un error</h2>
     return (
         <ProfileContainer>
             <h1>{`${user?.name} ${user?.lastName}`}  <AiFillCheckCircle color="blue" /></h1>

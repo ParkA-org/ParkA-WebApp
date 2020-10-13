@@ -10,10 +10,11 @@ import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
 import { CREATE_PARKING } from "mutations"
-import { FeaturesData } from "utils/types";
+import { FeaturesData, Coordinates } from "utils/types";
 import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
+import { useRouter } from "next/router";
 
 type DayCheckProps = {
     id: string;
@@ -109,19 +110,21 @@ type RangeObject = {
     end?: string;
 }
 
-type Parking = {
-    owner?: string;
-    address?: string;
-    sector?: string;
+type ParkingProps = {
+    coordinates: Coordinates
 }
 
-export default function ParkingForm() {
+export default function ParkingForm({ coordinates }: ParkingProps) {
     const { token } = useContext(UserContext)
+    const router = useRouter()
     const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
     const [CreateParking] = useMutation(CREATE_PARKING, {
+        onCompleted() {
+            router.push('/parking')
+        },
         context: {
             headers: {
                 authorization: `Bearer ${token}`
@@ -129,12 +132,17 @@ export default function ParkingForm() {
         }
     })
 
+    useEffect(() => {
+        console.log('Cambiaron coordenadas')
+        console.log(coordinates)
+    }, [coordinates])
+
     return (
         <Formik
             initialValues={{
                 countParking: 1,
-                latitude: "18.487876",
-                longitude: "-69.962292",
+                latitude: `${coordinates.lat}`,
+                longitude: `${coordinates.lng}`,
                 parkingName: "",
                 priceHours: 50,
                 pictures: ["as", "as"],
@@ -161,10 +169,10 @@ export default function ParkingForm() {
                             variables: {
                                 cpInput: {
                                     "countParking": parseFloat(values.countParking.toString()),
-                                    "latitude": "18.487876",
-                                    "longitude": "-69.962292",
+                                    "latitude": `${coordinates.lat}`,
+                                    "longitude": `${coordinates.lng}`,
                                     "parkingName": values.parkingName,
-                                    "priceHours": values.priceHours.toString(),
+                                    "priceHours": `${values.priceHours}`,
                                     "information": values.information,
                                     "sector": values.sector,
                                     "direction": values.direction,

@@ -194,6 +194,7 @@ query GetUserParkings{
     sector
     direction
     countParking
+    priceHours
   }
 }
 `

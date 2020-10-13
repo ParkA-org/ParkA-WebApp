@@ -193,6 +193,7 @@ export default function VehicleRegister(): JSX.Element {
                     }
                   }
                 })
+                router.push('/profile')
               })
               .catch(error => console.error(error))
           }}

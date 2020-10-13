@@ -11,19 +11,17 @@ import { ParkingData } from "utils/types";
 
 export default function ParkingSection() {
     const { token } = useContext(UserContext)
-
+    let getAllUserParkings = []
     const { loading, error, data } = useQuery<ParkingData>(GET_USER_PARKINGS, {
+        fetchPolicy: "network-only",
         context: {
             headers: {
                 authorization: token ? `Bearer ${token}` : ""
             }
         }
     })
-
-    if (error) return <h2>Error</h2>
-    if (loading) return <h2>Loading...</h2>
-
-    const { getAllUserParkings } = data
+    if (data)
+        getAllUserParkings = data.getAllUserParkings
     return (
         <>
             <HeaderSection>
@@ -32,6 +30,8 @@ export default function ParkingSection() {
                     <NewLink><BiPlusCircle size="1.5em" /> Nuevo Parqueo</NewLink>
                 </NavigationLink>
             </HeaderSection>
+            {error && <h2>Error</h2>}
+            {loading && <h2>Loading...</h2>}
             {getAllUserParkings.length > 0 ?
                 <VehicleList>
                     {getAllUserParkings.map(parking => {
@@ -59,11 +59,6 @@ export default function ParkingSection() {
                 `}</style>
                 </div>
             }
-            <VehicleList>
-                <ParkingCard />
-                <ParkingCard />
-                <ParkingCard />
-            </VehicleList>
         </>
     )
 }

@@ -1,5 +1,5 @@
 import { useQuery } from "@apollo/client"
-import { GET_ALL_VEHICLES, GET_MAKES } from "queries";
+import { GET_ALL_VEHICLES } from "queries";
 import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import VehicleCard from "components/VehicleCard"
@@ -9,14 +9,13 @@ import {
     NewLink
 } from "./styles"
 import { UserContext } from "context/UserContext";
-import { useContext } from "react";
-import { MakersData } from "utils/types";
+import { useContext } from "react"
 
 export default function VehicleSection() {
     const { token } = useContext(UserContext)
 
-    const { loading: makersLoading, error: makersError, data: makersData } = useQuery<MakersData>(GET_MAKES);
     const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
+        fetchPolicy: "network-only",
         context: {
             headers: {
                 authorization: token ? `Bearer ${token}` : ""

@@ -143,7 +143,7 @@ export default function EditVehicle(): JSX.Element {
     const [UpdateVehicle] = useMutation(UPDATE_VEHICLE, {
         onCompleted() {
             setShowModal(false)
-            // router.push('/profile')
+            router.push('/profile')
         },
         onError(error) {
             console.log('Using mutation on error')

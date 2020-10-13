@@ -29,7 +29,7 @@ export default function ParkingCard({ parking }: CardProps) {
                 <h3>Dirección</h3>
                 <p>{parking?.direction ? parking?.direction : "Calle Puerto Rico #175"}</p>
                 <h3>Precio</h3>
-                <p>{parking?.priceHours ? parking?.priceHours : "125.00 $RD por hora"}</p>
+                <p>{parking?.priceHours ? `${parking?.priceHours} $RD por hora` : "125.00 $RD por hora"}</p>
             </CardInformation>
             <ButtonSection>
                 <ActionButton>Compartir</ActionButton>
