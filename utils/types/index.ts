@@ -52,6 +52,29 @@ export interface ModelsData {
     models: BasicEntity[]
 }
 
+export type Parking = {
+    __typename: string;
+    id: string;
+    latitude: string;
+    longitude: string;
+    published: boolean;
+    parkingName: string;
+    calendar: string[];
+    priceHours: string;
+    pictures: string[];
+    mainPicture: string;
+    isAvailable: boolean;
+    sector: string;
+    direction: string;
+    information: string;
+    features: BasicEntity[];
+    verified: boolean;
+}
+
+export interface ParkingData {
+    getAllUserParkings: Parking[]
+}
+
 export type Vehicle = {
     __typename: string;
     id: string;

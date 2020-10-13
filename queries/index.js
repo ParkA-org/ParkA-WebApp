@@ -180,3 +180,20 @@ query GetVehicles{
     }
 }
 `;
+
+export const GET_USER_PARKINGS = gql`
+query GetUserParkings{
+  getAllUserParkings {
+    id
+    parkingName
+    calendar
+    mainPicture
+    latitude
+    longitude
+    information
+    sector
+    direction
+    countParking
+  }
+}
+`
