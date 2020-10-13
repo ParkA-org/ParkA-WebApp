@@ -9,7 +9,7 @@ export default function ParkingSection() {
         <>
             <HeaderSection>
                 <h1>Parqueos</h1>
-                <NavigationLink href="/parking/new">
+                <NavigationLink href="/parking/register">
                     <NewLink><BiPlusCircle size="1.5em" /> Nuevo Parqueo</NewLink>
                 </NavigationLink>
             </HeaderSection>
