@@ -86,7 +86,7 @@ export default function ConfirmEmail(): JSX.Element {
                                 </FieldSection>
                                 <InformationSection>
                                     <img
-                                        src="../images/projectLogo.png"
+                                        src="/images/projectLogo.png"
                                         style={{ width: "100%", height: "100%" }}
                                     />
                                 </InformationSection>

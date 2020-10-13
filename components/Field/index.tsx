@@ -123,7 +123,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="../icons/cameraIcon.svg"
+        src="/icons/cameraIcon.svg"
         ref={imgEl}
         alt="uploaded by the user"
       />
