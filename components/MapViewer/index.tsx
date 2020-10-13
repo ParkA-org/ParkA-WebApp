@@ -166,7 +166,7 @@ export default function MapViewer(): JSX.Element {
                                     <h3>{selected.name}</h3>
                                     <p className="description">{selected.information}</p>
                                     <img className="img" src={selected.picture} alt="parking picture" />
-                                    <button onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${selected.id}`)}>Ir al parqueo</button>
+                                    <button onClick={() => router.push('/parking/checkout/[id]', `/parking/checkout/${selected.id}`)}>Ir al parqueo</button>
                                 </div>
                             </InfoWindow>
                         ) : null}

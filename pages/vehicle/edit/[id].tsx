@@ -179,7 +179,7 @@ export default function EditVehicle(): JSX.Element {
 
     return (
         <Layout pageTitle="Formulario de Edición de Vehiculos">
-            <div style={{ textAlign: "left", width: "80%", margin: "0 auto" }}>
+            <div style={{ textAlign: "left", width: "80%", margin: "0 auto 2em auto" }}>
                 <h1>Formulario de Edición de Vehiculos</h1>
                 <Formik
                     enableReinitialize={true}

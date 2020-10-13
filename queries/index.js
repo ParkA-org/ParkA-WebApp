@@ -221,9 +221,15 @@ query GetParkingWithId($id: String!){
   getParkingById(id: $id){
     id
     parkingName
+    direction
+    sector
+    priceHours
     countParking
     isAvailable
     verified
+    information
+    mainPicture
+    pictures
   }
 }
 `

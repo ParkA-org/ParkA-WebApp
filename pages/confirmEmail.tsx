@@ -23,7 +23,11 @@ export default function ConfirmEmail(): JSX.Element {
     const { token } = useContext(UserContext)
     const router = useRouter()
     const [showModal, setShowModal] = useState(false)
-    const [ValidateEmail, { data: emailData, loading: emailLoading, error: emailError }] = useMutation(VALIDATE_EMAIL)
+    const [ValidateEmail, { data: emailData, loading: emailLoading, error: emailError }] = useMutation(VALIDATE_EMAIL, {
+        onCompleted() {
+            router.push('/login')
+        }
+    })
     const [ConfirmEmail, { error: confirmEmailError }] = useMutation(CONFIRM_EMAIL)
     return (
         <Layout pageTitle="Confirm account with email">
@@ -72,8 +76,9 @@ export default function ConfirmEmail(): JSX.Element {
                                         isTouched={touched.email}
                                         value={values.email}
                                     />
+                                    <Button submit={true}>Validar correo</Button>
                                     <p>No te ha llegado ningun correo?</p>
-                                    <Button onClick={() => {
+                                    <Button submit={false} onClick={() => {
                                         ConfirmEmail({
                                             variables: {
                                                 ceInput: {
@@ -82,7 +87,7 @@ export default function ConfirmEmail(): JSX.Element {
                                                 }
                                             }
                                         })
-                                    }}>Haz click aqui para mandarte otro.</Button>
+                                    }}>Mandame otro.</Button>
                                 </FieldSection>
                                 <InformationSection>
                                     <img

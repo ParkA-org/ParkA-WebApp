@@ -109,6 +109,11 @@ export default function SignWithEmail(): JSX.Element {
                     Atrás
                   </NavigationLink>
                 </Button>
+                <Button rank="secondary">
+                  <NavigationLink href="/confirmEmail" styled>
+                    Confirmar correo
+                  </NavigationLink>
+                </Button>
                 <Button rank="secondary" submit={true}>
                   Iniciar Sesión
                 </Button>
