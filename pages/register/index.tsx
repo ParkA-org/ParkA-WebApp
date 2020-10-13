@@ -15,9 +15,13 @@ import {
   FormHeading
 } from "styles/formStyles"
 import { useEffect, useState } from "react";
+import UploadImageService from "services/uploadImage";
 
 export default function registerPersonalAccount(): JSX.Element {
   const router = useRouter()
+  const [file, setFile] = useState({})
+  const [requestState, setRequestState] = useState("loading")
+  const [imageUrl, setImageUrl] = useState("")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
   const [initialUserValues, setInitialUserValues] = useState({
     name: "",
@@ -58,9 +62,7 @@ export default function registerPersonalAccount(): JSX.Element {
           initialValues={initialUserValues}
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => {
-            console.log('Se clicleo')
             setLocalUser({ ...localUser, ...values })
-            router.push('/register/PersonalIdentification')
             //   createUser({
             //     variables: {
             //       user: {
@@ -75,6 +77,8 @@ export default function registerPersonalAccount(): JSX.Element {
             //       }
             //     }
             //   })
+
+            router.push('/register/PersonalIdentification')
           }}
         >
           {({ setFieldValue, errors, touched, values }) => (

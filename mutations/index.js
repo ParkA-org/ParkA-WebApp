@@ -23,6 +23,24 @@ export const UPDATE_USER = gql`
   }
 `
 
+export const CONFIRM_EMAIL = gql`
+mutation ConfirmEmail($ceInput: ConfirmEmailInput!){
+  confirmEmail(confirmEmailInput: $ceInput){
+   	email
+  	origin
+  }
+}
+`
+
+export const VALIDATE_EMAIL = gql`
+mutation ValidateEmail($emInput: ValidateEmailCodeInput!){
+  validateEmailCode(validateEmailCodeInput: $emInput){
+    email
+    origin
+  }
+}
+`
+
 export const CREATE_USER_INFO = gql`
 mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
   createUserInformation(createUserInformationInpuType: $cuiInput){

@@ -14,8 +14,6 @@ import Button from "components/Button"
 import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
 import { BasicEntity, BirthPlaceData, NationalityData } from "utils/types"
-import { UserInformation, CreateUserInformationInput, User, CreateUserInput } from "utils/types/user"
-import UploadImageService from "services/uploadImage"
 import {
   MainFormContainer,
   FormContainer,
@@ -27,11 +25,8 @@ import {
 
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-  const [accountId, setAccountId] = useLocalStorage("account-id", "")
-  const [requestError, setRequestError] = useState(null)
-  const [imageUrl, setImageUrl] = useState("")
   const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
-  const [userId,] = useLocalStorage("user-id", "")
+  const [userId, setUserId] = useLocalStorage("user-id", "")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
@@ -52,12 +47,31 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     nationality: "",
   })
 
-  const [CreateUserInfo, { data: userInfoData, error: userInfoError }] = useMutation<UserInformation, CreateUserInformationInput>(CREATE_USER_INFO)
+  const [CreateUser] = useMutation(CREATE_USER)
+  const [CreateUserInfo] = useMutation(CREATE_USER_INFO, {
+    onCompleted({ createUserInformation }) {
+      const { id } = createUserInformation
+      CreateUser({
+        variables: {
+          cuInput: {
+            name: localUser.name,
+            lastName: localUser.lastName,
+            email: localUser.email,
+            password: localUser.password,
+            userInformation: id,
+            profilePicture: image,
+            origin: "web"
+          }
+        }
+      })
+      setShowModal(false)
+      router.push('/confirmEmail')
+    }
+  })
 
-  const [CreateUser] = useMutation<User, CreateUserInput>(CREATE_USER)
+
 
   useEffect(() => {
-    console.log('Se ejecuto')
     for (const key in userValues) {
       if (localUser[key]) {
         userValues[key] = localUser[key]
@@ -79,55 +93,22 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           enableReinitialize={true}
           initialValues={initialUserValues}
           validationSchema={PersonalIdentificationSchema}
-          onSubmit={async (values) => {
+          onSubmit={(values) => {
             setLocalUser({ ...localUser, ...values })
-            console.log('Nueva fecha')
             let newDate = new Date(values.dateOfBirth).toISOString()
             setShowModal(true)
-
-            await CreateUserInfo({
+            CreateUserInfo({
               variables: {
-                birthDate: newDate,
-                documentNumber: values.documentCode,
-                nationality: values.nationality,
-                placeOfBirth: values.birthPlace,
-                paymentInformation: "cc78a504-aafe-4917-afe9-f3a3ecee8b07",
+                cuiInput: {
+                  paymentInformation: "cc78a504-aafe-4917-afe9-f3a3ecee8b07",
+                  birthDate: newDate,
+                  documentNumber: values.documentCode,
+                  telephoneNumber: "8091234568123",
+                  nationality: nationalityData.getAllNationalities.filter(nation => nation.name == values.nationality)[0].id,
+                  placeOfBirth: birthPlacedata.getAllCountries.filter(country => country.name == values.birthPlace)[0].id,
+                }
               }
             })
-            const { id } = userInfoData
-
-            await UploadImageService(localUser.file, setImageUrl, setRequestError)
-
-            if (!userInfoError) {
-              CreateUser({
-                variables: {
-                  email: localUser.email,
-                  lastName: localUser.lastName,
-                  name: localUser.name,
-                  origin: "web",
-                  password: localUser.password,
-                  profilePicture: imageUrl ? imageUrl : "",
-                  userInformation: id,
-                  confirmed: false
-                }
-              })
-            }
-
-            // CreateAccount({
-            //   variables: {
-            //     userAccount: {
-            //       data: {
-            //         document: values.documentCode,
-            //         placeofbirth: values.birthPlace,
-            //         datebirth: values.dateOfBirth.toISOString(),
-            //         nationality: values.nationality,
-            //         document_type: values.typeOfDocument,
-            //         user: userId
-            //       }
-            //     }
-            //   }
-            // })
-            router.push('/register/PaymentInformation')
           }}
         >
           {({ values, errors, touched }) => (
@@ -201,7 +182,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                 <Button submit={true} rank="secondary">
                   Continuar
                 </Button>
-                {requestError && <p style={{ color: "red" }}>Ocurrio un error</p>}
               </ActionSection>
             </Form>
           )}
