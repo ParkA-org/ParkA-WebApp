@@ -5,14 +5,13 @@ export default function ParkingRegister() {
     return (
         <Layout>
             <div className="container">
-                <h2>Registro de Parqueo</h2>
-                <LocationPicker />
+                {/* <LocationPicker /> */}
                 <ParkingForm />
             </div>
             <style jsx>
                 {`
                     .container {
-                        width: 80vw;
+                        width: 99vw;
                         text-align: left;
                     }
                 `}

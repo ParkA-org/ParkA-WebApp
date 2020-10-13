@@ -1,5 +1,5 @@
 import { CSSProperties, useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer } from "./styles";
+import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer, CheckboxContainer } from "./styles";
 import Button from "components/Button";
 import { FormikErrors, FormikTouched } from "formik/dist/types";
 
@@ -28,6 +28,16 @@ export default function Field({
   placement = "vertical",
   inputStyles,
 }: FieldProps): JSX.Element {
+  if (type === "checkbox") {
+    return (
+      <CheckboxContainer>
+        <StyledLabel htmlFor={name}>
+          {label}
+        </StyledLabel>
+        <StyledField type="checkbox" name={name} value={value} />
+      </CheckboxContainer>
+    )
+  }
   return (
     <FieldContainer placement={placement}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>

@@ -127,3 +127,22 @@ mutation UpdateVehicle($uvInput: updateVehicleInput!){
   }
 }
 `
+
+export const CREATE_PARKING = gql`
+mutation CreateParking($cpInput: CreateParkingInput!){
+  createParking(createParkingInput: $cpInput){
+    id
+    countParking
+    latitude
+    longitude
+    parkingName
+    calendar
+    priceHours
+    mainPicture
+    isAvailable
+    sector
+    direction
+    information
+  }
+}
+`

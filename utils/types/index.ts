@@ -14,6 +14,10 @@ export interface NationalityData {
     getAllNationalities: BasicEntity[]
 }
 
+export interface FeaturesData {
+    getAllFeatures: BasicEntity[]
+}
+
 export type MakerIcon = {
     __typename: string;
     name: string;

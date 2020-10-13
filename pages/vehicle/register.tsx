@@ -151,7 +151,6 @@ export default function VehicleRegister(): JSX.Element {
     }
   })
 
-
   return (
     <Layout pageTitle="Formulario de Vehiculos">
       <div style={{ textAlign: "left", width: "80%", margin: "0 auto" }}>
@@ -196,7 +195,6 @@ export default function VehicleRegister(): JSX.Element {
                 })
               })
               .catch(error => console.error(error))
-
           }}
         >
           {({ errors, touched }) => (

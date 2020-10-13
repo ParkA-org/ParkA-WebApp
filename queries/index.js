@@ -16,6 +16,15 @@ query GetNationalities {
   }
 }`
 
+export const GET_FEATURES = gql`
+query GetFeatures {
+  getAllFeatures {
+    id
+    name
+  }
+}
+`
+
 export const GET_USER = gql`
 query GetUser($id: String!){
   getUserById(id: $id){

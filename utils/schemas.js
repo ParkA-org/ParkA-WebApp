@@ -69,11 +69,17 @@ export const EditProfileSchema = Yup.object().shape({
 });
 
 export const CreateParkingSchema = Yup.object().shape({
-    owner: Yup.string().required("Requerido"),
-    address: Yup.string().required("Requerido"),
+    countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    latitude: Yup.string().required("Requerido"),
+    longitude: Yup.string().required("Requerido"),
+    parkingName: Yup.string().required("Requerido"),
+    priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    pictures: Yup.array().of(Yup.string()),
+    mainPicture:  Yup.string().required("Requerido"),
     sector: Yup.string().required("Requerido"),
-    costPerHour: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    direction: Yup.string().required("Requerido"),
+    information: Yup.string().required("Requerido"),
+    features: Yup.array().of(Yup.string())
 });
 
 export const CreateVehicleSchema = Yup.object().shape({    
