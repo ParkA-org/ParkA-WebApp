@@ -17,18 +17,21 @@ const schedulerData = [
   { startDate: '2020-10-08T09:45', endDate: '2020-10-08T11:00', title: 'Tu reserva', color: "#63C7B2" },
 ];
 
-const Appointment = ({ children, style, data, ...restProps }) => (
+/*const Appointment = ({ children, style, data, resources, ...restProps }) => (
   <Appointments.Appointment
-    {...restProps}
     style={{
       ...style,
       backgroundColor: data.color,
       borderRadius: "8px"
     }}
+    draggable={false}
+    data={data}
+    resources={resources}
+    {...restProps}
   >
     {children}
   </Appointments.Appointment>
-);
+);*/
 
 
 
@@ -60,7 +63,7 @@ export default class Calendar extends React.PureComponent {
                 endDayHour={24}
               />
               <Appointments
-                appointmentComponent={Appointment} />
+                /*appointmentComponent={Appointment}*/ />
               <CurrentTimeIndicator />
             </Scheduler>
           </Paper>

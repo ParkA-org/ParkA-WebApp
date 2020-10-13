@@ -69,6 +69,13 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
                     setUserStatus(USER_STATES.LOGGED_IN)
                 }
             }
+        } else {
+            if (!token || !userId) {
+                setUserStatus(USER_STATES.LOGGED_OUT)
+            }
+            if (user && user['name']) {
+                setUserStatus(USER_STATES.LOGGED_IN)
+            }
         }
         if (!token || !userId) {
             setUserStatus(USER_STATES.LOGGED_OUT)

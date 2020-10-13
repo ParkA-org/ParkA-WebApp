@@ -2,10 +2,10 @@ import Layout from "../../layout";
 import styled from "styled-components";
 import Carousel from "components/Carousel";
 import ReviewCard from "components/ReviewCard";
+import { useRouter } from "next/router"
 import { BiDollar } from "react-icons/bi";
 import { useLazyQuery } from "@apollo/client";
 import { UserContext } from "context/UserContext";
-import { useRouter } from "next/router";
 import { GET_PARKING_WITH_ID } from "queries";
 import { useContext, useEffect } from "react";
 
@@ -66,7 +66,7 @@ export const ButtonGroup = styled.div`
     align-items:center;
 `;
 
-export const Button = styled.div`
+export const Button = styled.button`
     border:solid;
     border-color:#077187;
     color: #077187;

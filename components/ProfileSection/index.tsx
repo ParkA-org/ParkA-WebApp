@@ -9,7 +9,7 @@ import {
     ContentRow
 } from "./styles"
 import { useEffect, useState } from "react"
-import jwt_decode from "jwt-decode"
+//import jwt_decode from "jwt-decode"
 import Button from "components/Button"
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { useContext } from 'react';
@@ -29,8 +29,8 @@ export default function ProfileSection() {
     })
     const [user, setUser] = useState<User | null>(null)
     useEffect(() => {
-        let obj = jwt_decode(token)
-        getUser({ variables: { id: obj.id } })
+//       let obj = jwt_decode(token)
+//        getUser({ variables: { id: obj.id } })
         if (data)
             setUser(data.getUserById)
     }, [data])
