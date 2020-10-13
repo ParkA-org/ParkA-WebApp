@@ -75,6 +75,10 @@ export interface ParkingData {
     getAllUserParkings: Parking[]
 }
 
+export interface AllParkingData {
+    getAllParkings: Parking[]
+}
+
 export type Vehicle = {
     __typename: string;
     id: string;

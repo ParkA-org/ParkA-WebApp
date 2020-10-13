@@ -199,6 +199,23 @@ query GetUserParkings{
 }
 `
 
+export const GET_PARKINGS = gql`
+query GetParkings{
+  getAllParkings {
+    id
+    parkingName
+    calendar
+    mainPicture
+    latitude
+    longitude
+    information
+    sector
+    direction
+    countParking
+  }
+}
+`
+
 export const GET_PARKING_WITH_ID = gql`
 query GetParkingWithId($id: String!){
   getParkingById(id: $id){

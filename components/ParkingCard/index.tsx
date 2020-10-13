@@ -8,14 +8,16 @@ import {
 } from "./styles"
 import { BsStarFill, BsStar } from "react-icons/bs"
 import { Parking } from "utils/types"
+import useRouter from "next/router"
 
 type CardProps = {
     parking?: Parking
 }
 export default function ParkingCard({ parking }: CardProps) {
+    const router = useRouter
 
     return (
-        <Container>
+        <Container onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${parking.id}`)}>
             <CardImage
                 src={parking?.mainPicture ? parking?.mainPicture : "../placeholders/park-placeholder.png"} alt="parking lot" />
             <CardHeader>

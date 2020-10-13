@@ -1,4 +1,4 @@
-import Layout from "../layout";
+import Layout from "../../layout";
 import styled from "styled-components";
 import Carousel from "components/Carousel";
 import ReviewCard from "components/ReviewCard";
