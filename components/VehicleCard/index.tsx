@@ -1,7 +1,6 @@
 import { AiFillCheckCircle } from "react-icons/ai"
 import { useRouter } from "next/router"
 import Button from "components/Button"
-import NavigationLink from "components/NavigationLink"
 import { Vehicle } from "utils/types"
 import {
     Card,
@@ -37,9 +36,10 @@ export default function VehicleCard({ vehicle }: CardProps) {
 
             <AdditionalInfo>
                 <span>Verificado <AiFillCheckCircle size="1.3em" /> </span>
-                <NavigationLink href="/vehicle/edit">
-                    <Button>Editar</Button>
-                </NavigationLink>
+                <Button onClick={(e) => {
+                    e.stopPropagation()
+                    router.push('/vehicle/edit/[id]', `/vehicle/edit/${vehicle.id}`)
+                }}>Editar</Button>
             </AdditionalInfo>
         </Card>
     )

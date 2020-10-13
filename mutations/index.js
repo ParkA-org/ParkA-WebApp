@@ -111,3 +111,16 @@ mutation CreateVehicle($cvInput: createVehicleInput!){
   }
 }
 `
+
+export const UPDATE_VEHICLE = gql`
+mutation UpdateVehicle($uvInput: updateVehicleInput!){
+  updateVehicle(
+    updateVehicleInput: $uvInput
+  ) {
+    id
+    licensePlate
+    verified
+    detail
+  }
+}
+`
