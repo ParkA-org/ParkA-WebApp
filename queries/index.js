@@ -197,3 +197,15 @@ query GetUserParkings{
   }
 }
 `
+
+export const GET_PARKING_WITH_ID = gql`
+query GetParkingWithId($id: String!){
+  getParkingById(id: $id){
+    id
+    parkingName
+    countParking
+    isAvailable
+    verified
+  }
+}
+`
