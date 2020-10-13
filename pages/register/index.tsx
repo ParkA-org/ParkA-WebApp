@@ -15,14 +15,12 @@ import {
   FormHeading
 } from "styles/formStyles"
 import { useEffect, useState } from "react";
-import UploadImageService from "services/uploadImage";
+import UploadImageService from "services/uploadImage"
 
 export default function registerPersonalAccount(): JSX.Element {
   const router = useRouter()
-  const [file, setFile] = useState({})
-  const [requestState, setRequestState] = useState("loading")
-  const [imageUrl, setImageUrl] = useState("")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
+  const [_, setImage] = useLocalStorage("image", "")
   const [initialUserValues, setInitialUserValues] = useState({
     name: "",
     lastName: "",
@@ -32,7 +30,7 @@ export default function registerPersonalAccount(): JSX.Element {
     file: "",
   })
   let userValues = {
-    name: "probando",
+    name: "",
     lastName: "",
     email: "",
     password: "",
@@ -63,21 +61,7 @@ export default function registerPersonalAccount(): JSX.Element {
           validationSchema={CreateAccountSchema}
           onSubmit={(values) => {
             setLocalUser({ ...localUser, ...values })
-            //   createUser({
-            //     variables: {
-            //       user: {
-            //         data: {
-            //           name: values.name,
-            //           username: values.email,
-            //           email: values.email,
-            //           lastname: values.lastName,
-            //           password: values.password,
-            //           confirmed: true
-            //         }
-            //       }
-            //     }
-            //   })
-
+            UploadImageService(values.file, setImage)
             router.push('/register/PersonalIdentification')
           }}
         >

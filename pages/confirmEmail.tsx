@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react"
+import { useContext, useState } from "react"
 import { Formik, Form } from "formik"
 import { ValidateEmailSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
@@ -18,31 +18,13 @@ import {
 import { UserContext } from "context/UserContext"
 import ModalPortal from "components/Modal"
 import Spinner from "components/Spinner"
-import useLocalStorage from "hooks/useLocalStorage"
 
 export default function ConfirmEmail(): JSX.Element {
+    const { token } = useContext(UserContext)
     const router = useRouter()
     const [showModal, setShowModal] = useState(false)
-    const [ConfirmEmail, { error }] = useMutation(CONFIRM_EMAIL, {
-        onCompleted({ confirmEmail }) {
-            console.log('Lo que tenemos como resultado')
-            console.log(confirmEmail)
-        }
-    })
     const [ValidateEmail, { data: emailData, loading: emailLoading, error: emailError }] = useMutation(VALIDATE_EMAIL)
-    const [localUser, setLocalUser] = useLocalStorage("user", {})
-
-    useEffect(() => {
-        ConfirmEmail({
-            variables: {
-                ceInput: {
-                    email: localUser.email,
-                    origin: "web"
-                }
-            }
-        })
-    }, [])
-
+    const [ConfirmEmail, { error: confirmEmailError }] = useMutation(CONFIRM_EMAIL)
     return (
         <Layout pageTitle="Confirm account with email">
             <MainFormContainer>
@@ -50,7 +32,7 @@ export default function ConfirmEmail(): JSX.Element {
                 <Formik
                     initialValues={{
                         code: "",
-                        origin: "web"
+                        email: ""
                     }}
                     validationSchema={ValidateEmailSchema}
                     onSubmit={(values) => {
@@ -58,15 +40,15 @@ export default function ConfirmEmail(): JSX.Element {
                         ValidateEmail({
                             variables: {
                                 emInput: {
-                                    email: localUser.email,
+                                    email: values.email,
                                     code: values.code,
-                                    origin: values.origin
+                                    origin: "web"
                                 }
                             }
                         })
                     }}
                 >
-                    {({ errors, touched }) => (
+                    {({ errors, touched, values }) => (
                         <Form>
                             <FormContainer>
                                 <FieldSection>
@@ -79,8 +61,28 @@ export default function ConfirmEmail(): JSX.Element {
                                         placeholder="Código del correo"
                                         errorMessage={errors.code}
                                         isTouched={touched.code}
+                                        value={values.code}
                                     />
-
+                                    <Field
+                                        type="email"
+                                        label="Correo electrónico"
+                                        name="email"
+                                        placeholder="Correo electrónico"
+                                        errorMessage={errors.email}
+                                        isTouched={touched.email}
+                                        value={values.email}
+                                    />
+                                    <p>No te ha llegado ningun correo?</p>
+                                    <Button onClick={() => {
+                                        ConfirmEmail({
+                                            variables: {
+                                                ceInput: {
+                                                    email: values.email,
+                                                    origin: "web"
+                                                }
+                                            }
+                                        })
+                                    }}>Haz click aqui para mandarte otro.</Button>
                                 </FieldSection>
                                 <InformationSection>
                                     <img

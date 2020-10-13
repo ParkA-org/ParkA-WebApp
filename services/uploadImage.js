@@ -1,8 +1,6 @@
 import axios from "axios"
-import useLocalStorage from "hooks/useLocalStorage"
 
-export default function UploadImageService(file) {
-    const [_, setImage] = useLocalStorage("image", "")
+export default function UploadImageService(file, setImage) {
     const apiBaseURL = "https://parka-api.herokuapp.com/upload"
     const formData = new FormData()
     formData.append("files", file)
@@ -12,10 +10,11 @@ export default function UploadImageService(file) {
         data: formData
     }).then(res => {
         setImage(res.data[0].url)
-        return res
+        // return res.data[0].url
     })
     .catch(err => {
-        return err
+        console.error(err)
+        // return err.message
     })
 }
 

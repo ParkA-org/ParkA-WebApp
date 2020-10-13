@@ -14,6 +14,7 @@ import Button from "components/Button"
 import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
 import { BasicEntity, BirthPlaceData, NationalityData } from "utils/types"
+import UploadImageService from "services/uploadImage";
 import {
   MainFormContainer,
   FormContainer,

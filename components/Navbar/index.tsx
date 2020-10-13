@@ -79,7 +79,7 @@ export default function Navbar(): JSX.Element {
     return function cleanup() {
       window.removeEventListener("resize", handleResize);
     };
-  }, []);
+  }, [userStatus]);
 
   return (
     <>

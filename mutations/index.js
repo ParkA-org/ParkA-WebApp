@@ -71,13 +71,16 @@ mutation createNewPayment($userPaymentInfo: createPaymentInformationInput) {
 `
 
 export const LOGIN_USER = gql`
-mutation loginUser($loggedUser: UsersPermissionsLoginInput!) {
-  login(input: $loggedUser) {
-    jwt
+mutation LogUser($logInfo: LoginUserInput!){
+  login(loginUserInput: $logInfo){
+    JWT
     user {
       id
-      username
+      name
+      lastName
       email
+      profilePicture
+      confirmed
     }
   }
 }

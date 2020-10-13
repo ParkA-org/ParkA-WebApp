@@ -16,7 +16,7 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
             <DropdownButton onClick={() => router.push("/profile")}>
                 <img src="../images/mdi_menu.svg" />
                 <img src="../images/profile_pic.svg" />
-                <h4>{loading ? "Cargando..." : user.name} </h4>
+                <h4>{loading ? "Cargando..." : user?.name} </h4>
             </DropdownButton>
             <DropdownContent>
                 <DropdownItem style={{ cursor: "pointer" }} ><img src="../images/mdi_chat.svg" /><h4>Chats</h4></DropdownItem>
