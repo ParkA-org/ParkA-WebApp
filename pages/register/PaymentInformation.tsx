@@ -44,7 +44,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
       <MainFormContainer>
         <FormHeading>
           <img src="/images/logo1.svg" alt="ParkA logo" />
-          <h2>Crea una cuenta para continuar</h2>
+          <h2>Información de pago</h2>
         </FormHeading>
         <Formik
           initialValues={{

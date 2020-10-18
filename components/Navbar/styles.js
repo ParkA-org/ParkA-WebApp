@@ -27,7 +27,7 @@ const ListItemVariants = {
 };
 
 export const Menu = styled(motion.ul)`
-  padding: 1em 0 0 0;
+  padding: 0.25em 0 0 0;
   margin: 0;
   display: flex;
   width: 99vw;

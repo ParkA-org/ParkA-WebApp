@@ -40,6 +40,7 @@ export const StyledLabel = styled.label`
   font-weight: bolder;
   font-size: 1.25em;
   text-align: left;
+  color: #333;
   margin: 0.5em 1em 0.5em 0;
 `;
 
