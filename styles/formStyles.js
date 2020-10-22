@@ -23,7 +23,6 @@ export const MainFormContainer = styled.div`
   @media (min-width: 768px) {
     width: 80vw;
     max-width: 1000px;
-    box-shadow: none;
   }
 `;
 

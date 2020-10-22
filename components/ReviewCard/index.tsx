@@ -16,7 +16,7 @@ export default function ReviewCard() {
                 7/3/2020
             </ReviewDate>
             <Text>
-                Me agrado mucho el parqueo, venia con carwash y seguridad incluido.
+                Me agrado mucho el parqueo, venia con carwash y seguridad incluido.asdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
             </Text>
         </Container>
     )

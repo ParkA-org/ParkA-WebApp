@@ -5,8 +5,8 @@ export const Container = styled.div`
     width: 80%;
     margin: 1em 0;
     grid-template-areas:
-    "image header header ."
-    "image information . ."
+    "image header header verification"
+    "image information . status"
     "image information  button button";
     background: #fff;
     padding: 1em;
@@ -19,7 +19,9 @@ export const Container = styled.div`
         grid-template-areas:
         "image"
         "header"
+        "verification"
         "information"
+        "status"
         "button";
     }
 
@@ -27,8 +29,8 @@ export const Container = styled.div`
 
 export const CardImage = styled.img`
     grid-area: image;    
-    width: 200px;
-    height: 180px;
+    width: 260px;
+    height: 160px;
     margin: auto;
 `;
 
@@ -57,6 +59,7 @@ export const CardHeader = styled.div`
 export const CardInformation = styled.div`
     grid-area: information;
     text-align: left;
+    width: 250px;
     & > h3 {
         font-weight: bold;
         font-size: 1.3rem;
@@ -76,10 +79,36 @@ export const CardInformation = styled.div`
     }
 `;
 
+export const CarStatus = styled.div`
+    grid-area: status;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 1.3rem;
+
+    & > p {
+        margin-right: 0.5em;
+        font-weight: bold;
+    }
+`;
+
+export const CarVerification = styled.div`
+    grid-area: verification;
+    color: ${props => props.verified ? "#127FFE" : "#ff0000" };
+    font-size: 1.3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    & > p{
+        margin-right: 0.5em;
+    }
+`
+
 export const ButtonSection = styled.div`
     grid-area: button;
     display: flex;
     justify-content: space-around;
+    align-items: flex-end;
     @media(max-width: 768px) {
         margin-top: 1em;
         flex-direction: column;
@@ -92,10 +121,19 @@ export const ActionButton = styled.button`
     background-color: #077187;
     border-radius: 5px;
     color: white;
-    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    width: auto;
+    height: 40px;
     font-size: 1rem;
     font-weight: bold;
-    padding: 0.5em;
+    padding: 1em;
+
+    & > * {
+        margin-right: 1em;
+    }
+
     @media(max-width: 768px) {
         width: 60%;
         margin: 0.5em 0;
