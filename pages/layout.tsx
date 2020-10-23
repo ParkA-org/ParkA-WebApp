@@ -82,7 +82,7 @@ export default function Layout({
             Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
             Helvetica Neue, sans-serif;
             
-          background-color: #f5f5f5;
+          background-color: #fff;
         }
 
         * {

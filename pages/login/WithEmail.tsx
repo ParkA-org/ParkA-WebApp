@@ -44,9 +44,9 @@ export default function SignWithEmail(): JSX.Element {
   })
 
   return (
-    <Layout pageTitle="Sign in with email">
+    <Layout pageTitle="Iniciar sección con correo electrónico">
       <MainFormContainer>
-        <h1>Sign with email</h1>
+        <h1>Iniciar sección con correo electrónico</h1>
         <Formik
           initialValues={{
             email: "",

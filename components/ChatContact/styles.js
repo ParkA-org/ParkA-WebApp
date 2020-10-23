@@ -11,16 +11,19 @@ export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     text-align: left;
-    max-width: 70%;
+    max-width: 85%;
     border-bottom: 2px solid #333;
     & > h4 {
         margin-bottom: 0.5em;
+        margin-top: 0.5em;
     }
     & > p {
-        line-height: 1.3em;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-bottom: 0.5em;
+        white-space: nowrap;
+        width: 95%;
+        line-height: 1.3em;
+        margin-bottom: 1em;
     }
 `;
 
@@ -30,5 +33,6 @@ export const ContactImage = styled.img`
     width: 75px;
     height: 75px;
     border-radius: 15px;
-    margin-right: 1em;
+    margin-left: 1em;
+    margin-top: 1em;
 `

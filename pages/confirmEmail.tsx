@@ -30,9 +30,9 @@ export default function ConfirmEmail(): JSX.Element {
     })
     const [ConfirmEmail, { error: confirmEmailError }] = useMutation(CONFIRM_EMAIL)
     return (
-        <Layout pageTitle="Confirm account with email">
+        <Layout pageTitle="Confirmar cuenta con correo electrónico">
             <MainFormContainer>
-                <h1>Confirm email</h1>
+                <h1>Confirmar correo electrónico</h1>
                 <Formik
                     initialValues={{
                         code: "",

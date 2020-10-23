@@ -17,6 +17,7 @@ import {
     FieldSection,
     InformationSection,
     ActionSection,
+    FormHeading
 } from "styles/formStyles";
 import IconButton from "components/IconButton";
 import UploadImageService from "services/uploadImage"
@@ -72,13 +73,17 @@ export default function EditProfile(): JSX.Element {
                         <Form>
                             <FormContainer>
                                 <FieldSection>
-                                    <Logo />
+                                    <FormHeading>
+                                        <Logo />
+                                    </FormHeading>
                                     <Field
                                         name="name"
                                         label="Nombre"
                                         errorMessage={errors.name}
                                         isTouched={touched.name}
                                         placeholder="Nombre"
+                                        placement="horizontal"
+                                        containerStyles={{ margin: "1em 0" }}
                                     />
                                     <Field
                                         name="lastName"
@@ -86,6 +91,8 @@ export default function EditProfile(): JSX.Element {
                                         errorMessage={errors.lastName}
                                         isTouched={touched.lastName}
                                         placeholder="Apellido"
+                                        placement="horizontal"
+                                        containerStyles={{ margin: "1em 0" }}
                                     />
                                     <Field
                                         name="email"
@@ -93,6 +100,8 @@ export default function EditProfile(): JSX.Element {
                                         errorMessage={errors.email}
                                         isTouched={touched.email}
                                         placeholder="Correo electrónico"
+                                        placement="horizontal"
+                                        containerStyles={{ margin: "1em 0" }}
                                     />
                                     <Field
                                         type="date"
@@ -101,6 +110,8 @@ export default function EditProfile(): JSX.Element {
                                         placeholder="Fecha de nacimiento"
                                         errorMessage={errors.dateOfBirth}
                                         isTouched={touched.dateOfBirth}
+                                        placement="horizontal"
+                                        containerStyles={{ margin: "1em 0" }}
                                     />
                                 </FieldSection>
                                 <InformationSection>

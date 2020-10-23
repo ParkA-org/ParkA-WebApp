@@ -102,7 +102,7 @@ query GetUserAccountData($id: ID!){
 `
 
 export const GET_VEHICLE_BY_ID = gql`
-query GetVehicle($vehicleId: getVehicleByIdInput!){
+query GetVehicle($vehicleId: GetVehicleByIdInput!){
   getVehicleById(getVehicleByIdInput: $vehicleId) {
     id
     licensePlate
@@ -173,7 +173,10 @@ query GetVehicles{
       name
     }
     model {
-      make 
+      make {
+        icon
+        name
+      }
       name
     }
     verified

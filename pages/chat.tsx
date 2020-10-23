@@ -10,8 +10,8 @@ export default function Chat() {
             <div className="chatContainer">
                 <div className="chatContactsContainer">
                     <div className="searchSection">
-                        <BsSearch color="#cecccd" size="1rem" />
-                        <input type="text" style={{ width: "80%", marginLeft: "0.5em" }} placeholder="Buscar en chats" />
+                        <BsSearch color="#cecccd" size="1.7rem" />
+                        <input type="text" style={{ width: "90%", marginLeft: "0.5em", padding: "0.5em" }} placeholder="Buscar en chats" />
                     </div>
                     <ChatContact />
                     <ChatContact />
@@ -43,6 +43,9 @@ export default function Chat() {
                         display: flex;
                         background-color: #fff;
                         padding: 0.25em;
+                        font-size: 1.2rem;
+                        align-items: center;
+                        justify-content: space-around;
                     }
 
                     .chatContactsContainer {

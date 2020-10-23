@@ -20,31 +20,32 @@ import { UserContext } from "context/UserContext";
 const Container = styled.div`
   margin: 0 auto;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  width: 90%;
+  grid-template-columns: repeat(2, 1fr);
   grid-template-rows: auto;
+  align-items: center;
+  justify-items: center;
   border: solid;
   border-color: #59BCA7;
   background-color:white;
   border-radius: 1.2em;
   column-gap:10px;
   row-gap: 20px;
-  align-items: start;
-  padding: 2em 0.5em 2em 4em;
+  padding: 2em 2em;
 `;
 
 const RightSideContainer = styled.div`
-  grid-column: 3 / span 2;
+  grid-column: 2;
   height: auto;
   display: flex;
   flex-direction: column;
-
   & > * {
     margin: 0 auto;
   }
 `;
 
 const LeftSideContainer = styled.div`
-  grid-column: 1 / span 2;
+  grid-column: 1;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -160,7 +161,7 @@ export default function VehicleRegister(): JSX.Element {
   return (
     <Layout pageTitle="Formulario de Vehiculos">
       <div style={{ textAlign: "left", width: "80%", margin: "0 auto" }}>
-        <h1>Formulario de Vehiculos</h1>
+        <h1 style={{ color: "#333" }}>Formulario de Vehiculos</h1>
         <Formik initialValues={{
           licensePlate: "",
           detail: "",
@@ -214,6 +215,7 @@ export default function VehicleRegister(): JSX.Element {
                     placeholder="Alias del vehículo"
                     errorMessage={errors.alias}
                     isTouched={touched.alias}
+                    containerStyles={{ width: "300px" }}
                   />
                   <OwnField
                     label="Año"
@@ -221,6 +223,7 @@ export default function VehicleRegister(): JSX.Element {
                     placeholder="Año"
                     errorMessage={errors.year}
                     isTouched={touched.year}
+                    containerStyles={{ width: "300px" }}
                   />
 
                   {colorsLoading ? <Spinner /> :
@@ -240,6 +243,7 @@ export default function VehicleRegister(): JSX.Element {
                     placeholder="Placa del vehículo"
                     errorMessage={errors.licensePlate}
                     isTouched={touched.licensePlate}
+                    containerStyles={{ width: "300px" }}
                   />
 
                   {makersLoading ? <Spinner /> :
@@ -248,13 +252,14 @@ export default function VehicleRegister(): JSX.Element {
                       label="Modelo del vehículo"
                       errorMessage={errors.model}
                       isTouched={touched.model}
+                      containerStyles={{ width: "300px" }}
                     >
                       {options}
                     </SelectField>}
 
-                  <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
+                  <div role="group" id="vehicle-type-group" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: "80%", marginLeft: "0" }}>
                     <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
-                    <div style={{ display: "flex", flexDirection: "column" }}>
+                    <div style={{ display: "flex", justifyContent: "flex-start" }}>
                       {bodyStylesLoading ? <Spinner /> :
                         bodyStylesData.getAllBodyStyles.map((vehicleType: BasicEntity) => (
                           <div className="radioContainer">
@@ -264,6 +269,7 @@ export default function VehicleRegister(): JSX.Element {
                               label={vehicleType.name}
                               name="bodyStyle"
                               value={vehicleType.id}
+                              containerStyles={{ width: "300px" }}
                             />
                             <label>
                               {vehicleType.name}
@@ -283,6 +289,7 @@ export default function VehicleRegister(): JSX.Element {
                     name="detail"
                     placeholder="Detalles adicionales..."
                     component="textarea"
+                    style={{ width: "900px" }}
                   />
                 </DetailsContainer>
                 <ButtonsContainer>
@@ -317,6 +324,8 @@ export default function VehicleRegister(): JSX.Element {
           .radioContainer {
             display: flex;
             justify-content: flex-start;
+            margin-right: 2em;
+            margin-top: 1em;
           }
           .radioContainer > label {
             font-size: 1rem;

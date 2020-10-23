@@ -18,7 +18,7 @@ import styled from "styled-components"
 const TextArea = styled.textarea`
   resize: none;
   border:solid;
-  width: 300px;
+  width: 500px;
   height: 170px;
   border-color: #C4C4C4;
   border-width:0.3px
@@ -31,8 +31,9 @@ const Button = styled.button`
   padding: 15px;
   border-radius: 1.5em;
   margin-top: 0.5em;
-  width: 150px;
+  width: 200px;
   align-self: center;
+  font-size: 1.4rem;
 `;
 
 const Stars = styled.div`

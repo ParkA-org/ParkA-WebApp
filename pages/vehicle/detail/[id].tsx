@@ -31,7 +31,7 @@ const Container = styled.div`
 
 export default function DetailVehicle() {
     const router = useRouter()
-    const { token } = useContext(UserContext)
+    const { token, user } = useContext(UserContext)
     const [GetVehicle, { data, loading, error }] = useLazyQuery(GET_VEHICLE_BY_ID, {
         context: {
             headers: {
@@ -58,7 +58,7 @@ export default function DetailVehicle() {
                 {error && <h3>Ocurrio un error</h3>}
                 {data &&
                     <section>
-                        <VehicleCard vehicle={data.getVehicleById} />
+                        <VehicleCard vehicle={data.GetVehicleById} />
                         <IconButton color="#AB1414" text="">
                             <DeleteIcon />
                         </IconButton>
@@ -67,7 +67,7 @@ export default function DetailVehicle() {
                 <section>
                     <blockquote>
                         <h1>Propietario</h1>
-                        {/* <h2>{loading ? "Cargando..." : `${user?.name} ${user?.lastname}`}</h2> */}
+                        <h2>{loading ? "Cargando..." : `${user?.name} ${user?.lastname}`}</h2>
                     </blockquote>
                     <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>
