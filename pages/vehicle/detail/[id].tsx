@@ -17,15 +17,17 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
+    color: #333;
     overflow-x: hidden;
     text-align: left;
     & > section {
         margin-bottom: 2em;
         text-align: left;
-        width: 100%;
+        width: 90%;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-left: 2em;
     }
 `;
 
@@ -58,7 +60,7 @@ export default function DetailVehicle() {
                 {error && <h3>Ocurrio un error</h3>}
                 {data &&
                     <section>
-                        <VehicleCard vehicle={data.GetVehicleById} />
+                        <VehicleCard vehicle={data.getVehicleById} />
                         <IconButton color="#AB1414" text="">
                             <DeleteIcon />
                         </IconButton>

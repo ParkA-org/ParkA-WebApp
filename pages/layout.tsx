@@ -81,7 +81,6 @@ export default function Layout({
           font-family: "Mulish", -apple-system, BlinkMacSystemFont, Segoe UI,
             Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans,
             Helvetica Neue, sans-serif;
-            
           background-color: #fff;
         }
 

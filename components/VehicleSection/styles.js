@@ -1,10 +1,10 @@
 import styled from "styled-components"
 
 export const HeaderSection = styled.div`
-    margin: 2em 0;
+    margin: 2em auto;
     display: flex;
     justify-content: space-between;
-    width: 80%;
+    width: 60%;
 `;
 
 export const VehicleList = styled.ul`

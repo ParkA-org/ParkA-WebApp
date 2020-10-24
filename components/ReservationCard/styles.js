@@ -7,6 +7,9 @@ export const Container = styled.div`
     margin-right: 2em;
     border: 2px solid #0B768C;
     border-radius: 20px;
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
     display: grid;
     text-align: center;
     align-items: center;
@@ -15,7 +18,8 @@ export const Container = styled.div`
     "image cost"
     "buttons buttons";
     row-gap: 10px;
-    width: 35vw;
+    width: 25vw;
+    height: 215px;
     @media(max-width: 768px) {
         width: 200px;
         grid-template-areas:
@@ -28,8 +32,8 @@ export const Container = styled.div`
 
 export const ReservationImage = styled.img`
     grid-area: image;
-    width: 180px;
-    height: 125px;
+    width: 200px;
+    height: 135px;
     border-radius: 15px;
     justify-self: center;
 `;
@@ -107,8 +111,11 @@ export const ReservationsButton = styled.button`
     border-radius: 5px;
     background-color: #0B768C;
     color: white;
-    width: 100px;
+    width: 130px;
     padding: 0.5em;
+    display: flex;
+    justify-content: space-around;
+
     @media(max-width: 768px) {
         justify-self: center;
     }

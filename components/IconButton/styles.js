@@ -7,8 +7,8 @@ export const StyledIconButton = styled.button`
     -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
     background-color: ${props => props.color};
     padding: 1em;
-    width: auto;
-    height: auto;
+    width: 120px;
+    height: 120px;
     margin-right: 1em;
 
     &:hover {

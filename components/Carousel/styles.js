@@ -9,13 +9,14 @@ export const Container = styled.div`
 
 export const CarouselContainer = styled.div`
     margin: 0 auto;
-    max-width: 1080px;
+    max-width: 1900px;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
     width: 100%;
+    height: 260px;
 `;
 
 export const ScrollSection = styled.section`
@@ -28,6 +29,7 @@ export const ScrollSection = styled.section`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none; 
+    height: 260px;
     scrollbar-width: none; 
     &::-webkit-scrollbar {
         display: none;

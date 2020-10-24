@@ -46,20 +46,7 @@ export default function VehicleSection() {
                 <div className="emptySection">
                     <img src="/placeholders/empty/vehicle.svg" alt="empty vehicle" />
                     <h3>¡No tienes vehiculos registrados!</h3>
-                    <style jsx>{`
-                 .emptySection {
-                     margin: 0 auto;
-                     display: flex;
-                     flex-direction: column;
-                     justify-content: space-around;
-                     font-size: 1.2rem;
-                     max-width: 350px;
-                 }
-                 h3 {
-                     margin: 1em 0;
-                     color: #0B768C;
-                 }
-                `}</style>
+
                 </div>
             }
         </>

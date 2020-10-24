@@ -119,7 +119,10 @@ query GetVehicle($vehicleId: GetVehicleByIdInput!){
     }
     model {
       id
-      make
+      make {
+        name
+        icon
+      }
       name
     }
   }

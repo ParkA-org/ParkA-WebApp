@@ -10,7 +10,8 @@ import {
     SpecialReservationsButton
 } from "./styles"
 import Link from "next/link"
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
+import { BsStarFill, BsStarHalf, BsStar, BsCardList } from "react-icons/bs"
+import { BiMessageDetail } from "react-icons/bi"
 
 import React, { useState } from "react"
 import ModalPortal from "components/Modal"
@@ -81,8 +82,8 @@ export default function ReservationCard({ isCancelable }: { isCancelable?: boole
                         }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
-                        <ReservationsButton> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
-                        <ReservationsButton><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
+                        <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                        <ReservationsButton><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                     </ActionButtonsSection>
                 </ButtonSection>
             </Container>
