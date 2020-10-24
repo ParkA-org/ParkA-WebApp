@@ -10,7 +10,7 @@ export const MainFormContainer = styled.div`
   background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +23,6 @@ export const MainFormContainer = styled.div`
   @media (min-width: 768px) {
     width: 80vw;
     max-width: 1000px;
-    box-shadow: none;
   }
 `;
 

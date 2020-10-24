@@ -16,8 +16,8 @@ export const ProfileContainer = styled.div`
 export const ContentContainer = styled.div`
     display: grid;
     grid-template-areas:
-    "image content content reservations"
-    "image content content reservations";
+    "image content reservations"
+    "image content reservations";
     justify-items: center;
     align-items: center;
     @media (max-width: 768px) {
@@ -26,6 +26,12 @@ export const ContentContainer = styled.div`
         "content"
         "reservations";
         justify-items: center;
+    }
+
+    & a > button{
+        background-color: #077187;
+        border-radius: 0.3em;
+        width:150px;
     }
 `;
 
@@ -46,9 +52,9 @@ export const CircularButton = styled.button`
     width: 170px;
     height: 170px;
     font-size: 1.2em;
-
+    justify-self:start;
     & > p {
-        font-size: 1.5em;
+        font-size: 2.5em;
         font-weight: bold;
     }
 `;

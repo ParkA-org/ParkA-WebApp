@@ -89,6 +89,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
         <FormHeading>
           <img src="/images/logo1.svg" alt="ParkA logo" />
           <h2>Identificación Personal</h2>
+          
         </FormHeading>
         <Formik
           enableReinitialize={true}
@@ -173,6 +174,15 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   {birthPlaceLoading ? <Spinner /> :
                     <IdentificationCard {...values} imageUrl={image} />}
                 </InformationSection>
+                <style global jsx>{`
+                  label + select {
+                    max-width: none !important;
+                  }
+
+                  label + input {
+                    max-width: none !important;
+                  }
+              `}</style>
               </FormContainer>
               <ActionSection>
                 <NavigationLink
@@ -192,6 +202,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           <h3>Loading...</h3>
         </ModalPortal>}
       </MainFormContainer>
+      
     </Layout >
   );
 }

@@ -62,7 +62,13 @@ export default function ProfileSection() {
                 </ContentSection>
                 <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
             </ContentContainer>
-
+            <style global jsx>{`
+            ${Button} {
+                display:none;
+            }
+            `
+                
+                }</style>
         </ProfileContainer>
     )
 }
