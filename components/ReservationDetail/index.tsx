@@ -73,7 +73,6 @@ export default function ReservationDetail() {
                 <ElementContainer>
                     <label><b>Horas</b></label>
                     {hourPicker}
-
                 </ElementContainer>
                 <ElementContainer>
                     <label><b>Características</b></label>
