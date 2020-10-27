@@ -8,6 +8,8 @@ export const Title = styled.h3`
 
 export const Content = styled.p`
   border-radius: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
   min-height: 1.5em;
   max-height: auto;
   width: 240px;

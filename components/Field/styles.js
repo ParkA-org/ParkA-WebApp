@@ -14,6 +14,8 @@ export const StyledField = styled(Field)`
   @media (max-width: 768px) {
     width: auto;
   }
+  font-size:1.5em;
+  font-weight:bold;
 `;
 
 export const CheckboxContainer = styled.div`
