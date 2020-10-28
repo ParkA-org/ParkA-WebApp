@@ -43,7 +43,7 @@ export default function Login(): JSX.Element {
   return (
     <Layout pageTitle="Login">
       <MainFormContainer>
-        <h1>Login</h1>
+      <br/>
         <FormContainer>
           <FieldSection>
             <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
@@ -63,6 +63,10 @@ export default function Login(): JSX.Element {
             <h3>Utiliza uno de estos métodos para registrarte o iniciar sesión</h3>
           </InformationSection>
         </FormContainer>
+        <br/>
+        <br/>
+        <br/> 
+        <br/>
       </MainFormContainer>
     </Layout>
   );
