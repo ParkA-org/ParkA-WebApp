@@ -14,6 +14,7 @@ type FieldProps = {
   placeholder?: string;
   value?: string;
   inputStyles?: CSSProperties;
+  containerStyles?: CSSProperties;
 };
 
 export default function Field({
@@ -27,6 +28,7 @@ export default function Field({
   value,
   placement = "vertical",
   inputStyles,
+  containerStyles
 }: FieldProps): JSX.Element {
   if (type === "checkbox") {
     return (
@@ -34,12 +36,13 @@ export default function Field({
         <StyledLabel htmlFor={name}>
           {label}
         </StyledLabel>
-        <StyledField type="checkbox" name={name} value={value} />
+        <StyledField type="checkbox" name={name} value={value}
+          style={inputStyles} />
       </CheckboxContainer>
     )
   }
   return (
-    <FieldContainer placement={placement}>
+    <FieldContainer placement={placement} style={containerStyles}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField
         type={type}
@@ -47,7 +50,7 @@ export default function Field({
         component={component}
         placeholder={placeholder}
         value={value}
-        {...inputStyles}
+        style={inputStyles}
       />
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
@@ -65,6 +68,7 @@ type SelectFieldProps = {
   children: JSX.Element[];
   errorMessage: string | string[] | FormikErrors<any> | FormikErrors<any>[];
   isTouched: boolean | FormikTouched<any> | FormikTouched<any>[];
+  containerStyles?: CSSProperties;
 };
 
 export function SelectField({
@@ -75,10 +79,11 @@ export function SelectField({
   placement = "vertical",
   errorMessage,
   isTouched,
-  value
+  value,
+  containerStyles
 }: SelectFieldProps): JSX.Element {
   return (
-    <FieldContainer placement={placement}>
+    <FieldContainer placement={placement} style={containerStyles}>
       <StyledLabel htmlFor={name}>{label}</StyledLabel>
       <StyledField component="select" name={name} placeholder={placeholder} value={value}>
         {children}

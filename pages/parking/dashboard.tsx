@@ -29,11 +29,10 @@ export default function ParkingDashboard() {
             </Carousel>
             <style jsx>{`
                 .main-section {
-                    margin-top: 1.5em;
+                    margin: 2em 0;
                     display: flex;
                     width: 100%;
                     justify-content: space-between;
-                    margin-bottom: 1.5em;
                 }
             `}
             </style>

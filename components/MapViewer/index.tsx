@@ -164,10 +164,12 @@ export default function MapViewer(): JSX.Element {
                                 }}
                             >
                                 <div className="windowContent">
-                                    <h3>{selected.name}</h3>
-                                    <p className="description">{selected.information}</p>
+                                    <div className="information">
+                                        <h3>{selected.name}</h3>
+                                        <p className="description">{selected.information}</p>
+                                        <Button onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${selected.id}`)}>Ir al parqueo</Button>
+                                    </div>
                                     <img className="img" src={selected.picture} alt="parking picture" />
-                                    <Button onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${selected.id}`)}>Ir al parqueo</Button>
                                 </div>
                             </InfoWindow>
                         ) : null}
@@ -178,17 +180,17 @@ export default function MapViewer(): JSX.Element {
                         `
                         .windowContent {
                             display: flex;
-                            flex-direction: column;
                             justify-content: space-around;
                             align-items: center;
                             height: auto
                         }
+                        
                         .description {
                             margin: 0.5em;
                         }
                         .img {
-                            width: 100px;
-                            height: 75px;
+                            width: 150px;
+                            height: 100px;
                             border-radius: 5px;
                         }
                     `

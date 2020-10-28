@@ -6,7 +6,7 @@ export const MainFormContainer = styled.div`
   width: 100%;
   height: auto;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 50px;
   background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);

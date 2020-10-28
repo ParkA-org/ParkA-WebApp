@@ -5,7 +5,7 @@ import SchedulePicker from "components/SchedulePicker"
 import MultipleImagePicker from "components/MultipleImagePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, ElementContainer, CheckboxContainer, CenterSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
+import { Container, ElementContainer, CheckboxContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
 import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
@@ -222,7 +222,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
                         </LeftSection>
-                        <RightSection>
+                        <MiddleSection>
                             <Field
                                 name="sector"
                                 label="Sector"
@@ -267,11 +267,11 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
 
                                     </div>
                                 </>}
-                        </RightSection>
-                        <CenterSection>
+                        </MiddleSection>
+                        <RightSection>
                             <MultipleImagePicker setFiles={setFiles} />
                             <Button submit={true}>Crear parqueo</Button>
-                        </CenterSection>
+                        </RightSection>
                         <style jsx>
                             {`
                     .iconInput {

@@ -9,16 +9,18 @@ export const Container = styled.div`
 
 export const CarouselContainer = styled.div`
     margin: 0 auto;
-    max-width: 1080px;
+    max-width: 1900px;
     display: grid;
     grid-template-columns: 1fr 4fr 1fr;
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
     width: 100%;
+    height: auto;
 `;
 
 export const ScrollSection = styled.section`
+    padding-botom: 20px;
     grid-column: 2;
     grid-row: 1;
     place-self: center stretch;
@@ -28,6 +30,7 @@ export const ScrollSection = styled.section`
     overflow-x: scroll;
     -webkit-overflow-scrolling: touch;
     -ms-overflow-style: none; 
+    height: auto;
     scrollbar-width: none; 
     &::-webkit-scrollbar {
         display: none;
@@ -70,6 +73,9 @@ export const LeftButton = styled.button`
     height: 65px;
     padding: 0.5em;
     z-index: 10;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
     @media(max-width: 768px) {
         display: none;
     }
@@ -105,6 +111,9 @@ export const RightButton = styled.button`
     width: 65px;
     height: 65px;
     padding: 0.5em;
+    box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 10px 4px rgba(0, 0, 0, 0.25);
     @media(max-width: 768px) {
         display: none;
     }

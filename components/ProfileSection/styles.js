@@ -81,3 +81,11 @@ margin-bottom: 1em;
         font-weight: normal;
     }
 `;
+
+export const EditButton = styled.button`
+    color: white;
+    background: #077187;
+    border-radius: 5px;
+    font: light 1.2rem "Righteous";
+    padding: 0.5em 2em;
+`
