@@ -51,7 +51,6 @@ export default class Calendar extends React.PureComponent {
         <div className="container">
           <Paper>
             <Scheduler
-              height={660}
               locale='es-ES'
               data={schedulerData}
             >

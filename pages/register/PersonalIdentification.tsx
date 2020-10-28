@@ -85,6 +85,9 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
 
   return (
     <Layout pageTitle="Identificación Personal">
+      <style jsx>{`
+        
+      `}</style>
       <MainFormContainer>
         <FormHeading>
           <img src="/images/logo1.svg" alt="ParkA logo" />
