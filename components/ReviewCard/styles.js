@@ -6,14 +6,17 @@ export const Container = styled.div`
     border-radius: 20px;
     flex-shrink: 0;
     width: 20vw;
-    height: 230px;
+    height: auto;
     padding: 0.5em;
     display: grid;
     grid-template-areas:
     "photo details details date"
     "content content content content";
     border: 2px solid #0B768C;
-    
+    margin-bottom: 25px;
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
 `
 
 export const Avatar = styled.img`

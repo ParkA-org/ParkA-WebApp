@@ -1,4 +1,3 @@
-import { BiPlusCircle } from "react-icons/bi";
 import NavigationLink from "components/NavigationLink"
 import ParkingCard from "components/ParkingCard"
 import PlusIcon from "components/Icons/Plus"

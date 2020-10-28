@@ -16,11 +16,6 @@ export const MainContainer = styled.div`
     width: 100%;
     align-items: center;
     justify-content: flex-start;
-    flex-wrap: wrap;
-
-    @media(max-width: 768px) {
-        flex-direction: column;
-    }
 `;
 
 export const DataContainer = styled.div`

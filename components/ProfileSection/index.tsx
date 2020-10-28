@@ -6,11 +6,11 @@ import {
     ProfilePicture,
     CircularButton,
     ContentSection,
-    ContentRow
+    ContentRow,
+    EditButton
 } from "./styles"
 import { useEffect, useState } from "react"
 import jwt_decode from "jwt-decode"
-import Button from "components/Button"
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { useContext } from 'react';
 import { UserContext } from 'context/UserContext';
@@ -45,7 +45,7 @@ export default function ProfileSection() {
             <ContentContainer>
                 <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
                 <NavigationLink href="/profile/edit">
-                    <Button>Editar</Button>
+                    <EditButton>Editar</EditButton>
                 </NavigationLink>
                 <ContentSection>
                     <ContentRow>

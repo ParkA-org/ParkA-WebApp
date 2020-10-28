@@ -10,7 +10,7 @@ import {
     SpecialReservationsButton
 } from "./styles"
 import Link from "next/link"
-import { BsStarFill, BsStarHalf, BsStar, BsCardList } from "react-icons/bs"
+import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
 import { BiMessageDetail } from "react-icons/bi"
 
 import React, { useState } from "react"
@@ -35,14 +35,6 @@ const Button = styled.button`
   width: 200px;
   align-self: center;
   font-size: 1.4rem;
-`;
-
-const Stars = styled.div`
-  font-size: 25px;
-  color: #C4C4C4;
-  & > .checked{
-    color: #D8DC2A;
-  }
 `;
 
 const ModalContent = styled.div`
@@ -82,7 +74,14 @@ export default function ReservationCard({ isCancelable }: { isCancelable?: boole
                         }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
-                        <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                        {isCancelable ?
+                            <ReservationsButton>
+                                <BsMap size="1.5em" />
+                                <Link href="/map"><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                            </ReservationsButton>
+                            :
+                            <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                        }
                         <ReservationsButton><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                     </ActionButtonsSection>
                 </ButtonSection>

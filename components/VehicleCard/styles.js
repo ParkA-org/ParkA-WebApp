@@ -56,6 +56,7 @@ export const CardDetails = styled.div`
 `;
 
 export const AdditionalInfo = styled.div`
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

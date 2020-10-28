@@ -27,7 +27,7 @@ export default function Carousel({ title, children }: { title: string, children:
                 <LeftSideBack />
                 <LeftSide>
                     <LeftButton onClick={() => scrollAction("LEFT")}>
-                        <MdPlayArrow size="3em" color="#0B768C" style={{ transform: "rotate(180deg)" }} />
+                        <MdPlayArrow size="4em" color="#0B768C" style={{ transform: "rotate(180deg)" }} />
                     </LeftButton>
                 </LeftSide>
                 <ScrollSection ref={scrollRef} id="scrollSection">
@@ -36,7 +36,7 @@ export default function Carousel({ title, children }: { title: string, children:
                 <RightSideBack />
                 <RightSide>
                     <RightButton onClick={() => scrollAction("RIGHT")}>
-                        <MdPlayArrow size="3em" color="#0B768C" />
+                        <MdPlayArrow size="4em" color="#0B768C" />
                     </RightButton>
                 </RightSide>
             </CarouselContainer>

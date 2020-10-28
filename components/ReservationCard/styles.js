@@ -7,35 +7,42 @@ export const Container = styled.div`
     margin-right: 2em;
     border: 2px solid #0B768C;
     border-radius: 20px;
-    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
-    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
-    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
     display: grid;
     text-align: center;
-    align-items: center;
+    align-items: center;  
+    width: 200px;
+    height: auto;
     grid-template-areas:
-    "image metadata"
-    "image cost"
-    "buttons buttons";
-    row-gap: 10px;
-    width: 25vw;
-    height: 215px;
-    @media(max-width: 768px) {
-        width: 200px;
+    "image"
+    "metadata"
+    "cost"
+    "buttons";
+   
+    @media(min-width: 768px) {
         grid-template-areas:
-        "image"
-        "metadata"
-        "cost"
-        "buttons";
+        "image metadata"
+        "image cost"
+        "buttons buttons";
+        row-gap: 10px;
+        width: 45vw;
+        height: 215px;
+        max-width: 550px;
     }
 `;
 
 export const ReservationImage = styled.img`
     grid-area: image;
-    width: 200px;
-    height: 135px;
     border-radius: 15px;
     justify-self: center;
+    width: 150px;
+    height: 85px;
+    @media(min-width: 768px) {
+        width: 200px;
+        height: 135px;
+    }
 `;
 
 export const Item = styled.div`
