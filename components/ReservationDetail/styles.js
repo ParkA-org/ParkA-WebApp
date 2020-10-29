@@ -1,13 +1,12 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-    margin: 0 auto;    
     display: grid;
     align-items: start;
     justify-items: center;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto; 
-    width: 100%;
+    width: 50%;
     padding-top: 1.5em;
     height: auto;
     background-color: #fff;
@@ -36,7 +35,7 @@ export const StyledInput = styled.input`
 
 export const ElementContainer = styled.div`
     text-align: left;
-    margin-bottom: 0.5em;
+    margin-bottom: 1.5em;
 
     & > label {
         display: block;

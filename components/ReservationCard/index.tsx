@@ -10,7 +10,8 @@ import {
     SpecialReservationsButton
 } from "./styles"
 import Link from "next/link"
-import { BsStarFill, BsStarHalf, BsStar } from "react-icons/bs"
+import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
+import { BiMessageDetail } from "react-icons/bi"
 
 import React, { useState } from "react"
 import ModalPortal from "components/Modal"
@@ -18,7 +19,7 @@ import styled from "styled-components"
 const TextArea = styled.textarea`
   resize: none;
   border:solid;
-  width: 300px;
+  width: 500px;
   height: 170px;
   border-color: #C4C4C4;
   border-width:0.3px
@@ -31,16 +32,9 @@ const Button = styled.button`
   padding: 15px;
   border-radius: 1.5em;
   margin-top: 0.5em;
-  width: 150px;
+  width: 200px;
   align-self: center;
-`;
-
-const Stars = styled.div`
-  font-size: 25px;
-  color: #C4C4C4;
-  & > .checked{
-    color: #D8DC2A;
-  }
+  font-size: 1.4rem;
 `;
 
 const ModalContent = styled.div`
@@ -80,8 +74,15 @@ export default function ReservationCard({ isCancelable }: { isCancelable?: boole
                         }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
-                        <ReservationsButton> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
-                        <ReservationsButton><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
+                        {isCancelable ?
+                            <ReservationsButton>
+                                <BsMap size="1.5em" />
+                                <Link href="/map"><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                            </ReservationsButton>
+                            :
+                            <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                        }
+                        <ReservationsButton><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                     </ActionButtonsSection>
                 </ButtonSection>
             </Container>

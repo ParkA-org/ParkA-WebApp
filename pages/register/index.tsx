@@ -62,7 +62,7 @@ export default function registerPersonalAccount(): JSX.Element {
           onSubmit={(values) => {
             setLocalUser({ ...localUser, ...values })
             UploadImageService(values.file, setImage)
-            router.push('/register/PersonalIdentification')
+            router.push('/register/PersonalIdentification', 'register/personal-information')
           }}
         >
           {({ setFieldValue, errors, touched, values }) => (
@@ -76,7 +76,7 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.name}
                     placeholder="Nombre"
                     placement="horizontal"
-                    inputStyles={{ width: "100px" }}
+                    containerStyles={{ width: "100%" }}
                     value={values.name}
                   />
                   <Field
@@ -86,7 +86,6 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.lastName}
                     placeholder="Apellido"
                     placement="horizontal"
-                    inputStyles={{ width: "100px" }}
                     value={values.lastName}
                   />
                   <Field
@@ -96,7 +95,6 @@ export default function registerPersonalAccount(): JSX.Element {
                     isTouched={touched.email}
                     placeholder="Correo electrónico"
                     placement="horizontal"
-                    inputStyles={{ width: "100px" }}
                     value={values.email}
                   />
                   <Field
@@ -107,7 +105,6 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.password}
                     placement="horizontal"
                     isTouched={touched.password}
-                    inputStyles={{ width: "100px" }}
                     value={values.password}
                   />
                   <Field
@@ -118,7 +115,6 @@ export default function registerPersonalAccount(): JSX.Element {
                     errorMessage={errors.confirmPassword}
                     isTouched={touched.confirmPassword}
                     placement="horizontal"
-                    inputStyles={{ width: "100px" }}
                     value={values.confirmPassword}
                   />
                 </FieldSection>

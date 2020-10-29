@@ -44,9 +44,8 @@ export default function SignWithEmail(): JSX.Element {
   })
 
   return (
-    <Layout pageTitle="Sign in with email">
+    <Layout pageTitle="Iniciar sesión con correo electrónico">
       <MainFormContainer>
-        <h1>Sign with email</h1>
         <Formik
           initialValues={{
             email: "",
@@ -70,13 +69,14 @@ export default function SignWithEmail(): JSX.Element {
               <FormContainer>
                 <FieldSection>
                   <h3>Bienvenido!</h3>
-                  <p>Ingresa tus credenciales para iniciar sesión!</p>
+                  <p style={{ fontSize: "1.2rem" }}>Ingresa tus credenciales para iniciar sesión!</p>
                   <Field
                     type="email"
                     name="email"
                     label="Email"
                     errorMessage={errors.email}
                     isTouched={touched.email}
+                    containerStyles={{ paddingLeft: "3em" }}
                     placeholder="Correo electrónico"
                   />
                   <Field
@@ -84,6 +84,7 @@ export default function SignWithEmail(): JSX.Element {
                     label="Contraseña"
                     name="password"
                     placeholder="Contraseña"
+                    containerStyles={{ paddingLeft: "3em" }}
                     errorMessage={errors.password}
                     isTouched={touched.password}
                   />

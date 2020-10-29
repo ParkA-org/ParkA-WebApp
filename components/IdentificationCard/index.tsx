@@ -31,14 +31,6 @@ export default function IdentificationCard({
   imageUrl,
 }: CardProps): JSX.Element {
 
-  // const getCountry = (currentCountry = "") => {
-  //   let returnValue = ""
-  //   if (countries !== undefined && currentCountry !== "") {
-  //     returnValue = countries.filter(country => country.name === currentCountry)[0].name
-  //   }
-  //   return returnValue
-  // }
-
   return (
     <Container>
       <HeaderContainer>

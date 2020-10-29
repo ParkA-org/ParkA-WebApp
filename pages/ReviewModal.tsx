@@ -1,13 +1,12 @@
 import { useContext, useState } from "react"
 import Layout from "./layout";
 import ModalPortal from "components/Modal"
-import ProfileDropDownMenu from "components/ProfileDropDownMenu";
 import styled from "styled-components";
 
 const TextArea = styled.textarea`
   resize: none;
   border:solid;
-  width: 300px;
+  width: 500px;
   height: 170px;
   border-color: #C4C4C4;
   border-width:0.3px
@@ -41,7 +40,7 @@ export default function ReviewModal(): JSX.Element {
   return (
     <Layout pageTitle="ReviewModal">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></link>
-      <button onClick={() => {setShowModal(true)}} >Mostrar Modal
+      <button onClick={() => { setShowModal(true) }} >Mostrar Modal
       </button>
       {showModal && <ModalPortal onClose={() => setShowModal(false)}>
         <ModalContent>
@@ -54,7 +53,7 @@ export default function ReviewModal(): JSX.Element {
             <span className="fa fa-star"></span>
           </Stars>
           <h4>Comentario</h4>
-          <TextArea/>
+          <TextArea />
           <Button>Dejar Reseña</Button>
         </ModalContent>
       </ModalPortal>}

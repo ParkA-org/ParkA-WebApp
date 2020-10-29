@@ -4,13 +4,14 @@ export const MainFormContainer = styled.div`
   margin: 2em 0;
   padding: 2em 0.5em;
   width: 100%;
-  height: auto;
+  height: 50vh;
+  min-height: 600px;
   border: 1px solid rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  border-radius: 50px;
   background-color: #fff;
   -webkit-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
   -moz-box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
-  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 20px 5px 0px rgba(0, 0, 0, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -22,8 +23,7 @@ export const MainFormContainer = styled.div`
 
   @media (min-width: 768px) {
     width: 80vw;
-    max-width: 1000px;
-    box-shadow: none;
+    max-width: 1200px;
   }
 `;
 
@@ -85,7 +85,7 @@ export const FieldSection = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   min-width: 275px;
   text-align: left;
   border-bottom: none;

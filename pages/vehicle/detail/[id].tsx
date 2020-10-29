@@ -17,21 +17,23 @@ const Container = styled.div`
     flex-direction: column;
     width: 100%;
     margin: 0 auto;
+    color: #333;
     overflow-x: hidden;
     text-align: left;
     & > section {
         margin-bottom: 2em;
         text-align: left;
-        width: 100%;
+        width: 90%;
         display: flex;
         align-items: center;
         justify-content: space-between;
+        margin-left: 2em;
     }
 `;
 
 export default function DetailVehicle() {
     const router = useRouter()
-    const { token } = useContext(UserContext)
+    const { token, user } = useContext(UserContext)
     const [GetVehicle, { data, loading, error }] = useLazyQuery(GET_VEHICLE_BY_ID, {
         context: {
             headers: {
@@ -67,7 +69,7 @@ export default function DetailVehicle() {
                 <section>
                     <blockquote>
                         <h1>Propietario</h1>
-                        {/* <h2>{loading ? "Cargando..." : `${user?.name} ${user?.lastname}`}</h2> */}
+                        <h2>{loading ? "Cargando..." : `${user?.name} ${user?.lastname}`}</h2>
                     </blockquote>
                     <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>
