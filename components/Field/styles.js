@@ -6,7 +6,7 @@ export const StyledField = styled(Field)`
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
-  max-width: 260px;
+  max-width: 300px;
   line-height: 1.5em;
   width: 100%;
   text-align: left;
@@ -14,8 +14,7 @@ export const StyledField = styled(Field)`
   @media (max-width: 768px) {
     width: auto;
   }
-  font-size:1.5em;
-  font-weight:bold;
+  font-size:1.25rem;
 `;
 
 export const CheckboxContainer = styled.div`

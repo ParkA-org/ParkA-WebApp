@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { Formik, Form } from "formik"
 import MaskedInput from "react-text-mask"
+import { DatePicker } from "rsuite"
 import { useMutation } from '@apollo/client'
 import { PaymentInformationSchema } from "utils/schemas"
 import { CREATE_PAYMENTINFO } from "mutations"
@@ -108,7 +109,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
                       onChange={handleChange}
                       onBlur={handleBlur}
                       className="maskedInput"
-                      style={{ backgroundColor: "#E5E4E4", borderRadius: "0.25em", marginBottom: "1em", resize: "none", maxWidth: "260px", lineHeight: "1.5em", textAlign: "left", padding: "0.5em", width: "100%" }}
+                      style={{ backgroundColor: "#E5E4E4", borderRadius: "0.25em", marginBottom: "1em", resize: "none", lineHeight: "1.5em", textAlign: "left", padding: "0.5em", width: "300px", fontSize: "1.25rem" }}
                     />
                   </div>
                   <Field
@@ -128,15 +129,10 @@ export default function RegisterPaymentInformation(): JSX.Element {
                       inputStyles={{ width: "80px" }}
                       containerStyles={{ width: "140px" }}
                     />
-                    <Field
-                      type="date"
-                      label="Válida hasta:"
-                      name="expirationDate"
-                      placeholder="Válida hasta"
-                      errorMessage={errors.expirationDate}
-                      isTouched={touched.expirationDate}
-                      inputStyles={{ width: "150px" }}
-                    />
+                    <section style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
+                      <label style={{ fontSize: "1.25em", fontWeight: "bolder" }}>Válida hasta: </label>
+                      <DatePicker format="YYYY-MM" size="lg" placeholder="YYYY/MM" style={{ marginBottom: "1em", fontSize: "1.25rem", color: "#333" }} onOk={value => setFieldValue("expirationDate", value.toString())} />
+                    </section>
                   </div>
                 </FieldSection>
                 <InformationSection>

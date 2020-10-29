@@ -46,9 +46,9 @@ export const Container = styled.div`
   margin-right:-20px;
   border-radius: 2em;
   border: 3.5px solid #0B768C;
-  padding: 0.5em;
+  padding: 1.5em 1em;
   display: flex;
-  height: 90%;
+  height: auto;
   flex-wrap: wrap;
   justify-content: space-around;
   @media (max-width: 768px) {

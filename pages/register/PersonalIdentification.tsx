@@ -92,7 +92,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
         <FormHeading>
           <img src="/images/logo1.svg" alt="ParkA logo" />
           <h2>Identificación Personal</h2>
-          
+
         </FormHeading>
         <Formik
           enableReinitialize={true}
@@ -124,6 +124,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     name="typeOfDocument"
                     label="Tipo de documento"
                     placeholder="Tipo de documento"
+                    placement="horizontal"
                     errorMessage={errors.typeOfDocument}
                     isTouched={touched.typeOfDocument}
                     value={values.typeOfDocument}
@@ -136,6 +137,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     label="No. de documento"
                     name="documentCode"
                     placeholder="Número/Código del documento"
+                    placement="horizontal"
                     errorMessage={errors.documentCode}
                     isTouched={touched.documentCode}
                     value={values.documentCode}
@@ -145,6 +147,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                       name="birthPlace"
                       label="Lugar de Nacimiento"
                       placeholder="Lugar de nacimiento"
+                      placement="horizontal"
                       errorMessage={errors.birthPlace}
                       isTouched={touched.birthPlace}
                       value={values.birthPlace}
@@ -157,6 +160,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                       name="nationality"
                       label="Nacionalidad"
                       placeholder="Nacionalidad"
+                      placement="horizontal"
                       errorMessage={errors.nationality}
                       isTouched={touched.nationality}
                       value={values.nationality}
@@ -168,6 +172,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     label="Fecha de nacimiento"
                     name="dateOfBirth"
                     placeholder="Fecha de nacimiento"
+                    placement="horizontal"
                     errorMessage={errors.dateOfBirth}
                     isTouched={touched.dateOfBirth}
                     value={values.dateOfBirth}
@@ -177,15 +182,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   {birthPlaceLoading ? <Spinner /> :
                     <IdentificationCard {...values} imageUrl={image} />}
                 </InformationSection>
-                <style global jsx>{`
-                  label + select {
-                    max-width: none !important;
-                  }
-
-                  label + input {
-                    max-width: none !important;
-                  }
-              `}</style>
               </FormContainer>
               <ActionSection>
                 <NavigationLink
@@ -205,7 +201,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           <h3>Loading...</h3>
         </ModalPortal>}
       </MainFormContainer>
-      
+
     </Layout >
   );
 }
