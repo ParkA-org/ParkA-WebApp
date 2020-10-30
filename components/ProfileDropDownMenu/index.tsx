@@ -14,21 +14,24 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
     const router = useRouter()
     
     function showMenu(e){
-        if(e.currentTarget.parentNode.nextSibling.style.display == 'none'){
-            e.currentTarget.parentNode.parentNode.style.border = 'solid'
+        console.log(e.currentTarget.parentNode.nextSibling.style.display);
+        var content = e.currentTarget.parentNode.nextSibling;
+        if(content.style.display == 'none' || content.style.display == ''){
+
+            e.currentTarget.parentNode.parentNode.style.border = 'solid';
             e.currentTarget.parentNode.parentNode.style.borderColor = '#336F8B';
             e.currentTarget.parentNode.parentNode.style.borderWidth = '2px';
             e.currentTarget.parentNode.parentNode.style.borderRadius = '1.2em';
             
-            e.currentTarget.parentNode.style.border = 'solid'
+            e.currentTarget.parentNode.style.border = 'solid';
             e.currentTarget.parentNode.style.borderColor = '#336F8B';
             e.currentTarget.parentNode.style.borderWidth = '2px';
             e.currentTarget.parentNode.style.borderRadius = '1.2em';
             e.currentTarget.parentNode.style.height = '57px';
-                
             
             e.currentTarget.nextSibling.style.border = 'none';
             e.currentTarget.parentNode.nextSibling.style.display = 'block';
+
         }else{
             e.currentTarget.parentNode.parentNode.style.border = 'none'
             

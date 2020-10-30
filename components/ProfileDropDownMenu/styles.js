@@ -8,7 +8,7 @@ export const DropdownMenu = styled.div`
   background-color: white;
   min-width:260px;
   position:absolute;
-  top: 30px;
+  top: 25px;
   right:30px;
   z-index: 4;
 
@@ -36,6 +36,7 @@ export const DropdownButton = styled.button`
   min-width:260px;
   background-color: transparent;
   z-index: 4;
+  height:56px;
 
   & div > img:first-child {
     margin-right: 10px;
