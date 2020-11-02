@@ -32,6 +32,7 @@ export const DropdownButton = styled.button`
   min-width:260px;
   background-color: transparent;
   z-index: 4;
+  height:56px;
 
   & div > img:first-child {
     margin-right: 10px;
