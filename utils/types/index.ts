@@ -52,6 +52,23 @@ export interface ModelsData {
     models: BasicEntity[]
 }
 
+export type Schedule = {
+    start: number;
+    finish: number;
+}
+
+export type Calendar = {
+    id: string;
+    parkingId: string;
+    monday: Schedule[];
+    tuesday: Schedule[];
+    wednesday: Schedule[];
+    thrusday: Schedule[];
+    friday: Schedule[];
+    saturday: Schedule[];
+    sunday: Schedule[];
+}
+
 export type Parking = {
     __typename: string;
     id: string;
@@ -59,7 +76,7 @@ export type Parking = {
     longitude: string;
     published: boolean;
     parkingName: string;
-    calendar: string[];
+    calendar: Calendar;
     priceHours: string;
     pictures: string[];
     mainPicture: string;

@@ -3,6 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
     margin: 0 auto;    
     display: grid;
+    height: 80vh;
     align-items: start;
     justify-items: center;
     grid-template-columns: repeat(3, 1fr);
@@ -17,6 +18,7 @@ export const Container = styled.div`
 `;
 
 export const LeftSection = styled.div`
+
     grid-column: 1 / 2;
     grid-row: 1;
 `;
@@ -30,8 +32,9 @@ export const RightSection = styled.div`
     grid-column: 3 / 4;
     grid-row: 1;
     width: 75%;
-    place-self: center center;
+    place-self: start center;
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 1em;

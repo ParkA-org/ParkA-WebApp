@@ -192,7 +192,6 @@ query GetUserParkings{
   getAllUserParkings {
     id
     parkingName
-    calendar
     mainPicture
     latitude
     longitude

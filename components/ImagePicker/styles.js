@@ -4,8 +4,17 @@ export const Image = styled.img`
   width: 300px;
   height: 200px;
   border-radius: 10px;
-  margin-left: 2em;
 `;
+
+export const ImagesContainer = styled.div`
+  display: flex;
+  flex-direction: ${props => props.placement === "horizontal" ? "row" : "column"};
+  justify-content: space-around;
+
+  & > div {
+    margin: 0 ${props => props.placement === "horizontal" ? "1.5em 0" : "0 1.5em"} 0;
+  }
+`
 
 export const Tooltip = styled.div`
   position: relative;

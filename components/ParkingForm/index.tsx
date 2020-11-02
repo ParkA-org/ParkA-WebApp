@@ -2,7 +2,7 @@ import { useState, useReducer, useEffect, useContext } from "react"
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
-import MultipleImagePicker from "components/MultipleImagePicker"
+import ImagePicker from "components/ImagePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
 import { Container, ElementContainer, CheckboxContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
@@ -269,7 +269,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 </>}
                         </MiddleSection>
                         <RightSection>
-                            <MultipleImagePicker setFiles={setFiles} />
+                            <ImagePicker placement="vertical" />
                             <Button submit={true}>Crear parqueo</Button>
                         </RightSection>
                         <style jsx>
