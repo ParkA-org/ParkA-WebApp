@@ -56,8 +56,10 @@ function ImagePicker() {
 
     return (
         <>
+            <h2>Imagenes</h2>
             {images.length > 0 && images.map((img) => <ImageElement key={img.file.name} url={img.url} deleteElement={() => handleDelete(img.file.name)} />)}
-            <button onClick={handleClick} disabled={images.length > 2}>Agregar imagen</button>
+            <Image src="/placeholders/empty/carPlaceholder.svg" alt="add image" onClick={handleClick} />
+            {/* <button onClick={handleClick} disabled={images.length > 2}>Agregar imagen</button> */}
             <input
                 type="file"
                 id="input"
