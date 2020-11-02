@@ -1,14 +1,10 @@
 import styled from "styled-components";
 
 export const DropdownMenu = styled.div`
-  //border: solid;
-  //border-color: #336F8B;
-  //border-width: 2px;
-  //border-radius: 1.5em;
   background-color: white;
   min-width:260px;
   position:absolute;
-  top: 25px;
+  top: 15px;
   right:30px;
   z-index: 4;
 

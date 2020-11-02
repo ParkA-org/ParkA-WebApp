@@ -10,6 +10,7 @@ import { BasicEntity, ColorsData, BodyStylesData, MakersData } from "utils/types
 import Layout from "../layout";
 import { default as OwnField } from "components/Field"
 import { SelectField } from "components/Field"
+import ImagePicker from "components/ImagePicker"
 import Spinner from "components/Spinner"
 import MultipleImagePicker from "components/MultipleImagePicker"
 import ModalPortal from "components/Modal"
@@ -308,7 +309,8 @@ export default function VehicleRegister(): JSX.Element {
         </Formik>
 
         <div style={{ marginBottom: "2em" }}>
-          <MultipleImagePicker setFiles={setFiles} />
+          {/* <MultipleImagePicker setFiles={setFiles} /> */}
+          <ImagePicker />
         </div>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
           <Spinner />
