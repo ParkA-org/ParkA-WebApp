@@ -1,13 +1,14 @@
-import Layout from "../../layout";
-import styled from "styled-components";
-import Carousel from "components/Carousel";
-import ReviewCard from "components/ReviewCard";
 import { useRouter } from "next/router"
 import { BiDollar } from "react-icons/bi";
 import { useLazyQuery } from "@apollo/client";
 import { UserContext } from "context/UserContext";
 import { GET_PARKING_WITH_ID } from "queries";
 import { useContext, useEffect } from "react";
+import Layout from "../../layout";
+import styled from "styled-components";
+import Carousel from "components/Carousel";
+import ReviewCard from "components/ReviewCard";
+import ImageViewer from "components/ImageViewer"
 
 export const Container = styled.div`
     display:grid;
@@ -105,18 +106,7 @@ export default function ParkingDetail(): JSX.Element {
                 <h1>{data ? data.getParkingById.parkingName : "Agora Mall II"}</h1>
                 <Container>
                     <ParkingImages>
-                        <img src={data ? data.getParkingById.mainPicture : "/images/parkimage.png"} />
-                        <div className="subimages">
-                            {data ? data.getParkingById.pictures.map(pic => {
-                                return <img className="subimage" src={pic} alt="alternative image" key={pic} />
-                            }) : <>
-                                    <img style={{ width: "100px", height: "75px" }} src="/images/parkimage2.png" />
-                                    <img style={{ width: "100px", height: "75px" }} src="/images/parkimage2.png" />
-                                    <img style={{ width: "100px", height: "75px" }} src="/images/parkimage2.png" />
-                                </>
-                            }
-
-                        </div>
+                        {data ? <ImageViewer pictures={data.getParkingById.pictures} /> : <p>Cargando imagenes parqueo...</p>}
                     </ParkingImages>
                     <Form>
                         <FormItem>
@@ -161,17 +151,6 @@ export default function ParkingDetail(): JSX.Element {
                     margin-bottom:10px;
                     text-align:left;
                     margin-left:70px;
-                }
-                .subimages {
-                    width: 30vw;
-                    display: flex;
-                    flex-wrap: wrap;
-                    justify-content: center;
-                }
-
-                .subimage {
-                    width: 100px;
-                    heigth: 75px;
                 }
             `
             }</style>

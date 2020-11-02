@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Container, ImageBoxContainer, MainImage, ImageBox } from "./styles";
 
-function ImageViewer() {
+function ImageViewer({ pictures }: { pictures: Array<string> }) {
     const mainRef = useRef(null);
 
     const handleMouseEnter = (event) => {
@@ -10,21 +10,12 @@ function ImageViewer() {
     return (
         <Container>
             <ImageBoxContainer>
-                <ImageBox
-                    src={"/placeholders/car-placeholder.png"}
+                {pictures.map(img => <ImageBox
+                    src={img}
                     onMouseEnter={handleMouseEnter}
-                />
-                <ImageBox
-                    src={"/placeholders/image-placeholder.png"}
-                    onMouseEnter={handleMouseEnter}
-                />
-                <ImageBox
-                    src={"/placeholders/park-placeholder.jpg"}
-                    onMouseEnter={handleMouseEnter}
-                />
-                <ImageBox src={"/placeholders/park-placeholder.jpg"} onMouseEnter={handleMouseEnter} />
+                />)}
             </ImageBoxContainer>
-            <MainImage src={"/placeholders/park-placeholder.jpg"} ref={mainRef} />
+            <MainImage src={pictures[0]} ref={mainRef} />
         </Container>
     );
 }

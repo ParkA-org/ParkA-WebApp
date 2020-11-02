@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
 export const ImageBox = styled.img`
-  width: 100px;
-  height: 75px;
+  width: 175px;
+  height: 125px;
   border-radius: 10px;
   margin-bottom: 10px;
 `;
 
 export const MainImage = styled.img`
-  width: 400px;
-  height: 300px;
+  width: 500px;
+  height: 400px;
   border-radius: 10px;
   margin-left: 1em;
   margin-top: 1em;
@@ -25,5 +25,4 @@ export const ImageBoxContainer = styled.div`
 export const Container = styled.div`
   display: flex;
   justify-content: center;
-
 `
