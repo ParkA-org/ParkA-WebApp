@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useState, useRef } from "react";
 
-import { Image } from "./styles"
+import { Image, TooltipText, Tooltip } from "./styles"
 
 type ImageElementType = {
     url: string | ArrayBuffer | null;
@@ -14,7 +14,15 @@ type ImageElementProps = {
 }
 
 function ImageElement({ url, deleteElement }: ImageElementProps) {
-    return <Image src={url} onClick={deleteElement} />;
+    return (
+        <>
+            <Tooltip>
+                <Image src={url} onClick={deleteElement} />
+                <TooltipText>Haz click para eliminar la imagen</TooltipText>
+            </Tooltip>
+
+        </>
+    )
 }
 
 function ImagePicker() {
@@ -56,10 +64,9 @@ function ImagePicker() {
 
     return (
         <>
-            <h2>Imagenes</h2>
+            <h2>Imágenes</h2>
             {images.length > 0 && images.map((img) => <ImageElement key={img.file.name} url={img.url} deleteElement={() => handleDelete(img.file.name)} />)}
-            <Image src="/placeholders/empty/carPlaceholder.svg" alt="add image" onClick={handleClick} />
-            {/* <button onClick={handleClick} disabled={images.length > 2}>Agregar imagen</button> */}
+            {images.length < 3 && <Image src="/placeholders/empty/carPlaceholder.svg" alt="add image" onClick={handleClick} />}
             <input
                 type="file"
                 id="input"
