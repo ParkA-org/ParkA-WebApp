@@ -3,6 +3,10 @@ import styled from "styled-components"
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
+    margin-top: 2em;
+    padding-left: 2em;
+    height: 90%;
+    border-left: 2px solid #333;
 `;
 
 export const MainContainer = styled.div`
@@ -11,40 +15,23 @@ export const MainContainer = styled.div`
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-around;
-    flex-wrap: wrap;
-
-    @media(max-width: 768px) {
-        flex-direction: column;
-    }
+    justify-content: flex-start;
 `;
 
 export const DataContainer = styled.div`
     font-size: 1.2rem;
     text-align: left;
-    & > * {
+    margin-bottom: 1em;
+    margin-left: 4em;
+    display: flex;
+    justify-content: space-around;
+    & > div > * {
         margin-bottom: 0.5em;
     }
 
-    & > select {
+    & > div > select {
         width: 200px;
         background-color: #e5e4e4;
-    }
-`;
-
-export const CTASection = styled.div`
-    padding: 2em auto 0 auto;
-    text-align: center;
-    width: 100%;
-    padding: 3em;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #fff;
-    h3 {
-        display: inline-block;
-        margin-right: 1em;
     }
 `;
 

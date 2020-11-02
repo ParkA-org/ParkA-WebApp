@@ -6,11 +6,11 @@ import {
     ProfilePicture,
     CircularButton,
     ContentSection,
-    ContentRow
+    ContentRow,
+    EditButton
 } from "./styles"
 import { useEffect, useState } from "react"
-//import jwt_decode from "jwt-decode"
-import Button from "components/Button"
+import jwt_decode from "jwt-decode"
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { useContext } from 'react';
 import { UserContext } from 'context/UserContext';
@@ -29,10 +29,13 @@ export default function ProfileSection() {
     })
     const [user, setUser] = useState<User | null>(null)
     useEffect(() => {
-//       let obj = jwt_decode(token)
-//        getUser({ variables: { id: obj.id } })
         if (data)
             setUser(data.getUserById)
+        else {
+            let obj = jwt_decode(token)
+            getUser({ variables: { id: obj.id } })
+
+        }
     }, [data])
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Ocurrio un error</h2>
@@ -42,7 +45,7 @@ export default function ProfileSection() {
             <ContentContainer>
                 <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
                 <NavigationLink href="/profile/edit">
-                    <Button>Editar</Button>
+                    <EditButton>Editar</EditButton>
                 </NavigationLink>
                 <ContentSection>
                     <ContentRow>
@@ -59,7 +62,6 @@ export default function ProfileSection() {
                 </ContentSection>
                 <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
             </ContentContainer>
-
         </ProfileContainer>
     )
 }

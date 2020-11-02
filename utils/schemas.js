@@ -22,7 +22,7 @@ export const ValidateEmailSchema = Yup.object().shape({
 
 export const PaymentInformationSchema = Yup.object().shape({
     cardNumber: Yup.string()
-        .length(16, "Los números de tarjeta solo son 16")
+        .length(19, "Los números de tarjeta solo son 16")
         .required("Requerido"),
     cardHolder: Yup.string().required("Requerido"),
     expirationDate: Yup.date().required("Requerido"),

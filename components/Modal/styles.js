@@ -13,7 +13,7 @@ export const ModalLayout = styled.div`
 
 export const ModalContent = styled.div`
     background: #fff;
-    width: 50vw;
+    width: 35vw;
     padding: 10px 20px;
     margin: 20vh auto;
     min-width: 300px;

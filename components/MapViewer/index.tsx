@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { useRouter } from "next/router"
 import { BsSearch } from "react-icons/bs"
 import { AiOutlineMenu } from "react-icons/ai"
+import Button from "components/Button"
 import {
     GoogleMap,
     useLoadScript,
@@ -163,10 +164,12 @@ export default function MapViewer(): JSX.Element {
                                 }}
                             >
                                 <div className="windowContent">
-                                    <h3>{selected.name}</h3>
-                                    <p className="description">{selected.information}</p>
+                                    <div className="information">
+                                        <h3>{selected.name}</h3>
+                                        <p className="description">{selected.information}</p>
+                                        <Button onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${selected.id}`)}>Ir al parqueo</Button>
+                                    </div>
                                     <img className="img" src={selected.picture} alt="parking picture" />
-                                    <button onClick={() => router.push('/parking/checkout/[id]', `/parking/checkout/${selected.id}`)}>Ir al parqueo</button>
                                 </div>
                             </InfoWindow>
                         ) : null}
@@ -177,17 +180,17 @@ export default function MapViewer(): JSX.Element {
                         `
                         .windowContent {
                             display: flex;
-                            flex-direction: column;
                             justify-content: space-around;
                             align-items: center;
                             height: auto
                         }
+                        
                         .description {
                             margin: 0.5em;
                         }
                         .img {
-                            width: 100px;
-                            height: 75px;
+                            width: 150px;
+                            height: 100px;
                             border-radius: 5px;
                         }
                     `

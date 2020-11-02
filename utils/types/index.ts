@@ -36,7 +36,7 @@ export interface MakersData {
     getAllMakes: {
         id: string;
         name: string;
-        models: ModelsData[]
+        models: BasicEntity[]
     }[]
 }
 

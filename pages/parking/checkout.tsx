@@ -7,8 +7,10 @@ export default function Checkout() {
         <Layout pageTitle="Parking Checkout">
             <div className="container">
                 <img src="/images/carsParked.webp" alt="parked cars" />
-                <ReservationDetail />
-                <PaymentMethod />
+                <div className="pageContent">
+                    <ReservationDetail />
+                    <PaymentMethod />
+                </div>
             </div>
             <style jsx>
                 {`
@@ -24,6 +26,9 @@ export default function Checkout() {
                         width: 100%;
                         height: 50vh;
                         min-height: 400px;
+                    }
+                    .pageContent {
+                        display: flex;
                     }
                 `}
             </style>

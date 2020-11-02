@@ -21,48 +21,48 @@ function SectionElement({ name, children }: ElementProps) {
 export default function ReservationDetail() {
 
     const hourPicker = (
-        <div className="container">
-            <p>
-                <b>Desde</b>
+        <section>
+            <div>
+                <p>Desde</p>
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
                     onOk={console.log}
                 />
-            </p>
-            <BsArrowRight size="2em" style={{ alignSelf: "center" }} />
-            <p>
-                <b>Hasta</b>
+            </div>
+            <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
+            <div>
+                <p>Hasta</p>
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
                     onOk={console.log}
                 />
-            </p>
+            </div>
             <style jsx>
                 {`
-                    p {
+                    div {
                         display: flex;
                         flex-direction: column;
-                        width: 8vw;
+                        width: 130px;
                         height: auto
                         margin-right: 0.5em;
                     }
 
-                    b {
+                    p {
                         margin-bottom: 0.5em;
                     }
 
-                    .container {
+                    section {
                         width: 100%;
                         display: flex;
                         justify-content: space-around;
                     }
                 `}
             </style>
-        </div>
+        </section>
     )
 
     return (
@@ -73,7 +73,6 @@ export default function ReservationDetail() {
                 <ElementContainer>
                     <label><b>Horas</b></label>
                     {hourPicker}
-
                 </ElementContainer>
                 <ElementContainer>
                     <label><b>Características</b></label>

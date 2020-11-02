@@ -8,9 +8,11 @@ export const Title = styled.h3`
 
 export const Content = styled.p`
   border-radius: 0.5em;
+  font-size: 1.5em;
+  font-weight: bold;
   min-height: 1.5em;
   max-height: auto;
-  width: 200px;
+  width: 240px;
   background-color: #e5e4e4;
   word-break: break-word;
 `;
@@ -26,8 +28,9 @@ export const HeaderContainer = styled.div`
   margin: 0 auto;
   width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: start;
+  align-items: start;
+  padding: 10px 0 0 20px;
 `;
 
 export const DataContainer = styled.div`
@@ -40,12 +43,12 @@ export const DataContainer = styled.div`
 `;
 
 export const Container = styled.div`
-  border-radius: 0.5em;
-  border: 2px solid #084c7c;
-  padding: 0.5em;
+  margin-right:-20px;
+  border-radius: 2em;
+  border: 3.5px solid #0B768C;
+  padding: 1.5em 1em;
   display: flex;
-  width: 90%;
-  height: 90%;
+  height: auto;
   flex-wrap: wrap;
   justify-content: space-around;
   @media (max-width: 768px) {

@@ -7,31 +7,42 @@ export const Container = styled.div`
     margin-right: 2em;
     border: 2px solid #0B768C;
     border-radius: 20px;
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
     display: grid;
     text-align: center;
-    align-items: center;
+    align-items: center;  
+    width: 200px;
+    height: auto;
     grid-template-areas:
-    "image metadata"
-    "image cost"
-    "buttons buttons";
-    row-gap: 10px;
-    width: 35vw;
-    @media(max-width: 768px) {
-        width: 200px;
+    "image"
+    "metadata"
+    "cost"
+    "buttons";
+   
+    @media(min-width: 768px) {
         grid-template-areas:
-        "image"
-        "metadata"
-        "cost"
-        "buttons";
+        "image metadata"
+        "image cost"
+        "buttons buttons";
+        row-gap: 10px;
+        width: 45vw;
+        height: 215px;
+        max-width: 550px;
     }
 `;
 
 export const ReservationImage = styled.img`
     grid-area: image;
-    width: 180px;
-    height: 125px;
     border-radius: 15px;
     justify-self: center;
+    width: 150px;
+    height: 85px;
+    @media(min-width: 768px) {
+        width: 200px;
+        height: 135px;
+    }
 `;
 
 export const Item = styled.div`
@@ -104,9 +115,23 @@ export const ActionButtonsSection = styled.div`
 `;
 
 export const ReservationsButton = styled.button`
-    grid-area: ${props => props.isCancelable ? "cancel" : ""};
-    justify-self: ${props => props.isCancelable ? "end" : ""};
-    background-color: ${props => props.isCancelable ? "#BC3F3F" : "#077187"};
+    border-radius: 5px;
+    background-color: #0B768C;
+    color: white;
+    width: 130px;
+    padding: 0.5em;
+    display: flex;
+    justify-content: space-around;
+
+    @media(max-width: 768px) {
+        justify-self: center;
+    }
+`;
+
+export const SpecialReservationsButton = styled(ReservationsButton)`
+    grid-area: cancel;
+    justify-self: end;
+    background-color: ${props => props.isCancelable ? "#BC3F3F" : "#33C3C3"};
     border-radius: 5px;
     color: white;
     width: 100px;
@@ -114,4 +139,4 @@ export const ReservationsButton = styled.button`
     @media(max-width: 768px) {
         justify-self: center;
     }
-`;
+`

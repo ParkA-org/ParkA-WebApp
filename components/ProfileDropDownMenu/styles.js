@@ -1,46 +1,55 @@
 import styled from "styled-components";
 
 export const DropdownMenu = styled.div`
-  border: solid;
-  border-color: #336F8B;
-  border-width: 2px;
-  border-radius: 1.5em;
   background-color: white;
   min-width:260px;
   position:absolute;
-  top: 30px;
+  top: 15px;
   right:30px;
   z-index: 4;
+
   & h4{
     font-size: 1em;
+  }
+
+  & > div:first-child{
+    display:flex;
+    flex-wrap: nowrap;
+    height:53px;
+    margin:-2px;
   }
 `;
 
 export const DropdownButton = styled.button`
-  display: flex;
-  flex-wrap: nowrap;
+  display:inline;
   border: solid;
   border-color: #336F8B;
   border-width: 2px;
-  border-radius: 1.5em;
+  border-radius: 1.2em;
   margin: -2px;
-  align-items: center;
   padding: 2px 5px 2px 5px;
   position:relative;
   min-width:260px;
   background-color: transparent;
   z-index: 4;
+  height:56px;
 
-  & > img:first-child {
+  & div > img:first-child {
     margin-right: 10px;
   }
 
-  & > h4 {
+  & div > h4 {
     margin: 0 10px 0 10px;
   }
 
   &:hover ~ div {
     display:block;
+  }
+
+  & div{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
   }
 
 `;
@@ -74,3 +83,14 @@ export const DropdownItem = styled.div`
 
 
 `;
+
+export const ToggleButton = styled.button`
+  background-color:transparent;
+  outline:none;
+  margin-right:10px;
+
+  &:focus{
+    outline:none;
+  }
+
+`

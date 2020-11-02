@@ -5,12 +5,14 @@ export const Card = styled.div`
     justify-content: space-between;
     align-items: center;
     border: 3px solid #0B768C;
-    width: 80%;
-    border-radius: 20px;
+    width: 75%;
+    border-radius: 40px;
     padding: 1em;
-    margin-top: 1em;
+    margin-top: 2em;
     font-size: 1.2rem;
-
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.25);
     @media (max-width: 768px) {
         flex-direction: column;
         align-items: center;
@@ -37,7 +39,7 @@ export const CardDetails = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    text-align: center;
+    text-align: left;
     
     & > h3 {
         font-size: 1.5em;
@@ -54,10 +56,11 @@ export const CardDetails = styled.div`
 `;
 
 export const AdditionalInfo = styled.div`
+    align-self: stretch;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
+    
     & > span {
         display: flex;
         justify-items: center;
