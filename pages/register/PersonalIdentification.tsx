@@ -26,7 +26,7 @@ import {
 
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-  const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
+  const [image,] = useLocalStorage("image", "../placeholders/image.png")
   const [userId, setUserId] = useLocalStorage("user-id", "")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
   const [showModal, setShowModal] = useState(false)

@@ -106,7 +106,7 @@ export default function ReservationDetail() {
                         <option>BMW</option>
                         <option>Mustang</option>
                     </StyledSelect>
-                    <StyledImage src="/placeholders/image-placeholder.png" />
+                    <StyledImage src="/placeholders/image.png" />
                 </ElementContainer>
                 <SectionElement name="Costo por hora">
                     <MoneyIcon />

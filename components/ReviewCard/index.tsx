@@ -5,7 +5,7 @@ export default function ReviewCard() {
 
     return (
         <Container>
-            <Avatar src="/placeholders/image-placeholder.png" alt="user avatar" />
+            <Avatar src="/placeholders/image.png" alt="user avatar" />
             <UserInfo>
                 <h3>David Bujosa</h3>
                 <div>

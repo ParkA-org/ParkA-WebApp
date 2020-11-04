@@ -48,7 +48,7 @@ export default function ReservationCard({ isCancelable }: { isCancelable?: boole
     return (
         <>
             <Container>
-                <ReservationImage src="/placeholders/park-placeholder.png" />
+                <ReservationImage src="/placeholders/park.png" />
                 <MetadataSection>
                     <Item>
                         <h3>Fecha</h3>

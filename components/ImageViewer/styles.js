@@ -13,6 +13,7 @@ export const MainImage = styled.img`
   border-radius: 10px;
   margin-left: 1em;
   margin-top: 1em;
+  object-fit: fill;
 `;
 
 export const ImageBoxContainer = styled.div`

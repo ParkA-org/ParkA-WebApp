@@ -43,7 +43,7 @@ export default function ProfileSection() {
         <ProfileContainer>
             <h1>{`${user?.name} ${user?.lastName}`}  <AiFillCheckCircle color="blue" /></h1>
             <ContentContainer>
-                <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
+                <ProfilePicture alt="User Profile" src="placeholders/image.png" />
                 <NavigationLink href="/profile/edit">
                     <EditButton>Editar</EditButton>
                 </NavigationLink>
