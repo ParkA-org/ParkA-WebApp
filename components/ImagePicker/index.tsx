@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 import { ImagesContainer, Image, TooltipText, Tooltip } from "./styles"
 
@@ -16,6 +16,7 @@ type ImageElementProps = {
 type ImagePickerProps = {
     limit?: number;
     placement?: string;
+    setFiles: (files: any[]) => void
 }
 
 function ImageElement({ url, deleteElement }: ImageElementProps) {
@@ -30,7 +31,7 @@ function ImageElement({ url, deleteElement }: ImageElementProps) {
     )
 }
 
-function ImagePicker({ limit = 3, placement = "horizontal" }: ImagePickerProps) {
+function ImagePicker({ limit = 3, placement = "horizontal", setFiles }: ImagePickerProps) {
     const [images, setImages] = useState<Array<ImageElementType>>([]);
     const inputEl = useRef(null);
 
@@ -66,6 +67,14 @@ function ImagePicker({ limit = 3, placement = "horizontal" }: ImagePickerProps) 
     const handleDelete = (name: string) => {
         setImages(prevImages => prevImages.filter(img => img.file.name !== name))
     }
+
+    useEffect(() => {
+        let files = []
+        images.forEach(img => files.push(img.file))
+        if (files.length > 0)
+            setFiles(files)
+
+    }, [images])
 
     return (
         <>

@@ -209,7 +209,38 @@ query GetParkings{
   getAllParkings {
     id
     parkingName
-    calendar
+    calendar {
+      id
+      parkingId
+      monday {
+        start
+        finish
+      }
+      tuesday {
+        start
+        finish
+      }
+      wednesday {
+        start
+        finish
+      }
+      thursday {
+        start
+        finish
+      }
+      friday {
+        start
+        finish
+      }
+      saturday {
+        start
+        finish
+      }
+      sunday {
+        start
+        finish
+      }
+    }
     mainPicture
     latitude
     longitude

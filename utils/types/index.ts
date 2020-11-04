@@ -53,17 +53,18 @@ export interface ModelsData {
 }
 
 export type Schedule = {
+    id?: string;
     start: number;
     finish: number;
 }
 
 export type Calendar = {
-    id: string;
-    parkingId: string;
+    id?: string;
+    parkingId?: string;
     monday: Schedule[];
     tuesday: Schedule[];
     wednesday: Schedule[];
-    thrusday: Schedule[];
+    thursday: Schedule[];
     friday: Schedule[];
     saturday: Schedule[];
     sunday: Schedule[];
