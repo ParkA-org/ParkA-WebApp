@@ -1,7 +1,8 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
+import { Whisper, Tooltip } from "rsuite"
 
-import { ImagesContainer, Image, TooltipText, Tooltip } from "./styles"
+import { ImagesContainer, Image, TooltipText } from "./styles"
 
 type ImageElementType = {
     url: string | ArrayBuffer | null;
@@ -20,13 +21,13 @@ type ImagePickerProps = {
 }
 
 function ImageElement({ url, deleteElement }: ImageElementProps) {
+
+    const toolTip = <Tooltip> Haz click para eliminar la imagen</Tooltip>
     return (
         <>
-            <Tooltip>
+            <Whisper placement="left" trigger="hover" speaker={toolTip}>
                 <Image src={url} onClick={deleteElement} />
-                <TooltipText>Haz click para eliminar la imagen</TooltipText>
-            </Tooltip>
-
+            </Whisper>
         </>
     )
 }

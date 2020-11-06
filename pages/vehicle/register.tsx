@@ -310,7 +310,7 @@ export default function VehicleRegister(): JSX.Element {
 
         <div style={{ marginBottom: "2em" }}>
           {/* <MultipleImagePicker setFiles={setFiles} /> */}
-          <ImagePicker />
+          <ImagePicker setFiles={setFiles} />
         </div>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
           <Spinner />

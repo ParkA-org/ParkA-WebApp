@@ -9,9 +9,9 @@ export const Image = styled.img`
 export const ImagesContainer = styled.div`
   display: flex;
   flex-direction: ${props => props.placement === "horizontal" ? "row" : "column"};
-  justify-content: space-around;
+  justify-content:  ${props => props.placement === "horizontal" ? "flex-start" : "space-around"};
 
-  & > div {
+  & > img {
     margin: 0 ${props => props.placement === "horizontal" ? "1.5em 0" : "0 1.5em"} 0;
   }
 `
