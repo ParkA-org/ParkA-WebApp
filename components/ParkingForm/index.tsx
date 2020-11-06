@@ -162,7 +162,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
-    const [state, dispatch] = useReducer(reducer, {}, initState);
+    const [state, dispatch] = useReducer(reducer, {}, () => initState(week));
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
     const [CreateParking] = useMutation(CREATE_PARKING, {
         onCompleted() {

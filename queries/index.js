@@ -48,9 +48,11 @@ query GetLogUser {
       documentNumber
       telephoneNumber
       nationality {
+        id
         name
       }
       placeOfBirth {
+        id
         name
       }
     }

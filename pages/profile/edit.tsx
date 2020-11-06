@@ -48,7 +48,8 @@ export default function EditProfile(): JSX.Element {
         placeOfBirth: "",
         nationality: "",
         documentNumber: "",
-        profilePicture: ""
+        profilePicture: "",
+        file: undefined
     })
     const [image, setImage] = useLocalStorage("image", "")
     const [userId,] = useLocalStorage("user-id", "")
@@ -60,7 +61,8 @@ export default function EditProfile(): JSX.Element {
         placeOfBirth: "",
         nationality: "",
         documentNumber: "",
-        profilePicture: ""
+        profilePicture: "",
+        file: undefined
     }
     useEffect(() => {
         if (data) {
@@ -92,29 +94,30 @@ export default function EditProfile(): JSX.Element {
                     initialValues={initialValues}
                     validationSchema={EditProfileSchema}
                     onSubmit={(values) => {
+                        console.log('Values ', values)
                         // setImageStatus(prevState => {
                         //     return { ...prevState, loading: true }
                         // })
                         // UploadImageService(values.file, setImage, setImageStatus)
-                        updateUser({
-                            variables: {
-                                user: {
-                                    name: values.name,
-                                    lastName: values.lastName,
-                                    origin: "web"
-                                }
-                            }
-                        })
-                        updateUserInformation({
-                            variables: {
-                                userInfo: {
-                                    telephoneNumber: values.telephoneNumber,
-                                    nationality: values.nationality,
-                                    placeOfBirth: values.placeOfBirth,
-                                    documentNumber: values.documentNumber,
-                                }
-                            }
-                        })
+                        // updateUser({
+                        //     variables: {
+                        //         user: {
+                        //             name: values.name,
+                        //             lastName: values.lastName,
+                        //             origin: "web"
+                        //         }
+                        //     }
+                        // })
+                        // updateUserInformation({
+                        //     variables: {
+                        //         userInfo: {
+                        //             telephoneNumber: values.telephoneNumber,
+                        //             nationality: values.nationality,
+                        //             placeOfBirth: values.placeOfBirth,
+                        //             documentNumber: values.documentNumber,
+                        //         }
+                        //     }
+                        // })
                         // if (!error && !imageStatus.error) {
                         //     if (!imageStatus.loading && !loading) {
                         //         router.push('/profile')
