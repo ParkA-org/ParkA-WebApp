@@ -15,6 +15,7 @@ import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
 import { useRouter } from "next/router";
+import ReverseGeocode from "services/getAddress";
 
 type DayCheckProps = {
     id: string;
@@ -154,6 +155,10 @@ type ParkingProps = {
 export default function ParkingForm({ coordinates }: ParkingProps) {
     const { token } = useContext(UserContext)
     const router = useRouter()
+    const [geocodeData, setGeocodeData] = useState({
+        sector: "",
+        address: ""
+    })
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
@@ -173,10 +178,13 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     useEffect(() => {
         console.log('Cambiaron coordenadas')
         console.log(coordinates)
+        if (coordinates.lat !== 0)
+            ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
     }, [coordinates])
 
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={{
                 countParking: 1,
                 latitude: `${coordinates.lat}`,
@@ -185,8 +193,8 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                 priceHours: 50,
                 pictures: ["as", "as"],
                 mainPicture: "asd",
-                sector: "",
-                direction: "",
+                sector: `${geocodeData.sector}`,
+                direction: `${geocodeData.address}`,
                 information: "",
                 features: []
             }}
@@ -225,7 +233,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                     .catch(error => console.error(error))
             }}
         >
-            {({ setFieldValue, errors, touched }) => (
+            {({ setFieldValue, errors, touched, values }) => (
                 <Form>
                     <Container>
                         <LeftSection>
@@ -249,6 +257,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 label="Dirección"
                                 errorMessage={errors.direction}
                                 isTouched={touched.direction}
+                                value={values.direction}
                                 placeholder="Dirección"
                             />
                             <ElementContainer>
@@ -267,6 +276,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.sector}
                                 isTouched={touched.sector}
                                 placeholder="Sector"
+                                value={values.sector}
                             />
                             <div className="iconInput">
                                 <MoneyIcon />

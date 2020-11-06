@@ -5,7 +5,7 @@ export const MainFormContainer = styled.div`
   padding: 2em 0.5em;
   overflow: hidden;
   width: 100%;
-  height: 50vh;
+  height: auto;
   min-height: 600px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 50px;
@@ -124,7 +124,7 @@ export const InformationSection = styled.div`
 `;
 
 export const ActionSection = styled.div`
-  margin-top: 1em;
+  margin: 1em 0;
   grid-area: actions;
   justify-self: stretch;
   display: flex;

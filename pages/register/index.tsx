@@ -121,13 +121,13 @@ export default function registerPersonalAccount(): JSX.Element {
                 <InformationSection>
                   <FileUploader setFieldValue={setFieldValue} />
                 </InformationSection>
-              </FormContainer>
-              <ActionSection>
-                <NavigationLink href="/login" styled={true}>Atrás</NavigationLink>
-                <Button submit={true} rank="secondary">
-                  Continuar
+                <ActionSection>
+                  <NavigationLink href="/login" styled={true}>Atrás</NavigationLink>
+                  <Button submit={true} rank="secondary">
+                    Continuar
                 </Button>
-              </ActionSection>
+                </ActionSection>
+              </FormContainer>
             </Form>
           )}
         </Formik>
