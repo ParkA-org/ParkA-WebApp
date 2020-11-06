@@ -97,9 +97,10 @@ export function SelectField({
 
 type FileUploaderProps = {
   setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  placeholderImage?: string;
 }
 
-export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element {
+export function FileUploader({ setFieldValue, placeholderImage }: FileUploaderProps): JSX.Element {
   const imgEl = useRef(null),
     inputEl = useRef(null);
   const handleChange = (event) => {
@@ -128,7 +129,7 @@ export function FileUploader({ setFieldValue }: FileUploaderProps): JSX.Element 
   return (
     <>
       <UploaderImage
-        src="/icons/cameraIcon.svg"
+        src={placeholderImage ? placeholderImage : "/icons/cameraIcon.svg"}
         ref={imgEl}
         alt="uploaded by the user"
       />

@@ -5,11 +5,11 @@ import {
 } from "./styles"
 
 
-export default function IconButton({ text, children, color }): JSX.Element {
+export default function IconButton({ text, children, color, submit = false }): JSX.Element {
 
     return (
         <IconButtonContainer color={color}>
-            <StyledIconButton color={color}>{children}</StyledIconButton>
+            <StyledIconButton color={color} submit={submit}>{children}</StyledIconButton>
             <Text color={color}>{text}</Text>
         </IconButtonContainer>
     )

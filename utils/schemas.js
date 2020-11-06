@@ -63,9 +63,14 @@ export const CreatePasswordSchema = Yup.object().shape({
 export const EditProfileSchema = Yup.object().shape({
     name: Yup.string().required("Requerido"),
     lastName: Yup.string().required("Requerido"),
-    email: Yup.string().email("Email inválido").required("Requerido"),
-    dateOfBirth: Yup.string().required("Requerido"),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    telephoneNumber: Yup.string().required("Requerido").length(10),
+    placeOfBirth: Yup.string().required("Requerido"),
+    nationality: Yup.string().required("Requerido"),
+    documentNumber: Yup.string()
+        .required("Requerido")
+        .max(11, "Máximo de 11 caracteres"),
+    profilePicture: Yup.string()
+    .required("Requerido"),
 });
 
 export const CreateParkingSchema = Yup.object().shape({

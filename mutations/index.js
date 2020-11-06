@@ -14,11 +14,20 @@ mutation CreateUser($cuInput: createUserInput!){
 `
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($user: updateUserInput) {
-    updateUser(input: $user) {
-      user {
+  mutation UpdateUser($user: UpdateUserInput!) {
+    updateUser(updateUserInput: $user) {
         id
-      }
+        name
+        lastName
+    }
+  }
+`
+
+
+export const UPDATE_USER_INFORMATION = gql`
+  mutation UpdateUserInfo($userInfo: UpdateUserInformationInput!) {
+    updateUserInformation(updateUserInformationInput: $userInfo) {
+        documentNumber
     }
   }
 `
@@ -116,7 +125,7 @@ mutation CreateVehicle($cvInput: createVehicleInput!){
 `
 
 export const UPDATE_VEHICLE = gql`
-mutation UpdateVehicle($uvInput: updateVehicleInput!){
+mutation UpdateVehicle($uvInput: UpdateVehicleInput!){
   updateVehicle(
     updateVehicleInput: $uvInput
   ) {

@@ -36,6 +36,28 @@ query GetUser($id: String!){
 }
 `
 
+export const GET_LOGGED_USER = gql`
+query GetLogUser {
+  getLoggedUser {
+    name
+    lastName
+    email
+    profilePicture
+    confirmed
+    userInformation {
+      documentNumber
+      telephoneNumber
+      nationality {
+        name
+      }
+      placeOfBirth {
+        name
+      }
+    }
+  }
+}
+`
+
 export const GET_MODELS = gql`
 query GetModels {
   models{
