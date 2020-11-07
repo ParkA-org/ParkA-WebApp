@@ -40,6 +40,7 @@ export const PersonalIdentificationSchema = Yup.object().shape({
     birthPlace: Yup.string()
         .required("Requerido")
         .max(50, "Máximo de 50 caracteres"),
+    telephoneNumber: Yup.string().required("Requerido"),
     nationality: Yup.string()
         .required("Requerido")
         .max(40, "Máximo de 40 caracteres"),

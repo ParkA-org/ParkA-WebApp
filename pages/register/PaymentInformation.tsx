@@ -42,25 +42,25 @@ export default function RegisterPaymentInformation(): JSX.Element {
   const [accountId,] = useLocalStorage("account-id", "")
 
   const cardMask = [
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
     " ",
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
     " ",
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
     " ",
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
-    /[1-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
   ];
 
   return (
@@ -84,7 +84,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
               variables: {
                 userPaymentInfo: {
                   data: {
-                    digit: values.cardNumber,
+                    digit: values.cardNumber.replaceAll(" ", ""),
                     name: values.cardHolder,
                     expirationdate: values.expirationDate,
                     type_card: "VISA",
@@ -104,6 +104,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
                     <MaskedInput
                       mask={cardMask}
                       id="cardNumber"
+                      name="cardNumber"
                       placeholder="Enter your card number"
                       type="text"
                       onChange={handleChange}

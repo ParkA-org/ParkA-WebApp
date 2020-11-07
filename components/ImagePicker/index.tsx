@@ -1,8 +1,7 @@
 import * as React from "react";
 import { useState, useRef, useEffect } from "react";
 import { Whisper, Tooltip } from "rsuite"
-
-import { ImagesContainer, Image, TooltipText } from "./styles"
+import { ImagesContainer, Image } from "./styles"
 
 type ImageElementType = {
     url: string | ArrayBuffer | null;
