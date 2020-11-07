@@ -37,8 +37,8 @@ export default function CreditCard({
       <Logo
         src={
           cardNumber[0] === "4"
-            ? "../images/visaLogo.jpg"
-            : "../images/mastercardLogo.png"
+            ? "/images/visaLogo.jpg"
+            : "/images/mastercardLogo.png"
         }
         alt="card logo"
       />

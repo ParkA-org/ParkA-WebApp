@@ -290,6 +290,10 @@ query GetParkingWithId($id: String!){
     information
     mainPicture
     pictures
+    features {
+      id
+      name
+    }
   }
 }
 `
