@@ -309,6 +309,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     type="checkbox"
                                                     label={feature.name}
                                                     value={feature.id}
+                                                    inputStyles={{ width: "auto" }}
                                                 />
                                             )
                                         })}

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect, createRef } from "react";
 import { DatePicker } from "rsuite"
+import { Whisper, Tooltip } from "rsuite"
 import { ImCancelCircle } from "react-icons/im"
 import { BsArrowRight, BsCheck } from "react-icons/bs"
 import { ScheduleHead, StyledButton, HourPickerContainer, HourElement } from "./styles"
@@ -26,10 +27,17 @@ const lastFormatPlaceholder = (value) => `${value.substr(0, value.length / 2)}:$
 
 function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, dispatch: any }) {
     const [value, setValue] = useState<RangeObject>(item)
+    useEffect(() => { }, [value])
+    const validateHours = (hour: number) => {
+        return hour - (value.start / 100) < 1
+    }
+    const whisperRef = createRef()
+
+    const toolTip = <Tooltip>Falta un valor para completar el rango</Tooltip>
     return (
         <HourPickerContainer>
             <div>
-                <ImCancelCircle size="2em" color="rgb(255,0,0)" onClick={() => {
+                <button type="button" style={{ border: "transparent", background: "transparent" }} onClick={() => {
                     dispatch({
                         type: "remove_range",
                         payload: {
@@ -37,7 +45,9 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                             id: value.id
                         }
                     });
-                }} />
+                }}>
+                    <ImCancelCircle size="2em" color="rgb(255,0,0)" />
+                </button>
             </div>
             <div>
                 <DatePicker
@@ -46,9 +56,11 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                     hideMinutes={minute => minute % 15 !== 0}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.start.toString())}
-                    onOk={(date) => {
-                        let start = (date.getHours() * 100) + date.getMinutes()
-                        setValue({ ...value, "start": start })
+                    onChange={(date) => {
+                        if (date) {
+                            let start = (date.getHours() * 100) + date.getMinutes()
+                            setValue({ ...value, "start": start })
+                        }
                     }}
                 />
             </div>
@@ -58,6 +70,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
+                    hideHours={hour => validateHours(hour)}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.finish.toString())}
                     onOk={(date) => {
@@ -67,17 +80,25 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 />
             </div>
             <div>
-
                 <button type="button" style={{ border: "transparent", background: "transparent" }} onClick={() => {
-                    dispatch({
-                        type: "update_range",
-                        payload: {
-                            day: day,
-                            id: item.id,
-                            value: value
-                        }
-                    });
-                }}> <BsCheck size="2em" color="rgb(255,0,0)" /></button>
+                    if (value.start && value.finish) {
+                        whisperRef.current?.close();
+                        dispatch({
+                            type: "update_range",
+                            payload: {
+                                day: day,
+                                id: item.id,
+                                value: value
+                            }
+                        });
+                    } else {
+                        whisperRef.current?.open();
+                    }
+                }}>
+                    <Whisper placement="right" ref={whisperRef} speaker={toolTip} trigger="none">
+                        <BsCheck size="2em" color="rgb(255,0,0)" />
+                    </Whisper>
+                </button>
             </div>
         </HourPickerContainer>
     )

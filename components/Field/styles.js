@@ -19,7 +19,7 @@ export const StyledField = styled(Field)`
 
 export const CheckboxContainer = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     & > input[type="checkbox"] {
         display: inline-block;
