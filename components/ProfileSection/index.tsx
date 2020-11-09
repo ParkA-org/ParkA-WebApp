@@ -39,11 +39,12 @@ export default function ProfileSection() {
     }, [data])
     if (loading) return <h2>Loading...</h2>
     if (error) return <h2>Ocurrio un error</h2>
+
     return (
         <ProfileContainer>
             <h1>{`${user?.name} ${user?.lastName}`}  <AiFillCheckCircle color="blue" /></h1>
             <ContentContainer>
-                <ProfilePicture alt="User Profile" src="placeholders/image-placeholder.png" />
+                <ProfilePicture alt="User Profile" src={user?.profilePicture==undefined ? "placeholders/image-placeholder.png":user?.profilePicture} />
                 <NavigationLink href="/profile/edit">
                     <EditButton>Editar</EditButton>
                 </NavigationLink>

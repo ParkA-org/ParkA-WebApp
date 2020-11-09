@@ -32,6 +32,7 @@ query GetUser($id: String!){
     name
     lastName
     email
+    profilePicture
   }
 }
 `

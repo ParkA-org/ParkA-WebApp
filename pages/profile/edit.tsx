@@ -47,7 +47,7 @@ export default function EditProfile(): JSX.Element {
                         setImageStatus(prevState => {
                             return { ...prevState, loading: true }
                         })
-                        // UploadImageService(values.file, setImage, setImageStatus)
+                        UploadImageService(values.file, setImage)
                         updateUser({
                             variables: {
                                 where: {

@@ -92,6 +92,7 @@ export const ToggleButton = styled.button`
   background-color:transparent;
   outline:none;
   margin-right:10px;
+  margin-left:15px
 
   &:focus{
     outline:none;
