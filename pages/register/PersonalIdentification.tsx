@@ -15,7 +15,6 @@ import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
 import { BasicEntity, BirthPlaceData, NationalityData } from "utils/types"
 import MaskedInput from "react-text-mask"
-import UploadImageService from "services/uploadImage";
 import {
   MainFormContainer,
   FormContainer,
@@ -27,8 +26,7 @@ import {
 
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-  const [image,] = useLocalStorage("image", "../placeholders/image.png")
-  const [userId, setUserId] = useLocalStorage("user-id", "")
+  const [image, setLocalImage] = useLocalStorage("image", "../placeholders/image.png")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
@@ -85,6 +83,11 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     /[0-9]/,
     /[0-9]/,
     /[0-9]/,
+    /[0-9]/,
+    "-",
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
     /[0-9]/
   ];
 
@@ -117,6 +120,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           validationSchema={PersonalIdentificationSchema}
           onSubmit={(values) => {
             setLocalUser({ ...localUser, ...values })
+
             let newDate = new Date(values.dateOfBirth).toISOString()
             setShowModal(true)
             CreateUserInfo({
