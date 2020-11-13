@@ -42,8 +42,8 @@ mutation ConfirmEmail($ceInput: ConfirmEmailInput!){
 `
 
 export const VALIDATE_EMAIL = gql`
-mutation ValidateEmail($emInput: ValidateEmailCodeInput!){
-  validateEmailCode(validateEmailCodeInput: $emInput){
+mutation ValidateEmail($veI: ValidateEmailCodeInput!){
+  validateEmailCode(validateEmailCodeInput: $veI) {
     email
     origin
   }

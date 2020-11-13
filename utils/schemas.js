@@ -16,7 +16,6 @@ export const CreateAccountSchema = Yup.object().shape({
 });
 
 export const ValidateEmailSchema = Yup.object().shape({
-    code: Yup.string().required("Requerido"),
     email: Yup.string().email("Email inválido").required("Requerido"),
 })
 

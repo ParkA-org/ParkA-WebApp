@@ -32,7 +32,7 @@ export default function ConfirmEmail(): JSX.Element {
     return (
         <Layout pageTitle="Confirmar cuenta con correo electrónico">
             <MainFormContainer>
-                <h1>Confirmar correo electrónico</h1>
+                <h1>Confirmarndo correo electrónico</h1>
                 <Formik
                     initialValues={{
                         code: "",
