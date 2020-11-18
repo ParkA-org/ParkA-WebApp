@@ -183,3 +183,11 @@ mutation CreateParking($cpInput: CreateParkingInput!){
   }
 }
 `
+
+export const EDIT_PARKING = gql`
+mutation UpdateUserParking($epi: UpdateParkingInput!) {
+  updateParking(updateParkingInput: $epi){
+    ...BasicParkingInformation
+  }
+}
+`

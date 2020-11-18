@@ -1,21 +1,20 @@
-import { useState, useReducer, useEffect, useContext } from "react"
+import { useState, useReducer, useContext } from "react"
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
 import ImagePicker from "components/ImagePicker"
-import { CreateParkingSchema } from "utils/schemas"
+import { EditParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, ElementContainer, HeaderSection, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
+import { Container, ElementContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, HeaderSection } from "./styles"
 import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
-import { CREATE_PARKING } from "mutations"
-import { FeaturesData, Coordinates } from "utils/types";
+import { EDIT_PARKING } from "mutations"
+import { FeaturesData, Parking } from "utils/types";
 import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
 import { useRouter } from "next/router";
-import ReverseGeocode from "services/getAddress";
 
 type DayCheckProps = {
     id: string;
@@ -148,23 +147,16 @@ type RangeObject = {
     finish?: string;
 }
 
-type ParkingProps = {
-    coordinates: Coordinates
-}
 
-export default function ParkingForm({ coordinates }: ParkingProps) {
+export default function ParkingForm({ parkingName, countParking, calendar, priceHours, pictures, mainPicture, information, features }: Parking) {
     const { token } = useContext(UserContext)
     const router = useRouter()
-    const [geocodeData, setGeocodeData] = useState({
-        sector: "",
-        address: ""
-    })
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
-    const [CreateParking] = useMutation(CREATE_PARKING, {
+    const [EditParking] = useMutation(EDIT_PARKING, {
         onCompleted() {
             router.push('/parking')
         },
@@ -175,30 +167,19 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
         }
     })
 
-    useEffect(() => {
-        console.log('Cambiaron coordenadas')
-        console.log(coordinates)
-        if (coordinates.lat !== 0)
-            ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
-    }, [coordinates])
-
     return (
         <Formik
             enableReinitialize={true}
             initialValues={{
-                countParking: 1,
-                latitude: `${coordinates.lat}`,
-                longitude: `${coordinates.lng}`,
-                parkingName: "",
-                priceHours: 50,
-                pictures: ["as", "as"],
-                mainPicture: "asd",
-                sector: `${geocodeData.sector}`,
-                direction: `${geocodeData.address}`,
-                information: "",
-                features: []
+                countParking,
+                parkingName,
+                priceHours,
+                pictures,
+                mainPicture,
+                information,
+                features
             }}
-            validationSchema={CreateParkingSchema}
+            validationSchema={EditParkingSchema}
             onSubmit={(values) => {
                 let modifiedState = {}
                 for (let [key, range] of Object.entries(state)) {
@@ -211,17 +192,13 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                         return response.data
                     }).then(results => {
                         let urls = results?.map(obj => obj.url)
-                        CreateParking({
+                        EditParking({
                             variables: {
-                                cpInput: {
+                                epi: {
                                     "countParking": parseFloat(values.countParking.toString()),
-                                    "latitude": `${coordinates.lat}`,
-                                    "longitude": `${coordinates.lng}`,
                                     "parkingName": values.parkingName,
                                     "priceHours": parseFloat(values.priceHours.toString()),
                                     "information": values.information,
-                                    "sector": values.sector,
-                                    "direction": values.direction,
                                     "features": values.features,
                                     "calendar": modifiedState,
                                     "pictures": urls,
@@ -237,7 +214,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                 <Form>
                     <Container>
                         <HeaderSection>
-                            <h2>Registro de parqueos</h2>
+                            <h2>Editar parqueo</h2>
                         </HeaderSection>
                         <LeftSection>
                             <Field
@@ -246,6 +223,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.countParking}
                                 isTouched={touched.countParking}
                                 placeholder="Cantidad de parqueos"
+                                value={values.countParking ? values.countParking.toString() : ""}
                             />
                             <Field
                                 name="parkingName"
@@ -253,14 +231,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.parkingName}
                                 isTouched={touched.parkingName}
                                 placeholder="Nombre de parqueo"
-                            />
-                            <Field
-                                name="direction"
-                                label="Dirección"
-                                errorMessage={errors.direction}
-                                isTouched={touched.direction}
-                                value={values.direction}
-                                placeholder="Dirección"
+                                value={values.parkingName}
                             />
                             <ElementContainer>
                                 <label><b>Disponibilidad</b></label>
@@ -272,14 +243,6 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                             </ElementContainer>
                         </LeftSection>
                         <MiddleSection>
-                            <Field
-                                name="sector"
-                                label="Sector"
-                                errorMessage={errors.sector}
-                                isTouched={touched.sector}
-                                placeholder="Sector"
-                                value={values.sector}
-                            />
                             <div className="iconInput">
                                 <MoneyIcon />
                                 <Field
@@ -288,6 +251,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     errorMessage={errors.priceHours}
                                     isTouched={touched.priceHours}
                                     placeholder="Costo por hora"
+                                    value={values.priceHours}
                                 />
                             </div>
 
@@ -296,6 +260,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 name="information"
                                 placeholder="Informaciones adicionales..."
                                 component="textarea"
+                                value={values.information}
                             />
 
                             {featuresLoading ? <Spinner /> :
@@ -311,6 +276,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     type="checkbox"
                                                     label={feature.name}
                                                     value={feature.id}
+                                                    checked={values.features.filter(curFeature => curFeature.id === feature.id).length > 0 ? true : false}
                                                     inputStyles={{ width: "auto" }}
                                                 />
                                             )
@@ -321,7 +287,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                         </MiddleSection>
                         <RightSection>
                             <ImagePicker placement="vertical" setFiles={setFiles} />
-                            <Button submit={false}>Crear parqueo</Button>
+                            <Button submit={false}>Editar parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`

@@ -88,6 +88,16 @@ export const CreateParkingSchema = Yup.object().shape({
     features: Yup.array().of(Yup.string())
 });
 
+
+export const EditParkingSchema = Yup.object().shape({
+    countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    parkingName: Yup.string().required("Requerido"),
+    priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    pictures: Yup.array().of(Yup.string()),
+    mainPicture:  Yup.string().required("Requerido"),
+    features: Yup.array().of(Yup.string())
+});
+
 export const CreateVehicleSchema = Yup.object().shape({    
     licensePlate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
     detail: Yup.string().required("Requerido"),
