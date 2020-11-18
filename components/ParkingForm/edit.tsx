@@ -1,4 +1,4 @@
-import { useState, useReducer, useContext } from "react"
+import { useState, useReducer, useContext, useEffect } from "react"
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
@@ -10,7 +10,7 @@ import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
 import { EDIT_PARKING } from "mutations"
-import { FeaturesData, Parking } from "utils/types";
+import { FeaturesData, Parking, Calendar } from "utils/types";
 import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
@@ -21,9 +21,10 @@ type DayCheckProps = {
     value: number;
     dispatch: any;
     presentationName: string;
+    checked?: boolean;
 }
 
-function CheckElement({ id, value, dispatch, presentationName }: DayCheckProps) {
+function CheckElement({ id, value, dispatch, presentationName, checked }: DayCheckProps) {
     const handleChange = (event) => {
         const target = event.target
         const value = target.checked
@@ -46,10 +47,21 @@ function CheckElement({ id, value, dispatch, presentationName }: DayCheckProps) 
     }
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} />
+            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} checked={checked} />
             <label>{presentationName.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
+}
+
+function initStateWithData(initialState: Calendar) {
+    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    let obj = {}
+    if (week.length > 0) {
+        for (let day of week) {
+            obj[day] = initialState[day]
+        }
+    }
+    return obj
 }
 
 function initState(week: string[]) {
@@ -74,26 +86,13 @@ type StateObject = {
 
 
 type Action =
-    | {
-        type: "add_range", payload:
-        {
-            day: string,
-            id: string
-        }
-    }
-    | {
-        type: "update_range", payload: {
-            id: string, day: string, value: RangeObject
-        }
-    }
+    | { type: "add_range", payload: { day: string, id: string } }
+    | { type: "update_range", payload: { id: string, day: string, value: RangeObject } }
     | { type: "remove_range", payload: { id: string, day: string } }
     | { type: "remove_day", payload: { day: string } }
     | { type: "add_day", payload: { day: string } }
-    | {
-        type: "reset", payload: {
-            week: string[]
-        }
-    }
+    | { type: "reset", payload: { week: string[] } }
+    | { type: "update_state", payload: { calendar: Calendar } }
 
 function reducer(state: StateObject, action: Action) {
     switch (action.type) {
@@ -134,6 +133,8 @@ function reducer(state: StateObject, action: Action) {
             }
             delete stateCopy[action.payload.day]
             return stateCopy
+        case "update_state":
+            return initStateWithData(action.payload.calendar)
         case "reset":
             return initState(action.payload.week)
         default:
@@ -166,6 +167,17 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
             }
         }
     })
+
+    useEffect(() => {
+        if (calendar) {
+            dispatch({
+                type: 'update_state',
+                payload: {
+                    calendar: calendar
+                }
+            })
+        }
+    }, [calendar])
 
     return (
         <Formik
@@ -237,7 +249,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} presentationName={presentationalWeek[idx]} />)}
+                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} presentationName={presentationalWeek[idx]} checked={calendar[day].length > 0 ? true : false} />)}
                                 </div>
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
@@ -286,7 +298,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                                 </>}
                         </MiddleSection>
                         <RightSection>
-                            <ImagePicker placement="vertical" setFiles={setFiles} />
+                            <ImagePicker placement="vertical" setFiles={setFiles} pictures={pictures} />
                             <Button submit={false}>Editar parqueo</Button>
                         </RightSection>
                         <style jsx>

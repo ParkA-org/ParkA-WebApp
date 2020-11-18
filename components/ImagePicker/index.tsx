@@ -5,17 +5,18 @@ import { ImagesContainer, Image } from "./styles"
 
 type ImageElementType = {
     url: string | ArrayBuffer | null;
-    file: File;
+    file?: File;
 };
 
 type ImageElementProps = {
     url: string | ArrayBuffer | null;
-    deleteElement: (name: string) => void;
+    deleteElement?: (name: string) => void;
 }
 
 type ImagePickerProps = {
     limit?: number;
     placement?: string;
+    pictures?: string[];
     setFiles: (files: any[]) => void
 }
 
@@ -31,7 +32,19 @@ function ImageElement({ url, deleteElement }: ImageElementProps) {
     )
 }
 
-function ImagePicker({ limit = 3, placement = "horizontal", setFiles }: ImagePickerProps) {
+function PictureElement({ url }: ImageElementProps) {
+
+    const toolTip = <Tooltip> Haz click para eliminar la imagen</Tooltip>
+    return (
+        <>
+            <Whisper placement="left" trigger="hover" speaker={toolTip}>
+                <Image src={url} />
+            </Whisper>
+        </>
+    )
+}
+
+function ImagePicker({ limit = 3, placement = "horizontal", setFiles, pictures = [] }: ImagePickerProps) {
     const [images, setImages] = useState<Array<ImageElementType>>([]);
     const inputEl = useRef(null);
 
@@ -76,10 +89,15 @@ function ImagePicker({ limit = 3, placement = "horizontal", setFiles }: ImagePic
 
     }, [images])
 
+    useEffect(() => {
+        console.log('Pictures ', pictures)
+    }, [])
+
     return (
         <>
             <h2>Imágenes</h2>
             <ImagesContainer placement={placement}>
+                {pictures.length > 0 && pictures.map((pic) => <PictureElement key={pic} url={pic} />)}
                 {images.length > 0 && images.map((img) => <ImageElement key={img.file.name} url={img.url} deleteElement={() => handleDelete(img.file.name)} />)}
                 {images.length < limit && <Image src="/placeholders/empty/carPlaceholder.svg" alt="add image" onClick={handleClick} />}
             </ImagesContainer>

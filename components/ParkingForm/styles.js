@@ -6,7 +6,8 @@ export const Container = styled.div`
     height: 80vh;
     align-items: start;
     justify-items: center;
-    grid-gap: 20px;
+    row-gap: 20px;
+    column-gap: 5vw;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: 5vh 1fr; 
     width: 100%;
@@ -19,6 +20,7 @@ export const Container = styled.div`
 `;
 
 export const HeaderSection = styled.div`
+    margin-left: 4em;
     grid-column: 1 / 3;
     grid-row: 1;
     place-self: start start;
