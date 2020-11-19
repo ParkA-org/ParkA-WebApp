@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, useState } from "react"
 import { useQuery } from "@apollo/client"
 import { Parking, Vehicle } from "utils/types"
 import { GET_ALL_VEHICLES } from "queries"
@@ -34,23 +34,36 @@ type AllVehiclesData = {
 
 export default function ReservationDetail({ parking }: ComponentProps) {
 
+    const [startingDate, setStartingDate] = useState(null)
+    const [finishHour, setFinishedHour] = useState(null)
+    const [hourDifference, setHourDifference] = useState(null)
     const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES)
     const imgRef = useRef(null)
+
     useEffect(() => {
         if (data) {
             console.log(data)
         }
     }, [data])
 
+    const calculateTime = (start: Date, end: Date) => {
+        let fh = start.getHours(), eh = end.getHours(), fd = start, hourDiff = 0;
+        fd.setHours(eh)
+        fd.setMinutes(end.getMinutes())
+        setStartingDate(new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString())
+        setHourDifference(hourDiff)
+        setFinishedHour(new Date(fd.getTime() - (fd.getTimezoneOffset() * 60000)).toISOString())
+    }
+
     const hourPicker = (
         <section>
             <div>
                 <p>Desde</p>
                 <DatePicker
-                    format="HH:mm"
+                    format="YYYY-MM-DD HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
+                    onOk={(value) => setStartingDate(value)}
                 />
             </div>
             <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
@@ -60,7 +73,10 @@ export default function ReservationDetail({ parking }: ComponentProps) {
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
+                    onOk={(value) => {
+                        setFinishedHour(value)
+                        calculateTime(startingDate, value)
+                    }}
                 />
             </div>
             <style jsx>
@@ -106,20 +122,24 @@ export default function ReservationDetail({ parking }: ComponentProps) {
                 <ElementContainer>
                     <label><b>Vehiculos</b></label>
                     {loading && <h3>Loading user vehicles...</h3>}
-                    <StyledSelect onChange={e => {
-                        const { target } = e
-                        const { value } = target
-                        const imgUrl = data.getAllUserVehicles.find(vehicle => vehicle.id === value).mainPicture
-                        imgRef.current.src = imgUrl
-                    }} >
-                        {data && data.getAllUserVehicles.map(vehicle => <option key={vehicle.id} value={vehicle.id} data-image={vehicle.mainPicture}>{vehicle.model.name}</option>)}
-                    </StyledSelect>
-                    <StyledImage src={data.getAllUserVehicles[0].mainPicture} ref={imgRef} />
+                    {data && data.getAllUserVehicles && data.getAllUserVehicles.length > 0 ?
+                        (
+                            <>
+                                <StyledSelect onChange={e => {
+                                    const { target } = e
+                                    const { value } = target
+                                    const imgUrl = data.getAllUserVehicles.find(vehicle => vehicle.id === value).mainPicture
+                                    imgRef.current.src = imgUrl
+                                }} >
+                                    {data && data.getAllUserVehicles.map(vehicle => <option key={vehicle.id} value={vehicle.id} data-image={vehicle.mainPicture}>{vehicle.model.name}</option>)}
+                                </StyledSelect>
+                                <StyledImage src={data.getAllUserVehicles[0].mainPicture} ref={imgRef} />
+                            </>
+                        )
+                        : <p>No tienes ningun vehiculo registrado</p>}
                 </ElementContainer>
             </LeftSection>
             <RightSection>
-
-                <SectionElement name="Fecha" />
                 <ElementContainer>
                     <label><b>Horas</b></label>
                     {hourPicker}
