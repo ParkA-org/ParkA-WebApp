@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react"
 import { useQuery } from "@apollo/client"
-import { Parking, Vehicle } from "utils/types"
+import { Parking, Vehicle, ReservationInput } from "utils/types"
 import { GET_ALL_VEHICLES } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
@@ -15,6 +15,12 @@ type ElementProps = {
 
 type ComponentProps = {
     parking: Parking
+    checkout: ReservationInput;
+    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
+}
+
+type AllVehiclesData = {
+    getAllUserVehicles: Vehicle[]
 }
 
 function SectionElement({ name, children, value }: ElementProps) {
@@ -28,34 +34,38 @@ function SectionElement({ name, children, value }: ElementProps) {
     )
 }
 
-type AllVehiclesData = {
-    getAllUserVehicles: Vehicle[]
+type HourPickerProps = {
+    hourPrice: number;
+    checkout: ReservationInput;
+    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
 }
 
-export default function ReservationDetail({ parking }: ComponentProps) {
-
-    const [startingDate, setStartingDate] = useState(null)
-    const [finishHour, setFinishedHour] = useState(null)
-    const [hourDifference, setHourDifference] = useState(null)
-    const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES)
-    const imgRef = useRef(null)
-
-    useEffect(() => {
-        if (data) {
-            console.log(data)
-        }
-    }, [data])
+function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.Element {
+    const [startDate, setStartDate] = useState<Date>()
+    const [endDate, setEndDate] = useState<Date>()
 
     const calculateTime = (start: Date, end: Date) => {
-        let fh = start.getHours(), eh = end.getHours(), fd = start, hourDiff = 0;
-        fd.setHours(eh)
-        fd.setMinutes(end.getMinutes())
-        setStartingDate(new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString())
-        setHourDifference(hourDiff)
-        setFinishedHour(new Date(fd.getTime() - (fd.getTimezoneOffset() * 60000)).toISOString())
+        let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
+        endingDate.setTime(start.getTime())
+        endingDate.setHours(endingHour)
+        endingDate.setMinutes(endingMinutes)
+        hourDiff = Math.abs(endingHour - startingHour)
+        setCheckout({
+            ...checkout,
+            checkInDate: new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString(),
+            checkOutDate: new Date(endingDate.getTime() - (endingDate.getTimezoneOffset() * 60000)).toISOString(),
+            rentDate: new Date(rentDate.getTime() - (rentDate.getTimezoneOffset() * 60000)).toISOString(),
+            total: hourPrice * hourDiff
+        })
     }
 
-    const hourPicker = (
+    useEffect(() => {
+        if (startDate && endDate) {
+            calculateTime(startDate, endDate)
+        }
+    }, [startDate, endDate])
+
+    return (
         <section>
             <div>
                 <p>Desde</p>
@@ -63,7 +73,7 @@ export default function ReservationDetail({ parking }: ComponentProps) {
                     format="YYYY-MM-DD HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={(value) => setStartingDate(value)}
+                    onOk={(value) => setStartDate(value)}
                 />
             </div>
             <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
@@ -73,10 +83,7 @@ export default function ReservationDetail({ parking }: ComponentProps) {
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={(value) => {
-                        setFinishedHour(value)
-                        calculateTime(startingDate, value)
-                    }}
+                    onOk={(value) => setEndDate(value)}
                 />
             </div>
             <style jsx>
@@ -102,6 +109,19 @@ export default function ReservationDetail({ parking }: ComponentProps) {
             </style>
         </section>
     )
+}
+
+export default function ReservationDetail({ parking, checkout, setCheckout }: ComponentProps) {
+
+    const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES)
+    const imgRef = useRef(null)
+
+
+    useEffect(() => {
+        if (data) {
+            console.log(data)
+        }
+    }, [data])
 
     return (
         <Container>
@@ -142,10 +162,10 @@ export default function ReservationDetail({ parking }: ComponentProps) {
             <RightSection>
                 <ElementContainer>
                     <label><b>Horas</b></label>
-                    {hourPicker}
+                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} />
                 </ElementContainer>
 
-                <SectionElement name="Total de horas" />
+                <SectionElement name="Total de horas" value={checkout.total ? checkout.total.toString() : "0"} />
             </RightSection>
         </Container>
     )

@@ -1,29 +1,34 @@
 import { useLazyQuery } from "@apollo/client"
 import { useRouter } from "next/router"
 import { GET_PARKING_WITH_ID } from "queries"
-import { Parking } from "utils/types"
+import { Parking, ReservationInput } from "utils/types"
 import { useEffect, useState } from "react"
 import Layout from "../../layout"
 import ReservationDetail from "components/ReservationDetail"
 import PaymentMethod from "components/PaymentMethod"
+
 export default function Checkout() {
+
     const router = useRouter()
     const [parking, setParking] = useState<Parking>(null)
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
+    const [checkout, setCheckout] = useState<ReservationInput>({})
     const { id } = router.query;
+
     useEffect(() => {
         if (id)
             GetParkingWithId({ variables: { id: id } })
         if (data)
             setParking(data.getParkingById)
     }, [data, router])
+
     return (
         <Layout pageTitle="Parking Checkout">
             <div className="container">
                 <img src="/images/carsParked.webp" alt="parked cars" />
                 <div className="pageContent">
-                    {parking ? <ReservationDetail parking={parking} /> : <h3>Loading...</h3>}
-                    <PaymentMethod />
+                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Loading...</h3>}
+                    <PaymentMethod checkout={checkout} setCheckout={setCheckout} />
                 </div>
             </div>
             <style jsx>

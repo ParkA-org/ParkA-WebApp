@@ -140,4 +140,24 @@ export type Coordinates = {
     time?: Date;
 }
 
+export type ReservationInput = {
+    parking?: string;
+    owner?: string;
+    checkInDate?: string;
+    checkOutDate?: string;
+    vehicle?: string;
+    paymentInfo?: string;
+    total?: number;
+    rentDate?: string;
+}
+
+export type Payment = {
+    __typename: string;
+    id: string;
+    cardHolder: string;
+    expirationDate: string;
+    digit: string;
+    activated: boolean;
+    card: BasicEntity;
+}
 

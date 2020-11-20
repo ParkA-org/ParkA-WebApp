@@ -2,6 +2,13 @@ import { BiDollar } from "react-icons/bi"
 import CreditCard from "components/CreditCard"
 import Button from "components/Button"
 import { Container, MainContainer, DataContainer, StyledInput } from "./styles"
+import { ReservationInput, Payment } from "utils/types"
+
+type ComponentProps = {
+    payment: Payment
+    checkout: ReservationInput;
+    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
+}
 
 export default function PaymentMethod() {
     return (
