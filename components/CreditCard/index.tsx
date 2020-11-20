@@ -22,8 +22,15 @@ export default function CreditCard({
   expirationDate,
 }: CardProps): JSX.Element {
 
+  const formatNumbers = (data: string): string => {
+    return `•••• •••• •••• ${data.substr(data.length - 4)}`
+  }
+
   const formatDate = (data: string): string => {
-    return `${data.substr(5, 2)}/${data.substr(2, 2)}`;
+    if (data.length === 5)
+      return data
+    else
+      return `${data.substr(5, 2)}/${data.substr(2, 2)}`;
   };
 
   return (
@@ -40,7 +47,7 @@ export default function CreditCard({
       <CardNumbers>
         {cardNumber.length === 0
           ? "•••• •••• •••• ••••"
-          : cardNumber}
+          : formatNumbers(cardNumber)}
       </CardNumbers>
       <CardHolder>{cardHolder}</CardHolder>
       <ValidationMessage>
