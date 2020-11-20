@@ -33,6 +33,7 @@ export const DropdownButton = styled.button`
   background-color: transparent;
   z-index: 4;
   height:56px;
+  outline:none !important;
 
   & div > img:first-child {
     margin-right: 10px;
@@ -86,7 +87,7 @@ export const DropdownItem = styled.div`
 
 export const ToggleButton = styled.button`
   background-color:transparent;
-  outline:none;
+  outline:none !important; 
   margin-right:10px;
   margin-left:15px
 
