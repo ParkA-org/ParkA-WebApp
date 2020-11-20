@@ -2,10 +2,11 @@ import { useLazyQuery } from "@apollo/client"
 import { useRouter } from "next/router"
 import { GET_PARKING_WITH_ID } from "queries"
 import { Parking, ReservationInput } from "utils/types"
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import Layout from "../../layout"
 import ReservationDetail from "components/ReservationDetail"
 import PaymentMethod from "components/PaymentMethod"
+import { UserContext } from "context/UserContext"
 
 export default function Checkout() {
 
@@ -14,6 +15,7 @@ export default function Checkout() {
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
     const [checkout, setCheckout] = useState<ReservationInput>({})
     const { id } = router.query;
+    const { userId } = useContext(UserContext)
 
     useEffect(() => {
         if (id)
@@ -21,6 +23,11 @@ export default function Checkout() {
         if (data)
             setParking(data.getParkingById)
     }, [data, router])
+
+    useEffect(() => {
+        if (parking)
+            setCheckout({ ...checkout, parking: parking.id, owner: userId })
+    }, [parking])
 
     return (
         <Layout pageTitle="Parking Checkout">

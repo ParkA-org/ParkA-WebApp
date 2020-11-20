@@ -1,4 +1,4 @@
-
+import { User } from "./user"
 //Refers to the type where { id, name } are the only fields needed
 export type BasicEntity = {
     __typename: string;
@@ -87,6 +87,7 @@ export type Parking = {
     information: string;
     features: BasicEntity[];
     verified: boolean;
+    user: User;
 }
 
 export interface ParkingData {

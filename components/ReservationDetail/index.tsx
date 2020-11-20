@@ -113,7 +113,13 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
 
 export default function ReservationDetail({ parking, checkout, setCheckout }: ComponentProps) {
 
-    const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES)
+    const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES, {
+        onCompleted() {
+            if (data && data.getAllUserVehicles.length) {
+                setCheckout({ ...checkout, vehicle: data.getAllUserVehicles[0].id })
+            }
+        }
+    })
     const imgRef = useRef(null)
 
 

@@ -1,6 +1,8 @@
-import { useQuery } from "@apollo/client"
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useQuery, useMutation } from "@apollo/client"
+import { useRouter } from "next/router"
 import { GET_USER_PAYMENTS } from "queries"
+import { CREATE_RESERVATION } from "mutations"
 import NavigationLink from "components/NavigationLink"
 import CreditCard from "components/CreditCard"
 import Button from "components/Button"
@@ -18,11 +20,16 @@ type AllPaymentsData = {
 }
 
 export default function PaymentMethod({ checkout, setCheckout }: ComponentProps) {
+    const router = useRouter()
+    const [CreateReservation, { loading: loadingCreation, error: errorCreation }] = useMutation(CREATE_RESERVATION)
     const [payment, setPayment] = useState<Payment>()
     const { loading, error, data } = useQuery<AllPaymentsData>(GET_USER_PAYMENTS, {
         onCompleted() {
-            if (data && data.getAllUserPayments.length)
+            if (data && data.getAllUserPayments.length) {
+                console.log('Entro en payments')
+                setCheckout({ ...checkout, paymentInfo: data.getAllUserPayments[0].id })
                 setPayment(data.getAllUserPayments[0])
+            }
         }
     })
 
@@ -45,6 +52,16 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
         )
     }
 
+    const handlePaymentClick = () => {
+        console.log('Checkout ', checkout)
+        CreateReservation({
+            variables: {
+                crI: {
+                    ...checkout
+                }
+            }
+        })
+    }
 
     return (
         <Container>
@@ -72,10 +89,10 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
                                 <p>{payment.card.name}</p>
                             </>)
                         }
-                        <Button rank="secondary">Procesar Pago</Button>
                     </div>
                 </DataContainer>
             </MainContainer>
+            <Button rank="secondary" styles={{ margin: "0 auto", fontSize: "1.5rem" }} onClick={handlePaymentClick}>Procesar Pago</Button>
         </Container>
     )
 }

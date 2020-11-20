@@ -123,7 +123,7 @@ export const CREATE_RESERVATION = gql`
 `
 
 export const CREATE_VEHICLE = gql`
-mutation CreateVehicle($cvInput: createVehicleInput!){
+mutation CreateVehicle($cvInput: CreateVehicleInput!){
   createVehicle(createVehicleInput: $cvInput) {
     id
     licensePlate
