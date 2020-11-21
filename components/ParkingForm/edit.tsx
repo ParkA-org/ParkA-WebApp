@@ -149,7 +149,7 @@ type RangeObject = {
 }
 
 
-export default function ParkingForm({ parkingName, countParking, calendar, priceHours, pictures, mainPicture, information, features }: Parking) {
+export default function ParkingForm({ parkingName, countParking, calendar, priceHours, pictures, mainPicture, information, features, id }: Parking) {
     const { token } = useContext(UserContext)
     const router = useRouter()
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
@@ -199,27 +199,22 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         return { start: value.start, finish: value.finish }
                     })
                 }
-                uploadMultipleImages(files)
-                    .then(response => {
-                        return response.data
-                    }).then(results => {
-                        let urls = results?.map(obj => obj.url)
-                        EditParking({
-                            variables: {
-                                epi: {
-                                    "countParking": parseFloat(values.countParking.toString()),
-                                    "parkingName": values.parkingName,
-                                    "priceHours": parseFloat(values.priceHours.toString()),
-                                    "information": values.information,
-                                    "features": values.features,
-                                    "calendar": modifiedState,
-                                    "pictures": urls,
-                                    "mainPicture": urls[0]
-                                }
-                            }
-                        })
-                    })
-                    .catch(error => console.error(error))
+
+                EditParking({
+                    variables: {
+                        epi: {
+                            "id": id,
+                            "countParking": parseFloat(values.countParking.toString()),
+                            "parkingName": values.parkingName,
+                            "priceHours": values.priceHours.toString(),
+                            "information": values.information,
+                            "features": values.features.map(feature => feature.id),
+                            "calendar": modifiedState,
+                            "pictures": pictures,
+                            "mainPicture": pictures[0]
+                        }
+                    }
+                })
             }}
         >
             {({ setFieldValue, errors, touched, values }) => (
