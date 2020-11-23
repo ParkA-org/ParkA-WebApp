@@ -1,12 +1,14 @@
 import React, { useState } from "react"
 import { Formik, Form } from "formik";
+import { useMutation } from "@apollo/client"
+import { CREATE_REVIEW } from "mutations"
 import { CreateReviewSchema } from "utils/schemas"
 import ModalPortal from "components/Modal"
 import Link from "next/link"
-import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
+import { BsStarFill, BsStar, BsCardList, BsMap } from "react-icons/bs"
 import { BiMessageDetail } from "react-icons/bi"
 import Field, { SelectField } from "components/Field"
-import { Reservation, ReservationStatuses } from "utils/types"
+import { Reservation, ReservationStatuses, ReviewInput } from "utils/types"
 import { formatAMPM, parseISOString } from "utils/functions"
 import {
     Container,
@@ -18,12 +20,11 @@ import {
     ActionButtonsSection,
     Item,
     SpecialReservationsButton,
-    TextArea,
     Button,
     ModalContent
 } from "./styles"
 
-export default function ReservationCard({ checkInDate, checkOutDate, status, total, parking }: Reservation) {
+export default function ReservationCard({ id, checkInDate, checkOutDate, status, total, parking, client }: Reservation) {
     const isCancelable = status === ReservationStatuses.Created ? true : false
     const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
@@ -73,7 +74,7 @@ export default function ReservationCard({ checkInDate, checkOutDate, status, tot
             </Container>
             {showModal && <ModalPortal onClose={() => setShowModal(false)}>
                 <ModalContent>
-                    <ReservationForm />
+                    <ReservationForm parking={parking.id} reservation={id} user={client.id} />
                 </ModalContent>
             </ModalPortal>}
         </>
@@ -81,7 +82,10 @@ export default function ReservationCard({ checkInDate, checkOutDate, status, tot
     )
 }
 
-function ReservationForm() {
+function ReservationForm({ parking, reservation, user }: ReviewInput) {
+
+    const [CreateReview, { loading, error }] = useMutation(CREATE_REVIEW)
+
     const stars = [1, 2, 3, 4, 5]
     const graphicStars = (amountSelected) => {
         let res = []
@@ -103,9 +107,21 @@ function ReservationForm() {
             }}
             validationSchema={CreateReviewSchema}
             onSubmit={(values) => {
-                console.log(values)
+                CreateReview({
+                    variables: {
+                        crI: {
+                            parking,
+                            reservation,
+                            user,
+                            title: values.title,
+                            review: values.review,
+                            calification: parseFloat(values.calification.toString()),
+                            type: false
+                        }
+                    }
+                })
             }}>
-            {({ setFieldValue, errors, touched, values }) => (
+            {({ errors, touched, values }) => (
                 <Form>
                     <SelectField name="calification" label="Calificación" placeholder="Calificacion" placement="vertical" errorMessage={errors.calification} isTouched={touched.calification} value={values.calification.toString()}>
                         {stars.map(score => <option value={score} key={score}>{score}</option>)}

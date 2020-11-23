@@ -364,6 +364,9 @@ query GetClientReservations{
       id
       mainPicture
     }
+    client {
+      id
+    }
   }
 }
 `

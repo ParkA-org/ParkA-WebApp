@@ -113,5 +113,5 @@ export const CreateVehicleSchema = Yup.object().shape({
 export const CreateReviewSchema = Yup.object().shape({
     title: Yup.string().max(50, 'Máximo 50 caracterés como título de la reseña').required("Requerido"),
     review: Yup.string().max(150, 'Máximo 50 caracterés como título de la reseña').required("Requerido"),
-    calification: Yup.number().required("Requerido")
+    calification: Yup.number("Introduzca un número").positive("La calificacion debe ser mayor que 0").required("Requerido")
 })
