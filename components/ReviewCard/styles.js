@@ -33,10 +33,10 @@ export const ModalContainer = styled(Container)`
 
 export const Avatar = styled.img`
     grid-area: photo;
-    width: 100px;
-    height: 100px;
-    border-radius: 5px;
-    margin: 0 auto;
+    width: 75px;
+    height: 75px;
+    border-radius: 20px;
+    margin: auto 1em;
 `;
 
 export const ModalLink = styled.a`
@@ -56,6 +56,7 @@ export const UserInfo = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    text-align: left;
     & > h3 {
         font-size: 1.4rem;
         font-weight: bold;

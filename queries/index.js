@@ -367,3 +367,36 @@ query GetClientReservations{
   }
 }
 `
+
+export const GET_PARKING_REVIEWS = gql`
+query GetAllParkingReviews($gprI: GetAllParkingReviewInput!) {
+  getAllParkingReviews(getAllParkingReviewInput: $gprI) {
+    id
+    title
+    calification
+    createdAt
+    review
+    user {
+      name
+      lastName
+      profilePicture
+    }
+    parking {
+      id
+      rating
+    }
+  }
+}
+`
+
+export const GET_USER_REVIEWS = gql`
+  query GetAllUserReviews {
+    getAllUserReviews {
+      title
+      calification
+      parking {
+        id
+      }
+    }
+  }
+`

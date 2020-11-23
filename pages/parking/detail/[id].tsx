@@ -1,8 +1,8 @@
 import { useRouter } from "next/router"
 import { BiDollar } from "react-icons/bi";
 import { useLazyQuery } from "@apollo/client";
-import { Parking } from "utils/types"
-import { GET_PARKING_WITH_ID } from "queries";
+import { Parking, Review } from "utils/types"
+import { GET_PARKING_WITH_ID, GET_PARKING_REVIEWS } from "queries";
 import { useEffect, useState } from "react";
 import Layout from "../../layout";
 import styled from "styled-components";
@@ -83,16 +83,25 @@ export const Button = styled.button`
 export default function ParkingDetail(): JSX.Element {
     const router = useRouter()
     const [parking, setParking] = useState<Parking>(null)
+    const [reviews, setReviews] = useState<Review[]>([])
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
+    const [GetParkingReviews, { data: reviewData, loading: reviewLoading, error: reviewError }] = useLazyQuery(GET_PARKING_REVIEWS)
     const { id } = router.query;
     useEffect(() => {
-        console.log('Router id')
-        console.log(id)
-        if (id)
+        if (id) {
             GetParkingWithId({ variables: { id: id } })
+        }
         if (data)
             setParking(data.getParkingById)
     }, [data, id])
+
+    useEffect(() => {
+        if (id) {
+            GetParkingReviews({ variables: { gprI: { parking: id } } })
+        }
+        if (reviewData)
+            setReviews(reviewData.getAllParkingReviews)
+    }, [reviewData, id])
 
     if (loading) return <h3>Loading...</h3>
     if (error) return <h3>Error...</h3>
@@ -134,15 +143,10 @@ export default function ParkingDetail(): JSX.Element {
                         <Button>Compartir</Button>
                     </ButtonGroup>
                 </Container>
-                <Carousel title="Reseñas">
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                </Carousel>
+                {reviews.length > 0 ?
+                    <Carousel title="Reseñas">
+                        {reviews.map(review => <ReviewCard key={review.id} {...review} />)}
+                    </Carousel> : <h3>Este parqueo no tiene reseñas por el momento.</h3>}
             </div>
             <style jsx>{`
                 h1{
