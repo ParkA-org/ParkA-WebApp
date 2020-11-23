@@ -14,6 +14,9 @@ type FieldProps = {
   placeholder?: string;
   value?: string;
   inputStyles?: CSSProperties;
+  checked?: boolean;
+  onClick?: any;
+  defaultChecked?: boolean;
   containerStyles?: CSSProperties;
 };
 
@@ -28,7 +31,8 @@ export default function Field({
   value,
   placement = "vertical",
   inputStyles,
-  containerStyles
+  containerStyles,
+  checked
 }: FieldProps): JSX.Element {
   if (type === "checkbox") {
     return (
@@ -36,7 +40,7 @@ export default function Field({
         <StyledLabel htmlFor={name}>
           {label}
         </StyledLabel>
-        <StyledField type="checkbox" name={name} value={value}
+        <StyledField type="checkbox" name={name} value={value} checked={checked}
           style={inputStyles} />
       </CheckboxContainer>
     )

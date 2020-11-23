@@ -76,6 +76,7 @@ export type Parking = {
     latitude: string;
     longitude: string;
     published: boolean;
+    countParking: number;
     parkingName: string;
     calendar: Calendar;
     priceHours: string;

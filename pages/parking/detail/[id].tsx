@@ -96,32 +96,33 @@ export default function ParkingDetail(): JSX.Element {
 
     if (loading) return <h3>Loading...</h3>
     if (error) return <h3>Error...</h3>
+
     return (
         <Layout pageTitle="Detalle del Parqueo">
             <div>
-                <h1>{data ? parking.parkingName : "Agora Mall II"}</h1>
+                <h1>{parking ? parking.parkingName : "Agora Mall II"}</h1>
                 <Container>
                     <ParkingImages>
-                        {data ? <ImageViewer pictures={parking.pictures} /> : <p>Cargando imagenes parqueo...</p>}
+                        {parking ? <ImageViewer pictures={parking.pictures} /> : <p>Cargando imagenes parqueo...</p>}
                     </ParkingImages>
                     <Form>
                         <FormItem>
                             <h3>Información</h3>
-                            <p>{data ? parking.information : "Parqueo en zona tranquila"}</p>
+                            <p>{parking ? parking.information : "Parqueo en zona tranquila"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Sector</h3>
-                            <p>{data ? parking.sector : "Los Mina"}</p>
+                            <p>{parking ? parking.sector : "Los Mina"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Dirección</h3>
-                            <p>{data ? parking.direction : "C/ Pedro Zuluaga #12"}</p>
+                            <p>{parking ? parking.direction : "C/ Pedro Zuluaga #12"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Costo por hora</h3>
                             <div style={{ display: "flex", justifyContent: "flex-start" }}>
                                 <BiDollar fill="#077187" size="1.5em" />
-                                <p style={{ marginLeft: "0.25em" }}>{data ? `${parking.priceHours} RD$ hora` : "50 RD$ hora"}</p>
+                                <p style={{ marginLeft: "0.25em" }}>{parking ? `${parking.priceHours} RD$ hora` : "50 RD$ hora"}</p>
                             </div>
                         </FormItem>
                     </Form>

@@ -4,18 +4,19 @@ import { Whisper, Tooltip } from "rsuite"
 import { ImagesContainer, Image } from "./styles"
 
 type ImageElementType = {
-    url: string | ArrayBuffer | null;
-    file: File;
+    url: any;
+    file?: File;
 };
 
 type ImageElementProps = {
-    url: string | ArrayBuffer | null;
-    deleteElement: (name: string) => void;
+    url: any;
+    deleteElement?: (name: string) => void;
 }
 
 type ImagePickerProps = {
     limit?: number;
     placement?: string;
+    pictures?: string[];
     setFiles: (files: any[]) => void
 }
 
@@ -31,7 +32,7 @@ function ImageElement({ url, deleteElement }: ImageElementProps) {
     )
 }
 
-function ImagePicker({ limit = 3, placement = "horizontal", setFiles }: ImagePickerProps) {
+function ImagePicker({ limit = 3, placement = "horizontal", setFiles, pictures = [] }: ImagePickerProps) {
     const [images, setImages] = useState<Array<ImageElementType>>([]);
     const inputEl = useRef(null);
 
@@ -65,22 +66,31 @@ function ImagePicker({ limit = 3, placement = "horizontal", setFiles }: ImagePic
     };
 
     const handleDelete = (name: string) => {
-        setImages(prevImages => prevImages.filter(img => img.file.name !== name))
+        setImages(prevImages => prevImages.filter(img => img.url !== name))
     }
 
     useEffect(() => {
         let files = []
-        images.forEach(img => files.push(img.file))
+        images.forEach(img => {
+            if (img.file)
+                files.push(img.file)
+        })
         if (files.length > 0)
             setFiles(files)
-
     }, [images])
+
+    useEffect(() => {
+        let initialImages = pictures.map(pic => {
+            return { url: pic }
+        })
+        setImages(initialImages)
+    }, [pictures])
 
     return (
         <>
             <h2>Imágenes</h2>
             <ImagesContainer placement={placement}>
-                {images.length > 0 && images.map((img) => <ImageElement key={img.file.name} url={img.url} deleteElement={() => handleDelete(img.file.name)} />)}
+                {images.length > 0 && images.map((img) => <ImageElement key={img.url} url={img.url} deleteElement={() => handleDelete(img.url)} />)}
                 {images.length < limit && <Image src="/placeholders/empty/carPlaceholder.svg" alt="add image" onClick={handleClick} />}
             </ImagesContainer>
             <input
