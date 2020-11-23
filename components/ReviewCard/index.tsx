@@ -5,7 +5,7 @@ import { Container, ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, Tex
 import ModalPortal from "components/Modal"
 import { BsStarFill, BsStar } from "react-icons/bs"
 
-export default function ReviewCard({ id, title, calification, createdAt, review, user, parking }: Review) {
+export default function ReviewCard({ id, title, calification, createdAt, review, user }: Review) {
     const [showModal, setShowModal] = useState(false)
     let stars = []
     for (let i = 0; i < calification; i++) {

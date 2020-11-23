@@ -200,3 +200,14 @@ mutation UpdateUserParking($epi: UpdateParkingInput!) {
   }
 }
 `
+
+export const CREATE_REVIEW = gql`
+mutation CreateReview($crI: CreateReviewInput!){
+  createReview(createReviewInput: $crI){
+    id
+    title
+    calification
+    review
+  }
+}
+`

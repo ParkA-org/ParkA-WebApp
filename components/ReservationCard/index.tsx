@@ -1,9 +1,11 @@
 import React, { useState } from "react"
+import { Formik, Form } from "formik";
+import { CreateReviewSchema } from "utils/schemas"
 import ModalPortal from "components/Modal"
-import styled from "styled-components"
 import Link from "next/link"
 import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
 import { BiMessageDetail } from "react-icons/bi"
+import Field, { SelectField } from "components/Field"
 import { Reservation, ReservationStatuses } from "utils/types"
 import { formatAMPM, parseISOString } from "utils/functions"
 import {
@@ -15,36 +17,11 @@ import {
     ReservationsButton,
     ActionButtonsSection,
     Item,
-    SpecialReservationsButton
+    SpecialReservationsButton,
+    TextArea,
+    Button,
+    ModalContent
 } from "./styles"
-
-const TextArea = styled.textarea`
-  resize: none;
-  border:solid;
-  width: 500px;
-  height: 170px;
-  border-color: #C4C4C4;
-  border-width:0.3px
-
-`;
-
-const Button = styled.button`
-  background-color: #59BCA7;
-  color:white;
-  padding: 15px;
-  border-radius: 1.5em;
-  margin-top: 0.5em;
-  width: 200px;
-  align-self: center;
-  font-size: 1.4rem;
-`;
-
-const ModalContent = styled.div`
-  text-align:left;
-  display:flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
 
 export default function ReservationCard({ checkInDate, checkOutDate, status, total, parking }: Reservation) {
     const isCancelable = status === ReservationStatuses.Created ? true : false
@@ -96,20 +73,51 @@ export default function ReservationCard({ checkInDate, checkOutDate, status, tot
             </Container>
             {showModal && <ModalPortal onClose={() => setShowModal(false)}>
                 <ModalContent>
-                    <h4>Valoración</h4>
-                    <div className="starContainer">
-                        <BsStarFill fill="#D8DC2A" size="1.5em" />
-                        <BsStarFill fill="#D8DC2A" size="1.5em" />
-                        <BsStarFill fill="#D8DC2A" size="1.5em" />
-                        <BsStarHalf fill="#D8DC2A" size="1.5em" />
-                        <BsStar fill="#D8DC2A" size="1.5em" />
-                    </div>
-                    <h4>Comentario</h4>
-                    <TextArea />
-                    <Button>Dejar Reseña</Button>
+                    <ReservationForm />
                 </ModalContent>
             </ModalPortal>}
         </>
 
+    )
+}
+
+function ReservationForm() {
+    const stars = [1, 2, 3, 4, 5]
+    const graphicStars = (amountSelected) => {
+        let res = []
+        for (let i = 0; i < 5; i++) {
+            if (i < amountSelected) {
+                res.push(<BsStarFill fill="#D8DC2A" size="1.5em" />)
+            } else {
+                res.push(<BsStar fill="#D8DC2A" size="1.5em" />)
+            }
+        }
+        return res
+    }
+    return (
+        <Formik
+            initialValues={{
+                title: "",
+                review: "",
+                calification: 0
+            }}
+            validationSchema={CreateReviewSchema}
+            onSubmit={(values) => {
+                console.log(values)
+            }}>
+            {({ setFieldValue, errors, touched, values }) => (
+                <Form>
+                    <SelectField name="calification" label="Calificación" placeholder="Calificacion" placement="vertical" errorMessage={errors.calification} isTouched={touched.calification} value={values.calification.toString()}>
+                        {stars.map(score => <option value={score} key={score}>{score}</option>)}
+                    </SelectField>
+                    <div className="starContainer">
+                        {values.calification > 0 && graphicStars(values.calification)}
+                    </div>
+                    <Field label="Título" name="title" errorMessage={errors.title} isTouched={touched.title} placeholder="Título" placement="vertical" value={values.title} />
+                    <Field label="Reseña" name="review" errorMessage={errors.review} isTouched={touched.review} placeholder="Reseña" placement="vertical" value={values.review} component="textarea" />
+                    <Button submit={true}>Dejar Reseña</Button>
+                </Form>
+            )}
+        </Formik>
     )
 }
