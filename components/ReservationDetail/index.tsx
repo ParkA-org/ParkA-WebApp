@@ -133,15 +133,17 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
         <Container>
             <LeftSection>
                 <SectionElement name="Nombre" value={parking.parkingName} />
-                <ElementContainer>
-                    <label><b>Características</b></label>
-                    {parking.features.map(feature => (
-                        <CheckboxContainer key={feature.id}>
-                            <input type="checkbox" id="vehicle1" name="vehicle1" value={feature.name} checked={true}></input>
-                            <label><b>{feature.name}</b></label>
-                        </CheckboxContainer>
-                    ))}
-                </ElementContainer>
+                {parking.features.length > 0 ?
+                    <ElementContainer>
+                        <label><b>Características</b></label>
+                        {parking.features.map(feature => (
+                            <CheckboxContainer key={feature.id}>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value={feature.name} checked={true}></input>
+                                <label><b>{feature.name}</b></label>
+                            </CheckboxContainer>
+                        ))}
+                    </ElementContainer>
+                    : null}
                 <SectionElement name="Costo por hora" value={parking.priceHours}>
                     <MoneyIcon />
                 </SectionElement>
