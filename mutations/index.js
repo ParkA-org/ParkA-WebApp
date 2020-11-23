@@ -42,8 +42,8 @@ mutation ConfirmEmail($ceInput: ConfirmEmailInput!){
 `
 
 export const VALIDATE_EMAIL = gql`
-mutation ValidateEmail($emInput: ValidateEmailCodeInput!){
-  validateEmailCode(validateEmailCodeInput: $emInput){
+mutation ValidateEmail($veI: ValidateEmailCodeInput!){
+  validateEmailCode(validateEmailCodeInput: $veI) {
     email
     origin
   }
@@ -114,8 +114,16 @@ mutation resetPassword($password: String!, $passwordConfirmation: String!, $code
 }
 `
 
+export const CREATE_RESERVATION = gql`
+  mutation CreateReservation($crI: CreateReservationInput!){
+    createReservation(createReservationInput: $crI){
+      id
+    }
+  }
+`
+
 export const CREATE_VEHICLE = gql`
-mutation CreateVehicle($cvInput: createVehicleInput!){
+mutation CreateVehicle($cvInput: CreateVehicleInput!){
   createVehicle(createVehicleInput: $cvInput) {
     id
     licensePlate
@@ -180,6 +188,15 @@ mutation CreateParking($cpInput: CreateParkingInput!){
         finish
       }
     }
+  }
+}
+`
+
+export const EDIT_PARKING = gql`
+mutation UpdateUserParking($epi: UpdateParkingInput!) {
+  updateParking(updateParkingInput: $epi){
+    id
+    parkingName
   }
 }
 `

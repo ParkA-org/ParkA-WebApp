@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { Formik, Form } from "formik"
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
-import { LOGIN_USER } from "mutations"
+import { LOGIN_USER, CONFIRM_EMAIL } from "mutations"
 import { useRouter } from "next/router"
 import Layout from "../layout"
 import NavigationLink from "components/NavigationLink"
@@ -26,6 +26,7 @@ export default function SignWithEmail(): JSX.Element {
   const [requestError, setRequestError] = useState(null)
   const [_, setUserId] = useLocalStorage("user-id", "")
   const { setUser, setToken } = useContext(UserContext)
+  const [ConfirmEmail] = useMutation(CONFIRM_EMAIL)
   const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { JWT: token, user } = login
@@ -64,7 +65,7 @@ export default function SignWithEmail(): JSX.Element {
             })
           }}
         >
-          {({ errors, touched }) => (
+          {({ errors, touched, values }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
@@ -110,10 +111,17 @@ export default function SignWithEmail(): JSX.Element {
                     Atrás
                   </NavigationLink>
                 </Button>
-                <Button rank="secondary">
-                  <NavigationLink href="/confirmEmail" styled>
-                    Confirmar correo
-                  </NavigationLink>
+                <Button rank="secondary" submit={false} onClick={() => {
+                  ConfirmEmail({
+                    variables: {
+                      ceInput: {
+                        "origin": "web",
+                        "email": values.email
+                      }
+                    }
+                  })
+                }}>
+                  Confirmar correo
                 </Button>
                 <Button rank="secondary" submit={true}>
                   Iniciar Sesión

@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 type User = {
     id?: String;
     username?: String;
-    profilepicture?: String;
+    profilePicture?: String;
     email?: String;
     lastname?: String;
     name?: String;

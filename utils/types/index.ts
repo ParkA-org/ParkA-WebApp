@@ -1,4 +1,4 @@
-
+import { User } from "./user"
 //Refers to the type where { id, name } are the only fields needed
 export type BasicEntity = {
     __typename: string;
@@ -76,6 +76,7 @@ export type Parking = {
     latitude: string;
     longitude: string;
     published: boolean;
+    countParking: number;
     parkingName: string;
     calendar: Calendar;
     priceHours: string;
@@ -87,6 +88,7 @@ export type Parking = {
     information: string;
     features: BasicEntity[];
     verified: boolean;
+    user: User;
 }
 
 export interface ParkingData {
@@ -140,4 +142,24 @@ export type Coordinates = {
     time?: Date;
 }
 
+export type ReservationInput = {
+    parking?: string;
+    owner?: string;
+    checkInDate?: string;
+    checkOutDate?: string;
+    vehicle?: string;
+    paymentInfo?: string;
+    total?: number;
+    rentDate?: string;
+}
+
+export type Payment = {
+    __typename: string;
+    id: string;
+    cardHolder: string;
+    expirationDate: string;
+    digit: string;
+    activated: boolean;
+    card: BasicEntity;
+}
 

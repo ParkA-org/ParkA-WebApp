@@ -32,6 +32,7 @@ query GetUser($id: String!){
     name
     lastName
     email
+    profilePicture
   }
 }
 `
@@ -224,6 +225,8 @@ query GetUserParkings{
     direction
     countParking
     priceHours
+    isAvailable
+    verified
   }
 }
 `
@@ -291,6 +294,54 @@ query GetParkingWithId($id: String!){
     mainPicture
     pictures
     features {
+      id
+      name
+    }
+    calendar {
+      id
+      parkingId
+      monday {
+        start
+        finish
+      }
+      tuesday {
+        start
+        finish
+      }
+      wednesday {
+        start
+        finish
+      }
+      thursday {
+        start
+        finish
+      }
+      friday {
+        start
+        finish
+      }
+      saturday {
+        start
+        finish
+      }
+      sunday {
+        start
+        finish
+      }
+    }
+  }
+}
+`
+
+export const GET_USER_PAYMENTS = gql`
+query GetPaymentsMethods {
+  getAllUserPayments {
+    id
+    cardHolder
+    expirationDate
+    digit
+    activated
+    card {
       id
       name
     }

@@ -16,7 +16,6 @@ export const CreateAccountSchema = Yup.object().shape({
 });
 
 export const ValidateEmailSchema = Yup.object().shape({
-    code: Yup.string().required("Requerido"),
     email: Yup.string().email("Email inválido").required("Requerido"),
 })
 
@@ -86,6 +85,16 @@ export const CreateParkingSchema = Yup.object().shape({
     sector: Yup.string().required("Requerido"),
     direction: Yup.string().required("Requerido"),
     information: Yup.string().required("Requerido"),
+    features: Yup.array().of(Yup.string())
+});
+
+
+export const EditParkingSchema = Yup.object().shape({
+    countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    parkingName: Yup.string().max(50, 'Máximo 50 caracterés').required("Requerido"),
+    priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    pictures: Yup.array().of(Yup.string()),
+    mainPicture:  Yup.string().required("Requerido"),
     features: Yup.array().of(Yup.string())
 });
 

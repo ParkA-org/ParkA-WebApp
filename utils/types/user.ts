@@ -41,6 +41,8 @@ export type CreateUserInput = {
 }
 
 export type User = {
+    id: string;
+
     name: string;
 
     lastName: string;
