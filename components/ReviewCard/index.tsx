@@ -1,6 +1,6 @@
 
 import { useState } from "react"
-import { Container, ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, Text, ModalLink } from "./styles"
+import { Container, ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, Text, ModalLink, ReviewTitle, ModalTitle } from "./styles"
 import ModalPortal from "components/Modal"
 import { BsStarFill, BsStar } from "react-icons/bs"
 
@@ -18,6 +18,9 @@ export default function ReviewCard() {
             <ReviewDate>
                 7/3/2020
             </ReviewDate>
+            <ReviewTitle>
+                Titulo de la review iria en esta seccion que pasa si escribo de mas como suele pasar de manera acostumbrada
+            </ReviewTitle>
             <Text>
                 Me agrado mucho el parqueo, venia con carwash y seguridad incluido asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
             </Text>
@@ -36,6 +39,9 @@ export default function ReviewCard() {
                     <ReviewDate>
                         7/3/2020
                     </ReviewDate>
+                    <ModalTitle>
+                        Titulo de la review iria en esta seccion que pasa si escribo de mas como suele pasar de manera acostumbrada
+                    </ModalTitle>
                     <ModalText>
                         Me agrado mucho el parqueo, venia con carwash y seguridad incluido asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
                         Me agrado mucho el parqueo, venia con carwash y seguridad incluido

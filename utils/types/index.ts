@@ -185,3 +185,26 @@ export type Payment = {
     card: BasicEntity;
 }
 
+export type ReviewInput = {
+    user: string;
+    parking: string;
+    reservation: string;
+    title: string;
+    review: string;
+    calification: number;
+    type: boolean;
+}
+
+export type Review = {
+    __typename: string;
+    id: string;
+    title: string;
+    calification: number;
+    user: User;
+    parking: Parking;
+    reservation: Reservation;
+    review: string;
+    type: boolean;
+    createdAt: string;
+}
+

@@ -5,14 +5,16 @@ export const Container = styled.div`
     margin-right: 2em;
     border-radius: 20px;
     flex-shrink: 0;
-    width: 20vw;
+    width: 25vw;
     height: auto;
     padding: 0.5em;
     display: grid;
     grid-template-areas:
     "photo details details date"
+    "title title title title"
     "content content content content"
     ". . action action";
+    justify-items: center;
     border: 2px solid #0B768C;
     margin-bottom: 25px;
     box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
@@ -67,12 +69,26 @@ export const ReviewDate = styled.p`
     color: rgba(0,0,0,0.8);
 `;
 
+
+export const ReviewTitle = styled.h3`
+    grid-area: title;
+    font-size: 1rem;
+    text-align: left;
+    max-width: 90%;
+    margin: 0.25em 0.25em 0.25em 0.5em;
+    overflow: hidden;
+    white-space: nowrap;
+    word-wrap: break-word;
+    text-overflow: ellipsis;
+    line-height: 1.5em;
+`
+
 export const Text = styled.p`
     grid-area: content;
-    font-size: 1.2rem;
+    font-size: 1rem;
     width: 80%;
     text-align: left;
-    margin: 1em auto;
+    margin: 0.25em 0.25em 0.25em 0.5em;
     overflow: hidden;
     text-overflow: ellipsis;
 `;
@@ -83,6 +99,14 @@ export const ModalText = styled(Text)`
     word-wrap: break-word;
     overflow-x: hidden;
     overflow-y: scroll;
+`
+
+export const ModalTitle = styled(ReviewTitle)`
+    width: 80%;
+    margin: 0.5em 0;
+    white-space: normal;
+    word-wrap: normal;
+    text-overflow: string;
 `
 
 
