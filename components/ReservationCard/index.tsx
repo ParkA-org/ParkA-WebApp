@@ -1,3 +1,10 @@
+import React, { useState } from "react"
+import ModalPortal from "components/Modal"
+import styled from "styled-components"
+import Link from "next/link"
+import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
+import { BiMessageDetail } from "react-icons/bi"
+import { Reservation, ReservationStatuses } from "utils/types"
 import {
     Container,
     ReservationImage,
@@ -9,13 +16,7 @@ import {
     Item,
     SpecialReservationsButton
 } from "./styles"
-import Link from "next/link"
-import { BsStarFill, BsStarHalf, BsStar, BsCardList, BsMap } from "react-icons/bs"
-import { BiMessageDetail } from "react-icons/bi"
 
-import React, { useState } from "react"
-import ModalPortal from "components/Modal"
-import styled from "styled-components"
 const TextArea = styled.textarea`
   resize: none;
   border:solid;
@@ -43,29 +44,51 @@ const ModalContent = styled.div`
   flex-direction: column;
   justify-content: space-around;
 `;
-export default function ReservationCard({ isCancelable }: { isCancelable?: boolean }) {
+
+function parseISOString(s) {
+    var b = s.split(/\D+/);
+    return new Date(Date.UTC(b[0], --b[1], b[2], b[3], b[4], b[5], b[6]));
+}
+
+function formatAMPM(date) {
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    return strTime;
+}
+
+export default function ReservationCard({ checkInDate, checkOutDate, status, total, parking }: Reservation) {
+    const isCancelable = status === ReservationStatuses.Created ? true : false
+    const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
+
+    let dateObj = parseISOString(checkInDate), outDateObj = parseISOString(checkOutDate)
+
     return (
         <>
             <Container>
-                <ReservationImage src="/placeholders/park.png" />
+                <ReservationImage src={parkingImage} />
                 <MetadataSection>
                     <Item>
                         <h3>Fecha</h3>
-                        <p>20 Jun 2020</p>
+                        <p>{dateObj.toLocaleDateString('es-ES')}</p>
                     </Item>
                     <Item>
                         <h3>Desde</h3>
-                        <p>08:00 PM</p>
+                        <p>{formatAMPM(dateObj)}</p>
                     </Item>
                     <Item>
                         <h3>Hasta</h3>
-                        <p>11:00 PM</p>
+                        <p>{formatAMPM(outDateObj)}</p>
                     </Item>
                 </MetadataSection>
                 <CostSection>
                     <h3>Costo</h3>
-                    <p>350.00 $RD</p>
+                    <p>{`${total} $RD`}</p>
                 </CostSection>
                 <ButtonSection>
                     {isCancelable ?

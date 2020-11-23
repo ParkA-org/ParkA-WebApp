@@ -153,6 +153,28 @@ export type ReservationInput = {
     rentDate?: string;
 }
 
+export enum ReservationStatuses {
+    Created = "Created",
+    InProgress = "InProgress",
+    Completed = "Completed",
+    Cancelled = "Cancelled"
+}
+
+export type Reservation = {
+    __typename: string;
+    id: string;
+    parking: Parking;
+    client: User;
+    owner: User;
+    checkInDate: string;
+    checkOutDate: string;
+    vehicle: Vehicle;
+    paymentInfo: Payment;
+    total: number;
+    rentDate: string;
+    status: ReservationStatuses;
+}
+
 export type Payment = {
     __typename: string;
     id: string;

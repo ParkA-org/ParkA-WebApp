@@ -293,6 +293,9 @@ query GetParkingWithId($id: String!){
     information
     mainPicture
     pictures
+    user {
+      id
+    }
     features {
       id
       name
@@ -344,6 +347,22 @@ query GetPaymentsMethods {
     card {
       id
       name
+    }
+  }
+}
+`
+
+export const GET_CLIENT_RESERVATIONS = gql`
+query GetClientReservations{
+  getAllUserReservationsAsClient {
+    id
+    checkInDate
+    checkOutDate
+    total
+    status
+    parking {
+      id
+      mainPicture
     }
   }
 }
