@@ -7,13 +7,20 @@ import { BsStarFill, BsStar } from "react-icons/bs"
 
 export default function ReviewCard({ id, title, calification, createdAt, review, user, parking }: Review) {
     const [showModal, setShowModal] = useState(false)
+    let stars = []
+    for (let i = 0; i < calification; i++) {
+        stars.push(<BsStarFill color="goldenrod" />)
+    }
+    for (let i = calification; i < 5 && stars.length != 5; i++) {
+        stars.push(<BsStar />)
+    }
     return (
         <Container>
             <Avatar src={user.profilePicture ? user.profilePicture : "/placeholders/image.png"} alt="user avatar" />
             <UserInfo>
                 <h3>{`${user.name} ${user.lastName}`}</h3>
                 <div>
-                    <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" /> <BsStar /> <BsStar />
+                    {stars}
                 </div>
             </UserInfo>
             <ReviewDate>

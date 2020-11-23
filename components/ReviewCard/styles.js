@@ -35,7 +35,7 @@ export const Avatar = styled.img`
     grid-area: photo;
     width: 75px;
     height: 75px;
-    border-radius: 20px;
+    border-radius: 35px;
     margin: auto 1em;
 `;
 
