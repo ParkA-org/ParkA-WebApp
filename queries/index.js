@@ -224,6 +224,8 @@ query GetUserParkings{
     direction
     countParking
     priceHours
+    isAvailable
+    verified
   }
 }
 `

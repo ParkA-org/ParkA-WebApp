@@ -80,11 +80,11 @@ function ImagePicker({ limit = 3, placement = "horizontal", setFiles, pictures =
     }, [images])
 
     useEffect(() => {
-        pictures.forEach(pic => setImages([...images, {
-            url: pic
-        }]))
-
-    }, [])
+        let initialImages = pictures.map(pic => {
+            return { url: pic }
+        })
+        setImages(initialImages)
+    }, [pictures])
 
     return (
         <>

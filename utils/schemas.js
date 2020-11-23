@@ -91,7 +91,7 @@ export const CreateParkingSchema = Yup.object().shape({
 
 export const EditParkingSchema = Yup.object().shape({
     countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
-    parkingName: Yup.string().required("Requerido"),
+    parkingName: Yup.string().max(50, 'Máximo 50 caracterés').required("Requerido"),
     priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
     pictures: Yup.array().of(Yup.string()),
     mainPicture:  Yup.string().required("Requerido"),

@@ -203,28 +203,48 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                     })
                 }
 
-                uploadMultipleImages(files)
-                    .then(response => {
-                        return response.data
-                    }).then(results => {
-                        let urls = results?.map(obj => obj.url)
-                        urls = [...urls, ...pictures]
-                        EditParking({
-                            variables: {
-                                epi: {
-                                    "id": id,
-                                    "countParking": parseFloat(values.countParking.toString()),
-                                    "parkingName": values.parkingName,
-                                    "priceHours": values.priceHours.toString(),
-                                    "information": values.information,
-                                    "features": values.features.map(feature => feature.id),
-                                    "calendar": modifiedState,
-                                    "pictures": urls,
-                                    "mainPicture": urls[0]
+                if (files.length > 0) {
+                    uploadMultipleImages(files)
+                        .then(response => {
+                            return response.data
+                        }).then(results => {
+                            let urls = results?.map(obj => obj.url)
+                            urls = [...urls, ...pictures]
+                            let newFeatures = values.features.filter(feature => feature.id !== null)
+                            EditParking({
+                                variables: {
+                                    epi: {
+                                        "id": id,
+                                        "countParking": parseFloat(values.countParking.toString()),
+                                        "parkingName": values.parkingName,
+                                        "priceHours": values.priceHours.toString(),
+                                        "information": values.information,
+                                        "features": newFeatures.map(feature => feature.id),
+                                        "calendar": modifiedState,
+                                        "pictures": urls,
+                                        "mainPicture": urls[0]
+                                    }
                                 }
-                            }
+                            })
                         })
+                } else {
+                    let newFeatures = values.features.filter(feature => feature.id !== null)
+                    EditParking({
+                        variables: {
+                            epi: {
+                                "id": id,
+                                "countParking": parseFloat(values.countParking.toString()),
+                                "parkingName": values.parkingName,
+                                "priceHours": values.priceHours.toString(),
+                                "information": values.information,
+                                "features": newFeatures.map(feature => feature.id),
+                                "calendar": modifiedState,
+                                "pictures": pictures,
+                                "mainPicture": pictures[0]
+                            }
+                        }
                     })
+                }
             }}
         >
             {({ setFieldValue, errors, touched, values }) => (
@@ -318,6 +338,6 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                 </Form>
             )
             }
-        </ Formik>
+        </ Formik >
     )
 }
