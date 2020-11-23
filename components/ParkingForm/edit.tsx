@@ -25,10 +25,12 @@ type DayCheckProps = {
 }
 
 function CheckElement({ id, value, dispatch, presentationName, checked }: DayCheckProps) {
-    const handleChange = (event) => {
+    const [isChecked, setCheck] = useState(checked)
+    const handleClick = (event) => {
         const target = event.target
         const value = target.checked
         const name = target.name
+        setCheck(value)
         if (value) {
             dispatch({
                 type: 'add_day',
@@ -47,7 +49,7 @@ function CheckElement({ id, value, dispatch, presentationName, checked }: DayChe
     }
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} checked={checked} />
+            <input type="checkbox" id={id} name={id} value={value} onClick={handleClick} checked={isChecked} />
             <label>{presentationName.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
@@ -84,6 +86,7 @@ type StateObject = {
     "saturday"?: Array<RangeObject>;
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
 
 type Action =
     | { type: "add_range", payload: { day: string, id: string } }
@@ -125,7 +128,7 @@ function reducer(state: StateObject, action: Action) {
         case "add_day":
             return {
                 ...state,
-                [action.payload.day]: []
+                [action.payload.day]: [{ id: getRandomInt(10000).toString(), start: 1200, finish: 1400 }]
             }
         case "remove_day":
             let stateCopy = {
@@ -200,21 +203,28 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                     })
                 }
 
-                EditParking({
-                    variables: {
-                        epi: {
-                            "id": id,
-                            "countParking": parseFloat(values.countParking.toString()),
-                            "parkingName": values.parkingName,
-                            "priceHours": values.priceHours.toString(),
-                            "information": values.information,
-                            "features": values.features.map(feature => feature.id),
-                            "calendar": modifiedState,
-                            "pictures": pictures,
-                            "mainPicture": pictures[0]
-                        }
-                    }
-                })
+                uploadMultipleImages(files)
+                    .then(response => {
+                        return response.data
+                    }).then(results => {
+                        let urls = results?.map(obj => obj.url)
+                        urls = [...urls, ...pictures]
+                        EditParking({
+                            variables: {
+                                epi: {
+                                    "id": id,
+                                    "countParking": parseFloat(values.countParking.toString()),
+                                    "parkingName": values.parkingName,
+                                    "priceHours": values.priceHours.toString(),
+                                    "information": values.information,
+                                    "features": values.features.map(feature => feature.id),
+                                    "calendar": modifiedState,
+                                    "pictures": urls,
+                                    "mainPicture": urls[0]
+                                }
+                            }
+                        })
+                    })
             }}
         >
             {({ setFieldValue, errors, touched, values }) => (
@@ -306,7 +316,8 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         </style>
                     </Container>
                 </Form>
-            )}
-        </Formik>
+            )
+            }
+        </ Formik>
     )
 }

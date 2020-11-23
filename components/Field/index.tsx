@@ -15,6 +15,8 @@ type FieldProps = {
   value?: string;
   inputStyles?: CSSProperties;
   checked?: boolean;
+  onClick?: any;
+  defaultChecked?: boolean;
   containerStyles?: CSSProperties;
 };
 

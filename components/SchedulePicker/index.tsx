@@ -112,7 +112,7 @@ const translateDay = (curValue: String) => {
 }
 
 function ScheduleHeader({ day, dispatch, size }: { day: String, dispatch: any, size: number }) {
-    if (size === 0)
+    if (size == 0)
         return null
 
     return (
