@@ -11,12 +11,22 @@ export const Container = styled.div`
     display: grid;
     grid-template-areas:
     "photo details details date"
-    "content content content content";
+    "content content content content"
+    ". . action action";
     border: 2px solid #0B768C;
     margin-bottom: 25px;
     box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
     -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
     -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+`
+
+export const ModalContainer = styled(Container)`
+    width: 35vw;
+    height: auto;
+    margin: 1em;
+    border: none;
+    box-shadow: none;
+    align-items: center;
 `
 
 export const Avatar = styled.img`
@@ -26,6 +36,17 @@ export const Avatar = styled.img`
     border-radius: 5px;
     margin: 0 auto;
 `;
+
+export const ModalLink = styled.a`
+    grid-area: action;
+    color: #077187;
+    margin: 0.25em;
+    font-size: 1.25rem;
+
+    &:hover {
+        cursor: pointer;
+    }
+`
 
 export const UserInfo = styled.div`
     grid-area: details;    
@@ -55,5 +76,14 @@ export const Text = styled.p`
     overflow: hidden;
     text-overflow: ellipsis;
 `;
+
+export const ModalText = styled(Text)`
+    height: 30vh;
+    text-overflow: initial;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: scroll;
+`
+
 
 

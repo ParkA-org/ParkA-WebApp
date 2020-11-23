@@ -114,8 +114,16 @@ mutation resetPassword($password: String!, $passwordConfirmation: String!, $code
 }
 `
 
+export const CREATE_RESERVATION = gql`
+  mutation CreateReservation($crI: CreateReservationInput!){
+    createReservation(createReservationInput: $crI){
+      id
+    }
+  }
+`
+
 export const CREATE_VEHICLE = gql`
-mutation CreateVehicle($cvInput: createVehicleInput!){
+mutation CreateVehicle($cvInput: CreateVehicleInput!){
   createVehicle(createVehicleInput: $cvInput) {
     id
     licensePlate
