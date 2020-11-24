@@ -240,3 +240,19 @@ query GetParkingWithId($id: String!){
   }
 }
 `
+
+export const GET_PAYMENTS = gql`
+query GetPayments{
+  getAllUserPayments{
+		id,
+    cardHolder,
+    expirationDate,
+    digit,
+    activated,
+    card{
+      id,
+      name
+    },
+  }
+}
+`
