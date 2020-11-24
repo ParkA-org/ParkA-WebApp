@@ -36,7 +36,7 @@ export const Avatar = styled.img`
     width: 75px;
     height: 75px;
     border-radius: 35px;
-    margin: auto 1em;
+    margin: auto 1em auto 2em;
 `;
 
 export const ModalLink = styled.a`
@@ -99,7 +99,7 @@ export const ModalText = styled(Text)`
     text-overflow: initial;
     word-wrap: break-word;
     overflow-x: hidden;
-    overflow-y: scroll;
+    overflow-y: auto;
 `
 
 export const ModalTitle = styled(ReviewTitle)`

@@ -41,11 +41,11 @@ export default function ReviewCard({ id, title, calification, createdAt, review,
                     <UserInfo>
                         <h3>{`${user.name} ${user.lastName}`}</h3>
                         <div>
-                            <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" /> <BsStar /> <BsStar />
+                            {stars}
                         </div>
                     </UserInfo>
-                    <ReviewDate>
-                        {createdAt}
+                    <ReviewDate style={{ marginRight: "2em" }}>
+                        {`${parseISOString(createdAt).toLocaleDateString('es-ES')}`}
                     </ReviewDate>
                     <ModalTitle>
                         {title}
