@@ -371,6 +371,22 @@ query GetClientReservations{
 }
 `
 
+export const GET_PAYMENTS = gql`
+query GetPayments{
+  getAllUserPayments{
+		id,
+    cardHolder,
+    expirationDate,
+    digit,
+    activated,
+    card{
+      id,
+      name
+    },
+  }
+}
+`
+
 export const GET_PARKING_REVIEWS = gql`
 query GetAllParkingReviews($gprI: GetAllParkingReviewInput!) {
   getAllParkingReviews(getAllParkingReviewInput: $gprI) {
