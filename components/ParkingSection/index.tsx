@@ -3,25 +3,18 @@ import ParkingCard from "components/ParkingCard"
 import PlusIcon from "components/Icons/Plus"
 import { HeaderSection, NewLink, VehicleList } from "components/VehicleSection/styles";
 import { useQuery } from "@apollo/client";
-import { UserContext } from "context/UserContext";
 import { GET_USER_PARKINGS } from "queries";
-import { useContext } from "react";
 import { ParkingData } from "utils/types";
 
 
 export default function ParkingSection() {
-    const { token } = useContext(UserContext)
     let getAllUserParkings = []
     const { loading, error, data } = useQuery<ParkingData>(GET_USER_PARKINGS, {
-        fetchPolicy: "network-only",
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
+        fetchPolicy: "network-only"
     })
     if (data)
         getAllUserParkings = data.getAllUserParkings
+
     return (
         <>
             <HeaderSection>

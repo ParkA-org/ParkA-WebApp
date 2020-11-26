@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background-image: url("../images/cardBackground.png");
+  background-image: url("/images/cardBackground.png");
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 20px;

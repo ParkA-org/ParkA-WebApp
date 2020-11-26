@@ -1,11 +1,12 @@
 import { useRouter } from "next/router"
 import { BiDollar } from "react-icons/bi";
 import { useLazyQuery } from "@apollo/client";
-import { UserContext } from "context/UserContext";
-import { GET_PARKING_WITH_ID } from "queries";
-import { useContext, useEffect } from "react";
+import { Parking, Review } from "utils/types"
+import { GET_PARKING_WITH_ID, GET_PARKING_REVIEWS } from "queries";
+import { useEffect, useState } from "react";
 import Layout from "../../layout";
 import styled from "styled-components";
+import NavigationLink from "components/NavigationLink"
 import Carousel from "components/Carousel";
 import ReviewCard from "components/ReviewCard";
 import ImageViewer from "components/ImageViewer"
@@ -81,69 +82,71 @@ export const Button = styled.button`
 
 export default function ParkingDetail(): JSX.Element {
     const router = useRouter()
-    const { token } = useContext(UserContext)
-    const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
-    })
+    const [parking, setParking] = useState<Parking>(null)
+    const [reviews, setReviews] = useState<Review[]>([])
+    const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
+    const [GetParkingReviews, { data: reviewData, loading: reviewLoading, error: reviewError }] = useLazyQuery(GET_PARKING_REVIEWS)
+    const { id } = router.query;
     useEffect(() => {
-        console.log('Router id')
-        console.log(router.query.id)
-        if (router.query.id)
-            GetParkingWithId({ variables: { id: router.query.id } })
-        console.log('Data')
-        console.log(data)
-    }, [data, router])
+        if (id) {
+            GetParkingWithId({ variables: { id: id } })
+        }
+        if (data)
+            setParking(data.getParkingById)
+    }, [data, id])
+
+    useEffect(() => {
+        if (id) {
+            GetParkingReviews({ variables: { gprI: { parking: id } } })
+        }
+        if (reviewData)
+            setReviews(reviewData.getAllParkingReviews)
+    }, [reviewData, id])
 
     if (loading) return <h3>Loading...</h3>
     if (error) return <h3>Error...</h3>
+
     return (
         <Layout pageTitle="Detalle del Parqueo">
             <div>
-                <h1>{data ? data.getParkingById.parkingName : "Agora Mall II"}</h1>
+                <h1>{parking ? parking.parkingName : "Agora Mall II"}</h1>
                 <Container>
                     <ParkingImages>
-                        {data ? <ImageViewer pictures={data.getParkingById.pictures} /> : <p>Cargando imagenes parqueo...</p>}
+                        {parking ? <ImageViewer pictures={parking.pictures} /> : <p>Cargando imagenes parqueo...</p>}
                     </ParkingImages>
                     <Form>
                         <FormItem>
                             <h3>Información</h3>
-                            <p>{data ? data.getParkingById.information : "Parqueo en zona tranquila"}</p>
+                            <p>{parking ? parking.information : "Parqueo en zona tranquila"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Sector</h3>
-                            <p>{data ? data.getParkingById.sector : "Los Mina"}</p>
+                            <p>{parking ? parking.sector : "Los Mina"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Dirección</h3>
-                            <p>{data ? data.getParkingById.direction : "C/ Pedro Zuluaga #12"}</p>
+                            <p>{parking ? parking.direction : "C/ Pedro Zuluaga #12"}</p>
                         </FormItem>
                         <FormItem>
                             <h3>Costo por hora</h3>
                             <div style={{ display: "flex", justifyContent: "flex-start" }}>
                                 <BiDollar fill="#077187" size="1.5em" />
-                                <p style={{ marginLeft: "0.25em" }}>{data ? `${data.getParkingById.priceHours} RD$ hora` : "50 RD$ hora"}</p>
+                                <p style={{ marginLeft: "0.25em" }}>{parking ? `${parking.priceHours} RD$ hora` : "50 RD$ hora"}</p>
                             </div>
                         </FormItem>
                     </Form>
                     <ButtonGroup>
-                        <Button>Reservar</Button>
+                        <Button>
+                            <NavigationLink href={`/parking/checkout/${id}`}>Reservar</NavigationLink>
+                        </Button>
                         <Button>Disponibilidad</Button>
                         <Button>Compartir</Button>
                     </ButtonGroup>
                 </Container>
-                <Carousel title="Reseñas">
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                    <ReviewCard />
-                </Carousel>
+                {reviews.length > 0 ?
+                    <Carousel title="Reseñas">
+                        {reviews.map(review => <ReviewCard key={review.id} {...review} />)}
+                    </Carousel> : <h3>Este parqueo no tiene reseñas por el momento.</h3>}
             </div>
             <style jsx>{`
                 h1{

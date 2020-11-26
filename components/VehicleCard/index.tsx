@@ -26,10 +26,10 @@ export default function VehicleCard({ vehicle }: CardProps) {
     return (
         <Card onClick={() => router.push('/vehicle/detail/[id]', `/vehicle/detail/${vehicle.id}`)
         }>
-            <CardImage alt="user car" src={vehicle?.mainPicture ? vehicle?.mainPicture : "/placeholders/car-placeholder.png"} />
+            <CardImage alt="user car" src={vehicle?.mainPicture ? vehicle?.mainPicture : "/placeholders/car.png"} />
             <CardDetails style={{ textAlign: "center" }}>
                 <>
-                    <CardBrandImage alt="car brand" src={vehicle?.model?.make?.icon?.url ? vehicle?.model?.make?.icon?.url : "/placeholders/car-brand-placeholder.png"} />
+                    <CardBrandImage alt="car brand" src={vehicle?.model?.make?.icon?.url ? vehicle?.model?.make?.icon?.url : "/placeholders/car-brand.png"} />
                 </>
                 <h3>{vehicle?.model?.make?.name ? vehicle?.model?.make?.name : ""}</h3>
                 <h3>{vehicle?.model?.name ? vehicle?.model?.name : ""}</h3>

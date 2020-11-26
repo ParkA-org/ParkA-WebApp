@@ -9,13 +9,16 @@ function ImageViewer({ pictures }: { pictures: Array<string> }) {
     };
     return (
         <Container>
-            <ImageBoxContainer>
-                {pictures.map(img => <ImageBox
-                    src={img}
-                    onMouseEnter={handleMouseEnter}
-                />)}
-            </ImageBoxContainer>
-            <MainImage src={pictures[0]} ref={mainRef} />
+            {pictures.length > 0 ?
+                <>
+                    <ImageBoxContainer>
+                        {pictures.map(img => <ImageBox
+                            src={img}
+                            onMouseEnter={handleMouseEnter}
+                        />)}
+                    </ImageBoxContainer>
+                    <MainImage src={pictures[0]} ref={mainRef} alt="imagen principal del parqueo" />
+                </> : <MainImage src="/placeholders/park.png" alt="imagen principal del parqueo" />}
         </Container>
     );
 }

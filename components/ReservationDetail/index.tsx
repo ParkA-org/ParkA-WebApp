@@ -1,4 +1,7 @@
-import { useState } from "react"
+import { useRef, useEffect, useState } from "react"
+import { useQuery } from "@apollo/client"
+import { Parking, Vehicle, ReservationInput } from "utils/types"
+import { GET_ALL_VEHICLES } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
 import { DatePicker } from "rsuite";
@@ -7,28 +10,70 @@ import { BsArrowRight } from "react-icons/bs"
 type ElementProps = {
     name: string;
     children?: JSX.Element;
+    value?: string;
 }
 
-function SectionElement({ name, children }: ElementProps) {
+type ComponentProps = {
+    parking: Parking
+    checkout: ReservationInput;
+    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
+}
+
+type AllVehiclesData = {
+    getAllUserVehicles: Vehicle[]
+}
+
+function SectionElement({ name, children, value }: ElementProps) {
     return (
         <ElementContainer>
             <label><b>{name}</b></label>
-            {children}<StyledInput type="text" />
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", maxWidth: "250px" }}>
+                {children}<StyledInput type="text" value={value} />
+            </div>
         </ElementContainer>
     )
 }
 
-export default function ReservationDetail() {
+type HourPickerProps = {
+    hourPrice: number;
+    checkout: ReservationInput;
+    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
+}
 
-    const hourPicker = (
+function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.Element {
+    const [startDate, setStartDate] = useState<Date>()
+    const [endDate, setEndDate] = useState<Date>()
+
+    const calculateTime = (start: Date, end: Date) => {
+        let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
+        endingDate.setTime(start.getTime())
+        endingDate.setHours(endingHour)
+        endingDate.setMinutes(endingMinutes)
+        hourDiff = Math.abs(endingHour - startingHour)
+        setCheckout({
+            ...checkout,
+            checkInDate: new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString(),
+            checkOutDate: new Date(endingDate.getTime() - (endingDate.getTimezoneOffset() * 60000)).toISOString(),
+            rentDate: new Date(rentDate.getTime() - (rentDate.getTimezoneOffset() * 60000)).toISOString(),
+            total: hourPrice * hourDiff
+        })
+    }
+
+    useEffect(() => {
+        if (startDate && endDate) {
+            calculateTime(startDate, endDate)
+        }
+    }, [startDate, endDate])
+
+    return (
         <section>
             <div>
                 <p>Desde</p>
                 <DatePicker
-                    format="HH:mm"
+                    format="YYYY-MM-DD HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
+                    onOk={(value) => setStartDate(value)}
                 />
             </div>
             <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
@@ -38,7 +83,7 @@ export default function ReservationDetail() {
                     format="HH:mm"
                     ranges={[]}
                     hideMinutes={minute => minute % 15 !== 0}
-                    onOk={console.log}
+                    onOk={(value) => setEndDate(value)}
                 />
             </div>
             <style jsx>
@@ -64,57 +109,71 @@ export default function ReservationDetail() {
             </style>
         </section>
     )
+}
+
+export default function ReservationDetail({ parking, checkout, setCheckout }: ComponentProps) {
+
+    const { loading, error, data } = useQuery<AllVehiclesData>(GET_ALL_VEHICLES, {
+        onCompleted() {
+            if (data && data.getAllUserVehicles.length) {
+                setCheckout({ ...checkout, vehicle: data.getAllUserVehicles[0].id })
+            }
+        }
+    })
+    const imgRef = useRef(null)
+
+
+    useEffect(() => {
+        if (data) {
+            console.log(data)
+        }
+    }, [data])
 
     return (
         <Container>
             <LeftSection>
-                <SectionElement name="Parqueo" />
-                <SectionElement name="Fecha" />
+                <SectionElement name="Nombre" value={parking.parkingName} />
+                {parking.features.length > 0 ?
+                    <ElementContainer>
+                        <label><b>Características</b></label>
+                        {parking.features.map(feature => (
+                            <CheckboxContainer key={feature.id}>
+                                <input type="checkbox" id="vehicle1" name="vehicle1" value={feature.name} checked={true}></input>
+                                <label><b>{feature.name}</b></label>
+                            </CheckboxContainer>
+                        ))}
+                    </ElementContainer>
+                    : null}
+                <SectionElement name="Costo por hora" value={parking.priceHours}>
+                    <MoneyIcon />
+                </SectionElement>
                 <ElementContainer>
-                    <label><b>Horas</b></label>
-                    {hourPicker}
-                </ElementContainer>
-                <ElementContainer>
-                    <label><b>Características</b></label>
-                    <CheckboxContainer>
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Cámara de vigilancia"></input>
-                        <label><b>Cámara de vigilancia</b></label>
-                    </CheckboxContainer>
-                    <CheckboxContainer>
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Techado"></input>
-                        <label><b>Techado</b></label>
-                    </CheckboxContainer>
-                    <CheckboxContainer>
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Seguridad 24/7"></input>
-                        <label><b>Seguridad 24/7</b></label>
-                    </CheckboxContainer>
-                    <CheckboxContainer>
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Car wash"></input>
-                        <label><b>Car wash</b></label>
-                    </CheckboxContainer>
-                    <CheckboxContainer>
-                        <input type="checkbox" id="vehicle1" name="vehicle1" value="Cargador de vehículos electricos"></input>
-                        <label><b>Cargador de vehículos electricos</b></label>
-                    </CheckboxContainer>
+                    <label><b>Vehiculos</b></label>
+                    {loading && <h3>Loading user vehicles...</h3>}
+                    {data && data.getAllUserVehicles && data.getAllUserVehicles.length > 0 ?
+                        (
+                            <>
+                                <StyledSelect onChange={e => {
+                                    const { target } = e
+                                    const { value } = target
+                                    const imgUrl = data.getAllUserVehicles.find(vehicle => vehicle.id === value).mainPicture
+                                    imgRef.current.src = imgUrl
+                                }} >
+                                    {data && data.getAllUserVehicles.map(vehicle => <option key={vehicle.id} value={vehicle.id} data-image={vehicle.mainPicture}>{vehicle.model.name}</option>)}
+                                </StyledSelect>
+                                <StyledImage src={data.getAllUserVehicles[0].mainPicture} ref={imgRef} />
+                            </>
+                        )
+                        : <p>No tienes ningun vehiculo registrado</p>}
                 </ElementContainer>
             </LeftSection>
             <RightSection>
                 <ElementContainer>
-                    <label><b>Vehiculos</b></label>
-                    <StyledSelect>
-                        <option>Audi</option>
-                        <option>BMW</option>
-                        <option>Mustang</option>
-                    </StyledSelect>
-                    <StyledImage src="/placeholders/image-placeholder.png" />
+                    <label><b>Horas</b></label>
+                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} />
                 </ElementContainer>
-                <SectionElement name="Costo por hora">
-                    <MoneyIcon />
-                </SectionElement>
-                <SectionElement name="Horas Totales" />
-                <SectionElement name="Subtotal">
-                    <MoneyIcon />
-                </SectionElement>
+
+                <SectionElement name="Total de horas" value={checkout.total ? checkout.total.toString() : "0"} />
             </RightSection>
         </Container>
     )

@@ -1,34 +1,36 @@
-import { useState, useReducer, useEffect, useContext } from "react"
+import { useState, useReducer, useContext, useEffect } from "react"
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
 import ImagePicker from "components/ImagePicker"
-import { CreateParkingSchema } from "utils/schemas"
+import { EditParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, ElementContainer, HeaderSection, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
+import { Container, ElementContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, HeaderSection } from "./styles"
 import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
-import { CREATE_PARKING } from "mutations"
-import { FeaturesData, Coordinates } from "utils/types";
+import { EDIT_PARKING } from "mutations"
+import { FeaturesData, Parking, Calendar } from "utils/types";
 import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
 import { useRouter } from "next/router";
-import ReverseGeocode from "services/getAddress";
 
 type DayCheckProps = {
     id: string;
     value: number;
     dispatch: any;
     presentationName: string;
+    checked?: boolean;
 }
 
-function CheckElement({ id, value, dispatch, presentationName }: DayCheckProps) {
-    const handleChange = (event) => {
+function CheckElement({ id, value, dispatch, presentationName, checked }: DayCheckProps) {
+    const [isChecked, setCheck] = useState(checked)
+    const handleClick = (event) => {
         const target = event.target
         const value = target.checked
         const name = target.name
+        setCheck(value)
         if (value) {
             dispatch({
                 type: 'add_day',
@@ -47,10 +49,21 @@ function CheckElement({ id, value, dispatch, presentationName }: DayCheckProps) 
     }
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} />
+            <input type="checkbox" id={id} name={id} value={value} onClick={handleClick} checked={isChecked} />
             <label>{presentationName.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
+}
+
+function initStateWithData(initialState: Calendar) {
+    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+    let obj = {}
+    if (week.length > 0) {
+        for (let day of week) {
+            obj[day] = initialState[day]
+        }
+    }
+    return obj
 }
 
 function initState(week: string[]) {
@@ -73,28 +86,16 @@ type StateObject = {
     "saturday"?: Array<RangeObject>;
 }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
 
 type Action =
-    | {
-        type: "add_range", payload:
-        {
-            day: string,
-            id: string
-        }
-    }
-    | {
-        type: "update_range", payload: {
-            id: string, day: string, value: RangeObject
-        }
-    }
+    | { type: "add_range", payload: { day: string, id: string } }
+    | { type: "update_range", payload: { id: string, day: string, value: RangeObject } }
     | { type: "remove_range", payload: { id: string, day: string } }
     | { type: "remove_day", payload: { day: string } }
     | { type: "add_day", payload: { day: string } }
-    | {
-        type: "reset", payload: {
-            week: string[]
-        }
-    }
+    | { type: "reset", payload: { week: string[] } }
+    | { type: "update_state", payload: { calendar: Calendar } }
 
 function reducer(state: StateObject, action: Action) {
     switch (action.type) {
@@ -127,7 +128,7 @@ function reducer(state: StateObject, action: Action) {
         case "add_day":
             return {
                 ...state,
-                [action.payload.day]: []
+                [action.payload.day]: [{ id: getRandomInt(10000).toString(), start: 1200, finish: 1400 }]
             }
         case "remove_day":
             let stateCopy = {
@@ -135,6 +136,8 @@ function reducer(state: StateObject, action: Action) {
             }
             delete stateCopy[action.payload.day]
             return stateCopy
+        case "update_state":
+            return initStateWithData(action.payload.calendar)
         case "reset":
             return initState(action.payload.week)
         default:
@@ -148,23 +151,16 @@ type RangeObject = {
     finish?: string;
 }
 
-type ParkingProps = {
-    coordinates: Coordinates
-}
 
-export default function ParkingForm({ coordinates }: ParkingProps) {
+export default function ParkingForm({ parkingName, countParking, calendar, priceHours, pictures, mainPicture, information, features, id }: Parking) {
     const { token } = useContext(UserContext)
     const router = useRouter()
-    const [geocodeData, setGeocodeData] = useState({
-        sector: "",
-        address: ""
-    })
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
-    const [CreateParking] = useMutation(CREATE_PARKING, {
+    const [EditParking] = useMutation(EDIT_PARKING, {
         onCompleted() {
             router.push('/parking')
         },
@@ -176,29 +172,29 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     })
 
     useEffect(() => {
-        console.log('Cambiaron coordenadas')
-        console.log(coordinates)
-        if (coordinates.lat !== 0)
-            ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
-    }, [coordinates])
+        if (calendar) {
+            dispatch({
+                type: 'update_state',
+                payload: {
+                    calendar: calendar
+                }
+            })
+        }
+    }, [calendar])
 
     return (
         <Formik
             enableReinitialize={true}
             initialValues={{
-                countParking: 1,
-                latitude: `${coordinates.lat}`,
-                longitude: `${coordinates.lng}`,
-                parkingName: "",
-                priceHours: 50,
-                pictures: ["as", "as"],
-                mainPicture: "asd",
-                sector: `${geocodeData.sector}`,
-                direction: `${geocodeData.address}`,
-                information: "",
-                features: []
+                countParking,
+                parkingName,
+                priceHours,
+                pictures,
+                mainPicture,
+                information,
+                features
             }}
-            validationSchema={CreateParkingSchema}
+            validationSchema={EditParkingSchema}
             onSubmit={(values) => {
                 let modifiedState = {}
                 for (let [key, range] of Object.entries(state)) {
@@ -206,38 +202,56 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                         return { start: value.start, finish: value.finish }
                     })
                 }
-                uploadMultipleImages(files)
-                    .then(response => {
-                        return response.data
-                    }).then(results => {
-                        let urls = results?.map(obj => obj.url)
-                        CreateParking({
-                            variables: {
-                                cpInput: {
-                                    "countParking": parseFloat(values.countParking.toString()),
-                                    "latitude": `${coordinates.lat}`,
-                                    "longitude": `${coordinates.lng}`,
-                                    "parkingName": values.parkingName,
-                                    "priceHours": parseFloat(values.priceHours.toString()),
-                                    "information": values.information,
-                                    "sector": values.sector,
-                                    "direction": values.direction,
-                                    "features": values.features,
-                                    "calendar": modifiedState,
-                                    "pictures": urls,
-                                    "mainPicture": urls[0]
+
+                if (files.length > 0) {
+                    uploadMultipleImages(files)
+                        .then(response => {
+                            return response.data
+                        }).then(results => {
+                            let urls = results?.map(obj => obj.url)
+                            urls = [...urls, ...pictures]
+                            let newFeatures = values.features.filter(feature => feature.id !== null)
+                            EditParking({
+                                variables: {
+                                    epi: {
+                                        "id": id,
+                                        "countParking": parseFloat(values.countParking.toString()),
+                                        "parkingName": values.parkingName,
+                                        "priceHours": values.priceHours.toString(),
+                                        "information": values.information,
+                                        "features": newFeatures.map(feature => feature.id),
+                                        "calendar": modifiedState,
+                                        "pictures": urls,
+                                        "mainPicture": urls[0]
+                                    }
                                 }
-                            }
+                            })
                         })
+                } else {
+                    let newFeatures = values.features.filter(feature => feature.id !== null)
+                    EditParking({
+                        variables: {
+                            epi: {
+                                "id": id,
+                                "countParking": parseFloat(values.countParking.toString()),
+                                "parkingName": values.parkingName,
+                                "priceHours": values.priceHours.toString(),
+                                "information": values.information,
+                                "features": newFeatures.map(feature => feature.id),
+                                "calendar": modifiedState,
+                                "pictures": pictures,
+                                "mainPicture": pictures[0]
+                            }
+                        }
                     })
-                    .catch(error => console.error(error))
+                }
             }}
         >
             {({ setFieldValue, errors, touched, values }) => (
                 <Form>
                     <Container>
                         <HeaderSection>
-                            <h2>Registro de parqueos</h2>
+                            <h2>Editar parqueo</h2>
                         </HeaderSection>
                         <LeftSection>
                             <Field
@@ -246,6 +260,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.countParking}
                                 isTouched={touched.countParking}
                                 placeholder="Cantidad de parqueos"
+                                value={values.countParking ? values.countParking.toString() : ""}
                             />
                             <Field
                                 name="parkingName"
@@ -253,33 +268,18 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.parkingName}
                                 isTouched={touched.parkingName}
                                 placeholder="Nombre de parqueo"
-                            />
-                            <Field
-                                name="direction"
-                                label="Dirección"
-                                errorMessage={errors.direction}
-                                isTouched={touched.direction}
-                                value={values.direction}
-                                placeholder="Dirección"
+                                value={values.parkingName}
                             />
                             <ElementContainer>
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} presentationName={presentationalWeek[idx]} />)}
+                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} presentationName={presentationalWeek[idx]} checked={calendar[day].length > 0 ? true : false} />)}
                                 </div>
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
                         </LeftSection>
                         <MiddleSection>
-                            <Field
-                                name="sector"
-                                label="Sector"
-                                errorMessage={errors.sector}
-                                isTouched={touched.sector}
-                                placeholder="Sector"
-                                value={values.sector}
-                            />
                             <div className="iconInput">
                                 <MoneyIcon />
                                 <Field
@@ -288,6 +288,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     errorMessage={errors.priceHours}
                                     isTouched={touched.priceHours}
                                     placeholder="Costo por hora"
+                                    value={values.priceHours}
                                 />
                             </div>
 
@@ -296,6 +297,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 name="information"
                                 placeholder="Informaciones adicionales..."
                                 component="textarea"
+                                value={values.information}
                             />
 
                             {featuresLoading ? <Spinner /> :
@@ -311,6 +313,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     type="checkbox"
                                                     label={feature.name}
                                                     value={feature.id}
+                                                    checked={values.features.filter(curFeature => curFeature.id === feature.id).length > 0 ? true : false}
                                                     inputStyles={{ width: "auto" }}
                                                 />
                                             )
@@ -320,8 +323,8 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 </>}
                         </MiddleSection>
                         <RightSection>
-                            <ImagePicker placement="vertical" setFiles={setFiles} />
-                            <Button submit={false}>Crear parqueo</Button>
+                            <ImagePicker placement="vertical" setFiles={setFiles} pictures={pictures} />
+                            <Button submit={false}>Editar parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`
@@ -333,7 +336,8 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                         </style>
                     </Container>
                 </Form>
-            )}
-        </Formik>
+            )
+            }
+        </ Formik >
     )
 }
