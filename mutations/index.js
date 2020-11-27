@@ -68,13 +68,11 @@ mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
 }
 `
 
-export const CREATE_PAYMENTINFO = gql`
-mutation createNewPayment($userPaymentInfo: createPaymentInformationInput) {
-  createPaymentInformation(input: $userPaymentInfo){
-    paymentInformation {
+export const CREATE_PAYMENT = gql`
+mutation createNewPayment($userPayment: CreatePaymentInput!) {
+  createPayment(createPaymentInput: $userPayment){
       id
-      name
-    }
+      cardHolder
   }
 }
 `
@@ -197,6 +195,17 @@ mutation UpdateUserParking($epi: UpdateParkingInput!) {
   updateParking(updateParkingInput: $epi){
     id
     parkingName
+  }
+}
+`
+
+export const CREATE_REVIEW = gql`
+mutation CreateReview($crI: CreateReviewInput!){
+  createReview(createReviewInput: $crI){
+    id
+    title
+    calification
+    review
   }
 }
 `

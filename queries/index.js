@@ -293,6 +293,9 @@ query GetParkingWithId($id: String!){
     information
     mainPicture
     pictures
+    user {
+      id
+    }
     features {
       id
       name
@@ -347,4 +350,72 @@ query GetPaymentsMethods {
     }
   }
 }
+`
+
+export const GET_CLIENT_RESERVATIONS = gql`
+query GetClientReservations{
+  getAllUserReservationsAsClient {
+    id
+    checkInDate
+    checkOutDate
+    total
+    status
+    parking {
+      id
+      mainPicture
+    }
+    client {
+      id
+    }
+  }
+}
+`
+
+export const GET_PAYMENTS = gql`
+query GetPayments{
+  getAllUserPayments{
+		id,
+    cardHolder,
+    expirationDate,
+    digit,
+    activated,
+    card{
+      id,
+      name
+    },
+  }
+}
+`
+
+export const GET_PARKING_REVIEWS = gql`
+query GetAllParkingReviews($gprI: GetAllParkingReviewInput!) {
+  getAllParkingReviews(getAllParkingReviewInput: $gprI) {
+    id
+    title
+    calification
+    createdAt
+    review
+    user {
+      name
+      lastName
+      profilePicture
+    }
+    parking {
+      id
+      rating
+    }
+  }
+}
+`
+
+export const GET_USER_REVIEWS = gql`
+  query GetAllUserReviews {
+    getAllUserReviews {
+      title
+      calification
+      parking {
+        id
+      }
+    }
+  }
 `

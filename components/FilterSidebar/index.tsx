@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import sliderStyles from "styles/Slider.module.css"
 import InputRange from 'react-input-range'
 import { DatePicker } from "rsuite"
@@ -12,23 +12,25 @@ import {
     Slider,
     TimeFields
 } from "./styles"
+import { GET_FEATURES } from "queries"
+import { useQuery } from "@apollo/client"
+import { FeaturesData } from "utils/types"
 
 export interface Range {
     max: number;
     min: number;
 }
 
-function PriceSlider() {
+function PriceSlider({ setFilterObject, filterObject }: { setFilterObject: any, filterObject: any }) {
 
-    const [stateValue, setStateValue] = useState<Range | number>({ min: 25, max: 100 })
+    const [stateValue, setStateValue] = useState<Range>({ min: 0, max: 200 })
 
     return (
         <Slider>
-            <InputRange maxValue={100} minValue={25} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
-                console.log('On change completed')
-                console.log(val)
+            <InputRange maxValue={200} minValue={0} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
+                setFilterObject({ ...filterObject, priceHours_lte: val.max, priceHours_gte: val.min })
             }}
-                step={5}
+                step={10}
                 classNames={{
                     activeTrack: sliderStyles.inputRangeTrackActive,
                     disabledInputRange: sliderStyles.inputRangeDisabled,
@@ -47,12 +49,49 @@ function PriceSlider() {
 }
 
 export default function FilterSideBar() {
+
+    const [filterObject, setFilterObject] = useState({
+        features_in: [],
+        priceHours_lte: 200,
+        priceHours_gte: 0
+    })
+
+    const { loading, error, data } = useQuery<FeaturesData>(GET_FEATURES);
+
+    const handleCheckboxes = (event) => {
+        const target = event.target
+        const name = target.name
+        const value = target.value
+        const checked = target.checked
+        if (checked) {
+            setFilterObject({ ...filterObject, features_in: [...filterObject.features_in, value] })
+        } else {
+            setFilterObject({ ...filterObject, features_in: filterObject.features_in.filter(feature => feature !== value) })
+        }
+    }
+
+    useEffect(() => { }, [data])
+
+    useEffect(() => {
+        let actualFilterObject = { ...filterObject }
+        for (const [key, value] of Object.entries(actualFilterObject)) {
+            if (typeof actualFilterObject[key] === "object") {
+                if (actualFilterObject[key].length === 0)
+                    delete actualFilterObject[key]
+            }
+        }
+        console.log('Stringified object')
+        console.log(JSON.stringify(filterObject))
+        console.log('Stringified actual filter')
+        console.log(JSON.stringify(actualFilterObject))
+    }, [filterObject])
+
     return (
         <Container>
             <h2>Filtros</h2>
             <Section>
                 <h3>Precio</h3>
-                <PriceSlider />
+                <PriceSlider setFilterObject={setFilterObject} filterObject={filterObject} />
             </Section>
             <Section>
                 <h3>Tipo de Reserva</h3>
@@ -81,28 +120,19 @@ export default function FilterSideBar() {
             </Section>
             <Section>
                 <h3>Características</h3>
-                <CharacteristicContainer>
-                    <Characteristic>
-                        <input type="checkbox" name="camara" value="camaraVigilancia" />
-                        <label htmlFor="camara">Cámara de vigilancia</label>
-                    </Characteristic>
-                    <Characteristic>
-                        <input type="checkbox" name="roof" value="techado" />
-                        <label htmlFor="roof">Techado</label>
-                    </Characteristic>
-                    <Characteristic>
-                        <input type="checkbox" name="security" value="Bike" />
-                        <label htmlFor="security">Seguridad 24/7</label>
-                    </Characteristic>
-                    <Characteristic>
-                        <input type="checkbox" name="wash" value="Bike" />
-                        <label htmlFor="wash">Car Wash</label>
-                    </Characteristic>
-                    <Characteristic>
-                        <input type="checkbox" name="electricCharger" value="Bike" />
-                        <label htmlFor="electricCharger">Cargador de vehículos eléctricos</label>
-                    </Characteristic>
-                </CharacteristicContainer>
+                {loading && <h3>Cargando características</h3>}
+                {data &&
+                    <CharacteristicContainer>
+                        {data.getAllFeatures.map(feature => {
+                            return (
+                                <Characteristic>
+                                    <input type="checkbox" name="features_in" value={feature.id} onClick={handleCheckboxes} />
+                                    <label htmlFor={feature.name}>{feature.name}</label>
+                                </Characteristic>
+                            )
+                        })}
+                    </CharacteristicContainer>
+                }
             </Section>
             <style jsx>
                 {`

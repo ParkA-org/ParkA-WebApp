@@ -9,6 +9,7 @@ import { UserContext } from "context/UserContext";
 import { initializeApollo } from "lib/apolloClient";
 import { GET_ALL_VEHICLES } from "queries"
 
+
 const Container = styled.div`
 width: 100%;
 margin: 0 auto;

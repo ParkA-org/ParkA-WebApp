@@ -4,7 +4,7 @@ import MaskedInput from "react-text-mask"
 import { DatePicker } from "rsuite"
 import { useMutation } from '@apollo/client'
 import { PaymentInformationSchema } from "utils/schemas"
-import { CREATE_PAYMENTINFO } from "mutations"
+import { CREATE_PAYMENT } from "mutations"
 import { useRouter } from "next/router"
 import Layout from "pages/layout"
 import NavigationLink from "components/NavigationLink"
@@ -22,13 +22,12 @@ import {
   CompactActionSection,
   FormHeading
 } from "styles/formStyles"
-import useLocalStorage from "hooks/useLocalStorage"
 
 export default function RegisterPaymentInformation(): JSX.Element {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
-  const [CreatePaymentInfo] = useMutation(CREATE_PAYMENTINFO, {
+  const [CreatePayment] = useMutation(CREATE_PAYMENT, {
     onCompleted() {
       setShowModal(false)
       router.push('/')
@@ -39,7 +38,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
       setShowModal(false)
     }
   })
-  const [accountId,] = useLocalStorage("account-id", "")
+
 
   const cardMask = [
     /[0-9]/,
@@ -79,17 +78,16 @@ export default function RegisterPaymentInformation(): JSX.Element {
           }}
           validationSchema={PaymentInformationSchema}
           onSubmit={(values) => {
+            let typeOfCard = values.cardNumber[0] === "5" ? "1eb995ef-3e68-4e7e-a8a3-d2127f2507c1" : "3bfdb758-4ae7-4f83-bf0d-742aa34a7ebd"
             setShowModal(true)
-            CreatePaymentInfo({
+            CreatePayment({
               variables: {
-                userPaymentInfo: {
-                  data: {
-                    digit: values.cardNumber.replaceAll(" ", ""),
-                    name: values.cardHolder,
-                    expirationdate: values.expirationDate,
-                    type_card: "VISA",
-                    account_data: accountId
-                  }
+                userPayment: {
+                  digit: values.cardNumber.replaceAll(" ", ""),
+                  cardHolder: values.cardHolder,
+                  expirationDate: values.expirationDate,
+                  cvv: values.cvv,
+                  card: typeOfCard
                 }
               }
             })
@@ -132,7 +130,9 @@ export default function RegisterPaymentInformation(): JSX.Element {
                     />
                     <section style={{ display: "flex", flexDirection: "column", justifyContent: "space-around" }}>
                       <label style={{ fontSize: "1.25em", fontWeight: "bolder" }}>Válida hasta: </label>
-                      <DatePicker format="YYYY-MM" size="lg" placeholder="YYYY/MM" style={{ marginBottom: "1em", fontSize: "1.25rem", color: "#333" }} onOk={value => setFieldValue("expirationDate", value.toString())} />
+                      <DatePicker format="YYYY-MM" size="lg" placeholder="YYYY/MM" style={{ marginBottom: "1em", fontSize: "1.25rem", color: "#333" }} onOk={value =>
+                        setFieldValue("expirationDate", value.toISOString())
+                      } />
                     </section>
                   </div>
                 </FieldSection>

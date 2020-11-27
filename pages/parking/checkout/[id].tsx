@@ -26,7 +26,7 @@ export default function Checkout() {
 
     useEffect(() => {
         if (parking)
-            setCheckout({ ...checkout, parking: parking.id, owner: "aa71e416-147c-44a8-9bbd-41d469cbbd83" })
+            setCheckout({ ...checkout, parking: parking.id, owner: parking.user.id })
     }, [parking])
 
     return (

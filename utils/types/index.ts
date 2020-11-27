@@ -153,6 +153,28 @@ export type ReservationInput = {
     rentDate?: string;
 }
 
+export enum ReservationStatuses {
+    Created = "Created",
+    InProgress = "InProgress",
+    Completed = "Completed",
+    Cancelled = "Cancelled"
+}
+
+export type Reservation = {
+    __typename: string;
+    id: string;
+    parking: Parking;
+    client: User;
+    owner: User;
+    checkInDate: string;
+    checkOutDate: string;
+    vehicle: Vehicle;
+    paymentInfo: Payment;
+    total: number;
+    rentDate: string;
+    status: ReservationStatuses;
+}
+
 export type Payment = {
     __typename: string;
     id: string;
@@ -161,5 +183,28 @@ export type Payment = {
     digit: string;
     activated: boolean;
     card: BasicEntity;
+}
+
+export type ReviewInput = {
+    user?: string;
+    parking?: string;
+    reservation?: string;
+    title?: string;
+    review?: string;
+    calification?: number;
+    type?: boolean;
+}
+
+export type Review = {
+    __typename: string;
+    id: string;
+    title: string;
+    calification: number;
+    user: User;
+    parking: Parking;
+    reservation: Reservation;
+    review: string;
+    type: boolean;
+    createdAt: string;
 }
 
