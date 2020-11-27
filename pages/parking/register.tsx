@@ -20,6 +20,7 @@ export default function ParkingRegister() {
                     .container {
                         width: 99vw;
                         text-align: left;
+                        margin-bottom: 2em;
                     }
                 `}
             </style>

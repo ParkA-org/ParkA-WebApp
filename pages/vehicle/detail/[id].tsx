@@ -50,12 +50,17 @@ export default function DetailVehicle() {
         console.log(data)
     }, [data, router])
 
+    function GetFullName(){
+        let name = (user?.name == undefined) ? "" : user?.name;
+        let lastName = (user?.lastname == undefined) ? "" : user?.lastname;
+        return `${name} ${lastName}`;
+    }
+
     if (loading) return <h3>Loading...</h3>
 
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>
-                <h2>Detalle Vehiculo</h2>
                 {loading && <h3>Loading...</h3>}
                 {error && <h3>Ocurrio un error</h3>}
                 {data &&
@@ -69,7 +74,7 @@ export default function DetailVehicle() {
                 <section>
                     <blockquote>
                         <h1>Propietario</h1>
-                        <h2>{loading ? "Cargando..." : `${user?.name} ${user?.lastname}`}</h2>
+                        <h2>{loading ? "Cargando..." : GetFullName()}</h2>
                     </blockquote>
                     <CircularButton color="#336F8B;"><p>10</p> Reservas Completadas</CircularButton>
                     <CircularButton color="#B40909;"><p>1</p> Denuncias</CircularButton>

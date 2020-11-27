@@ -16,7 +16,6 @@ export const CreateAccountSchema = Yup.object().shape({
 });
 
 export const ValidateEmailSchema = Yup.object().shape({
-    code: Yup.string().required("Requerido"),
     email: Yup.string().email("Email inválido").required("Requerido"),
 })
 
@@ -40,6 +39,7 @@ export const PersonalIdentificationSchema = Yup.object().shape({
     birthPlace: Yup.string()
         .required("Requerido")
         .max(50, "Máximo de 50 caracteres"),
+    telephoneNumber: Yup.string().required("Requerido"),
     nationality: Yup.string()
         .required("Requerido")
         .max(40, "Máximo de 40 caracteres"),
@@ -63,9 +63,15 @@ export const CreatePasswordSchema = Yup.object().shape({
 export const EditProfileSchema = Yup.object().shape({
     name: Yup.string().required("Requerido"),
     lastName: Yup.string().required("Requerido"),
-    email: Yup.string().email("Email inválido").required("Requerido"),
-    dateOfBirth: Yup.string().required("Requerido"),
-    file: Yup.mixed().test("fileSize", "Su imagen es demasiado grande 5MB o menos", value => value && value.size <= 500000),
+    telephoneNumber: Yup.string().required("Requerido").length(10),
+    placeOfBirth: Yup.string().required("Requerido"),
+    nationality: Yup.string().required("Requerido"),
+    documentNumber: Yup.string()
+        .required("Requerido")
+        .max(11, "Máximo de 11 caracteres"),
+    profilePicture: Yup.string()
+    .required("Requerido"),
+    file: Yup.mixed()
 });
 
 export const CreateParkingSchema = Yup.object().shape({
@@ -82,6 +88,16 @@ export const CreateParkingSchema = Yup.object().shape({
     features: Yup.array().of(Yup.string())
 });
 
+
+export const EditParkingSchema = Yup.object().shape({
+    countParking: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    parkingName: Yup.string().max(50, 'Máximo 50 caracterés').required("Requerido"),
+    priceHours: Yup.number("Introduzca un número").positive("Costo debe ser mayor que 0").required("Requerido"),
+    pictures: Yup.array().of(Yup.string()),
+    mainPicture:  Yup.string().required("Requerido"),
+    features: Yup.array().of(Yup.string())
+});
+
 export const CreateVehicleSchema = Yup.object().shape({    
     licensePlate: Yup.string().max(7, "Máximo 7 caracterés como placa").required("Requerido"),
     detail: Yup.string().required("Requerido"),
@@ -92,4 +108,10 @@ export const CreateVehicleSchema = Yup.object().shape({
     model:  Yup.string().required("Requerido"),
     mainPicture:  Yup.string().required("Requerido"),
     pictures: Yup.array().of(Yup.string())
+})
+
+export const CreateReviewSchema = Yup.object().shape({
+    title: Yup.string().max(50, 'Máximo 50 caracterés como título de la reseña').required("Requerido"),
+    review: Yup.string().max(150, 'Máximo 50 caracterés como título de la reseña').required("Requerido"),
+    calification: Yup.number("Introduzca un número").positive("La calificacion debe ser mayor que 0").required("Requerido")
 })

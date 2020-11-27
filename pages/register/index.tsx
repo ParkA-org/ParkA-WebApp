@@ -20,7 +20,7 @@ import UploadImageService from "services/uploadImage"
 export default function registerPersonalAccount(): JSX.Element {
   const router = useRouter()
   const [localUser, setLocalUser] = useLocalStorage("user", {})
-  const [_, setImage] = useLocalStorage("image", "")
+  const [image, setImage] = useLocalStorage("image", "")
   const [initialUserValues, setInitialUserValues] = useState({
     name: "",
     lastName: "",
@@ -47,7 +47,6 @@ export default function registerPersonalAccount(): JSX.Element {
     setInitialUserValues(userValues)
   }, [localUser])
 
-
   return (
     <Layout pageTitle="Registro Datos Personales">
       <MainFormContainer>
@@ -59,10 +58,19 @@ export default function registerPersonalAccount(): JSX.Element {
           enableReinitialize={true}
           initialValues={initialUserValues}
           validationSchema={CreateAccountSchema}
-          onSubmit={(values) => {
+          onSubmit={async (values) => {
             setLocalUser({ ...localUser, ...values })
-            UploadImageService(values.file, setImage)
-            router.push('/register/PersonalIdentification', 'register/personal-information')
+
+            try {
+              if (image === "") {
+                let response = await UploadImageService(values.file)
+                let url = await response.data[0].url
+                setImage(url)
+              }
+              router.push('/register/PersonalIdentification')
+            } catch (error) {
+              console.error(error)
+            }
           }}
         >
           {({ setFieldValue, errors, touched, values }) => (
@@ -119,15 +127,15 @@ export default function registerPersonalAccount(): JSX.Element {
                   />
                 </FieldSection>
                 <InformationSection>
-                  <FileUploader setFieldValue={setFieldValue} />
+                  <FileUploader setFieldValue={setFieldValue} placeholderImage={image} />
                 </InformationSection>
-              </FormContainer>
-              <ActionSection>
-                <NavigationLink href="/login" styled={true}>Atrás</NavigationLink>
-                <Button submit={true} rank="secondary">
-                  Continuar
+                <ActionSection>
+                  <NavigationLink href="/login" styled={true}>Atrás</NavigationLink>
+                  <Button submit={true} rank="secondary">
+                    Continuar
                 </Button>
-              </ActionSection>
+                </ActionSection>
+              </FormContainer>
             </Form>
           )}
         </Formik>

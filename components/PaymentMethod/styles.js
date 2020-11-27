@@ -40,3 +40,9 @@ export const StyledInput = styled.input`
     padding: 0.5em;
     border-radius: 5px;
 `;  
+
+export const StyledSelect = styled.select`
+    width: 200px;
+    background-color: #e5e4e4;
+    padding: 0.5em; 
+`;

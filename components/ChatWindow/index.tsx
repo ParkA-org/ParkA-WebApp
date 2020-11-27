@@ -7,7 +7,7 @@ export default function ChatWindow() {
     return (
         <Container>
             <TopNav>
-                <img src="/placeholders/image-placeholder.png" alt="current user profile pic" />
+                <img src="/placeholders/image.png" alt="current user profile pic" />
                 <h3>Probando</h3>
             </TopNav >
             <ContentContainer>

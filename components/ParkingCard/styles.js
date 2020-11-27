@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 export const Container = styled.div`
     display: grid;
-    width: 80%;
+    width: 90%;
     margin: 1em 0;
     grid-template-areas:
     "image header header verification"
@@ -40,9 +40,13 @@ export const CardHeader = styled.div`
     justify-content: space-around;
     align-items: center;
     & > h2 {
+        max-width: 20vw;
         font-size: 1.6rem;
         font-weight: bold;
         display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     & > h4 { 

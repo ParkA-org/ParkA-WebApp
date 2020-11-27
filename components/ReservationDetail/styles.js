@@ -29,8 +29,10 @@ export const StyledInput = styled.input`
     background-color: #e5e4e4;
     border-radius: 10px;
     border: none;
+    font-size: 1.1rem;
+    color: #333;
     padding: 0.25em;
-    max-width: 300px;
+    width: 100%;
 `;
 
 export const ElementContainer = styled.div`

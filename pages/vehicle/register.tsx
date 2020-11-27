@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { Formik, Form, Field } from "formik"
 import { useRouter } from "next/router"
-import { useQuery, useMutation, useLazyQuery } from "@apollo/client"
+import { useQuery, useMutation } from "@apollo/client"
 import { GET_MAKES, GET_COLORS, GET_BODY_STYLES } from "queries"
 import { CREATE_VEHICLE } from "mutations"
 import { CreateVehicleSchema } from "utils/schemas"
@@ -10,8 +10,8 @@ import { BasicEntity, ColorsData, BodyStylesData, MakersData } from "utils/types
 import Layout from "../layout";
 import { default as OwnField } from "components/Field"
 import { SelectField } from "components/Field"
+import ImagePicker from "components/ImagePicker"
 import Spinner from "components/Spinner"
-import MultipleImagePicker from "components/MultipleImagePicker"
 import ModalPortal from "components/Modal"
 import { uploadMultipleImages } from "services/uploadImage"
 import { UserContext } from "context/UserContext";
@@ -308,7 +308,7 @@ export default function VehicleRegister(): JSX.Element {
         </Formik>
 
         <div style={{ marginBottom: "2em" }}>
-          <MultipleImagePicker setFiles={setFiles} />
+          <ImagePicker setFiles={setFiles} />
         </div>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
           <Spinner />
