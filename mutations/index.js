@@ -1,7 +1,7 @@
 import { gql } from "@apollo/client"
 
 export const CREATE_USER = gql`
-mutation CreateUser($cuInput: createUserInput!){
+mutation CreateUser($cuInput: CreateUserInput!){
   createUser(createUserInput: $cuInput){
     id
     name
@@ -14,11 +14,20 @@ mutation CreateUser($cuInput: createUserInput!){
 `
 
 export const UPDATE_USER = gql`
-  mutation UpdateUser($user: updateUserInput) {
-    updateUser(input: $user) {
-      user {
+  mutation UpdateUser($user: UpdateUserInput!) {
+    updateUser(updateUserInput: $user) {
         id
-      }
+        name
+        lastName
+    }
+  }
+`
+
+
+export const UPDATE_USER_INFORMATION = gql`
+  mutation UpdateUserInfo($userInfo: UpdateUserInformationInput!) {
+    updateUserInformation(updateUserInformationInput: $userInfo) {
+        documentNumber
     }
   }
 `
@@ -33,8 +42,8 @@ mutation ConfirmEmail($ceInput: ConfirmEmailInput!){
 `
 
 export const VALIDATE_EMAIL = gql`
-mutation ValidateEmail($emInput: ValidateEmailCodeInput!){
-  validateEmailCode(validateEmailCodeInput: $emInput){
+mutation ValidateEmail($veI: ValidateEmailCodeInput!){
+  validateEmailCode(validateEmailCodeInput: $veI) {
     email
     origin
   }
@@ -59,13 +68,11 @@ mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
 }
 `
 
-export const CREATE_PAYMENTINFO = gql`
-mutation createNewPayment($userPaymentInfo: createPaymentInformationInput) {
-  createPaymentInformation(input: $userPaymentInfo){
-    paymentInformation {
+export const CREATE_PAYMENT = gql`
+mutation createNewPayment($userPayment: CreatePaymentInput!) {
+  createPayment(createPaymentInput: $userPayment){
       id
-      name
-    }
+      cardHolder
   }
 }
 `
@@ -105,8 +112,16 @@ mutation resetPassword($password: String!, $passwordConfirmation: String!, $code
 }
 `
 
+export const CREATE_RESERVATION = gql`
+  mutation CreateReservation($crI: CreateReservationInput!){
+    createReservation(createReservationInput: $crI){
+      id
+    }
+  }
+`
+
 export const CREATE_VEHICLE = gql`
-mutation CreateVehicle($cvInput: createVehicleInput!){
+mutation CreateVehicle($cvInput: CreateVehicleInput!){
   createVehicle(createVehicleInput: $cvInput) {
     id
     licensePlate
@@ -116,7 +131,7 @@ mutation CreateVehicle($cvInput: createVehicleInput!){
 `
 
 export const UPDATE_VEHICLE = gql`
-mutation UpdateVehicle($uvInput: updateVehicleInput!){
+mutation UpdateVehicle($uvInput: UpdateVehicleInput!){
   updateVehicle(
     updateVehicleInput: $uvInput
   ) {
@@ -135,14 +150,62 @@ mutation CreateParking($cpInput: CreateParkingInput!){
     countParking
     latitude
     longitude
+    published
     parkingName
-    calendar
     priceHours
     mainPicture
-    isAvailable
-    sector
-    direction
-    information
+    calendar {
+      id
+      parkingId
+      monday {
+        start
+        finish
+      }
+      tuesday {
+        start
+        finish
+      }
+      wednesday {
+        start
+        finish
+      }
+      thursday {
+        start
+        finish
+      }
+      friday {
+        start
+        finish
+      }
+      saturday {
+        start
+        finish
+      }
+      sunday {
+        start
+        finish
+      }
+    }
+  }
+}
+`
+
+export const EDIT_PARKING = gql`
+mutation UpdateUserParking($epi: UpdateParkingInput!) {
+  updateParking(updateParkingInput: $epi){
+    id
+    parkingName
+  }
+}
+`
+
+export const CREATE_REVIEW = gql`
+mutation CreateReview($crI: CreateReviewInput!){
+  createReview(createReviewInput: $crI){
+    id
+    title
+    calification
+    review
   }
 }
 `

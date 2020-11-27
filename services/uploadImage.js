@@ -1,20 +1,13 @@
 import axios from "axios"
 
-export default function UploadImageService(file, setImage) {
+export default function UploadImageService(file) {
     const apiBaseURL = "https://parka-api.herokuapp.com/upload"
     const formData = new FormData()
     formData.append("files", file)
-    axios({
+    return axios({
         method: "POST",
         url: apiBaseURL,
         data: formData
-    }).then(res => {
-        setImage(res.data[0].url)
-        // return res.data[0].url
-    })
-    .catch(err => {
-        console.error(err)
-        // return err.message
     })
 }
 

@@ -3,8 +3,9 @@ import styled from "styled-components";
 export const MainFormContainer = styled.div`
   margin: 2em 0;
   padding: 2em 0.5em;
+  overflow: hidden;
   width: 100%;
-  height: 50vh;
+  height: auto;
   min-height: 600px;
   border: 1px solid rgba(0, 0, 0, 0.5);
   border-radius: 50px;
@@ -64,7 +65,7 @@ export const FormContainer = styled.div`
     "actions actions";
 
   column-gap: 1em;
-  row-gap: 0.5em;
+  row-gap: 1em;
 
   @media (max-width: 768px) {
     grid-template-areas:
@@ -123,7 +124,9 @@ export const InformationSection = styled.div`
 `;
 
 export const ActionSection = styled.div`
+  margin: 1em 0;
   grid-area: actions;
+  justify-self: stretch;
   display: flex;
   justify-content: space-around;
   align-items: center;

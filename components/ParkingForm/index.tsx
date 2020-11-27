@@ -2,10 +2,10 @@ import { useState, useReducer, useEffect, useContext } from "react"
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money"
 import SchedulePicker from "components/SchedulePicker"
-import MultipleImagePicker from "components/MultipleImagePicker"
+import ImagePicker from "components/ImagePicker"
 import { CreateParkingSchema } from "utils/schemas"
 import Field from "components/Field"
-import { Container, ElementContainer, CheckboxContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
+import { Container, ElementContainer, HeaderSection, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, } from "./styles"
 import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
@@ -15,14 +15,16 @@ import Spinner from "components/Spinner"
 import Button from "components/Button"
 import { uploadMultipleImages } from "services/uploadImage"
 import { useRouter } from "next/router";
+import ReverseGeocode from "services/getAddress";
 
 type DayCheckProps = {
     id: string;
     value: number;
     dispatch: any;
+    presentationName: string;
 }
 
-function CheckElement({ id, value, dispatch }: DayCheckProps) {
+function CheckElement({ id, value, dispatch, presentationName }: DayCheckProps) {
     const handleChange = (event) => {
         const target = event.target
         const value = target.checked
@@ -46,7 +48,7 @@ function CheckElement({ id, value, dispatch }: DayCheckProps) {
     return (
         <DayCheckboxContainer>
             <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} />
-            <label>{id.substr(0, 2)}</label>
+            <label>{presentationName.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
 }
@@ -61,7 +63,40 @@ function initState(week: string[]) {
     return obj
 }
 
-function reducer(state, action) {
+type StateObject = {
+    "sunday"?: Array<RangeObject>;
+    "monday"?: Array<RangeObject>;
+    "tuesday"?: Array<RangeObject>;
+    "wednesday"?: Array<RangeObject>;
+    "thursday"?: Array<RangeObject>;
+    "friday"?: Array<RangeObject>;
+    "saturday"?: Array<RangeObject>;
+}
+
+
+type Action =
+    | {
+        type: "add_range", payload:
+        {
+            day: string,
+            id: string
+        }
+    }
+    | {
+        type: "update_range", payload: {
+            id: string, day: string, value: RangeObject
+        }
+    }
+    | { type: "remove_range", payload: { id: string, day: string } }
+    | { type: "remove_day", payload: { day: string } }
+    | { type: "add_day", payload: { day: string } }
+    | {
+        type: "reset", payload: {
+            week: string[]
+        }
+    }
+
+function reducer(state: StateObject, action: Action) {
     switch (action.type) {
         case "add_range":
             return {
@@ -69,7 +104,7 @@ function reducer(state, action) {
                 [action.payload.day]: [...state[action.payload.day], {
                     id: action.payload.id,
                     start: "",
-                    end: ""
+                    finish: ""
                 }]
             }
         case "update_range":
@@ -95,8 +130,11 @@ function reducer(state, action) {
                 [action.payload.day]: []
             }
         case "remove_day":
-            let { [action.payload.day]: omit, ...res } = state
-            return res
+            let stateCopy = {
+                ...state
+            }
+            delete stateCopy[action.payload.day]
+            return stateCopy
         case "reset":
             return initState(action.payload.week)
         default:
@@ -107,7 +145,7 @@ function reducer(state, action) {
 type RangeObject = {
     id: number;
     start?: string;
-    end?: string;
+    finish?: string;
 }
 
 type ParkingProps = {
@@ -117,7 +155,12 @@ type ParkingProps = {
 export default function ParkingForm({ coordinates }: ParkingProps) {
     const { token } = useContext(UserContext)
     const router = useRouter()
-    const week = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+    const [geocodeData, setGeocodeData] = useState({
+        sector: "",
+        address: ""
+    })
+    const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
+    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
     const [state, dispatch] = useReducer(reducer, {}, initState);
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
@@ -135,10 +178,13 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     useEffect(() => {
         console.log('Cambiaron coordenadas')
         console.log(coordinates)
+        if (coordinates.lat !== 0)
+            ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
     }, [coordinates])
 
     return (
         <Formik
+            enableReinitialize={true}
             initialValues={{
                 countParking: 1,
                 latitude: `${coordinates.lat}`,
@@ -147,19 +193,19 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                 priceHours: 50,
                 pictures: ["as", "as"],
                 mainPicture: "asd",
-                sector: "",
-                direction: "",
+                sector: `${geocodeData.sector}`,
+                direction: `${geocodeData.address}`,
                 information: "",
                 features: []
             }}
             validationSchema={CreateParkingSchema}
             onSubmit={(values) => {
-                const daysAvailable = []
-
-                for (const key in state) {
-                    daysAvailable.push(key)
+                let modifiedState = {}
+                for (let [key, range] of Object.entries(state)) {
+                    modifiedState[key] = range.map((value: RangeObject) => {
+                        return { start: value.start, finish: value.finish }
+                    })
                 }
-
                 uploadMultipleImages(files)
                     .then(response => {
                         return response.data
@@ -172,12 +218,12 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     "latitude": `${coordinates.lat}`,
                                     "longitude": `${coordinates.lng}`,
                                     "parkingName": values.parkingName,
-                                    "priceHours": `${values.priceHours}`,
+                                    "priceHours": parseFloat(values.priceHours.toString()),
                                     "information": values.information,
                                     "sector": values.sector,
                                     "direction": values.direction,
                                     "features": values.features,
-                                    "calendar": daysAvailable,
+                                    "calendar": modifiedState,
                                     "pictures": urls,
                                     "mainPicture": urls[0]
                                 }
@@ -187,11 +233,13 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                     .catch(error => console.error(error))
             }}
         >
-            {({ setFieldValue, errors, touched }) => (
+            {({ setFieldValue, errors, touched, values }) => (
                 <Form>
                     <Container>
-                        <LeftSection>
+                        <HeaderSection>
                             <h2>Registro de parqueos</h2>
+                        </HeaderSection>
+                        <LeftSection>
                             <Field
                                 name="countParking"
                                 label="Cantidad de parqueos"
@@ -211,13 +259,14 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 label="Dirección"
                                 errorMessage={errors.direction}
                                 isTouched={touched.direction}
+                                value={values.direction}
                                 placeholder="Dirección"
                             />
                             <ElementContainer>
                                 <label><b>Disponibilidad</b></label>
                                 <b>Dias</b>
                                 <div style={{ display: "flex", justifyContent: "space-around", width: "300px" }}>
-                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} />)}
+                                    {week.map((day, idx) => <CheckElement key={day} id={day} value={idx} dispatch={dispatch} presentationName={presentationalWeek[idx]} />)}
                                 </div>
                                 <SchedulePicker dispatch={dispatch} state={state} />
                             </ElementContainer>
@@ -229,6 +278,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 errorMessage={errors.sector}
                                 isTouched={touched.sector}
                                 placeholder="Sector"
+                                value={values.sector}
                             />
                             <div className="iconInput">
                                 <MoneyIcon />
@@ -261,6 +311,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     type="checkbox"
                                                     label={feature.name}
                                                     value={feature.id}
+                                                    inputStyles={{ width: "auto" }}
                                                 />
                                             )
                                         })}
@@ -269,8 +320,8 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                 </>}
                         </MiddleSection>
                         <RightSection>
-                            <MultipleImagePicker setFiles={setFiles} />
-                            <Button submit={true}>Crear parqueo</Button>
+                            <ImagePicker placement="vertical" setFiles={setFiles} />
+                            <Button submit={false}>Crear parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`

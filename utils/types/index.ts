@@ -1,4 +1,4 @@
-
+import { User } from "./user"
 //Refers to the type where { id, name } are the only fields needed
 export type BasicEntity = {
     __typename: string;
@@ -52,14 +52,33 @@ export interface ModelsData {
     models: BasicEntity[]
 }
 
+export type Schedule = {
+    id?: string;
+    start: number;
+    finish: number;
+}
+
+export type Calendar = {
+    id?: string;
+    parkingId?: string;
+    monday: Schedule[];
+    tuesday: Schedule[];
+    wednesday: Schedule[];
+    thursday: Schedule[];
+    friday: Schedule[];
+    saturday: Schedule[];
+    sunday: Schedule[];
+}
+
 export type Parking = {
     __typename: string;
     id: string;
     latitude: string;
     longitude: string;
     published: boolean;
+    countParking: number;
     parkingName: string;
-    calendar: string[];
+    calendar: Calendar;
     priceHours: string;
     pictures: string[];
     mainPicture: string;
@@ -69,6 +88,7 @@ export type Parking = {
     information: string;
     features: BasicEntity[];
     verified: boolean;
+    user: User;
 }
 
 export interface ParkingData {
@@ -122,4 +142,69 @@ export type Coordinates = {
     time?: Date;
 }
 
+export type ReservationInput = {
+    parking?: string;
+    owner?: string;
+    checkInDate?: string;
+    checkOutDate?: string;
+    vehicle?: string;
+    paymentInfo?: string;
+    total?: number;
+    rentDate?: string;
+}
+
+export enum ReservationStatuses {
+    Created = "Created",
+    InProgress = "InProgress",
+    Completed = "Completed",
+    Cancelled = "Cancelled"
+}
+
+export type Reservation = {
+    __typename: string;
+    id: string;
+    parking: Parking;
+    client: User;
+    owner: User;
+    checkInDate: string;
+    checkOutDate: string;
+    vehicle: Vehicle;
+    paymentInfo: Payment;
+    total: number;
+    rentDate: string;
+    status: ReservationStatuses;
+}
+
+export type Payment = {
+    __typename: string;
+    id: string;
+    cardHolder: string;
+    expirationDate: string;
+    digit: string;
+    activated: boolean;
+    card: BasicEntity;
+}
+
+export type ReviewInput = {
+    user?: string;
+    parking?: string;
+    reservation?: string;
+    title?: string;
+    review?: string;
+    calification?: number;
+    type?: boolean;
+}
+
+export type Review = {
+    __typename: string;
+    id: string;
+    title: string;
+    calification: number;
+    user: User;
+    parking: Parking;
+    reservation: Reservation;
+    review: string;
+    type: boolean;
+    createdAt: string;
+}
 

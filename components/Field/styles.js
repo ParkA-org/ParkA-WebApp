@@ -6,20 +6,21 @@ export const StyledField = styled(Field)`
   border-radius: 0.25em;
   margin-bottom: 1em;
   resize: none;
-  max-width: 300px;
+  max-width: ${props => props.component === "textarea" ? "350px" : "300px"};
   line-height: 1.5em;
   width: 100%;
+  height: ${props => props.component === "textarea" ? "200px" : "auto"};
   text-align: left;
   padding: 0.5em;
   @media (max-width: 768px) {
     width: auto;
   }
-  font-size:1.25rem;
+  font-size:${props => props.component === "textarea" ? "1.1rem" : "1.25rem"};
 `;
 
 export const CheckboxContainer = styled.div`
     display: flex;
-    justify-content: flex-start;
+    justify-content: space-between;
     align-items: center;
     & > input[type="checkbox"] {
         display: inline-block;

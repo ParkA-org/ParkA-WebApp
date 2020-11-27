@@ -1,23 +1,60 @@
-
-import { Container, Avatar, UserInfo, ReviewDate, Text } from "./styles"
+import { useState } from "react"
+import { Review } from "utils/types"
+import { parseISOString } from "utils/functions"
+import { Container, ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, Text, ModalLink, ReviewTitle, ModalTitle } from "./styles"
+import ModalPortal from "components/Modal"
 import { BsStarFill, BsStar } from "react-icons/bs"
-export default function ReviewCard() {
 
+export default function ReviewCard({ id, title, calification, createdAt, review, user }: Review) {
+    const [showModal, setShowModal] = useState(false)
+    let stars = []
+    for (let i = 0; i < calification; i++) {
+        stars.push(<BsStarFill color="goldenrod" />)
+    }
+    for (let i = calification; i < 5 && stars.length != 5; i++) {
+        stars.push(<BsStar />)
+    }
     return (
         <Container>
-            <Avatar src="/placeholders/image-placeholder.png" alt="user avatar" />
+            <Avatar src={user.profilePicture ? user.profilePicture : "/placeholders/image.png"} alt="user avatar" />
             <UserInfo>
-                <h3>David Bujosa</h3>
+                <h3>{`${user.name} ${user.lastName}`}</h3>
                 <div>
-                    <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" />  <BsStarFill color="goldenrod" /> <BsStar /> <BsStar />
+                    {stars}
                 </div>
             </UserInfo>
             <ReviewDate>
-                7/3/2020
+                {`${parseISOString(createdAt).toLocaleDateString('es-ES')}`}
             </ReviewDate>
+            <ReviewTitle>
+                {title}
+            </ReviewTitle>
             <Text>
-                Me agrado mucho el parqueo, venia con carwash y seguridad incluido asddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddasdddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+                {review}
             </Text>
+            <ModalLink onClick={() => setShowModal(true)}>
+                Ver más
+            </ModalLink>
+            {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+                <ModalContainer>
+                    <Avatar src={user.profilePicture ? user.profilePicture : "/placeholders/image.png"} alt="user avatar" />
+                    <UserInfo>
+                        <h3>{`${user.name} ${user.lastName}`}</h3>
+                        <div>
+                            {stars}
+                        </div>
+                    </UserInfo>
+                    <ReviewDate style={{ marginRight: "2em" }}>
+                        {`${parseISOString(createdAt).toLocaleDateString('es-ES')}`}
+                    </ReviewDate>
+                    <ModalTitle>
+                        {title}
+                    </ModalTitle>
+                    <ModalText>
+                        {review}
+                    </ModalText>
+                </ModalContainer>
+            </ModalPortal>}
         </Container>
     )
 }

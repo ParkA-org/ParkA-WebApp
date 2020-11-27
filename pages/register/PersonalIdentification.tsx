@@ -14,7 +14,7 @@ import Button from "components/Button"
 import Spinner from "components/Spinner"
 import IdentificationCard from "components/IdentificationCard"
 import { BasicEntity, BirthPlaceData, NationalityData } from "utils/types"
-import UploadImageService from "services/uploadImage";
+import MaskedInput from "react-text-mask"
 import {
   MainFormContainer,
   FormContainer,
@@ -26,8 +26,7 @@ import {
 
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
-  const [image,] = useLocalStorage("image", "../placeholders/image-placeholder.png")
-  const [userId, setUserId] = useLocalStorage("user-id", "")
+  const [image, setLocalImage] = useLocalStorage("image", "../placeholders/image.png")
   const [localUser, setLocalUser] = useLocalStorage("user", {})
   const [showModal, setShowModal] = useState(false)
   const router = useRouter()
@@ -39,6 +38,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     dateOfBirth: "",
     birthPlace: "",
     nationality: "",
+    telephoneNumber: ""
   }
   const [initialUserValues, setInitialUserValues] = useState({
     typeOfDocument: "",
@@ -46,6 +46,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     dateOfBirth: "",
     birthPlace: "",
     nationality: "",
+    telephoneNumber: ""
   })
 
   const [CreateUser] = useMutation(CREATE_USER)
@@ -70,6 +71,25 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     }
   })
 
+  const cardMask = [
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    "-",
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    "-",
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    "-",
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/,
+    /[0-9]/
+  ];
 
 
   useEffect(() => {
@@ -100,6 +120,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           validationSchema={PersonalIdentificationSchema}
           onSubmit={(values) => {
             setLocalUser({ ...localUser, ...values })
+
             let newDate = new Date(values.dateOfBirth).toISOString()
             setShowModal(true)
             CreateUserInfo({
@@ -108,7 +129,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   paymentInformation: "cc78a504-aafe-4917-afe9-f3a3ecee8b07",
                   birthDate: newDate,
                   documentNumber: values.documentCode,
-                  telephoneNumber: "8091234568123",
+                  telephoneNumber: values.telephoneNumber.replaceAll("-", ""),
                   nationality: nationalityData.getAllNationalities.filter(nation => nation.name == values.nationality)[0].id,
                   placeOfBirth: birthPlacedata.getAllCountries.filter(country => country.name == values.birthPlace)[0].id,
                 }
@@ -116,7 +137,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
             })
           }}
         >
-          {({ values, errors, touched }) => (
+          {({ values, errors, touched, handleBlur, handleChange }) => (
             <Form>
               <FormContainer>
                 <FieldSection>
@@ -142,6 +163,20 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                     isTouched={touched.documentCode}
                     value={values.documentCode}
                   />
+                  <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", width: "100%" }}>
+                    <label className="maskLabel">Número de telefono</label>
+                    <MaskedInput
+                      mask={cardMask}
+                      id="telephoneNumber"
+                      name="telephoneNumber"
+                      placeholder="Entra tu número telefónico"
+                      type="text"
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      className="maskedInput"
+                      style={{ backgroundColor: "#E5E4E4", borderRadius: "0.25em", marginBottom: "1em", resize: "none", lineHeight: "1.5em", textAlign: "left", padding: "0.5em", width: "300px", fontSize: "1.25rem" }}
+                    />
+                  </div>
                   {birthPlaceLoading ? <Spinner /> :
                     <SelectField
                       name="birthPlace"
@@ -201,7 +236,15 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
           <h3>Loading...</h3>
         </ModalPortal>}
       </MainFormContainer>
-
+      <style jsx>{`
+          .maskLabel {
+            font-weight: bolder;
+            font-size: 1.25em;
+            text-align: left;
+            color: #333;
+            margin: 0.5em 1em 0.5em 0;
+          }
+        `}</style>
     </Layout >
   );
 }

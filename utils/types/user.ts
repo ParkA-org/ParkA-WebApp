@@ -1,3 +1,8 @@
+export type BasicEntity = {
+    __typename: string;
+    id: string;
+    name: string;
+}
 
 export type CreateUserInformationInput = {
     paymentInformation?: string;
@@ -36,6 +41,8 @@ export type CreateUserInput = {
 }
 
 export type User = {
+    id: string;
+
     name: string;
 
     lastName: string;
@@ -44,7 +51,7 @@ export type User = {
 
     password: string;
 
-    userInformation: string;
+    userInformation: UserInformation;
 
     profilePicture?: string;
 
@@ -70,7 +77,7 @@ export type UserInformation = {
 
     birthDate: string;
 
-    placeOfBirth: string;
+    placeOfBirth: BasicEntity;
 
-    nationality: string;
+    nationality: BasicEntity;
 }

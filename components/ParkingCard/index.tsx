@@ -23,7 +23,7 @@ export default function ParkingCard({ parking }: CardProps) {
     return (
         <Container onClick={() => router.push('/parking/detail/[id]', `/parking/detail/${parking.id}`)}>
             <CardImage
-                src={parking?.mainPicture ? parking?.mainPicture : "../placeholders/park-placeholder.png"} alt="parking lot" />
+                src={parking?.mainPicture ? parking?.mainPicture : "../placeholders/park.png"} alt="parking lot" />
             <CardHeader>
                 <h2>{parking?.parkingName ? parking?.parkingName : "Alma Rosa I"}</h2>
                 <div>
@@ -60,7 +60,10 @@ export default function ParkingCard({ parking }: CardProps) {
             <ButtonSection>
                 <ActionButton><MdScreenShare color="white" size="1.5em" />Compartir</ActionButton>
                 <ActionButton><MdMap color="white" size="1.5em" />Ver en mapa</ActionButton>
-                <ActionButton>Editar</ActionButton>
+                <ActionButton onClick={(event) => {
+                    event.stopPropagation()
+                    router.push('/parking/edit/[id]', `/parking/edit/${parking.id}`)
+                }}>Editar</ActionButton>
             </ButtonSection>
         </Container>
     )

@@ -183,15 +183,32 @@ export default function MapViewer(): JSX.Element {
                             justify-content: space-around;
                             align-items: center;
                             height: auto
+                            max-width: 20vw;
                         }
-                        
+                        .information > h3 {
+                            font-size: 1.2rem;
+                            color: red;
+                        }
+                        .information {
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                        }
                         .description {
+                            font-size: 0.9rem;
                             margin: 0.5em;
+                            max-width: 350px;
+                            overflow: hidden;
+                            display: -webkit-box;
+                            -webkit-line-clamp: 3;
+                            -webkit-box-orient: vertical;  
                         }
                         .img {
                             width: 150px;
                             height: 100px;
                             border-radius: 5px;
+                            margin-left: 0.5em;
                         }
                     `
                     }

@@ -1,14 +1,10 @@
 import styled from "styled-components";
 
 export const DropdownMenu = styled.div`
-  //border: solid;
-  //border-color: #336F8B;
-  //border-width: 2px;
-  //border-radius: 1.5em;
   background-color: white;
   min-width:260px;
   position:absolute;
-  top: 30px;
+  top: 15px;
   right:30px;
   z-index: 4;
 
@@ -36,6 +32,8 @@ export const DropdownButton = styled.button`
   min-width:260px;
   background-color: transparent;
   z-index: 4;
+  height:56px;
+  outline:none !important;
 
   & div > img:first-child {
     margin-right: 10px;
@@ -89,8 +87,9 @@ export const DropdownItem = styled.div`
 
 export const ToggleButton = styled.button`
   background-color:transparent;
-  outline:none;
+  outline:none !important; 
   margin-right:10px;
+  margin-left:15px
 
   &:focus{
     outline:none;
