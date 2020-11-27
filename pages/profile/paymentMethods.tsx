@@ -12,12 +12,17 @@ import NavigationLink from "components/NavigationLink"
 
 const PageContainer = styled.div`
     height: 88vh;
+    width: auto;
+    padding: 0 2em;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
 `
 
 const InformationSection = styled.section`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     background-color: #C4C4C4;
     padding: 2em; 
     margin-top: 2em;
@@ -102,7 +107,7 @@ export default function PaymentMethods() {
         <Layout pageTitle="Métodos de Pago">
             <PageContainer>
                 <section className="HeaderSection">
-                    <h1>Métodos de pago</h1>
+                    <h1 style={{ marginRight: "3em" }}>Métodos de pago</h1>
                     <NavigationLink href="/register/PaymentInformation">
                         <NewLink><PlusIcon />Nuevo Método de Pago</NewLink>
                     </NavigationLink>
@@ -112,7 +117,7 @@ export default function PaymentMethods() {
 
                 </Carousel>
 
-                {currentPayment === null ? <img src="/images/creditcards.svg" /> : (
+                {currentPayment === null ? <img src="/images/creditcards.svg" style={{ maxHeight: "40vh" }} /> : (
                     <InformationSection>
                         <CardInformation>
                             <CardElement>
