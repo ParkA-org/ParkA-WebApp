@@ -56,9 +56,7 @@ export default function Field({
         value={value}
         style={inputStyles}
       />
-      {errorMessage && isTouched ? (
-        <ErrorMessage>{errorMessage}</ErrorMessage>
-      ) : null}
+      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </FieldContainer>
   );
 }
