@@ -158,7 +158,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
     const presentationalWeek = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sabado']
     const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
     const [files, setFiles] = useState([])
-    const [state, dispatch] = useReducer(reducer, {}, initState);
+    const [state, dispatch] = useReducer(reducer, week, initState);
     const { loading: featuresLoading, error: featuresError, data: featuresData } = useQuery<FeaturesData>(GET_FEATURES);
     const [EditParking] = useMutation(EDIT_PARKING, {
         onCompleted() {
@@ -197,7 +197,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
             validationSchema={EditParkingSchema}
             onSubmit={(values) => {
                 let modifiedState = {}
-                for (let [key, range] of Object.entries(state)) {
+                for (let [key, range] of Object.entries(state as Record<string, RangeObject[]>)) {
                     modifiedState[key] = range.map((value: RangeObject) => {
                         return { start: value.start, finish: value.finish }
                     })

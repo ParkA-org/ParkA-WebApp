@@ -21,6 +21,11 @@ type StateObject = {
     "saturday"?: Array<RangeObject>;
 }
 
+interface RefObject {
+    close: () => void
+    open: () => void
+}
+
 const getRandomInt = (max) => Math.floor(Math.random() * max)
 
 const lastFormatPlaceholder = (value) => `${value.substr(0, value.length / 2)}:${value.substr((value.length / 2))}`
@@ -31,7 +36,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
     const validateHours = (hour: number) => {
         return hour - (value.start / 100) < 1
     }
-    const whisperRef = createRef()
+    const whisperRef = createRef<RefObject>()
 
     const toolTip = <Tooltip>Falta un valor para completar el rango</Tooltip>
     return (

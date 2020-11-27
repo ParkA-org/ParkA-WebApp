@@ -9,8 +9,7 @@ import {
     TagContainer,
     CharacteristicContainer,
     Characteristic,
-    Slider,
-    TimeFields
+    Slider
 } from "./styles"
 import { GET_FEATURES } from "queries"
 import { useQuery } from "@apollo/client"
@@ -23,12 +22,12 @@ export interface Range {
 
 function PriceSlider({ setFilterObject, filterObject }: { setFilterObject: any, filterObject: any }) {
 
-    const [stateValue, setStateValue] = useState<Range>({ min: 0, max: 200 })
+    const [stateValue, setStateValue] = useState<Range | number>({ min: 0, max: 200 })
 
     return (
         <Slider>
             <InputRange maxValue={200} minValue={0} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
-                setFilterObject({ ...filterObject, priceHours_lte: val.max, priceHours_gte: val.min })
+                setFilterObject({ ...filterObject, priceHours_lte: val['max'], priceHours_gte: val['min'] })
             }}
                 step={10}
                 classNames={{
