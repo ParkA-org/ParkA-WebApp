@@ -1,4 +1,4 @@
-
+import { CSSProperties } from "react"
 import {
   Container,
   CardNumbers,
@@ -13,13 +13,17 @@ type CardProps = {
   cardNumber: string;
   cardHolder: string;
   expirationDate: string;
+  cardStyles?: CSSProperties;
   cvv?: string;
+  onClick?: () => void;
 };
 
 export default function CreditCard({
   cardNumber,
   cardHolder,
   expirationDate,
+  cardStyles,
+  onClick
 }: CardProps): JSX.Element {
 
   const formatNumbers = (data: string): string => {
@@ -34,7 +38,7 @@ export default function CreditCard({
   };
 
   return (
-    <Container>
+    <Container style={cardStyles} onClick={onClick}>
       <Logo
         src={
           cardNumber[0] === "4"

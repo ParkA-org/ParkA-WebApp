@@ -68,13 +68,11 @@ mutation CreateUserInfo($cuiInput: CreateUserInformationInpuType!){
 }
 `
 
-export const CREATE_PAYMENTINFO = gql`
-mutation createNewPayment($userPaymentInfo: createPaymentInformationInput) {
-  createPaymentInformation(input: $userPaymentInfo){
-    paymentInformation {
+export const CREATE_PAYMENT = gql`
+mutation createNewPayment($userPayment: CreatePaymentInput!) {
+  createPayment(createPaymentInput: $userPayment){
       id
-      name
-    }
+      cardHolder
   }
 }
 `
