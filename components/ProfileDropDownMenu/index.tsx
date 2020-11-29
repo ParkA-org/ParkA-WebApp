@@ -66,7 +66,7 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
             <DropdownContent>
                 <DropdownItem style={{ cursor: "pointer" }} onClick={() => router.push("/chat")}><img src="/images/mdi_chat.svg" /><h4>Chats</h4></DropdownItem>
                 <DropdownItem style={{ cursor: "pointer" }} onClick={() => router.push("/profile/paymentMethods")}><img src="/images/mdi_payment.svg" /><h4>Métodos de Pagos</h4></DropdownItem>
-                <DropdownItem style={{ cursor: "pointer" }} ><img src="/images/mdi_person.svg" /><h4>Editar Perfil</h4></DropdownItem>
+                <DropdownItem style={{ cursor: "pointer" }} onClick={() => router.push("/profile/edit")}><img src="/images/mdi_person.svg" /><h4>Editar Perfil</h4></DropdownItem>
                 <DropdownItem style={{ cursor: "pointer" }} ><img src="/images/mdi_settings.svg" /><h4>Configuración</h4></DropdownItem>
                 <DropdownItem style={{ cursor: "pointer" }} onClick={logout} ><img src="/images/mdi_exit.svg" /><h4>Cerrar Sesión</h4></DropdownItem>
             </DropdownContent>

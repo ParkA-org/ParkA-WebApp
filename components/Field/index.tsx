@@ -46,18 +46,20 @@ export default function Field({
     )
   }
   return (
-    <FieldContainer placement={placement} style={containerStyles}>
-      <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField
-        type={type}
-        name={name}
-        component={component}
-        placeholder={placeholder}
-        value={value}
-        style={inputStyles}
-      />
+    <>
+      <FieldContainer placement={placement} style={containerStyles}>
+        <StyledLabel htmlFor={name}>{label}</StyledLabel>
+        <StyledField
+          type={type}
+          name={name}
+          component={component}
+          placeholder={placeholder}
+          value={value}
+          style={inputStyles}
+        />
+      </FieldContainer>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </FieldContainer>
+    </>
   );
 }
 
@@ -85,15 +87,17 @@ export function SelectField({
   containerStyles
 }: SelectFieldProps): JSX.Element {
   return (
-    <FieldContainer placement={placement} style={containerStyles}>
-      <StyledLabel htmlFor={name}>{label}</StyledLabel>
-      <StyledField component="select" name={name} placeholder={placeholder} value={value}>
-        {children}
-      </StyledField>
+    <>
+      <FieldContainer placement={placement} style={containerStyles}>
+        <StyledLabel htmlFor={name}>{label}</StyledLabel>
+        <StyledField component="select" name={name} placeholder={placeholder} value={value}>
+          {children}
+        </StyledField>
+      </FieldContainer>
       {errorMessage && isTouched ? (
         <ErrorMessage>{errorMessage}</ErrorMessage>
       ) : null}
-    </FieldContainer>
+    </>
   );
 }
 

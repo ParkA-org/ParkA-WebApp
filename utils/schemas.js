@@ -1,8 +1,8 @@
 import * as Yup from "yup"
 
 export const CreateAccountSchema = Yup.object().shape({
-    name: Yup.string().required("Requerido"),
-    lastName: Yup.string().required("Requerido"),
+    name: Yup.string().min("Debe introducir más caracteres").required("Requerido"),
+    lastName: Yup.string().min("Debe introducir más caracteres").required("Requerido"),
     email: Yup.string().email("Email inválido").required("Requerido"),
     password: Yup.string().required("Requerido"),
     confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir'),
