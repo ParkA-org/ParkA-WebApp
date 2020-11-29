@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import { useQuery } from "@apollo/client";
 import { GET_CLIENT_RESERVATIONS } from "queries";
 import { Reservation, ReservationStatuses } from "utils/types";
+import { UserContext } from "context/UserContext";
 import Layout from "../layout"
 import Carousel from "components/Carousel"
 import styled from "styled-components"
@@ -21,11 +22,17 @@ export type ReservationsData = {
 }
 
 export default function Reservations() {
+    const { token } = useContext(UserContext)
     const [pendingReservations, setPendingReservations] = useState<Reservation[]>([])
     const [completedReservations, setCompletedReservations] = useState<Reservation[]>([])
 
     const { loading, error, data } = useQuery<ReservationsData>(GET_CLIENT_RESERVATIONS, {
-        fetchPolicy: "network-only"
+        fetchPolicy: "network-only",
+        context: {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }
     })
 
     useEffect(() => {

@@ -364,6 +364,9 @@ query GetClientReservations{
       id
       mainPicture
     }
+    vehicle {
+      id
+    }
     client {
       id
     }
