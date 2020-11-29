@@ -262,7 +262,7 @@ export default function EditVehicle(): JSX.Element {
                                             {options.length > 0 && options}
                                         </SelectField>}
 
-                                    <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
+                                    <div role="group" id="vehicle-type-group" style={{ display: "flex", flexDirection: "column", marginLeft: "0", justifyContent: "space-between", marginTop: "2em" }}>
                                         <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
                                             {bodyStylesLoading ? <Spinner /> :
@@ -316,21 +316,21 @@ export default function EditVehicle(): JSX.Element {
                 </ModalPortal>}
             </div>
             <style jsx>{`
-          h1{
-            margin-top:20px;
-            margin-bottom:10px;
-            text-align:left;
-          }
-          .radioContainer {
-            display: flex;
-            justify-content: flex-start;
-          }
-          .radioContainer > label {
-            font-size: 1rem;
-            font-weight: 800;
-            margin-left: 1em;
-          }
-        `}
+                h1{
+                    margin-top:20px;
+                    margin-bottom:10px;
+                    text-align:left;
+                }
+                .radioContainer {
+                    display: flex;
+                    justify-content: flex-start;
+                }
+                .radioContainer > label {
+                    font-size: 1rem;
+                    font-weight: 800;
+                    margin-left: 1em;
+                }
+            `}
             </style>
         </Layout >
     );

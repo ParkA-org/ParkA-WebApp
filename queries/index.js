@@ -47,6 +47,7 @@ query GetLogUser {
     confirmed
     userInformation {
       documentNumber
+      birthDate
       telephoneNumber
       nationality {
         id
