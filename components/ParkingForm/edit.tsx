@@ -26,7 +26,7 @@ type DayCheckProps = {
 
 function CheckElement({ id, value, dispatch, presentationName, checked }: DayCheckProps) {
     const [isChecked, setCheck] = useState(checked)
-    const handleClick = (event) => {
+    const handleChange = (event) => {
         const target = event.target
         const value = target.checked
         const name = target.name
@@ -49,7 +49,7 @@ function CheckElement({ id, value, dispatch, presentationName, checked }: DayChe
     }
     return (
         <DayCheckboxContainer>
-            <input type="checkbox" id={id} name={id} value={value} onClick={handleClick} checked={isChecked} />
+            <input type="checkbox" id={id} name={id} value={value} onChange={handleChange} checked={isChecked} />
             <label>{presentationName.substr(0, 2)}</label>
         </DayCheckboxContainer>
     )
@@ -291,7 +291,6 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                                     value={values.priceHours}
                                 />
                             </div>
-
                             <Field
                                 label="Informaciones adicionales"
                                 name="information"
@@ -309,11 +308,23 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                                         {featuresData.getAllFeatures.map(feature => {
                                             return (
                                                 <Field
+                                                    key={feature.id}
                                                     name="features"
                                                     type="checkbox"
                                                     label={feature.name}
                                                     value={feature.id}
-                                                    checked={values.features.filter(curFeature => curFeature.id === feature.id).length > 0 ? true : false}
+                                                    onChange={() => {
+                                                        if (values.features.filter(feat => feat.id === feature.id).length > 0) {
+                                                            const nextValue = values.features.filter(
+                                                                value => value.id !== feature.id
+                                                            );
+                                                            setFieldValue('features', nextValue);
+                                                        } else {
+                                                            const nextValue = values.features.concat(feature);
+                                                            setFieldValue('features', nextValue);
+                                                        }
+                                                    }}
+                                                    checked={values.features.filter(curFeature => curFeature.id === feature.id).length > 0}
                                                     inputStyles={{ width: "auto" }}
                                                 />
                                             )
@@ -328,11 +339,11 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         </RightSection>
                         <style jsx>
                             {`
-                    .iconInput {
-                        display: flex;
-                        align-items: center;
-                    }
-                `}
+                                .iconInput {
+                                    display: flex;
+                                    align-items: center;
+                                }
+                            `}
                         </style>
                     </Container>
                 </Form>

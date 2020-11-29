@@ -224,6 +224,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     "direction": values.direction,
                                     "features": values.features,
                                     "calendar": modifiedState,
+                                    "isAvailable": true,
                                     "pictures": urls,
                                     "mainPicture": urls[0]
                                 }

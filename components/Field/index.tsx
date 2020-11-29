@@ -16,6 +16,7 @@ type FieldProps = {
   inputStyles?: CSSProperties;
   checked?: boolean;
   onClick?: any;
+  onChange?: any;
   defaultChecked?: boolean;
   containerStyles?: CSSProperties;
 };
@@ -25,6 +26,7 @@ export default function Field({
   name,
   label,
   errorMessage,
+  onChange,
   isTouched,
   component,
   placeholder,
@@ -41,7 +43,7 @@ export default function Field({
           {label}
         </StyledLabel>
         <StyledField type="checkbox" name={name} value={value} checked={checked}
-          style={inputStyles} />
+          style={inputStyles} onChange={onChange} />
       </CheckboxContainer>
     )
   }
