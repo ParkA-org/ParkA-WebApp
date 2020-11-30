@@ -100,60 +100,6 @@ export default function PaymentMethods() {
 
     if (error) return <h2>Error</h2>
     if (loading) return <h2>Loading...</h2>
-<<<<<<< HEAD
-    const {getAllUserPayments }= data;
-
-    function showInformation(userPayment){
-        console.log(userPayment);
-        document.getElementById("digit").value = userPayment.digit;
-        document.getElementById("expirationDate").value = userPayment.expirationDate;
-        document.getElementById("activated").value = userPayment.activated;
-        document.getElementById("cardHolder").value = userPayment.cardHolder;
-        document.getElementById("type").value = userPayment.card.name;
-        var content = document.getElementById("information");
-        if (content.style.maxHeight){
-        content.style.maxHeight = null;
-        } else {
-        content.style.maxHeight = content.scrollHeight + "px";
-        } 
-    }
-
-    console.log(getAllUserPayments[0].cardHolder);
-    return (
-        <Layout pageTitle="Métodos de Pago">
-            <div>
-                <AddButton><PlusIcon/> Nuevo Método de Pago</AddButton>
-                    <h1 style={{textAlign : "left"}}>Métodos de Pago</h1>
-                
-                    {getAllUserPayments.length > 0 ?
-                        <Carousel title ="">
-                        {getAllUserPayments.map( userPayment =>
-                            <div onClick={() => showInformation(userPayment)} >
-                                <CreditCard  cardNumber={userPayment.digit} cardHolder={userPayment.cardHolder} expirationDate={userPayment.expirationDate}/>
-                            </div>
-                        )}
-                        </Carousel>
-                        :
-                        <img src="/images/creditcards.svg" />
-                    }
-                
-                
-                <CardInformation id="information">
-                    <h3>Número de tarjeta</h3>
-                    <input id="digit" type="text"/>
-                    <h3>CVV</h3>
-                    <input id="cvv" type="text"/>
-                    <h3>Fecha de expiración</h3>
-                    <input id="expirationDate" type="text"/>
-                    <h3>Estado</h3>
-                    <input id="activated" type="text"/>
-                    <h3>Nombre titular</h3>
-                    <input id="cardHolder" type="text"/>
-                    <h3>Tipo</h3>
-                    <input id="type" type="text"/>
-                </CardInformation>
-            </div>
-=======
 
     const { getAllUserPayments } = data
 
@@ -215,7 +161,6 @@ export default function PaymentMethods() {
                     }
                 `}</style>
             </PageContainer>
->>>>>>> 196d18be9eae54e968a6237622e4332fc5d9dd1d
         </Layout>
     )
 }

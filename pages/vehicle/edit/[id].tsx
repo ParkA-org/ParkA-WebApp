@@ -37,7 +37,7 @@ const RightSideContainer = styled.div`
   flex-direction: column;
 
   & > * {
-    margin: 0 auto;
+    margin: 0;
   }
 `;
 
@@ -262,7 +262,7 @@ export default function EditVehicle(): JSX.Element {
                                             {options.length > 0 && options}
                                         </SelectField>}
 
-                                    <div role="group" id="vehicle-type-group" style={{ display: "flex", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
+                                    <div role="group" id="vehicle-type-group" style={{ display: "flex", flexDirection:"column", justifyContent: "space-between", width: "60%", marginTop: "2em" }}>
                                         <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
                                         <div style={{ display: "flex", flexDirection: "column" }}>
                                             {bodyStylesLoading ? <Spinner /> :
@@ -274,6 +274,7 @@ export default function EditVehicle(): JSX.Element {
                                                             label={bodyStyle.name}
                                                             name="bodyStyle"
                                                             value={values.bodyStyle}
+                                                            containerStyles={{ width: "300px" }}
                                                         />
                                                         <label>
                                                             {bodyStyle.name}
@@ -324,6 +325,8 @@ export default function EditVehicle(): JSX.Element {
           .radioContainer {
             display: flex;
             justify-content: flex-start;
+            margin-right: 2em;
+            margin-top: 1em;
           }
           .radioContainer > label {
             font-size: 1rem;

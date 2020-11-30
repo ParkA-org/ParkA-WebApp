@@ -54,7 +54,7 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                     <p>{`${total} $RD`}</p>
                 </CostSection>
                 <ButtonSection>
-                    {isCancelable ?
+                    {isCancelable ? 
                         <SpecialReservationsButton isCancelable>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={() => {
                             setShowModal(true)
                         }}>Dejar reseña</SpecialReservationsButton>}

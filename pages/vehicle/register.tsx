@@ -257,9 +257,9 @@ export default function VehicleRegister(): JSX.Element {
                       {options}
                     </SelectField>}
 
-                  <div role="group" id="vehicle-type-group" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: "80%", marginLeft: "0" }}>
+                  <div role="group" id="vehicle-type-group" style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: "60%", marginLeft: "0" }}>
                     <h4 style={{ fontSize: "1.25rem" }}>Tipo de vehiculo</h4>
-                    <div style={{ display: "flex", justifyContent: "flex-start" }}>
+                    <div style={{ display: "flex", flexDirection: "column" }}>
                       {bodyStylesLoading ? <Spinner /> :
                         bodyStylesData.getAllBodyStyles.map((vehicleType: BasicEntity) => (
                           <div className="radioContainer">
