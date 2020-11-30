@@ -233,10 +233,20 @@ query GetUserParkings{
 `
 
 export const GET_PARKINGS = gql`
-query GetParkings{
-  getAllParkings {
+query GetParkings($filterV: FilterInput!) {
+  getAllParkings(input: $filterV) {
     id
+    countParking
+    latitude
+    longitude
+    published
     parkingName
+    priceHours
+    mainPicture
+  	pictures
+    user{
+      id
+    }
     calendar {
       id
       parkingId
@@ -269,13 +279,6 @@ query GetParkings{
         finish
       }
     }
-    mainPicture
-    latitude
-    longitude
-    information
-    sector
-    direction
-    countParking
   }
 }
 `

@@ -47,7 +47,7 @@ function PriceSlider({ setFilterObject, filterObject }: { setFilterObject: any, 
     )
 }
 
-export default function FilterSideBar() {
+export default function FilterSideBar({ refetch }) {
 
     const [filterObject, setFilterObject] = useState({
         features_in: [],
@@ -79,10 +79,15 @@ export default function FilterSideBar() {
                     delete actualFilterObject[key]
             }
         }
-        console.log('Stringified object')
-        console.log(JSON.stringify(filterObject))
-        console.log('Stringified actual filter')
         console.log(JSON.stringify(actualFilterObject))
+        refetch({
+            filterV:
+            {
+                where: {
+                    ...actualFilterObject
+                }
+            }
+        })
     }, [filterObject])
 
     return (
@@ -95,7 +100,14 @@ export default function FilterSideBar() {
             <Section>
                 <h3>Tipo de Reserva</h3>
                 <TagContainer>
-                    <Tag>Horas</Tag>
+                    <Tag onClick={() => refetch({
+                        filterV:
+                        {
+                            where: {
+                                priceHours_gte: 200
+                            }
+                        }
+                    })}>Horas</Tag>
                     <Tag>Dias</Tag>
                     <Tag>Semanas</Tag>
                     <Tag>Meses</Tag>

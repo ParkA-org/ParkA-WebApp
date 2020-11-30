@@ -12,7 +12,7 @@ export default function ParkingRegister() {
     return (
         <Layout>
             <div className="container">
-                {/* <LocationPicker setCoordinates={setCoordinates} /> */}
+                <LocationPicker setCoordinates={setCoordinates} />
                 <ParkingForm coordinates={coordinates} />
             </div>
             <style jsx>
