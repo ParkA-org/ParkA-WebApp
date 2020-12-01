@@ -80,6 +80,7 @@ export default function Calendar() {
   return (
     <Layout>
       <div className="container">
+        {ownerLoading && <h3>Cargando...</h3>}
         {data &&
           <Paper>
             <Scheduler

@@ -290,6 +290,8 @@ query GetParkingWithId($id: String!){
     parkingName
     direction
     sector
+    latitude
+    longitude
     priceHours
     countParking
     isAvailable

@@ -5,6 +5,7 @@ import { Parking, ReservationInput } from "utils/types"
 import { useContext, useEffect, useState } from "react"
 import Layout from "../../layout"
 import ReservationDetail from "components/ReservationDetail"
+import MapFragment from "components/MapFragment"
 import PaymentMethod from "components/PaymentMethod"
 import { UserContext } from "context/UserContext"
 
@@ -32,7 +33,7 @@ export default function Checkout() {
     return (
         <Layout pageTitle="Parking Checkout">
             <div className="container">
-                <img src="/images/carsParked.webp" alt="parked cars" />
+                {parking && <MapFragment coordinates={{ lat: parseFloat(parking.latitude), lng: parseFloat(parking.longitude) }} />}
                 <div className="pageContent">
                     {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Loading...</h3>}
                     <PaymentMethod checkout={checkout} setCheckout={setCheckout} />
