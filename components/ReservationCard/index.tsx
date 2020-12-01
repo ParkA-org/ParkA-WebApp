@@ -63,7 +63,7 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                         {isCancelable ?
                             <ReservationsButton>
                                 <BsMap size="1.5em" />
-                                <Link href="/map"><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                                <Link href={`/parking/checkout/${parking.id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
                             </ReservationsButton>
                             :
                             <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
