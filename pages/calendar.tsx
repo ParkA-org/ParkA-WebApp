@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useState, useEffect } from "react"
 import Layout from "./layout";
-import { AppointmentsProps, ViewState } from '@devexpress/dx-react-scheduler';
+import { AppointmentModel, ViewState } from '@devexpress/dx-react-scheduler';
 import { GET_CLIENT_RESERVATIONS, GET_OWNER_RESERVATIONS } from "queries"
 import { useLazyQuery } from "@apollo/client";
 import { Reservation } from "utils/types";
@@ -10,24 +10,17 @@ import {
   Scheduler,
   WeekView,
   Appointments,
-  CurrentTimeIndicator,
+  Resources
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-
-const currentDate = '2020-11-26';
-// const schedulerData = [
-//   { startDate: '2020-10-06T09:45', endDate: '2020-10-06T11:00', title: 'Parqueo Reservado', color: "#077187" },
-//   { startDate: '2020-10-07T12:00', endDate: '2020-10-07T13:30', title: 'Parqueo Reservado', color: "#077187" },
-//   { startDate: '2020-10-08T09:45', endDate: '2020-10-08T11:00', title: 'Tu reserva', color: "#63C7B2" },
-// ];
-
-const MyAppointment: React.ComponentType<AppointmentsProps> = ({ children, ...restProps }) => (
-  <Appointments
-    {...restProps}
-  >
-    {children}
-  </Appointments>
-);
+const resources = [{
+  fieldName: 'type',
+  title: 'Type',
+  instances: [
+    { id: 'client', text: 'Usuario', color: '#EC407A' },
+    { id: 'owner', text: 'Parqueo', color: '#7E57C2' },
+  ],
+}];
 
 export type ReservationsData = {
   getAllUserReservationsAsClient: Reservation[];
@@ -39,7 +32,7 @@ export type OwnerReservationsData = {
 
 export default function Calendar() {
   const [data, setData] = useState([])
-  const [curDate, setCurrentDate] = useState(currentDate)
+  const [curDate, setCurrentDate] = useState("2020-11-26")
 
   const [GetReservations, { loading: reservationLoading, error: reservationError, data: reservationData }] = useLazyQuery<ReservationsData>(GET_CLIENT_RESERVATIONS, {
     fetchPolicy: "network-only"
@@ -61,8 +54,8 @@ export default function Calendar() {
         return {
           startDate: reservation.checkInDate,
           endDate: reservation.checkOutDate,
-          title: reservation.id,
-          color: "#63C7B2"
+          title: 'Mis reservaciones',
+          type: "client"
         }
       })
       setData(prevData => [...prevData, ...newData])
@@ -75,8 +68,8 @@ export default function Calendar() {
         return {
           startDate: reservation.checkInDate,
           endDate: reservation.checkOutDate,
-          title: reservation.id,
-          color: "#000000"
+          title: 'Mis parqueos',
+          type: "owner"
         }
       })
       setData(prevData => [...prevData, ...newData])
@@ -87,23 +80,24 @@ export default function Calendar() {
   return (
     <Layout>
       <div className="container">
-        <Paper>
-          <Scheduler
-            locale='es-ES'
-            data={data}
-          >
-            <ViewState
-              currentDate={curDate}
-            />
-            <WeekView
-              startDayHour={5}
-              endDayHour={24}
-            />
-            <Appointments
-              appointmentComponent={MyAppointment} />
-            <CurrentTimeIndicator />
-          </Scheduler>
-        </Paper>
+        {data &&
+          <Paper>
+            <Scheduler
+              locale='es-ES'
+              data={data}
+            >
+              <ViewState
+                currentDate={curDate}
+              />
+              <WeekView
+                startDayHour={9}
+                endDayHour={22}
+              />
+              <Appointments />
+              <Resources data={resources} />
+            </Scheduler>
+          </Paper>
+        }
       </div>
       <style jsx>{`
               .container{
