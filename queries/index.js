@@ -378,6 +378,28 @@ query GetClientReservations{
 }
 `
 
+export const GET_OWNER_RESERVATIONS = gql`
+query GetOwnerReservations{
+  getAllUserReservationsAsOwner {
+    id
+    checkInDate
+    checkOutDate
+    total
+    status
+    client {
+      id
+    }
+    vehicle {
+      id
+    }
+    parking {
+      id
+      mainPicture
+    }
+  }
+}
+`
+
 export const GET_PAYMENTS = gql`
 query GetPayments{
   getAllUserPayments{
@@ -420,8 +442,14 @@ export const GET_USER_REVIEWS = gql`
     getAllUserReviews {
       title
       calification
+      review
+      createdAt
       parking {
         id
+        mainPicture
+      }
+      reservation {
+        checkInDate
       }
     }
   }

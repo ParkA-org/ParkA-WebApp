@@ -32,6 +32,35 @@ export const Section = styled.div`
     }
 `;
 
+
+export const StyledInput = styled.input`
+    background-color: #e5e4e4;
+    border-radius: 10px;
+    border: none;
+    padding: 0.25em;
+    width: 200px;
+`;
+
+export const ElementContainer = styled.div`
+    text-align: left;
+    margin-bottom: 0.5em;
+
+    & > label {
+        display: block;
+    }
+
+    & > div {
+        display: flex;
+        align-items: center;
+    }
+
+    & > svg {
+        width: 50;
+        height: 50;
+        display: inline-block;
+    }
+`;
+
 export const TagContainer = styled.div`
     display: flex;
     flex-wrap: wrap;

@@ -61,6 +61,9 @@ function LoggedNavbar({ logout, setIsOpen, isOpen }): JSX.Element {
         <ListItem>
           <Link href="/map"><span className="normal-span">Mapa</span></Link>
         </ListItem>
+        <ListItem>
+          <Link href="/review"><span className="normal-span">Reseñas</span></Link>
+        </ListItem>
         <ProfileDropDownMenu logout={logout} />
       </LoggedHiddenContainer>
     </Menu>
