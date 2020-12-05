@@ -3,7 +3,7 @@ import Layout from "./layout"
 import { useQuery } from "@apollo/client";
 import { GET_USER_REVIEWS } from "queries";
 import { Review } from "utils/types";
-
+import ReviewTable from "components/ReviewTable"
 
 interface ReviewData {
     getAllUserReviews: Review[]
@@ -27,7 +27,7 @@ export default function ReviewPage() {
         <Layout pageTitle="Reviews de usuarios">
             {userReviews.length > 0 ?
                 <div className="wrapper">
-                    {JSON.stringify(data, undefined, 2)}
+                    {userReviews.length > 0 && <ReviewTable reviews={userReviews} />}
                     <style jsx>
                         {`
                         .wrapper {
