@@ -206,7 +206,7 @@ export default function MapViewer(): JSX.Element {
                         }
                         .img {
                             width: 150px;
-                            height: 100px;
+                            height: 70px;
                             border-radius: 5px;
                             margin-left: 0.5em;
                         }
