@@ -402,6 +402,47 @@ query GetOwnerReservations{
 }
 `
 
+export const GET_RESERVATION_BY_ID = gql`
+query GetReservationById($var: GetReservationById!) {
+  getReservationById(getReservationByIdInput: $var){
+    checkInDate
+    checkOutDate
+    vehicle {
+      alias
+      model {
+        id
+        name
+      }
+      licensePlate
+      mainPicture
+    } 
+    paymentInfo {
+      expirationDate
+      cardHolder
+      digit
+      card {
+        id
+        name
+      }
+      activated
+    }
+    parking {
+      mainPicture
+      latitude
+      longitude
+      priceHours
+      parkingName
+      features {
+        id
+        name
+      }
+    }
+    total
+  }
+  
+}
+`
+
 export const GET_PAYMENTS = gql`
 query GetPayments{
   getAllUserPayments{

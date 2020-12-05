@@ -23,8 +23,10 @@ import {
     Button,
     ModalContent
 } from "./styles"
+import { useRouter } from "next/router";
 
 export default function ReservationCard({ id, checkInDate, checkOutDate, status, total, parking, client }: Reservation) {
+    const router = useRouter()
     const isCancelable = status === ReservationStatuses.Created ? true : false
     const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
@@ -33,7 +35,9 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
 
     return (
         <>
-            <Container>
+            <Container onClick={() => {
+                router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+            }}>
                 <ReservationImage src={parkingImage} />
                 <MetadataSection>
                     <Item>
@@ -55,20 +59,25 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                 </CostSection>
                 <ButtonSection>
                     {isCancelable ?
-                        <SpecialReservationsButton isCancelable>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={() => {
-                            setShowModal(true)
-                        }}>Dejar reseña</SpecialReservationsButton>}
+                        <SpecialReservationsButton isCancelable onClick={(event) =>
+                            event.stopPropagation()}>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
+                                event.stopPropagation()
+                                setShowModal(true)
+                            }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
                         {isCancelable ?
-                            <ReservationsButton>
+                            <ReservationsButton onClick={(event) =>
+                                event.stopPropagation()}>
                                 <BsMap size="1.5em" />
                                 <Link href={`/parking/checkout/${parking.id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
                             </ReservationsButton>
                             :
-                            <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                            <ReservationsButton onClick={(event) =>
+                                event.stopPropagation()}><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
                         }
-                        <ReservationsButton><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
+                        <ReservationsButton onClick={(event) =>
+                            event.stopPropagation()}><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                     </ActionButtonsSection>
                 </ButtonSection>
             </Container>

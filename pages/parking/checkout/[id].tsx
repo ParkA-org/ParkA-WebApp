@@ -16,7 +16,6 @@ export default function Checkout() {
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
     const [checkout, setCheckout] = useState<ReservationInput>({})
     const { id } = router.query;
-    const { userId } = useContext(UserContext)
 
     useEffect(() => {
         if (id)
