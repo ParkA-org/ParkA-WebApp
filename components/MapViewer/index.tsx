@@ -80,6 +80,7 @@ export default function MapViewer(): JSX.Element {
                     lat: parking.latitude,
                     lng: parking.longitude,
                     time: new Date(),
+                    isAvailable: parking.isAvailable,
                     name: parking.parkingName,
                     information: parking.information,
                     picture: parking.mainPicture,
@@ -158,7 +159,7 @@ export default function MapViewer(): JSX.Element {
                                         setSelected(marker);
                                     }}
                                     icon={{
-                                        url: `/icons/availableIcon.svg`,
+                                        url: marker.isAvailable ? `/icons/availableIcon.svg` : `/icons/unavailableIcon.svg`,
                                         origin: new (window as any).google.maps.Point(0, 0),
                                         anchor: new (window as any).google.maps.Point(15, 15),
                                         scaledSize: new (window as any).google.maps.Size(30, 30),

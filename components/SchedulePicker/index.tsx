@@ -58,7 +58,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.start.toString())}
                     onChange={(date) => {
@@ -74,7 +74,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     hideHours={hour => validateHours(hour)}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.finish.toString())}

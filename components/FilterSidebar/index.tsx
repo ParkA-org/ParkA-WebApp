@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react"
 import sliderStyles from "styles/Slider.module.css"
 import InputRange from 'react-input-range'
-import { DatePicker } from "rsuite"
 import {
     Container,
     Section,

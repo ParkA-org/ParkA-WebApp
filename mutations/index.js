@@ -209,3 +209,12 @@ mutation CreateReview($crI: CreateReviewInput!){
   }
 }
 `
+
+export const UPDATE_PAYMENT = gql`
+mutation UpdatePayment($upV: UpdatePaymentInput!) {
+  updatePayment(updatePaymentInput: $upV){
+    id
+    expirationDate
+  }
+}
+`

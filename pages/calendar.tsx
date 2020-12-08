@@ -32,7 +32,7 @@ export type OwnerReservationsData = {
 
 export default function Calendar() {
   const [data, setData] = useState([])
-  const [curDate, setCurrentDate] = useState("2020-11-26")
+  const [curDate, setCurrentDate] = useState(new Date(Date.now()).toISOString())
 
   const [GetReservations, { loading: reservationLoading, error: reservationError, data: reservationData }] = useLazyQuery<ReservationsData>(GET_CLIENT_RESERVATIONS, {
     fetchPolicy: "network-only"
@@ -89,6 +89,7 @@ export default function Calendar() {
             >
               <ViewState
                 currentDate={curDate}
+
               />
               <WeekView
                 startDayHour={9}

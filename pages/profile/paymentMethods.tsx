@@ -4,7 +4,11 @@ import Carousel from "components/Carousel"
 import Layout from "../layout"
 import CreditCard from "components/CreditCard"
 import PlusIcon from "components/Icons/Plus"
+import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from "react-icons/ai"
 import styled from "styled-components"
+import { DatePicker } from "rsuite";
+import { useMutation } from "@apollo/client"
+import { UPDATE_PAYMENT } from "mutations"
 import { UserContext } from "context/UserContext";
 import { GET_PAYMENTS } from "queries"
 import { useQuery } from "@apollo/client"
@@ -78,6 +82,15 @@ export type PaymentsData = {
 
 
 export default function PaymentMethods() {
+    const [newDate, setNewDate] = useState("")
+    const [editDate, setEditDate] = useState(false)
+    const [currentPayment, setPayment] = useState<Payment | null>(null)
+
+    const [UpdatePayment] = useMutation(UPDATE_PAYMENT, {
+        onCompleted() {
+            setEditDate(false)
+        }
+    })
 
     const formatDate = (data: string): string => {
         if (data.length === 5)
@@ -87,7 +100,6 @@ export default function PaymentMethods() {
     };
 
     const { token } = useContext(UserContext)
-    const [currentPayment, setPayment] = useState<Payment | null>(null)
 
     const { loading, error, data } = useQuery<PaymentsData>(GET_PAYMENTS, {
         fetchPolicy: "network-only",
@@ -126,7 +138,33 @@ export default function PaymentMethods() {
                             </CardElement>
                             <CardElement>
                                 <h4>Fecha de expiración</h4>
-                                <p>{formatDate(currentPayment.expirationDate)}</p>
+                                <div className="expirationContainer">
+                                    {editDate ?
+                                        <>
+                                            <DatePicker
+                                                format="YYYY-MM-DD"
+                                                defaultValue={new Date(Date.now())}
+                                                onOk={(date) => setNewDate(date.toISOString())}
+                                            />
+                                            <AiOutlineCheck size="2em" style={{ marginLeft: "1em" }} onClick={() => {
+                                                UpdatePayment({
+                                                    variables: {
+                                                        upV: {
+                                                            id: currentPayment.id,
+                                                            expirationDate: newDate
+                                                        }
+                                                    }
+                                                })
+                                            }}></AiOutlineCheck>
+                                            <AiOutlineClose size="2em" style={{ marginLeft: "1em" }} onClick={() => setEditDate(false)}></AiOutlineClose>
+                                        </> :
+                                        <>
+                                            <p style={{ fontSize: "2em" }} >{formatDate(currentPayment.expirationDate)}</p>
+                                            <AiOutlineEdit size="2em" style={{ marginLeft: "1em" }} onClick={() => setEditDate(true)}></AiOutlineEdit>
+                                        </>
+                                    }
+                                </div>
+
                             </CardElement>
                             <CardElement>
                                 <h4>Estado</h4>
@@ -155,6 +193,11 @@ export default function PaymentMethods() {
                         justify-content: space-around;
                         align-items: center;
                         margin-top: 3em;
+                    }
+                    .expirationContainer {
+                        display: flex;
+                        justify-content: space-between;
+                        align-items: center;
                     }
                     span {
                         color: #FC0606;

@@ -72,7 +72,7 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
                 <DatePicker
                     format="YYYY-MM-DD HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     onOk={(value) => setStartDate(value)}
                 />
             </div>
@@ -82,7 +82,7 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     onOk={(value) => setEndDate(value)}
                 />
             </div>

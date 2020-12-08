@@ -242,6 +242,7 @@ query GetParkings($filterV: FilterInput!) {
     published
     parkingName
     priceHours
+    isAvailable
     mainPicture
   	pictures
     user{
