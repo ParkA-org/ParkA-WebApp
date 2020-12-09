@@ -1,8 +1,11 @@
 import Head from "next/head"
 import Navbar from "components/Navbar"
 import Footer from "components/Footer"
+import { useRouter } from "next/router"
 
 function Header() {
+  const router = useRouter()
+
   return (
     <div id="header">
       <div className="container">
@@ -15,12 +18,12 @@ function Header() {
           <div className="col-md-3">
             <section>
               <div>
-                <button className="btn"><img src="/images/botonParqueo.svg" /></button>
-                <button className="text-button">Ofrecer Parqueo</button>
+                <button onClick={() => router.push("/parking")} className="btn"><img src="/images/botonParqueo.svg" /></button>
+                <button onClick={() => router.push("/parking")} className="text-button">Ofrecer Parqueo</button>
               </div>
               <div>
-                <button className="btn"><img src="/images/botonCarro.svg" /></button>
-                <button className="text-button">Explorar Parqueos</button>
+                <button onClick={() => router.push("/map")} className="btn"><img src="/images/botonCarro.svg" /></button>
+                <button onClick={() => router.push("/map")} className="text-button">Explorar Parqueos</button>
               </div>
             </section>
           </div>

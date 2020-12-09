@@ -67,7 +67,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
         }
       })
       setShowModal(false)
-      router.push('/confirmEmail')
+      router.push('/EmailSent')
     }
   })
 

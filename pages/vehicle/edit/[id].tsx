@@ -37,7 +37,7 @@ const RightSideContainer = styled.div`
   flex-direction: column;
 
   & > * {
-    margin: 0 auto;
+    margin: 0;
   }
 `;
 
@@ -274,6 +274,7 @@ export default function EditVehicle(): JSX.Element {
                                                             label={bodyStyle.name}
                                                             name="bodyStyle"
                                                             value={values.bodyStyle}
+                                                            containerStyles={{ width: "300px" }}
                                                         />
                                                         <label>
                                                             {bodyStyle.name}
@@ -320,7 +321,7 @@ export default function EditVehicle(): JSX.Element {
                     margin-top:20px;
                     margin-bottom:10px;
                     text-align:left;
-                }
+                }d
                 .radioContainer {
                     display: flex;
                     justify-content: flex-start;
