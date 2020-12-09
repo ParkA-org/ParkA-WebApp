@@ -49,9 +49,7 @@ export default function Login(): JSX.Element {
           {({ errors, touched }) => (
             <Form>
               <Logo>
-                <NavigationLink href="/">
-                  ParkA
-                  </NavigationLink>
+                <img src="/images/logo1.svg" alt="ParkA logo" />
               </Logo>
               <FormContainer>
                 <FieldSection>

@@ -3,7 +3,8 @@ import { BiDollar } from "react-icons/bi";
 import { useLazyQuery } from "@apollo/client";
 import { Parking, Review } from "utils/types"
 import { GET_PARKING_WITH_ID, GET_PARKING_REVIEWS } from "queries";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { UserContext } from "context/UserContext"
 import Layout from "../../layout";
 import styled from "styled-components";
 import NavigationLink from "components/NavigationLink"
@@ -84,6 +85,7 @@ export default function ParkingDetail(): JSX.Element {
     const router = useRouter()
     const [parking, setParking] = useState<Parking>(null)
     const [reviews, setReviews] = useState<Review[]>([])
+    const { userId } = useContext(UserContext)
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
     const [GetParkingReviews, { data: reviewData, loading: reviewLoading, error: reviewError }] = useLazyQuery(GET_PARKING_REVIEWS)
     const { id } = router.query;
@@ -137,7 +139,9 @@ export default function ParkingDetail(): JSX.Element {
                     </Form>
                     <ButtonGroup>
                         <Button>
-                            <NavigationLink href={`/parking/checkout/${id}`}>Reservar</NavigationLink>
+                            {parking && (parking.user.id === userId) ? <NavigationLink href={`/parking/edit/${id}`}>Editar</NavigationLink> :
+                                <NavigationLink href={`/parking/checkout/${id}`}>Reservar</NavigationLink>
+                            }
                         </Button>
                         <Button>Disponibilidad</Button>
                         <Button>Compartir</Button>
