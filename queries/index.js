@@ -370,6 +370,8 @@ query GetClientReservations{
     parking {
       id
       mainPicture
+      latitude
+      longitude
     }
     vehicle {
       id

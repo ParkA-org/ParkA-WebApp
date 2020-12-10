@@ -46,6 +46,10 @@ export default function MapFragment({ coordinates }: LocationProps) {
     });
     const [marker, setMarker] = useState<Coordinates>(coordinates);
 
+    useEffect(() => {
+        panTo(coordinates)
+    }, [coordinates])
+
     const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;

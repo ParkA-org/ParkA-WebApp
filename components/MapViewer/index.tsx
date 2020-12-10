@@ -50,6 +50,7 @@ const options = {
 
 export default function MapViewer(): JSX.Element {
     const router = useRouter()
+
     const [coordinates, setCoordinates] = useState({ lat: 18.487876, lng: -69.962292 })
     const { loading, error, data, refetch } = useQuery<AllParkingData>(GET_PARKINGS, {
         fetchPolicy: "network-only",
@@ -99,6 +100,9 @@ export default function MapViewer(): JSX.Element {
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
             if (mapRef && mapRef.current) {
+                console.log('Llegamos aqui')
+                console.log('Latitude ', lat)
+                console.log('Longitude ', lng)
                 mapRef.current!.panTo({ lat, lng });
                 mapRef.current!.setZoom(16);
                 setCoordinates({ lat: lat, lng: lng })
@@ -107,16 +111,21 @@ export default function MapViewer(): JSX.Element {
     }, []);
 
     useEffect(() => {
-        navigator && navigator.geolocation.getCurrentPosition(
-            (position) => {
-                panTo({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                });
-            },
-            () => null
-        );
-    }, [])
+        if (router.query.latitude) {
+            console.log('Entramos aqui ', router.query)
+            panTo({ lat: router.query.latitude, lng: router.query.longitude })
+        } else {
+            navigator && navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    panTo({
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    });
+                },
+                () => null
+            );
+        }
+    }, [router.query])
 
     if (loadError) return <h2>Error</h2>;
     if (!isLoaded) return <h2>"Loading..."</h2>;
