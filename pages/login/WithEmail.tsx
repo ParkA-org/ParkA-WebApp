@@ -2,7 +2,7 @@ import { useContext, useState } from "react"
 import { Formik, Form } from "formik"
 import { SignInSchema } from "utils/schemas"
 import { useMutation } from "@apollo/client"
-import { LOGIN_USER, CONFIRM_EMAIL } from "mutations"
+import { LOGIN_USER, CONFIRM_EMAIL, RESET_PASSWORD } from "mutations"
 import { useRouter } from "next/router"
 import Layout from "../layout"
 import NavigationLink from "components/NavigationLink"
@@ -27,6 +27,11 @@ export default function SignWithEmail(): JSX.Element {
   const [_, setUserId] = useLocalStorage("user-id", "")
   const { setUser, setToken } = useContext(UserContext)
   const [ConfirmEmail] = useMutation(CONFIRM_EMAIL)
+  const [ResetPassword] = useMutation(RESET_PASSWORD, {
+    onCompleted() {
+      console.log('Chequee el correo para mas instrucciones')
+    }
+  })
   const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { JWT: token, user } = login
@@ -89,13 +94,18 @@ export default function SignWithEmail(): JSX.Element {
                     errorMessage={errors.password}
                     isTouched={touched.password}
                   />
-                  <NavigationLink
-                    href="/forgotPassword"
-                  >
-                    <span>Olvidaste tu contraseña?
-                  </span>
-                  </NavigationLink>
-
+                  <Button rank="secondary" submit={false} onClick={() => {
+                    ResetPassword({
+                      variables: {
+                        resetInput: {
+                          "origin": "web",
+                          "email": values.email
+                        }
+                      }
+                    })
+                  }}>
+                    Olvidaste tu contraseña?
+                </Button>
                   {requestError && <span style={{ width: "100%", color: "red", margin: "0 auto" }}>{requestError.message}</span>}
                 </FieldSection>
                 <InformationSection>

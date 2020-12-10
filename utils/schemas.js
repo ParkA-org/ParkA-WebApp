@@ -51,8 +51,8 @@ export const SignInSchema = Yup.object().shape({
 });
 
 export const ForgotPasswordSchema = Yup.object().shape({
-    email: Yup.string().email("Email inválido").required("Requerido"),
-    code: Yup.string().required("Requerido"),
+    email: Yup.string().email("Email inválido"),
+    password: Yup.string().min(8, "Debe tener una longitud de 8 caracteres la contraseña").required("Requerido")
 });
 
 export const CreatePasswordSchema = Yup.object().shape({
