@@ -70,16 +70,18 @@ export const LegendContainer = styled.div`
 
 export const Legend = styled.div`
     border: 2px solid #cecece;
-    padding: 0.5em;
+    padding: 0.3em;
+    padding-right: 0.7em;
     height: auto;
     width: auto;
     font-size: 2rem;
     font-weight: 600;
     background-color: #fff;
     width: auto;
-    border-radius: 20px;
+    border-radius: 50px;
     & > p {
         display: inline;
+        font-size: 80%;
         margin-left: 0.5em;
     }
 `;
