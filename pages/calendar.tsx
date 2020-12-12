@@ -6,11 +6,28 @@ import {
   Scheduler,
   WeekView,
   Appointments,
+  Toolbar,
+  DateNavigator,
   CurrentTimeIndicator,
+  ViewSwitcher,
+  MonthView,
+  DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
+function getCurrentDate() {
+  var date = new Date()
+  var year = date.getFullYear();
 
-const currentDate = '2020-10-05';
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  
+  return year + '-' + month + '-' + day;
+}
+
+const currentDate = getCurrentDate();
 const schedulerData = [
   { startDate: '2020-10-06T09:45', endDate: '2020-10-06T11:00', title: 'Parqueo Reservado', color: "#077187" },
   { startDate: '2020-10-07T12:00', endDate: '2020-10-07T13:30', title: 'Parqueo Reservado', color: "#077187" },
@@ -32,19 +49,26 @@ const schedulerData = [
     {children}
   </Appointments.Appointment>
 );*/
+type MyProps = {currentViewNameChange: (currentViewName: any) => void};
+type MyState = { currentViewName: string, data: {}, currentDate:string };
 
-
-
-export default class Calendar extends React.PureComponent {
+export default class Calendar extends React.PureComponent<MyProps, MyState> {
+  currentViewNameChange: (currentViewName: any) => void
   constructor(props) {
     super(props);
+
     this.state = {
       data: schedulerData,
-      currentDate: currentDate
+      currentDate: currentDate,
+      currentViewName: 'Week',
+    };
+    this.currentViewNameChange = (currentViewName) => {
+      this.setState({ currentViewName });
     };
   }
 
   render() {
+    const {currentViewName} = this.state;
 
     return (
       <Layout>
@@ -54,13 +78,23 @@ export default class Calendar extends React.PureComponent {
               locale='es-ES'
               data={schedulerData}
             >
+              
               <ViewState
-                currentDate={currentDate}
+                defaultCurrentDate={currentDate}
+                currentViewName={currentViewName}
+                onCurrentViewNameChange={this.currentViewNameChange}
+                
               />
+              
               <WeekView
                 startDayHour={5}
                 endDayHour={24}
               />
+              <MonthView />
+              <DayView />
+              <Toolbar/>
+              <ViewSwitcher/>
+              <DateNavigator />
               <Appointments
                 /*appointmentComponent={Appointment}*/ />
               <CurrentTimeIndicator />
@@ -75,7 +109,6 @@ export default class Calendar extends React.PureComponent {
               }
             `}</style>
       </Layout>
-
     );
   }
 }
