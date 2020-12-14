@@ -3,7 +3,7 @@ import styled from "styled-components"
 export const Container = styled.div`
     display: grid;
     align-items: start;
-    justify-items: center;
+    justify-items: start;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto; 
     width: 50%;

@@ -76,7 +76,7 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                             <ReservationsButton onClick={(event) =>
                                 event.stopPropagation()}>
                                 <BsMap size="1.5em" />
-                                <Link href={`/parking/checkout/${parking.id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                                <Link href={`/reservations/detail/${id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
                             </ReservationsButton>
                             :
                             <ReservationsButton onClick={(event) =>

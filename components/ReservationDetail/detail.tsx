@@ -1,8 +1,8 @@
 import { Parking, Vehicle } from "utils/types"
-import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
+import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
-import { DatePicker } from "rsuite";
 import { BsArrowRight } from "react-icons/bs"
+import { formatAMPM, parseISOString } from "utils/functions"
 
 type ElementProps = {
     name: string;
@@ -35,23 +35,21 @@ type HourPickerProps = {
 }
 
 function HourPicker({ checkInDate, checkOutDate }: HourPickerProps): JSX.Element {
-
+    let dateObj = parseISOString(checkInDate), outDateObj = parseISOString(checkOutDate)
     return (
         <section>
             <div>
-                <p>Desde</p>
-                <DatePicker
-                    format="YYYY-MM-DD HH:mm"
-                    defaultValue={new Date(checkInDate)}
-                />
+                <SectionElement name="Día" value={dateObj.toLocaleDateString('es-ES')} />
             </div>
-            <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
-            <div>
-                <p>Hasta</p>
-                <DatePicker
-                    format="HH:mm"
-                    defaultValue={new Date(checkOutDate)}
-                />
+            <h3>Horas:</h3>
+            <div className="hourSection">
+                <div>
+                    <SectionElement name="Desde" value={formatAMPM(dateObj)} />
+                </div>
+                <BsArrowRight size="2em" style={{ margin: "0 2em" }} />
+                <div>
+                    <SectionElement name="Hasta" value={formatAMPM(outDateObj)} />
+                </div>
             </div>
             <style jsx>
                 {`
@@ -63,6 +61,13 @@ function HourPicker({ checkInDate, checkOutDate }: HourPickerProps): JSX.Element
                         margin-right: 0.5em;
                     }
 
+                    .hourSection {
+                        display: flex;
+                        flex-direction: row;
+                        align-items: center;
+                        justify-content: start;
+                    }
+
                     p {
                         margin-bottom: 0.5em;
                     }
@@ -70,6 +75,7 @@ function HourPicker({ checkInDate, checkOutDate }: HourPickerProps): JSX.Element
                     section {
                         width: 100%;
                         display: flex;
+                        flex-direction: column;
                         justify-content: space-around;
                     }
                 `}
@@ -109,7 +115,7 @@ export default function ReservationView({ parking, vehicle, checkInDate, checkOu
             </LeftSection>
             <RightSection>
                 <ElementContainer>
-                    <label><b>Horas</b></label>
+                    <label><b>Fecha</b></label>
                     <HourPicker checkInDate={checkInDate} checkOutDate={checkOutDate} />
                 </ElementContainer>
 
