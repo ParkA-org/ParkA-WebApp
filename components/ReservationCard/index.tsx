@@ -36,7 +36,11 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     return (
         <>
             <Container onClick={() => {
-                router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+                if (isCancelable) {
+                    router.push('/reservations/edit/[id]', `/reservations/edit/${id}`)
+                } else {
+                    router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+                }
             }}>
                 <ReservationImage src={parkingImage} />
                 <MetadataSection>
@@ -60,10 +64,12 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                 <ButtonSection>
                     {isCancelable ?
                         <SpecialReservationsButton isCancelable onClick={(event) =>
-                            event.stopPropagation()}>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
-                                event.stopPropagation()
-                                setShowModal(true)
-                            }}>Dejar reseña</SpecialReservationsButton>}
+                            event.stopPropagation()
+
+                        }>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
+                            event.stopPropagation()
+                            setShowModal(true)
+                        }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
                         {isCancelable ?
