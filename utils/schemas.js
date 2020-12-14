@@ -56,8 +56,9 @@ export const ForgotPasswordSchema = Yup.object().shape({
 });
 
 export const CreatePasswordSchema = Yup.object().shape({
+    oldPassword: Yup.string().required("Requerido"),
     password: Yup.string().required("Requerido"),
-    confirmPassword: Yup.string().required("Requerido"),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Las contraseñas deben coincidir'),
 });
 
 export const EditProfileSchema = Yup.object().shape({

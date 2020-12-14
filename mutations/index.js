@@ -250,6 +250,16 @@ mutation UpdatePayment($upV: UpdatePaymentInput!) {
 }
 `
 
+export const CHANGE_PASSWORD = gql`
+mutation ChangePassword($input: UpdateUserPasswordInput!) {
+  updateUserPassword(updateUserPasswordInput: $input) {
+      id
+      name
+      lastName
+    }
+  }
+`
+
 export const RESET_PASSWORD = gql`
 mutation resetPassword($resetInput: ResetPasswordInput!) {
   resetPassword(resetPasswordInput: $resetInput) {
