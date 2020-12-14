@@ -55,7 +55,7 @@ export default function ForgotPassword(): JSX.Element {
   return (
     <Layout pageTitle="Forgot password">
       <MainFormContainer>
-        <h1>Parka - Forgot Password</h1>
+        <h1>Parka - Contraseña olvidada</h1>
         <Formik
           initialValues={{
             email: "",

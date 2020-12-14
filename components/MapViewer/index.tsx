@@ -107,7 +107,7 @@ export default function MapViewer(): JSX.Element {
     }, [])
 
     if (loadError) return <h2>Error</h2>;
-    if (!isLoaded) return <h2>"Loading..."</h2>;
+    if (!isLoaded) return <h2>"Cargando..."</h2>;
 
     return (
         <div>

@@ -21,7 +21,7 @@ export default function EditParking(): JSX.Element {
         }
 
     }, [id, data])
-    if (loading) return <h3>Loading... </h3>
+    if (loading) return <h3>Cargando... </h3>
     if (error) return <h3>Error...</h3>
 
     return (

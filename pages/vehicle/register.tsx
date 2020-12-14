@@ -312,7 +312,7 @@ export default function VehicleRegister(): JSX.Element {
         </div>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
           <Spinner />
-          <h3>Loading...</h3>
+          <h3>Cargando...</h3>
         </ModalPortal>}
       </div>
       <style jsx>{`

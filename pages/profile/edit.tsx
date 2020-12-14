@@ -210,7 +210,7 @@ export default function EditProfile(): JSX.Element {
                     )}
                 </Formik>
             </MainFormContainer>
-            {imageStatus.loading && <p>Loading...</p>}
+            {imageStatus.loading && <p>Cargando...</p>}
             {imageStatus.error && <p>Error...</p>}
         </Layout >
     );

@@ -99,7 +99,7 @@ export default function PaymentMethods() {
     })
 
     if (error) return <h2>Error</h2>
-    if (loading) return <h2>Loading...</h2>
+    if (loading) return <h2>Cargando...</h2>
 
     const { getAllUserPayments } = data
 

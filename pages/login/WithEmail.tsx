@@ -142,7 +142,7 @@ export default function SignWithEmail(): JSX.Element {
 
       {showModal && <ModalPortal onClose={() => setShowModal(false)}>
         <Spinner />
-        <h3>Loading...</h3>
+        <h3>Cargando...</h3>
       </ModalPortal>}
     </Layout>
   );

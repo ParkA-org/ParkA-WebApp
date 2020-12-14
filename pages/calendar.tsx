@@ -97,7 +97,7 @@ export default class Calendar extends React.PureComponent<MyProps, MyState> {
               <DateNavigator />
               <Appointments
                 /*appointmentComponent={Appointment}*/ />
-              <CurrentTimeIndicator />
+              <CurrentTimeIndicator /> 
             </Scheduler>
           </Paper>
         </div>

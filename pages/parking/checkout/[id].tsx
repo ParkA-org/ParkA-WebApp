@@ -34,7 +34,7 @@ export default function Checkout() {
             <div className="container">
                 <img src="/images/carsParked.webp" alt="parked cars" />
                 <div className="pageContent">
-                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Loading...</h3>}
+                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Cargando...</h3>}
                     <PaymentMethod checkout={checkout} setCheckout={setCheckout} />
                 </div>
             </div>

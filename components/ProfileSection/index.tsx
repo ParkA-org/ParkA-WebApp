@@ -37,7 +37,7 @@ export default function ProfileSection() {
 
         }
     }, [data])
-    if (loading) return <h2>Loading...</h2>
+    if (loading) return <h2>Cargando...</h2>
     if (error) return <h2>Ocurrio un error</h2>
 
     return (

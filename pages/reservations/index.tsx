@@ -46,7 +46,7 @@ export default function Reservations() {
                     <NewLink style={{ color: "#084C7C" }}><AiFillPlusCircle size="1.5em" color="#084C7C" /> Nueva Reserva</NewLink>
                 </NavigationLink>
                 {error && <h2>Error</h2>}
-                {loading && <h2>Loading...</h2>}
+                {loading && <h2>Cargando...</h2>}
                 {pendingReservations.length > 0 ?
                     <Carousel title="Reservas Pendientes">
                         {pendingReservations.map(reservation => {
