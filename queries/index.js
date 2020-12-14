@@ -503,3 +503,17 @@ export const GET_USER_REVIEWS = gql`
     }
   }
 `
+
+export const GET_PARKING_DISPONIBILITY = gql`
+query GetParkingAvailability($paInput: GetParkingCalendarInput!){
+  getParkingAvaliability(getParkingCalendarInput: $paInput){
+    id
+    parking
+    schedules {
+      start
+      finish
+    }
+    date
+  }
+}
+`

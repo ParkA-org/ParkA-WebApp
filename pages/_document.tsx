@@ -13,7 +13,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link
-            href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&family=Righteous&display=swap"
+            href="https://fonts.googleapis.com/css2?family=Mulish:wght@400;700&family=Righteous&family=Montserrat:wght@400;500&display=swap"
             rel="stylesheet"
           />
         </Head>

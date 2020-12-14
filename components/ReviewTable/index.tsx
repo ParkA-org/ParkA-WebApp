@@ -5,7 +5,7 @@ import { useTable } from 'react-table'
 import { parseISOString } from "utils/functions"
 import ModalPortal from "components/Modal"
 import { BsStarFill, BsStar } from "react-icons/bs"
-import { ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, ModalTitle } from "./styles"
+import { Container, ModalContainer, ModalText, Avatar, UserInfo, ReviewDate, ModalTitle, TableHeader, TableCell, TableRow, ReviewBody } from "./styles"
 
 type ComponentProps = {
     reviews: Review[]
@@ -16,10 +16,10 @@ function ModalCard(userReview: Review) {
     const { createdAt, title, review, calification } = userReview
     let stars = []
     for (let i = 0; i < calification; i++) {
-        stars.push(<BsStarFill color="goldenrod" />)
+        stars.push(<BsStarFill color="goldenrod" size="2em" />)
     }
     for (let i = calification; i < 5 && stars.length != 5; i++) {
-        stars.push(<BsStar />)
+        stars.push(<BsStar size="2em" />)
     }
     return (
         <ModalContainer>
@@ -50,6 +50,18 @@ export default function ReviewTable({ reviews }: ComponentProps) {
         return { createdAt: review.createdAt, title: review.title, review: review.review, calification: review.calification, image: review.parking.mainPicture, checkInDate: review.reservation.checkInDate }
     })
 
+    const graphicStars = (amountSelected) => {
+        let res = []
+        for (let i = 0; i < 5; i++) {
+            if (i < amountSelected) {
+                res.push(<BsStarFill fill="#D8DC2A" size="1.5em" />)
+            } else {
+                res.push(<BsStar fill="#D8DC2A" size="1.5em" />)
+            }
+        }
+        return res
+    }
+
     const data = useMemo(
         () => formattedData,
         []
@@ -70,16 +82,22 @@ export default function ReviewTable({ reviews }: ComponentProps) {
             },
             {
                 Header: 'Comentario',
+                Cell: (row) => {
+                    return <ReviewBody> {row.cell.value}</ReviewBody >
+                },
                 accessor: 'review',
             },
             {
                 Header: 'Calificación',
+                Cell: (row) => {
+                    return <p> {graphicStars(row.cell.value)} </p>
+                },
                 accessor: 'calification',
             },
             {
                 Header: 'Imagen',
                 Cell: (row) => {
-                    return <div><img src={row.cell.value} style={{ width: "100px", height: "100px" }} /></div>
+                    return <div><img src={row.cell.value} style={{ width: "230px", height: "150px" }} /></div>
                 },
                 accessor: 'image',
             },
@@ -114,97 +132,75 @@ export default function ReviewTable({ reviews }: ComponentProps) {
     } = useTable({ columns, data })
 
     return (
-        <table {...getTableProps()} className="table">
+        <Container>
+            <table {...getTableProps()} className="table">
 
-            <thead>
+                <thead>
 
-                {headerGroups.map(headerGroup => (
+                    {headerGroups.map(headerGroup => (
 
-                    <tr {...headerGroup.getHeaderGroupProps()}>
+                        <TableRow {...headerGroup.getHeaderGroupProps()}>
 
-                        {headerGroup.headers.map(column => (
+                            {headerGroup.headers.map(column => (
 
-                            <th
+                                <TableHeader
+                                    {...column.getHeaderProps()}
+                                >
 
-                                {...column.getHeaderProps()}
+                                    {column.render('Header')}
 
-                                style={{
-                                    background: '#63C7B2',
-                                    padding: '0.5em',
-                                    color: 'black',
-                                    fontSize: '1.5rem',
-                                    fontWeight: 'bold'
-                                }}
+                                </TableHeader>
 
-                            >
+                            ))}
 
-                                {column.render('Header')}
+                        </TableRow>
 
-                            </th>
+                    ))}
 
-                        ))}
+                </thead>
 
-                    </tr>
+                <tbody {...getTableBodyProps()}>
 
-                ))}
+                    {rows.map(row => {
 
-            </thead>
+                        prepareRow(row)
 
-            <tbody {...getTableBodyProps()}>
+                        return (
 
-                {rows.map(row => {
+                            <TableRow {...row.getRowProps()} onClick={() => {
+                                setSelectedReview(row.original)
+                                setShowModal(true)
+                            }}>
 
-                    prepareRow(row)
+                                {row.cells.map(cell => {
 
-                    return (
+                                    return (
 
-                        <tr {...row.getRowProps()} onClick={() => {
-                            setSelectedReview(row.original)
-                            setShowModal(true)
-                        }}>
+                                        <TableCell
+                                            {...cell.getCellProps()}
+                                        >
 
-                            {row.cells.map(cell => {
+                                            {cell.render('Cell')}
 
-                                return (
+                                        </TableCell>
 
-                                    <td
+                                    )
 
-                                        {...cell.getCellProps()}
+                                })}
 
-                                        style={{
+                            </TableRow>
 
-                                            padding: '10px',
-                                            border: 'solid 1px gray',
-                                            background: '#077187',
-                                            color: 'white'
-                                        }}
+                        )
 
-                                    >
+                    })}
 
-                                        {cell.render('Cell')}
-
-                                    </td>
-
-                                )
-
-                            })}
-
-                        </tr>
-
-                    )
-
-                })}
-
-            </tbody>
-            {showModal && <ModalPortal onClose={() => setShowModal(false)}>
-                <ModalCard {...selectedReview} />
-            </ModalPortal>}
-            <style jsx>{`
-                .table{
-                    border: 'solid 1px blue';
-                    margin-top: 1.5em;
-                }
+                </tbody>
+                {showModal && <ModalPortal onClose={() => setShowModal(false)}>
+                    <ModalCard {...selectedReview} />
+                </ModalPortal>}
+                <style jsx>{`
             `}</style>
-        </table>
+            </table>
+        </Container>
     )
 }
