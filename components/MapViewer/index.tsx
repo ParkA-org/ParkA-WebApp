@@ -111,21 +111,16 @@ export default function MapViewer(): JSX.Element {
     }, []);
 
     useEffect(() => {
-        if (router.query.latitude) {
-            console.log('Entramos aqui ', router.query)
-            panTo({ lat: router.query.latitude, lng: router.query.longitude })
-        } else {
-            navigator && navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    panTo({
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    });
-                },
-                () => null
-            );
-        }
-    }, [router.query])
+        navigator && navigator.geolocation.getCurrentPosition(
+            (position) => {
+                panTo({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                });
+            },
+            () => null
+        );
+    }, [])
 
     if (loadError) return <h2>Error</h2>;
     if (!isLoaded) return <h2>"Loading..."</h2>;

@@ -52,7 +52,7 @@ export default function ReservationDetail() {
                     .pageContent {
                         display: flex;
                         justify-content: space-between;
-                        width: 85vw;
+                        width: 100%;
                     }
                     `}
             </style>
