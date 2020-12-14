@@ -101,17 +101,6 @@ mutation forgotPassword($email: String!) {
 }
 `
 
-export const RESET_PASSWORD = gql`
-mutation resetPassword($password: String!, $passwordConfirmation: String!, $code: String!) {
-  resetPassword(password: $password, passwordConfirmation: $passwordConfirmation, code: $code) {
-    jwt
-    user {
-      username
-    }
-  }
-}
-`
-
 export const CREATE_RESERVATION = gql`
   mutation CreateReservation($crI: CreateReservationInput!){
     createReservation(createReservationInput: $crI){
@@ -257,6 +246,23 @@ mutation UpdatePayment($upV: UpdatePaymentInput!) {
   updatePayment(updatePaymentInput: $upV){
     id
     expirationDate
+  }
+}
+`
+
+export const RESET_PASSWORD = gql`
+mutation resetPassword($resetInput: ResetPasswordInput!) {
+  resetPassword(resetPasswordInput: $resetInput) {
+    origin
+    email
+  }
+}
+`
+export const VALIDATE_PASSWORD_RESET = gql`
+mutation validateReset($validateInput: ValidateResetPasswordCodeInput!) {
+  validateResetPasswordCode(validateResetPasswordCodeInput: $validateInput) {
+    email
+    origin
   }
 }
 `
