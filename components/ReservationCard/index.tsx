@@ -36,7 +36,11 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     return (
         <>
             <Container onClick={() => {
-                router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+                if (isCancelable) {
+                    router.push('/reservations/edit/[id]', `/reservations/edit/${id}`)
+                } else {
+                    router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+                }
             }}>
                 <ReservationImage src={parkingImage} />
                 <MetadataSection>
@@ -60,17 +64,19 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                 <ButtonSection>
                     {isCancelable ?
                         <SpecialReservationsButton isCancelable onClick={(event) =>
-                            event.stopPropagation()}>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
-                                event.stopPropagation()
-                                setShowModal(true)
-                            }}>Dejar reseña</SpecialReservationsButton>}
+                            event.stopPropagation()
+
+                        }>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
+                            event.stopPropagation()
+                            setShowModal(true)
+                        }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
                         {isCancelable ?
                             <ReservationsButton onClick={(event) =>
                                 event.stopPropagation()}>
                                 <BsMap size="1.5em" />
-                                <Link href={`/parking/checkout/${parking.id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                                <Link href={`/reservations/detail/${id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
                             </ReservationsButton>
                             :
                             <ReservationsButton onClick={(event) =>
