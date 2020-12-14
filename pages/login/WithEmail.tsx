@@ -23,6 +23,7 @@ import useLocalStorage from "hooks/useLocalStorage"
 export default function SignWithEmail(): JSX.Element {
   const router = useRouter()
   const [showModal, setShowModal] = useState(false)
+  const [showEmailModal, setShowEmailModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
   const [_, setUserId] = useLocalStorage("user-id", "")
   const { setUser, setToken } = useContext(UserContext)
@@ -94,7 +95,8 @@ export default function SignWithEmail(): JSX.Element {
                     errorMessage={errors.password}
                     isTouched={touched.password}
                   />
-                  <Button rank="secondary" submit={false} onClick={() => {
+                  <Button rank="secondary" submit={false} onClick={(e) => {
+                    e.preventDefault();
                     ResetPassword({
                       variables: {
                         resetInput: {
@@ -103,6 +105,7 @@ export default function SignWithEmail(): JSX.Element {
                         }
                       }
                     })
+                    setShowEmailModal(true)
                   }}>
                     Olvidaste tu contraseña?
                 </Button>
@@ -121,7 +124,8 @@ export default function SignWithEmail(): JSX.Element {
                     Atrás
                   </NavigationLink>
                 </Button>
-                <Button rank="secondary" submit={false} onClick={() => {
+                <Button rank="secondary" submit={false} onClick={(e) => {
+                  e.preventDefault();
                   ConfirmEmail({
                     variables: {
                       ceInput: {
@@ -153,6 +157,16 @@ export default function SignWithEmail(): JSX.Element {
       {showModal && <ModalPortal onClose={() => setShowModal(false)}>
         <Spinner />
         <h3>Loading...</h3>
+      </ModalPortal>}
+
+      {showEmailModal && <ModalPortal onClose={() => setShowEmailModal(false)}>
+        <>
+          <img
+            src="/images/projectLogo.png"
+            style={{ width: "25vw", height: "35vh", margin: "1em 0" }}
+          />
+          <h4 style={{ margin: "1em auto", width: "80%" }}>Se ha enviado un correo electrónico la correo proporcionado con los siguientes pasos a seguir.</h4>
+        </>
       </ModalPortal>}
     </Layout>
   );

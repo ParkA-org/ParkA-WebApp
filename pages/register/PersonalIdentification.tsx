@@ -83,11 +83,6 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     /[0-9]/,
     /[0-9]/,
     /[0-9]/,
-    /[0-9]/,
-    "-",
-    /[0-9]/,
-    /[0-9]/,
-    /[0-9]/,
     /[0-9]/
   ];
 
