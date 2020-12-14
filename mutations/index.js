@@ -120,6 +120,48 @@ export const CREATE_RESERVATION = gql`
   }
 `
 
+export const UPDATE_RESERVATION = gql`
+mutation UpdateReservation($urInput: UpdateReservationInput!){
+  updateReservation(updateReservationInput: $urInput) {
+    id
+    checkInDate
+    checkOutDate
+    vehicle {
+      alias
+      model {
+        id
+        name
+      }
+      licensePlate
+      mainPicture
+    }
+    paymentInfo {
+      expirationDate
+      cardHolder
+      digit
+      card {
+        id
+        name
+      }
+      activated
+    }
+    parking {
+      mainPicture
+      latitude
+      longitude
+      priceHours
+      parkingName
+      features {
+        id
+        name
+      }
+    }
+    total
+  }
+}
+
+`
+
 export const CREATE_VEHICLE = gql`
 mutation CreateVehicle($cvInput: CreateVehicleInput!){
   createVehicle(createVehicleInput: $cvInput) {

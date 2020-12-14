@@ -428,6 +428,9 @@ query GetReservationById($var: GetReservationById!) {
       activated
     }
     parking {
+      user {
+        id
+      }
       mainPicture
       latitude
       longitude
