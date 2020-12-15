@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react"
 import { useQuery } from "@apollo/client"
-import { Parking, Vehicle, ReservationInput } from "utils/types"
+import { Parking, Vehicle, ReservationInput, Calendar } from "utils/types"
 import { GET_ALL_VEHICLES } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
@@ -36,11 +36,42 @@ function SectionElement({ name, children, value }: ElementProps) {
 
 type HourPickerProps = {
     hourPrice: number;
+    calendar: Calendar;
     checkout: ReservationInput;
     setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
 }
 
-function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.Element {
+const DisableCalendarDates = (date: Date, calendar: Calendar): boolean => {
+
+    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+    let dayOfWeek = date.getDay()
+
+    for (let i = 0; i < week.length; i++) {
+        if (calendar[week[i]].length === 0 && dayOfWeek === i) {
+            return true
+        }
+    }
+    return false
+}
+
+const DisableCalendarHours = (hour: number, date: Date, calendar: Calendar): boolean => {
+
+    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+    let dayOfWeek = date.getDay()
+
+    for (let i = 0; i < calendar[week[dayOfWeek]].length; i++) {
+        if (hour < (calendar[week[dayOfWeek]][i].start / 100) || hour > (calendar[week[dayOfWeek]][i].finish) / 100) {
+            return true
+        }
+    }
+
+    return false
+}
+
+function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerProps): JSX.Element {
+    console.log('Calendario', calendar)
     const [startDate, setStartDate] = useState<Date>
         (new Date(new Date(checkout.checkInDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
     const [endDate, setEndDate] = useState<Date>
@@ -68,30 +99,46 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
     }, [startDate, endDate])
 
     return (
-        <section>
-            <div>
-                <p>Desde</p>
-                <DatePicker
-                    format="YYYY-MM-DD HH:mm"
-                    ranges={[]}
-                    defaultValue={startDate}
-                    hideMinutes={minute => minute % 30 !== 0}
-                    onOk={(value) => setStartDate(value)}
-                />
-            </div>
-            <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
-            <div>
-                <p>Hasta</p>
-                <DatePicker
-                    defaultValue={endDate}
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 30 !== 0}
-                    onOk={(value) => setEndDate(value)}
-                />
-            </div>
-            <style jsx>
-                {`
+        <>
+            <section>
+                <div>
+                    <p>Fecha</p>
+                    <DatePicker
+                        format="YYYY-MM-DD"
+                        defaultValue={startDate}
+                        disabledDate={(date) => {
+                            return DisableCalendarDates(date, calendar)
+                        }}
+                        onOk={(value) => setStartDate(value)}
+                    />
+                </div>
+            </section>
+            <section>
+                <div>
+                    <p>Desde</p>
+                    <DatePicker
+                        format="HH:mm"
+                        ranges={[]}
+                        defaultValue={startDate}
+                        disabledHours={(hour) => DisableCalendarHours(hour, startDate, calendar)}
+                        hideMinutes={minute => minute % 30 !== 0}
+                        onOk={(value) => setStartDate(value)}
+                    />
+                </div>
+                <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
+                <div>
+                    <p>Hasta</p>
+                    <DatePicker
+                        defaultValue={endDate}
+                        format="HH:mm"
+                        ranges={[]}
+                        disabledHours={(hour) => DisableCalendarHours(hour, startDate, calendar)}
+                        hideMinutes={minute => minute % 30 !== 0}
+                        onOk={(value) => setEndDate(value)}
+                    />
+                </div>
+                <style jsx>
+                    {`
                     div {
                         display: flex;
                         flex-direction: column;
@@ -110,8 +157,9 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
                         justify-content: space-around;
                     }
                 `}
-            </style>
-        </section>
+                </style>
+            </section>
+        </>
     )
 }
 
@@ -174,7 +222,7 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
             <RightSection>
                 <ElementContainer>
                     <label><b>Horas</b></label>
-                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} />
+                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} calendar={parking.calendar} />
                 </ElementContainer>
 
                 <SectionElement name="Total de horas" value={checkout.total ? checkout.total.toString() : "0"} />
