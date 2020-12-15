@@ -47,6 +47,7 @@ query GetLogUser {
     confirmed
     userInformation {
       documentNumber
+      birthDate
       telephoneNumber
       nationality {
         id
@@ -232,10 +233,21 @@ query GetUserParkings{
 `
 
 export const GET_PARKINGS = gql`
-query GetParkings{
-  getAllParkings {
+query GetParkings($filterV: FilterInput!) {
+  getAllParkings(input: $filterV) {
     id
+    countParking
+    latitude
+    longitude
+    published
     parkingName
+    priceHours
+    isAvailable
+    mainPicture
+  	pictures
+    user{
+      id
+    }
     calendar {
       id
       parkingId
@@ -268,13 +280,6 @@ query GetParkings{
         finish
       }
     }
-    mainPicture
-    latitude
-    longitude
-    information
-    sector
-    direction
-    countParking
   }
 }
 `
@@ -286,6 +291,8 @@ query GetParkingWithId($id: String!){
     parkingName
     direction
     sector
+    latitude
+    longitude
     priceHours
     countParking
     isAvailable
@@ -363,11 +370,115 @@ query GetClientReservations{
     parking {
       id
       mainPicture
+      latitude
+      longitude
+    }
+    vehicle {
+      id
     }
     client {
       id
     }
   }
+}
+`
+
+export const GET_OWNER_RESERVATIONS = gql`
+query GetOwnerReservations{
+  getAllUserReservationsAsOwner {
+    id
+    checkInDate
+    checkOutDate
+    total
+    status
+    client {
+      id
+    }
+    vehicle {
+      id
+    }
+    parking {
+      id
+      mainPicture
+    }
+  }
+}
+`
+
+export const GET_RESERVATION_BY_ID = gql`
+query GetReservationById($var: GetReservationById!) {
+  getReservationById(getReservationByIdInput: $var){
+    checkInDate
+    checkOutDate
+    vehicle {
+      alias
+      model {
+        id
+        name
+      }
+      licensePlate
+      mainPicture
+    } 
+    paymentInfo {
+      expirationDate
+      cardHolder
+      digit
+      card {
+        id
+        name
+      }
+      activated
+    }
+    parking {
+      id
+      user {
+        id
+      }
+      mainPicture
+      latitude
+      longitude
+      priceHours
+      parkingName
+      features {
+        id
+        name
+      }
+      calendar {
+        id
+        parkingId
+        monday {
+          start
+          finish
+        }
+        tuesday {
+          start
+          finish
+        }
+        wednesday {
+          start
+          finish
+        }
+        thursday {
+          start
+          finish
+        }
+        friday {
+          start
+          finish
+        }
+        saturday {
+          start
+          finish
+        }
+        sunday {
+          start
+          finish
+        }
+      }
+    }
+    total
+  }
+  
 }
 `
 
@@ -413,9 +524,29 @@ export const GET_USER_REVIEWS = gql`
     getAllUserReviews {
       title
       calification
+      review
+      createdAt
       parking {
         id
+        mainPicture
+      }
+      reservation {
+        checkInDate
       }
     }
   }
+`
+
+export const GET_PARKING_DISPONIBILITY = gql`
+query GetParkingAvailability($paInput: GetParkingCalendarInput!){
+  getParkingAvaliability(getParkingCalendarInput: $paInput){
+    id
+    parking
+    schedules {
+      start
+      finish
+    }
+    date
+  }
+}
 `

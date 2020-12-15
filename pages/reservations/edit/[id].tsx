@@ -1,31 +1,47 @@
-import { useLazyQuery } from "@apollo/client"
-import { useRouter } from "next/router"
-import { GET_PARKING_WITH_ID } from "queries"
-import { Parking, ReservationInput } from "utils/types"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
+import { useLazyQuery } from "@apollo/client"
 import Layout from "../../layout"
-import ReservationDetail from "components/ReservationDetail"
 import MapFragment from "components/MapFragment"
+import ReservationDetail from "components/ReservationDetail/edit"
 import PaymentMethod from "components/PaymentMethod"
+import { Reservation } from "utils/types"
+import { Parking, Vehicle, ReservationInput } from "utils/types"
+import { GET_RESERVATION_BY_ID } from "queries"
 
-export default function Checkout() {
+export type ReservationsData = {
+    getReservationById: Reservation;
+}
+
+export default function EditReservation() {
 
     const router = useRouter()
     const [parking, setParking] = useState<Parking>(null)
-    const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
+    const [GetReservationWithId, { data, loading, error }] = useLazyQuery<ReservationsData>(GET_RESERVATION_BY_ID)
     const [checkout, setCheckout] = useState<ReservationInput>({})
     const { id } = router.query;
 
     useEffect(() => {
         if (id)
-            GetParkingWithId({ variables: { id: id } })
-        if (data)
-            setParking(data.getParkingById)
+            GetReservationWithId({ variables: { var: { id: id } } })
+        if (data) {
+            setParking(data.getReservationById.parking)
+            setCheckout({
+                ...checkout,
+                checkInDate: data.getReservationById.checkInDate,
+                checkOutDate: data.getReservationById.checkOutDate,
+                total: data.getReservationById.total
+            })
+        }
     }, [data, router])
 
     useEffect(() => {
         if (parking)
-            setCheckout({ ...checkout, parking: parking.id, owner: parking.user.id })
+            setCheckout({
+                ...checkout,
+                parking: parking.id,
+                owner: parking.user.id
+            })
     }, [parking])
 
     return (
@@ -33,7 +49,7 @@ export default function Checkout() {
             <div className="container">
                 {parking && <MapFragment coordinates={{ lat: parseFloat(parking.latitude), lng: parseFloat(parking.longitude) }} />}
                 <div className="pageContent">
-                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Cargando...</h3>}
+                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Loading...</h3>}
                     <PaymentMethod checkout={checkout} setCheckout={setCheckout} />
                 </div>
             </div>

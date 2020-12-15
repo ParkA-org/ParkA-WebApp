@@ -11,9 +11,12 @@ import {
   InformationSection,
   ActionSection,
 } from "../styles/formStyles"
+import { CHANGE_PASSWORD } from "mutations"
+import { useMutation } from "@apollo/client"
 import NavigationLink from "components/NavigationLink"
 import Field from "components/Field"
 import { motion } from "framer-motion"
+import { useRouter } from "next/router"
 
 const Logo = styled(motion.li)`
   list-style: none;
@@ -34,27 +37,52 @@ const Logo = styled(motion.li)`
 `;
 
 export default function Login(): JSX.Element {
+  const router = useRouter()
+
+  const [ChangePassword] = useMutation(CHANGE_PASSWORD, {
+    onCompleted() {
+      router.push('/profile')
+    }
+  })
+
   return (
     <Layout pageTitle="Nueva Contraseña">
       <MainFormContainer>
 
         <Formik
           initialValues={{
+            oldPassword: "",
             password: "",
             confirmPassword: ""
           }}
           validationSchema={CreatePasswordSchema}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={(values) => {
+
+            ChangePassword({
+              variables: {
+                input: {
+                  oldPassword: values.oldPassword,
+                  newPassword: values.password
+                }
+              }
+            })
+
+          }}
         >
           {({ errors, touched }) => (
             <Form>
               <Logo>
-                <NavigationLink href="/">
-                  ParkA
-                  </NavigationLink>
+                <img src="/images/logo1.svg" alt="ParkA logo" />
               </Logo>
               <FormContainer>
                 <FieldSection>
+                  <Field
+                    type="password"
+                    label="Vieja contraseña"
+                    name="oldPassword"
+                    errorMessage={errors.oldPassword}
+                    isTouched={touched.oldPassword}
+                  />
                   <Field
                     type="password"
                     label="Nueva contraseña"
@@ -82,11 +110,7 @@ export default function Login(): JSX.Element {
                   Cancelar
                 </NavigationLink>
                 <Button submit={true} rank="secondary">
-                  <NavigationLink
-                    href="/."
-                  >
-                    Confirmar
-                  </NavigationLink>
+                  Confirmar
                 </Button>
               </ActionSection>
             </Form>

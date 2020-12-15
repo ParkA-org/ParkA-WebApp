@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useQuery, useMutation } from "@apollo/client"
 import { useRouter } from "next/router"
 import { GET_USER_PAYMENTS } from "queries"
-import { CREATE_RESERVATION } from "mutations"
+import { CREATE_RESERVATION, UPDATE_RESERVATION } from "mutations"
 import NavigationLink from "components/NavigationLink"
 import CreditCard from "components/CreditCard"
 import Button from "components/Button"
@@ -21,7 +21,19 @@ type AllPaymentsData = {
 
 export default function PaymentMethod({ checkout, setCheckout }: ComponentProps) {
     const router = useRouter()
-    const [CreateReservation, { loading: loadingCreation, error: errorCreation }] = useMutation(CREATE_RESERVATION)
+    const [editMode, setEditMode] = useState(false)
+
+    const [CreateReservation, { loading: loadingCreation, error: errorCreation }] = useMutation(CREATE_RESERVATION, {
+        onCompleted() {
+            router.push('/reservations')
+        }
+    })
+
+    const [UpdateReservation] = useMutation(UPDATE_RESERVATION, {
+        onCompleted() {
+            router.push('/reservations')
+        }
+    })
     const [payment, setPayment] = useState<Payment>()
     const { loading, error, data } = useQuery<AllPaymentsData>(GET_USER_PAYMENTS, {
         onCompleted() {
@@ -32,6 +44,13 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
             }
         }
     })
+
+    useEffect(() => {
+        let url = router.pathname
+        if (url.includes('edit')) {
+            setEditMode(true)
+        }
+    }, [])
 
     const formatNumbers = (data: string): string => {
         return `•••• •••• •••• ${data.substr(data.length - 4)}`
@@ -53,11 +72,30 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
     }
 
     const handlePaymentClick = () => {
-        console.log('Checkout ', checkout)
         CreateReservation({
             variables: {
                 crI: {
                     ...checkout
+                }
+            }
+        })
+    }
+
+    const handleEditClick = () => {
+        UpdateReservation({
+            variables: {
+                urInput: {
+                    where: {
+                        "id": router.query.id
+                    },
+                    data: {
+                        checkInDate: checkout.checkInDate,
+                        checkOutDate: checkout.checkOutDate,
+                        vehicle: checkout.vehicle,
+                        paymentInfo: checkout.paymentInfo,
+                        rentDate: checkout.rentDate,
+                        total: checkout.total
+                    }
                 }
             }
         })
@@ -92,7 +130,8 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
                     </div>
                 </DataContainer>
             </MainContainer>
-            <Button rank="secondary" styles={{ margin: "0 auto", fontSize: "1.5rem" }} onClick={handlePaymentClick}>Procesar Pago</Button>
+            {editMode ? <Button rank="secondary" styles={{ margin: "0 auto", fontSize: "1.5rem" }} onClick={handleEditClick}>Editar reserva</Button> :
+                <Button rank="secondary" styles={{ margin: "0 auto", fontSize: "1.5rem" }} onClick={handlePaymentClick}>Procesar Pago</Button>}
         </Container>
     )
 }

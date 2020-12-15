@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client"
 import { CREATE_REVIEW } from "mutations"
@@ -23,8 +23,11 @@ import {
     Button,
     ModalContent
 } from "./styles"
+import { useRouter } from "next/router";
+import { UserContext } from "context/UserContext";
 
 export default function ReservationCard({ id, checkInDate, checkOutDate, status, total, parking, client }: Reservation) {
+    const router = useRouter()
     const isCancelable = status === ReservationStatuses.Created ? true : false
     const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
@@ -33,7 +36,13 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
 
     return (
         <>
-            <Container>
+            <Container onClick={() => {
+                if (isCancelable) {
+                    router.push('/reservations/edit/[id]', `/reservations/edit/${id}`)
+                } else {
+                    router.push('/reservations/detail/[id]', `/reservations/detail/${id}`)
+                }
+            }}>
                 <ReservationImage src={parkingImage} />
                 <MetadataSection>
                     <Item>
@@ -55,26 +64,33 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
                 </CostSection>
                 <ButtonSection>
                     {isCancelable ?
-                        <SpecialReservationsButton isCancelable>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={() => {
+                        <SpecialReservationsButton isCancelable onClick={(event) =>
+                            event.stopPropagation()
+
+                        }>Cancelar</SpecialReservationsButton> : <SpecialReservationsButton onClick={(event) => {
+                            event.stopPropagation()
                             setShowModal(true)
                         }}>Dejar reseña</SpecialReservationsButton>}
 
                     <ActionButtonsSection>
                         {isCancelable ?
-                            <ReservationsButton>
+                            <ReservationsButton onClick={(event) =>
+                                event.stopPropagation()}>
                                 <BsMap size="1.5em" />
-                                <Link href="/map"><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
+                                <Link href={`/reservations/detail/${id}`}><a style={{ color: "white", textDecoration: "none" }}>Ver en mapa</a></Link>
                             </ReservationsButton>
                             :
-                            <ReservationsButton><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
+                            <ReservationsButton onClick={(event) =>
+                                event.stopPropagation()}><BsCardList size="1.5em" /> <Link href="/parking/detail"><a style={{ color: "white", textDecoration: "none" }}>Detalles</a></Link></ReservationsButton>
                         }
-                        <ReservationsButton><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
+                        <ReservationsButton onClick={(event) =>
+                            event.stopPropagation()}><BiMessageDetail size="1.5em" /><Link href="/chat"><a style={{ color: "white", textDecoration: "none" }}>Mensajear</a></Link></ReservationsButton>
                     </ActionButtonsSection>
                 </ButtonSection>
             </Container>
             {showModal && <ModalPortal onClose={() => setShowModal(false)}>
                 <ModalContent>
-                    <ReservationForm parking={parking.id} reservation={id} user={client.id} />
+                    <ReservationForm parking={parking.id} reservation={id} user={client.id} setShowModal={setShowModal} />
                 </ModalContent>
             </ModalPortal>}
         </>
@@ -82,9 +98,20 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     )
 }
 
-function ReservationForm({ parking, reservation, user }: ReviewInput) {
+type ReservationFormProps = ReviewInput & { setShowModal: (value: boolean) => void; }
 
-    const [CreateReview, { loading, error }] = useMutation(CREATE_REVIEW)
+function ReservationForm({ parking, reservation, user, setShowModal }: ReservationFormProps) {
+    const { token } = useContext(UserContext)
+    const [CreateReview] = useMutation(CREATE_REVIEW, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        },
+        onCompleted() {
+            setShowModal(false)
+        }
+    })
 
     const stars = [1, 2, 3, 4, 5]
     const graphicStars = (amountSelected) => {

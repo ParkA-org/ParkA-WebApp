@@ -21,6 +21,11 @@ type StateObject = {
     "saturday"?: Array<RangeObject>;
 }
 
+interface RefObject {
+    close: () => void
+    open: () => void
+}
+
 const getRandomInt = (max) => Math.floor(Math.random() * max)
 
 const lastFormatPlaceholder = (value) => `${value.substr(0, value.length / 2)}:${value.substr((value.length / 2))}`
@@ -31,7 +36,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
     const validateHours = (hour: number) => {
         return hour - (value.start / 100) < 1
     }
-    const whisperRef = createRef()
+    const whisperRef = createRef<RefObject>()
 
     const toolTip = <Tooltip>Falta un valor para completar el rango</Tooltip>
     return (
@@ -53,7 +58,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.start.toString())}
                     onChange={(date) => {
@@ -69,7 +74,7 @@ function HourPicker({ day, item, dispatch }: { day: string, item: RangeObject, d
                 <DatePicker
                     format="HH:mm"
                     ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
+                    hideMinutes={minute => minute % 30 !== 0}
                     hideHours={hour => validateHours(hour)}
                     placement="topStart"
                     placeholder={lastFormatPlaceholder(value.finish.toString())}

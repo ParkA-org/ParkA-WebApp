@@ -1,20 +1,19 @@
 import { useState, useEffect } from "react"
 import sliderStyles from "styles/Slider.module.css"
 import InputRange from 'react-input-range'
-import { DatePicker } from "rsuite"
 import {
     Container,
     Section,
-    Tag,
-    TagContainer,
+    StyledInput,
+    ElementContainer,
     CharacteristicContainer,
     Characteristic,
-    Slider,
-    TimeFields
+    Slider
 } from "./styles"
 import { GET_FEATURES } from "queries"
 import { useQuery } from "@apollo/client"
 import { FeaturesData } from "utils/types"
+import Button from "components/Button"
 
 export interface Range {
     max: number;
@@ -23,12 +22,12 @@ export interface Range {
 
 function PriceSlider({ setFilterObject, filterObject }: { setFilterObject: any, filterObject: any }) {
 
-    const [stateValue, setStateValue] = useState<Range>({ min: 0, max: 200 })
+    const [stateValue, setStateValue] = useState<Range | number>({ min: 0, max: 200 })
 
     return (
         <Slider>
             <InputRange maxValue={200} minValue={0} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
-                setFilterObject({ ...filterObject, priceHours_lte: val.max, priceHours_gte: val.min })
+                setFilterObject({ ...filterObject, priceHours_lte: val['max'], priceHours_gte: val['min'] })
             }}
                 step={10}
                 classNames={{
@@ -48,15 +47,71 @@ function PriceSlider({ setFilterObject, filterObject }: { setFilterObject: any, 
     )
 }
 
-export default function FilterSideBar() {
+
+function CalificationSlider({ setFilterObject, filterObject }: { setFilterObject: any, filterObject: any }) {
+
+    const [stateValue, setStateValue] = useState<Range | number>({ min: 0, max: 5 })
+
+    return (
+        <Slider>
+            <InputRange maxValue={5} minValue={0} value={stateValue} onChange={val => setStateValue(val)} onChangeComplete={val => {
+                setFilterObject({ ...filterObject, rating_lte: val['max'], rating_gte: val['min'] })
+            }}
+                step={1}
+                classNames={{
+                    activeTrack: sliderStyles.inputRangeTrackActive,
+                    disabledInputRange: sliderStyles.inputRangeDisabled,
+                    inputRange: sliderStyles.inputRange,
+                    labelContainer: sliderStyles.labelContainer,
+                    maxLabel: sliderStyles.labelMax,
+                    minLabel: sliderStyles.labelMin,
+                    slider: sliderStyles.inputRangeSlider,
+                    sliderContainer: sliderStyles.sliderContainer,
+                    track: sliderStyles.inputRangeTrackBackground,
+                    valueLabel: sliderStyles.valueLabel,
+                }}
+            />
+        </Slider>
+    )
+}
+
+
+export default function FilterSideBar({ refetch }) {
 
     const [filterObject, setFilterObject] = useState({
         features_in: [],
         priceHours_lte: 200,
-        priceHours_gte: 0
+        priceHours_gte: 0,
+        rating_lte: 5,
+        rating_gte: 0,
+        sector_contains: "",
+        parkingName_contains: ""
     })
 
+    const [inputState, setInputState] = useState({ name: "", sector: "" })
     const { loading, error, data } = useQuery<FeaturesData>(GET_FEATURES);
+
+    useEffect(() => { }, [data])
+
+    useEffect(() => {
+        let actualFilterObject = { ...filterObject }
+        for (const [key, value] of Object.entries(actualFilterObject)) {
+            if (typeof actualFilterObject[key] === "object") {
+                if (actualFilterObject[key].length === 0)
+                    delete actualFilterObject[key]
+            }
+        }
+        console.log(JSON.stringify(actualFilterObject))
+        refetch({
+            filterV:
+            {
+                where: {
+                    ...actualFilterObject
+                }
+            }
+        })
+    }, [filterObject])
+
 
     const handleCheckboxes = (event) => {
         const target = event.target
@@ -70,21 +125,21 @@ export default function FilterSideBar() {
         }
     }
 
-    useEffect(() => { }, [data])
+    const handleInput = (e) => {
+        const { value, name } = e.target
+        setInputState(prevState => {
+            return { ...prevState, [name]: value }
+        })
+    }
 
-    useEffect(() => {
-        let actualFilterObject = { ...filterObject }
-        for (const [key, value] of Object.entries(actualFilterObject)) {
-            if (typeof actualFilterObject[key] === "object") {
-                if (actualFilterObject[key].length === 0)
-                    delete actualFilterObject[key]
-            }
-        }
-        console.log('Stringified object')
-        console.log(JSON.stringify(filterObject))
-        console.log('Stringified actual filter')
-        console.log(JSON.stringify(actualFilterObject))
-    }, [filterObject])
+    const handleFieldSubmit = (e) => {
+        setFilterObject({
+            ...filterObject,
+            sector_contains: inputState.sector,
+            parkingName_contains: inputState.name
+        })
+    }
+
 
     return (
         <Container>
@@ -92,31 +147,6 @@ export default function FilterSideBar() {
             <Section>
                 <h3>Precio</h3>
                 <PriceSlider setFilterObject={setFilterObject} filterObject={filterObject} />
-            </Section>
-            <Section>
-                <h3>Tipo de Reserva</h3>
-                <TagContainer>
-                    <Tag>Horas</Tag>
-                    <Tag>Dias</Tag>
-                    <Tag>Semanas</Tag>
-                    <Tag>Meses</Tag>
-                </TagContainer>
-            </Section>
-            <Section>
-                <h3>Disponibilidad</h3>
-                <p>Fecha <DatePicker style={{ width: "auto" }} placement="topStart" /> </p>
-                <p>Desde   <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                    placement="topStart"
-                /></p>
-                <p>Hasta  <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 15 !== 0}
-                    placement="topStart"
-                /></p>
             </Section>
             <Section>
                 <h3>Características</h3>
@@ -133,6 +163,22 @@ export default function FilterSideBar() {
                         })}
                     </CharacteristicContainer>
                 }
+            </Section>
+            <Section>
+                <h3>Calificación</h3>
+                <CalificationSlider setFilterObject={setFilterObject} filterObject={filterObject} />
+            </Section>
+            <Section>
+                <h3>Campo en específico</h3>
+                <ElementContainer>
+                    <label><b>Sector</b></label>
+                    <StyledInput name="sector" onChange={handleInput} />
+                </ElementContainer>
+                <ElementContainer>
+                    <label><b>Nombre</b></label>
+                    <StyledInput name="name" onChange={handleInput} />
+                </ElementContainer>
+                <Button onClick={handleFieldSubmit}>Buscar</Button>
             </Section>
             <style jsx>
                 {`

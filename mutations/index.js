@@ -101,23 +101,54 @@ mutation forgotPassword($email: String!) {
 }
 `
 
-export const RESET_PASSWORD = gql`
-mutation resetPassword($password: String!, $passwordConfirmation: String!, $code: String!) {
-  resetPassword(password: $password, passwordConfirmation: $passwordConfirmation, code: $code) {
-    jwt
-    user {
-      username
-    }
-  }
-}
-`
-
 export const CREATE_RESERVATION = gql`
   mutation CreateReservation($crI: CreateReservationInput!){
     createReservation(createReservationInput: $crI){
       id
     }
   }
+`
+
+export const UPDATE_RESERVATION = gql`
+mutation UpdateReservation($urInput: UpdateReservationInput!){
+  updateReservation(updateReservationInput: $urInput) {
+    id
+    checkInDate
+    checkOutDate
+    vehicle {
+      alias
+      model {
+        id
+        name
+      }
+      licensePlate
+      mainPicture
+    }
+    paymentInfo {
+      expirationDate
+      cardHolder
+      digit
+      card {
+        id
+        name
+      }
+      activated
+    }
+    parking {
+      mainPicture
+      latitude
+      longitude
+      priceHours
+      parkingName
+      features {
+        id
+        name
+      }
+    }
+    total
+  }
+}
+
 `
 
 export const CREATE_VEHICLE = gql`
@@ -206,6 +237,42 @@ mutation CreateReview($crI: CreateReviewInput!){
     title
     calification
     review
+  }
+}
+`
+
+export const UPDATE_PAYMENT = gql`
+mutation UpdatePayment($upV: UpdatePaymentInput!) {
+  updatePayment(updatePaymentInput: $upV){
+    id
+    expirationDate
+  }
+}
+`
+
+export const CHANGE_PASSWORD = gql`
+mutation ChangePassword($input: UpdateUserPasswordInput!) {
+  updateUserPassword(updateUserPasswordInput: $input) {
+      id
+      name
+      lastName
+    }
+  }
+`
+
+export const RESET_PASSWORD = gql`
+mutation resetPassword($resetInput: ResetPasswordInput!) {
+  resetPassword(resetPasswordInput: $resetInput) {
+    origin
+    email
+  }
+}
+`
+export const VALIDATE_PASSWORD_RESET = gql`
+mutation validateReset($validateInput: ValidateResetPasswordCodeInput!) {
+  validateResetPasswordCode(validateResetPasswordCodeInput: $validateInput) {
+    email
+    origin
   }
 }
 `

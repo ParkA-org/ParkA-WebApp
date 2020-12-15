@@ -1,19 +1,17 @@
 import NavigationLink from "components/NavigationLink"
 import ParkingCard from "components/ParkingCard"
 import PlusIcon from "components/Icons/Plus"
+import { Parking } from "utils/types";
 import { HeaderSection, NewLink, VehicleList } from "components/VehicleSection/styles";
-import { useQuery } from "@apollo/client";
-import { GET_USER_PARKINGS } from "queries";
-import { ParkingData } from "utils/types";
+import { ApolloError } from "@apollo/client";
 
+type ComponentProps = {
+    loading: boolean;
+    error: ApolloError;
+    parkings: Parking[]
+}
 
-export default function ParkingSection() {
-    let getAllUserParkings = []
-    const { loading, error, data } = useQuery<ParkingData>(GET_USER_PARKINGS, {
-        fetchPolicy: "network-only"
-    })
-    if (data)
-        getAllUserParkings = data.getAllUserParkings
+export default function ParkingSection({ error, loading, parkings }: ComponentProps) {
 
     return (
         <>
@@ -25,33 +23,12 @@ export default function ParkingSection() {
             </HeaderSection>
             {error && <h2>Error</h2>}
             {loading && <h2>Loading...</h2>}
-            {getAllUserParkings.length > 0 ?
-                <VehicleList>
-                    {getAllUserParkings.map(parking => {
-                        return <ParkingCard key={`${parking.id}${parking.parkingName}`
-                        } parking={parking} />
-                    })}
-                </VehicleList>
-                :
-                <div className="emptySection">
-                    <img src="/placeholders/empty/parking.svg" alt="empty vehicle" />
-                    <h3>¡No tienes parqueos registrados!</h3>
-                    <style jsx>{`
-                 .emptySection {
-                     margin: 0 auto;
-                     display: flex;
-                     flex-direction: column;
-                     justify-content: space-around;
-                     font-size: 1.2rem;
-                     max-width: 350px;
-                 }
-                 h3 {
-                     margin: 1em 0;
-                     color: #0B768C;
-                 }
-                `}</style>
-                </div>
-            }
+            <VehicleList>
+                {parkings.map(parking => {
+                    return <ParkingCard key={`${parking.id}${parking.parkingName}`
+                    } parking={parking} />
+                })}
+            </VehicleList>
         </>
     )
 }

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback, Dispatch, SetStateAction } from "react"
+import { useState, useEffect, useRef, useCallback } from "react"
 import { Coordinates } from "utils/types"
 import {
     GoogleMap,
@@ -36,30 +36,19 @@ const center = {
 
 
 type LocationProps = {
-    setCoordinates: Dispatch<SetStateAction<Coordinates>>
+    coordinates: Coordinates
 }
 
-export default function LocationPicker({ setCoordinates }: LocationProps) {
+export default function MapFragment({ coordinates }: LocationProps) {
     const { isLoaded, loadError } = useLoadScript({
         googleMapsApiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
         libraries,
     });
-    const [marker, setMarker] = useState<Coordinates>({});
-    const [selected, setSelected] = useState(null);
+    const [marker, setMarker] = useState<Coordinates>(coordinates);
 
-    const onMapClick = useCallback((e) => {
-        setCoordinates({
-            lat: e.latLng.lat(),
-            lng: e.latLng.lng()
-        })
-        setMarker(
-            {
-                lat: e.latLng.lat(),
-                lng: e.latLng.lng(),
-                time: new Date(),
-            },
-        );
-    }, []);
+    useEffect(() => {
+        panTo(coordinates)
+    }, [coordinates])
 
     const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
@@ -75,20 +64,8 @@ export default function LocationPicker({ setCoordinates }: LocationProps) {
         }
     }, []);
 
-    useEffect(() => {
-        navigator && navigator.geolocation.getCurrentPosition(
-            (position) => {
-                panTo({
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                });
-            },
-            () => null
-        );
-    }, [])
-
     if (loadError) return <h2>Error</h2>;
-    if (!isLoaded) return <h2>"Cargando..."</h2>;
+    if (!isLoaded) return <h2>"Loading..."</h2>;
 
     return (
         <MapContainer>
@@ -98,7 +75,6 @@ export default function LocationPicker({ setCoordinates }: LocationProps) {
                 zoom={16}
                 center={center}
                 options={options}
-                onClick={onMapClick}
                 onLoad={onMapLoad}
             >
                 {process.browser && marker !== {} && (
@@ -109,7 +85,7 @@ export default function LocationPicker({ setCoordinates }: LocationProps) {
                             url: `/icons/availableIcon.svg`,
                             origin: new (window as any).google.maps.Point(0, 0),
                             anchor: new (window as any).google.maps.Point(15, 15),
-                            scaledSize: new (window as any).google.maps.Size(30, 30),
+                            scaledSize: new (window as any).google.maps.Size(50, 50),
                         }}
                     />
                 )}

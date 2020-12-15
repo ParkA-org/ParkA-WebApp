@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import { Formik, Form } from "formik";
 import { useMutation, useQuery } from '@apollo/client'
-import useLocalStorage from "hooks/useLocalStorage"
 import { useRouter } from 'next/router'
 import { UPDATE_USER, UPDATE_USER_INFORMATION } from "mutations"
 import { GET_BIRTH_PLACES, GET_LOGGED_USER, GET_NATIONALITIES } from "queries"
@@ -51,8 +50,6 @@ export default function EditProfile(): JSX.Element {
         profilePicture: "",
         file: undefined
     })
-    const [image, setImage] = useLocalStorage("image", "")
-    const [userId,] = useLocalStorage("user-id", "")
     let tempUserValues = {
         name: "",
         lastName: "",
@@ -67,7 +64,6 @@ export default function EditProfile(): JSX.Element {
     useEffect(() => {
         if (data) {
             const user = data.getLoggedUser
-            console.log(user)
             const { userInformation } = user
             for (const key in tempUserValues) {
                 if (user[key])
@@ -80,8 +76,6 @@ export default function EditProfile(): JSX.Element {
                     }
                 }
             }
-            console.log('Temp user Values')
-            console.log(tempUserValues)
             setInitialValues(tempUserValues)
         }
     }, [data])
@@ -95,36 +89,64 @@ export default function EditProfile(): JSX.Element {
                     validationSchema={EditProfileSchema}
                     onSubmit={(values) => {
                         console.log('Values ', values)
-                        // setImageStatus(prevState => {
-                        //     return { ...prevState, loading: true }
-                        // })
-                        // UploadImageService(values.file, setImage, setImageStatus)
-                        // updateUser({
-                        //     variables: {
-                        //         user: {
-                        //             name: values.name,
-                        //             lastName: values.lastName,
-                        //             origin: "web"
-                        //         }
-                        //     }
-                        // })
-                        // updateUserInformation({
-                        //     variables: {
-                        //         userInfo: {
-                        //             telephoneNumber: values.telephoneNumber,
-                        //             nationality: values.nationality,
-                        //             placeOfBirth: values.placeOfBirth,
-                        //             documentNumber: values.documentNumber,
-                        //         }
-                        //     }
-                        // })
-                        // if (!error && !imageStatus.error) {
-                        //     if (!imageStatus.loading && !loading) {
-                        //         router.push('/profile')
-                        //     }
-                        // }
-                        // else
-                        //     alert(error)
+                        if (values.file) {
+                            UploadImageService(values.file)
+                                .then(result => {
+                                    let url = result.data[0].url
+                                    updateUser({
+                                        variables: {
+                                            user: {
+                                                name: values.name,
+                                                lastName: values.lastName,
+                                                profilePicture: url,
+                                                origin: "web"
+                                            }
+                                        }
+                                    })
+                                    updateUserInformation({
+                                        variables: {
+                                            userInfo: {
+                                                telephoneNumber: values.telephoneNumber,
+                                                nationality: values.nationality,
+                                                placeOfBirth: values.placeOfBirth,
+                                                documentNumber: values.documentNumber,
+                                                birthDate: data.getLoggedUser.userInformation.birthDate
+                                            }
+                                        }
+                                    })
+                                })
+                        } else {
+                            updateUser({
+                                variables: {
+                                    user: {
+                                        name: values.name,
+                                        lastName: values.lastName,
+                                        profilePicture: initialValues.profilePicture,
+                                        origin: "web"
+                                    }
+                                }
+                            })
+
+                            updateUserInformation({
+                                variables: {
+                                    userInfo: {
+                                        telephoneNumber: values.telephoneNumber,
+                                        nationality: values.nationality,
+                                        placeOfBirth: values.placeOfBirth,
+                                        documentNumber: values.documentNumber,
+                                        birthDate: new Date(data.getLoggedUser.userInformation.birthDate).toISOString()
+                                    }
+                                }
+                            })
+                        }
+
+                        if (!error && !infoError) {
+                            if (!infoLoading && !loading) {
+                                router.push('/profile')
+                            }
+                        }
+                        else
+                            alert(error)
                     }}>
                     {({ setFieldValue, errors, touched, values }) => (
                         <Form>
@@ -210,7 +232,7 @@ export default function EditProfile(): JSX.Element {
                     )}
                 </Formik>
             </MainFormContainer>
-            {imageStatus.loading && <p>Loading...</p>}
+            {imageStatus.loading && <p>Cargando...</p>}
             {imageStatus.error && <p>Error...</p>}
         </Layout >
     );

@@ -59,6 +59,7 @@ export default function registerPersonalAccount(): JSX.Element {
           initialValues={initialUserValues}
           validationSchema={CreateAccountSchema}
           onSubmit={async (values) => {
+            console.log('Llegamos aqui ', values)
             setLocalUser({ ...localUser, ...values })
 
             try {

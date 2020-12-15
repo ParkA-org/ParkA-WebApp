@@ -50,8 +50,19 @@ const options = {
 
 export default function MapViewer(): JSX.Element {
     const router = useRouter()
-    const { loading, error, data } = useQuery<AllParkingData>(GET_PARKINGS, {
-        fetchPolicy: "network-only"
+
+    const [coordinates, setCoordinates] = useState({ lat: 18.487876, lng: -69.962292 })
+    const { loading, error, data, refetch } = useQuery<AllParkingData>(GET_PARKINGS, {
+        fetchPolicy: "network-only",
+        variables: {
+            filterV:
+            {
+                where: {
+                    position_near: { latitude: coordinates.lat, longitude: coordinates.lng }
+                }
+            }
+
+        }
     })
 
     const { isLoaded, loadError } = useLoadScript({
@@ -70,6 +81,7 @@ export default function MapViewer(): JSX.Element {
                     lat: parking.latitude,
                     lng: parking.longitude,
                     time: new Date(),
+                    isAvailable: parking.isAvailable,
                     name: parking.parkingName,
                     information: parking.information,
                     picture: parking.mainPicture,
@@ -88,8 +100,12 @@ export default function MapViewer(): JSX.Element {
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
             if (mapRef && mapRef.current) {
+                console.log('Llegamos aqui')
+                console.log('Latitude ', lat)
+                console.log('Longitude ', lng)
                 mapRef.current!.panTo({ lat, lng });
                 mapRef.current!.setZoom(16);
+                setCoordinates({ lat: lat, lng: lng })
             }
         }
     }, []);
@@ -107,7 +123,7 @@ export default function MapViewer(): JSX.Element {
     }, [])
 
     if (loadError) return <h2>Error</h2>;
-    if (!isLoaded) return <h2>"Loading..."</h2>;
+    if (!isLoaded) return <h2>"Cargando..."</h2>;
 
     return (
         <div>
@@ -119,7 +135,7 @@ export default function MapViewer(): JSX.Element {
                                 <AiOutlineMenu color="#333" size="1.5rem" /></button>
                             <Search panTo={panTo} />
                             <BsSearch color="#cecccd" size="1.5rem" />
-                            {showFilters && <FilterSideBar />}
+                            {showFilters && <FilterSideBar refetch={refetch} />}
                         </ButtonSection>
                     </ButtonsContainer>
                     <LegendContainer>
@@ -147,7 +163,7 @@ export default function MapViewer(): JSX.Element {
                                         setSelected(marker);
                                     }}
                                     icon={{
-                                        url: `/icons/availableIcon.svg`,
+                                        url: marker.isAvailable ? `/icons/availableIcon.svg` : `/icons/unavailableIcon.svg`,
                                         origin: new (window as any).google.maps.Point(0, 0),
                                         anchor: new (window as any).google.maps.Point(15, 15),
                                         scaledSize: new (window as any).google.maps.Size(30, 30),
@@ -182,7 +198,7 @@ export default function MapViewer(): JSX.Element {
                             display: flex;
                             justify-content: space-around;
                             align-items: center;
-                            height: auto
+                            height: auto;
                             max-width: 20vw;
                         }
                         .information > h3 {
@@ -194,6 +210,7 @@ export default function MapViewer(): JSX.Element {
                             flex-direction: column;
                             justify-content: center;
                             align-items: center;
+                            word-wrap: break-word;
                         }
                         .description {
                             font-size: 0.9rem;
@@ -206,7 +223,7 @@ export default function MapViewer(): JSX.Element {
                         }
                         .img {
                             width: 150px;
-                            height: 100px;
+                            height: 50px;
                             border-radius: 5px;
                             margin-left: 0.5em;
                         }

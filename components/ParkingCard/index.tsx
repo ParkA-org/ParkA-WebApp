@@ -59,7 +59,10 @@ export default function ParkingCard({ parking }: CardProps) {
             </CarStatus>
             <ButtonSection>
                 <ActionButton><MdScreenShare color="white" size="1.5em" />Compartir</ActionButton>
-                <ActionButton><MdMap color="white" size="1.5em" />Ver en mapa</ActionButton>
+                <ActionButton onClick={(event) => {
+                    event.stopPropagation()
+                    router.push('/parking/checkout/[id]', `/parking/checkout/${parking.id}`)
+                }}><MdMap color="white" size="1.5em" />Ver en mapa</ActionButton>
                 <ActionButton onClick={(event) => {
                     event.stopPropagation()
                     router.push('/parking/edit/[id]', `/parking/edit/${parking.id}`)
