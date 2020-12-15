@@ -228,7 +228,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
         </Formik>
         {showModal && <ModalPortal onClose={() => setShowModal(false)}>
           <Spinner />
-          <h3>Loading...</h3>
+          <h3>Cargando...</h3>
         </ModalPortal>}
       </MainFormContainer>
       <style jsx>{`

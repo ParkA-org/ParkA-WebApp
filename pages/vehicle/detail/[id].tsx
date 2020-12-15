@@ -65,12 +65,12 @@ export default function DetailVehicle() {
         return `${name} ${lastName}`;
     }
 
-    if (loading) return <h3>Loading...</h3>
+    if (loading) return <h3>Cargando...</h3>
 
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>
-                {loading && <h3>Loading...</h3>}
+                {loading && <h3>Cargando...</h3>}
                 {error && <h3>Ocurrio un error</h3>}
                 {data &&
                     <section>

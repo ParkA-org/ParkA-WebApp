@@ -123,7 +123,7 @@ export default function MapViewer(): JSX.Element {
     }, [])
 
     if (loadError) return <h2>Error</h2>;
-    if (!isLoaded) return <h2>"Loading..."</h2>;
+    if (!isLoaded) return <h2>"Cargando..."</h2>;
 
     return (
         <div>
@@ -223,7 +223,7 @@ export default function MapViewer(): JSX.Element {
                         }
                         .img {
                             width: 150px;
-                            height: 70px;
+                            height: 50px;
                             border-radius: 5px;
                             margin-left: 0.5em;
                         }

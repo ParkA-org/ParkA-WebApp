@@ -66,7 +66,7 @@ export default function ForgotPassword(): JSX.Element {
   return (
     <Layout pageTitle="Reiniciar contraseña">
       <MainFormContainer>
-        <h1>Parka - Reinicio de contraseña</h1>
+        <h1>Parka - Contraseña olvidada</h1>
         <Formik
           initialValues={{
             email: "",

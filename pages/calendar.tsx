@@ -1,114 +1,114 @@
-import * as React from 'react';
-import { useState, useEffect } from "react"
 import Layout from "./layout";
-import { AppointmentModel, ViewState } from '@devexpress/dx-react-scheduler';
-import { GET_CLIENT_RESERVATIONS, GET_OWNER_RESERVATIONS } from "queries"
-import { useLazyQuery } from "@apollo/client";
-import { Reservation } from "utils/types";
+import { ViewState } from '@devexpress/dx-react-scheduler';
+import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import {
   Scheduler,
   WeekView,
   Appointments,
-  Resources
+  Toolbar,
+  DateNavigator,
+  CurrentTimeIndicator,
+  ViewSwitcher,
+  MonthView,
+  DayView,
 } from '@devexpress/dx-react-scheduler-material-ui';
 
-const resources = [{
-  fieldName: 'type',
-  title: 'Type',
-  instances: [
-    { id: 'client', text: 'Usuario', color: '#EC407A' },
-    { id: 'owner', text: 'Parqueo', color: '#7E57C2' },
-  ],
-}];
+function getCurrentDate() {
+  var date = new Date()
+  var year = date.getFullYear();
 
-export type ReservationsData = {
-  getAllUserReservationsAsClient: Reservation[];
+  var month = (1 + date.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = date.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+
+  return year + '-' + month + '-' + day;
 }
 
-export type OwnerReservationsData = {
-  getAllUserReservationsAsOwner: Reservation[];
-}
+const currentDate = getCurrentDate();
+const schedulerData = [
+  { startDate: '2020-10-06T09:45', endDate: '2020-10-06T11:00', title: 'Parqueo Reservado', color: "#077187" },
+  { startDate: '2020-10-07T12:00', endDate: '2020-10-07T13:30', title: 'Parqueo Reservado', color: "#077187" },
+  { startDate: '2020-10-08T09:45', endDate: '2020-10-08T11:00', title: 'Tu reserva', color: "#63C7B2" },
+];
 
-export default function Calendar() {
-  const [data, setData] = useState([])
-  const [curDate, setCurrentDate] = useState(new Date(Date.now()).toISOString())
+/*const Appointment = ({ children, style, data, resources, ...restProps }) => (
+  <Appointments.Appointment
+    style={{
+      ...style,
+      backgroundColor: data.color,
+      borderRadius: "8px"
+    }}
+    draggable={false}
+    data={data}
+    resources={resources}
+    {...restProps}
+  >
+    {children}
+  </Appointments.Appointment>
+);*/
+type MyProps = { currentViewNameChange: (currentViewName: any) => void };
+type MyState = { currentViewName: string, data: {}, currentDate: string };
 
-  const [GetReservations, { loading: reservationLoading, error: reservationError, data: reservationData }] = useLazyQuery<ReservationsData>(GET_CLIENT_RESERVATIONS, {
-    fetchPolicy: "network-only"
-  })
+export default class Calendar extends React.PureComponent<MyProps, MyState> {
+  currentViewNameChange: (currentViewName: any) => void
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      data: schedulerData,
+      currentDate: currentDate,
+      currentViewName: 'Week',
+    };
+    this.currentViewNameChange = (currentViewName) => {
+      this.setState({ currentViewName });
+    };
+  }
 
-  const [GetOwnerReservations, { loading: ownerLoading, error: ownerError, data: ownerData }] = useLazyQuery<OwnerReservationsData>(GET_OWNER_RESERVATIONS, {
-    fetchPolicy: "network-only"
-  })
+  render() {
+    const { currentViewName } = this.state;
 
-
-  useEffect(() => {
-    GetOwnerReservations()
-    GetReservations()
-  }, [])
-  useEffect(() => {
-    if (reservationData) {
-      let newData = reservationData.getAllUserReservationsAsClient.map(reservation => {
-        return {
-          startDate: reservation.checkInDate,
-          endDate: reservation.checkOutDate,
-          title: 'Mis reservaciones',
-          type: "client"
-        }
-      })
-      setData(prevData => [...prevData, ...newData])
-    }
-  }, [reservationData])
-
-  useEffect(() => {
-    if (ownerData) {
-      let newData = ownerData.getAllUserReservationsAsOwner.map(reservation => {
-        return {
-          startDate: reservation.checkInDate,
-          endDate: reservation.checkOutDate,
-          title: 'Mis parqueos',
-          type: "owner"
-        }
-      })
-      setData(prevData => [...prevData, ...newData])
-    }
-  }, [ownerData])
-
-
-  return (
-    <Layout>
-      <div className="container">
-        {ownerLoading && <h3>Cargando...</h3>}
-        {data &&
+    return (
+      <Layout>
+        <div className="container">
           <Paper>
             <Scheduler
               locale='es-ES'
-              data={data}
+              data={schedulerData}
             >
+
               <ViewState
-                currentDate={curDate}
+                defaultCurrentDate={currentDate}
+                currentViewName={currentViewName}
+                onCurrentViewNameChange={this.currentViewNameChange}
 
               />
+
               <WeekView
-                startDayHour={9}
-                endDayHour={22}
+                startDayHour={5}
+                endDayHour={24}
               />
-              <Appointments />
-              <Resources data={resources} />
+              <MonthView />
+              <DayView />
+              <Toolbar />
+              <ViewSwitcher />
+              <DateNavigator />
+              <Appointments
+                /*appointmentComponent={Appointment}*/ />
+              <CurrentTimeIndicator />
             </Scheduler>
           </Paper>
-        }
-      </div>
-      <style jsx>{`
+        </div>
+        <style jsx>{`
               .container{
                 margin:0;
                 width:99vw;
                 padding:0;
               }
             `}</style>
-    </Layout>
-
-  );
+      </Layout>
+    );
+  }
 }

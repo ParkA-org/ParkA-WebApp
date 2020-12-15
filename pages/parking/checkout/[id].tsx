@@ -33,7 +33,7 @@ export default function Checkout() {
             <div className="container">
                 {parking && <MapFragment coordinates={{ lat: parseFloat(parking.latitude), lng: parseFloat(parking.longitude) }} />}
                 <div className="pageContent">
-                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Loading...</h3>}
+                    {parking ? <ReservationDetail parking={parking} checkout={checkout} setCheckout={setCheckout} /> : <h3>Cargando...</h3>}
                     <PaymentMethod checkout={checkout} setCheckout={setCheckout} />
                 </div>
             </div>
