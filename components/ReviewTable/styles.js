@@ -2,11 +2,21 @@ import styled from "styled-components"
 
 export const Container = styled.div`
     background: #fff;
-    margin-right: 2em;
+    margin-top: 2em;
     border-radius: 20px;
     flex-shrink: 0;
-    width: 25vw;
+    width: auto;
     height: auto;
+    padding: 0 1em 1em 1em;
+    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
+`
+
+export const ModalContainer = styled.div`
+    background: #fff;
+    border-radius: 20px;
+    flex-shrink: 0;
     padding: 0.5em;
     display: grid;
     grid-template-areas:
@@ -17,13 +27,6 @@ export const Container = styled.div`
     justify-items: center;
     border: 2px solid #0B768C;
     margin-bottom: 25px;
-    box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
-    -webkit-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
-    -moz-box-shadow: 0px 20px 8px rgba(0, 0, 0, 0.20);
-`
-
-
-export const ModalContainer = styled(Container)`
     width: 35vw;
     height: auto;
     margin: 1em;
@@ -34,9 +37,9 @@ export const ModalContainer = styled(Container)`
 
 export const Avatar = styled.img`
     grid-area: photo;
-    width: 75px;
-    height: 75px;
-    border-radius: 35px;
+    width: 175px;
+    height: 175px;
+    border-radius: 40%;
     margin: auto 1em auto 2em;
 `;
 
@@ -59,14 +62,14 @@ export const UserInfo = styled.div`
     align-items: flex-start;
     text-align: left;
     & > h3 {
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: bold;
     }
 `;
 
 export const ReviewDate = styled.p`
     grid-area: date;
-    font-size: 1rem;
+    font-size: 1.4rem;
     font-style: italic;
     color: rgba(0,0,0,0.8);
 `;
@@ -101,6 +104,7 @@ export const ModalText = styled(Text)`
     word-wrap: break-word;
     overflow-x: hidden;
     overflow-y: auto;
+    font-size: 1.5rem;
 `
 
 export const ModalTitle = styled(ReviewTitle)`
@@ -109,4 +113,42 @@ export const ModalTitle = styled(ReviewTitle)`
     white-space: normal;
     word-wrap: normal;
     text-overflow: string;
+    font-size: 1.7rem;
+`
+
+export const TableHeader = styled.th`
+    background: #fff;
+    padding: 0.5em;
+    color: rgba(15,15,15,.6);
+    font-size: 1.5rem;
+    font-family: Montserrat;
+    text-align: left;
+    font-weight: bold;
+`
+
+export const TableCell = styled.td`
+    font-size: 1.3rem;
+    padding-right: 30px;
+    padding-top: 20px;
+    background: #fff;
+    color: #077187;
+    text-align: left;
+`
+
+export const TableRow = styled.tr`
+    background-color: #fff; 
+    
+    &:hover {
+        background-color: #3c3f43;
+        cursor: pointer;
+    }
+`
+
+export const ReviewBody = styled.p`
+    max-height: 150px;
+    max-width: 350px;
+    text-overflow: initial;
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
 `

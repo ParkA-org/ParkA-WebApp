@@ -430,6 +430,7 @@ query GetReservationById($var: GetReservationById!) {
       activated
     }
     parking {
+      id
       user {
         id
       }
@@ -441,6 +442,38 @@ query GetReservationById($var: GetReservationById!) {
       features {
         id
         name
+      }
+      calendar {
+        id
+        parkingId
+        monday {
+          start
+          finish
+        }
+        tuesday {
+          start
+          finish
+        }
+        wednesday {
+          start
+          finish
+        }
+        thursday {
+          start
+          finish
+        }
+        friday {
+          start
+          finish
+        }
+        saturday {
+          start
+          finish
+        }
+        sunday {
+          start
+          finish
+        }
       }
     }
     total
@@ -502,4 +535,18 @@ export const GET_USER_REVIEWS = gql`
       }
     }
   }
+`
+
+export const GET_PARKING_DISPONIBILITY = gql`
+query GetParkingAvailability($paInput: GetParkingCalendarInput!){
+  getParkingAvaliability(getParkingCalendarInput: $paInput){
+    id
+    parking
+    schedules {
+      start
+      finish
+    }
+    date
+  }
+}
 `

@@ -43,7 +43,6 @@ type HourPickerProps = {
 function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.Element {
     const [startDate, setStartDate] = useState<Date>()
     const [endDate, setEndDate] = useState<Date>()
-
     const calculateTime = (start: Date, end: Date) => {
         let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
         endingDate.setTime(start.getTime())
@@ -170,7 +169,7 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
             <RightSection>
                 <ElementContainer>
                     <label><b>Horas</b></label>
-                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} />
+                    <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} calendar={parking.calendar} />
                 </ElementContainer>
 
                 <SectionElement name="Total de horas" value={checkout.total ? checkout.total.toString() : "0"} />

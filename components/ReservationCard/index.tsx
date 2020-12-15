@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useContext, useState } from "react"
 import { Formik, Form } from "formik";
 import { useMutation } from "@apollo/client"
 import { CREATE_REVIEW } from "mutations"
@@ -24,6 +24,7 @@ import {
     ModalContent
 } from "./styles"
 import { useRouter } from "next/router";
+import { UserContext } from "context/UserContext";
 
 export default function ReservationCard({ id, checkInDate, checkOutDate, status, total, parking, client }: Reservation) {
     const router = useRouter()
@@ -89,7 +90,7 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
             </Container>
             {showModal && <ModalPortal onClose={() => setShowModal(false)}>
                 <ModalContent>
-                    <ReservationForm parking={parking.id} reservation={id} user={client.id} />
+                    <ReservationForm parking={parking.id} reservation={id} user={client.id} setShowModal={setShowModal} />
                 </ModalContent>
             </ModalPortal>}
         </>
@@ -97,9 +98,20 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     )
 }
 
-function ReservationForm({ parking, reservation, user }: ReviewInput) {
+type ReservationFormProps = ReviewInput & { setShowModal: (value: boolean) => void; }
 
-    const [CreateReview, { loading, error }] = useMutation(CREATE_REVIEW)
+function ReservationForm({ parking, reservation, user, setShowModal }: ReservationFormProps) {
+    const { token } = useContext(UserContext)
+    const [CreateReview] = useMutation(CREATE_REVIEW, {
+        context: {
+            headers: {
+                authorization: token ? `Bearer ${token}` : ""
+            }
+        },
+        onCompleted() {
+            setShowModal(false)
+        }
+    })
 
     const stars = [1, 2, 3, 4, 5]
     const graphicStars = (amountSelected) => {

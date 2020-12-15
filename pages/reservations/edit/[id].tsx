@@ -37,7 +37,11 @@ export default function EditReservation() {
 
     useEffect(() => {
         if (parking)
-            setCheckout({ ...checkout, parking: parking.id, owner: parking.user.id })
+            setCheckout({
+                ...checkout,
+                parking: parking.id,
+                owner: parking.user.id
+            })
     }, [parking])
 
     return (
