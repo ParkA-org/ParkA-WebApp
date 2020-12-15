@@ -430,6 +430,7 @@ query GetReservationById($var: GetReservationById!) {
       activated
     }
     parking {
+      id
       user {
         id
       }

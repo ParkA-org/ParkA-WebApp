@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react"
-import { useQuery } from "@apollo/client"
+import { useLazyQuery, useQuery } from "@apollo/client"
 import { Parking, Vehicle, ReservationInput, Calendar } from "utils/types"
-import { GET_ALL_VEHICLES } from "queries"
+import { GET_ALL_VEHICLES, GET_PARKING_DISPONIBILITY } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
 import { DatePicker } from "rsuite";
@@ -21,6 +21,22 @@ type ComponentProps = {
 
 type AllVehiclesData = {
     getAllUserVehicles: Vehicle[]
+}
+
+type ParkingSchedule = {
+    start: number;
+    finish: number;
+}
+
+type ParkingCalendar = {
+    id: string;
+    parking: string;
+    schedules: ParkingSchedule[];
+    date: string;
+}
+
+type ParkingAvailability = {
+    getParkingAvaliability: ParkingCalendar[]
 }
 
 function SectionElement({ name, children, value }: ElementProps) {
@@ -70,8 +86,20 @@ const DisableCalendarHours = (hour: number, date: Date, calendar: Calendar): boo
     return false
 }
 
+const DisableAvailableCalendarHours = (hour: number, parkingAvailableCalendar: ParkingCalendar): boolean => {
+
+    for (let i = 0; i < parkingAvailableCalendar.schedules.length; i++) {
+        if (hour < (parkingAvailableCalendar.schedules[0][i].start / 100) || hour > (parkingAvailableCalendar.schedules[0][i].finish) / 100) {
+            return true
+        }
+    }
+    return false
+}
+
 function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerProps): JSX.Element {
-    console.log('Calendario', calendar)
+
+    const [GetParkingDisponibility, { data }] = useLazyQuery<ParkingAvailability>(GET_PARKING_DISPONIBILITY)
+
     const [startDate, setStartDate] = useState<Date>
         (new Date(new Date(checkout.checkInDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
     const [endDate, setEndDate] = useState<Date>
@@ -95,6 +123,19 @@ function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerPr
     useEffect(() => {
         if (startDate && endDate) {
             calculateTime(startDate, endDate)
+        }
+        if (startDate) {
+            GetParkingDisponibility(
+                {
+                    variables:
+                    {
+                        paInput:
+                        {
+                            parking: checkout.parking,
+                            date: startDate
+                        }
+                    }
+                })
         }
     }, [startDate, endDate])
 
@@ -173,13 +214,6 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
         }
     })
     const imgRef = useRef(null)
-
-
-    useEffect(() => {
-        if (data) {
-            console.log(data)
-        }
-    }, [data])
 
     return (
         <Container>
