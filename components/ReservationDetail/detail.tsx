@@ -41,31 +41,34 @@ function HourPicker({ checkInDate, checkOutDate }: HourPickerProps): JSX.Element
             <div>
                 <SectionElement name="Día" value={dateObj.toLocaleDateString('es-ES')} />
             </div>
-            <h3>Horas:</h3>
+            <h4>Horas:</h4>
             <div className="hourSection">
                 <div>
                     <SectionElement name="Desde" value={formatAMPM(dateObj)} />
                 </div>
-                <BsArrowRight size="2em" style={{ margin: "0 2em" }} />
+                <BsArrowRight size="2em" style={{ margin: "0 2em" }} color="#333" />
                 <div>
                     <SectionElement name="Hasta" value={formatAMPM(outDateObj)} />
                 </div>
             </div>
             <style jsx>
                 {`
-                    div {
-                        display: flex;
-                        flex-direction: column;
-                        width: 130px;
-                        height: auto
-                        margin-right: 0.5em;
-                    }
+                
+                .hourSection {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    justify-content: start;
+                    width: 300px;
+                }
 
-                    .hourSection {
-                        display: flex;
-                        flex-direction: row;
-                        align-items: center;
-                        justify-content: start;
+                .hourSection > div {
+                    width: auto;
+                }
+
+                    div {
+                        margin-right: 0.5em;
+                        width: 130px;
                     }
 
                     p {
@@ -115,7 +118,7 @@ export default function ReservationView({ parking, vehicle, checkInDate, checkOu
             </LeftSection>
             <RightSection>
                 <ElementContainer>
-                    <label><b>Fecha</b></label>
+                    <h3>Fecha</h3>
                     <HourPicker checkInDate={checkInDate} checkOutDate={checkOutDate} />
                 </ElementContainer>
 

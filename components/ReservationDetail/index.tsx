@@ -90,7 +90,6 @@ function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.
                     div {
                         display: flex;
                         flex-direction: column;
-                        width: 130px;
                         height: auto
                         margin-right: 0.5em;
                     }

@@ -32,7 +32,8 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
 
-    let dateObj = parseISOString(checkInDate), outDateObj = parseISOString(checkOutDate)
+    let dateObj = new Date(parseISOString(checkInDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)),
+        outDateObj = new Date(parseISOString(checkOutDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000))
 
     return (
         <>

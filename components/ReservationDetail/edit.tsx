@@ -57,44 +57,6 @@ type HourPickerProps = {
     setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
 }
 
-const DisableCalendarDates = (date: Date, calendar: Calendar): boolean => {
-
-    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-
-    let dayOfWeek = date.getDay()
-
-    for (let i = 0; i < week.length; i++) {
-        if (calendar[week[i]].length === 0 && dayOfWeek === i) {
-            return true
-        }
-    }
-    return false
-}
-
-const DisableCalendarHours = (hour: number, date: Date, calendar: Calendar): boolean => {
-
-    const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-
-    let dayOfWeek = date.getDay()
-
-    for (let i = 0; i < calendar[week[dayOfWeek]].length; i++) {
-        if (hour < (calendar[week[dayOfWeek]][i].start / 100) || hour > (calendar[week[dayOfWeek]][i].finish) / 100) {
-            return true
-        }
-    }
-
-    return false
-}
-
-const DisableAvailableCalendarHours = (hour: number, parkingAvailableCalendar: ParkingCalendar): boolean => {
-
-    for (let i = 0; i < parkingAvailableCalendar.schedules.length; i++) {
-        if (hour < (parkingAvailableCalendar.schedules[0][i].start / 100) || hour > (parkingAvailableCalendar.schedules[0][i].finish) / 100) {
-            return true
-        }
-    }
-    return false
-}
 
 function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerProps): JSX.Element {
 
@@ -119,6 +81,61 @@ function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerPr
             total: hourPrice * hourDiff
         })
     }
+
+
+    const DisableCalendarDates = (date: Date, calendar: Calendar): boolean => {
+
+        const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+        let dayOfWeek = date.getDay()
+
+        for (let i = 0; i < week.length; i++) {
+            if (calendar[week[i]].length === 0 && dayOfWeek === i) {
+                return true
+            }
+        }
+
+        if (date.getTime() < new Date(Date.now()).getTime()) {
+            return true
+        }
+
+        return false
+    }
+
+    const DisableAvailableCalendarHours = (hour: number): boolean => {
+        let parkingAvailableCalendar = []
+
+        if (data) {
+            parkingAvailableCalendar = data.getParkingAvaliability
+        }
+
+        for (let z = 0; z < parkingAvailableCalendar.length; z++) {
+            let calendar = parkingAvailableCalendar[z]
+            for (let i = 0; i < calendar.schedules.length; i++) {
+                if (hour < (calendar.schedules[i].start / 100) || hour > (calendar.schedules[i].finish) / 100) {
+                    return false
+                }
+            }
+        }
+
+        return true
+    }
+
+    const DisableCalendarHours = (hour: number, date: Date, calendar: Calendar): boolean => {
+
+        const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
+
+        let dayOfWeek = date.getDay()
+
+        for (let i = 0; i < calendar[week[dayOfWeek]].length; i++) {
+            if (hour < (calendar[week[dayOfWeek]][i].start / 100) || hour > (calendar[week[dayOfWeek]][i].finish) / 100) {
+                return true
+            }
+        }
+        return DisableAvailableCalendarHours(hour)
+    }
+
+
 
     useEffect(() => {
         if (startDate && endDate) {
@@ -183,7 +200,6 @@ function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerPr
                     div {
                         display: flex;
                         flex-direction: column;
-                        width: 130px;
                         height: auto
                         margin-right: 0.5em;
                     }

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useContext } from "react"
 import { CreatePasswordSchema } from "utils/schemas"
 import { Formik, Form } from "formik"
 import styled from "styled-components"
@@ -17,6 +17,7 @@ import NavigationLink from "components/NavigationLink"
 import Field from "components/Field"
 import { motion } from "framer-motion"
 import { useRouter } from "next/router"
+import { UserContext } from "context/UserContext"
 
 const Logo = styled(motion.li)`
   list-style: none;
@@ -38,8 +39,14 @@ const Logo = styled(motion.li)`
 
 export default function Login(): JSX.Element {
   const router = useRouter()
+  const { token } = useContext(UserContext)
 
   const [ChangePassword] = useMutation(CHANGE_PASSWORD, {
+    context: {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    },
     onCompleted() {
       router.push('/profile')
     }

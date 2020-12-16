@@ -13,8 +13,6 @@ export type ReservationsData = {
     getReservationById: Reservation;
 }
 
-
-
 export default function ReservationDetail() {
     const router = useRouter()
     const [GetReservation, { data, loading, error }] = useLazyQuery<ReservationsData>(GET_RESERVATION_BY_ID)
