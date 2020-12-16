@@ -1,6 +1,6 @@
 import { useRef, useEffect, useState } from "react"
 import { useLazyQuery, useQuery } from "@apollo/client"
-import { Parking, Vehicle, ReservationInput, Calendar } from "utils/types"
+import { Parking, Vehicle, ReservationInput, Calendar, ParkingSchedule, ParkingCalendar } from "utils/types"
 import { GET_ALL_VEHICLES, GET_PARKING_DISPONIBILITY } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
@@ -21,18 +21,6 @@ type ComponentProps = {
 
 type AllVehiclesData = {
     getAllUserVehicles: Vehicle[]
-}
-
-type ParkingSchedule = {
-    start: number;
-    finish: number;
-}
-
-type ParkingCalendar = {
-    id: string;
-    parking: string;
-    schedules: ParkingSchedule[];
-    date: string;
 }
 
 type ParkingAvailability = {

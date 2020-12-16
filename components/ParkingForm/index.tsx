@@ -176,8 +176,6 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     })
 
     useEffect(() => {
-        console.log('Cambiaron coordenadas')
-        console.log(coordinates)
         if (coordinates.lat !== 0)
             ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
     }, [coordinates])

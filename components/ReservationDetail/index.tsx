@@ -120,13 +120,6 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
     })
     const imgRef = useRef(null)
 
-
-    useEffect(() => {
-        if (data) {
-            console.log(data)
-        }
-    }, [data])
-
     return (
         <Container>
             <LeftSection>

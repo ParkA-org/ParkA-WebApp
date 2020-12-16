@@ -19,7 +19,6 @@ export default function ReviewPage() {
     useEffect(() => {
         if (data && data.getAllUserReviews) {
             setUserReviews(data.getAllUserReviews)
-            console.log(userReviews)
         }
     }, [data])
 

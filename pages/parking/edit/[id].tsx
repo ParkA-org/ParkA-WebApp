@@ -12,7 +12,6 @@ export default function EditParking(): JSX.Element {
     const [parking, setParking] = useState<Parking>(null)
     const [GetParkingWithId, { data, loading, error }] = useLazyQuery(GET_PARKING_WITH_ID)
     useEffect(() => {
-        console.log('Parking id', id)
         if (id) {
             GetParkingWithId({ variables: { id: id } })
         }

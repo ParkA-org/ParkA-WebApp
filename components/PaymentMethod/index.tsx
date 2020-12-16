@@ -38,7 +38,6 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
     const { loading, error, data } = useQuery<AllPaymentsData>(GET_USER_PAYMENTS, {
         onCompleted() {
             if (data && data.getAllUserPayments.length) {
-                console.log('Entro en payments')
                 setCheckout({ ...checkout, paymentInfo: data.getAllUserPayments[0].id })
                 setPayment(data.getAllUserPayments[0])
             }

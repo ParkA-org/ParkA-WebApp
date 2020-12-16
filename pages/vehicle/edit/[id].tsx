@@ -159,8 +159,6 @@ export default function EditVehicle(): JSX.Element {
     })
     const [options, setOptions] = useState([])
     useEffect(() => {
-        console.log('Router id')
-        console.log(router.query.id)
         GetVehicle({ variables: { vehicleId: { id: router.query.id } } })
         if (data) {
             let obj = {};

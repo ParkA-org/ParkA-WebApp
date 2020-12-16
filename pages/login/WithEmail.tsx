@@ -28,11 +28,7 @@ export default function SignWithEmail(): JSX.Element {
   const [_, setUserId] = useLocalStorage("user-id", "")
   const { setUser, setToken } = useContext(UserContext)
   const [ConfirmEmail] = useMutation(CONFIRM_EMAIL)
-  const [ResetPassword] = useMutation(RESET_PASSWORD, {
-    onCompleted() {
-      console.log('Chequee el correo para mas instrucciones')
-    }
-  })
+  const [ResetPassword] = useMutation(RESET_PASSWORD)
   const [LoginUser] = useMutation(LOGIN_USER, {
     onCompleted({ login }) {
       const { JWT: token, user } = login

@@ -101,7 +101,6 @@ export default function FilterSideBar({ refetch }) {
                     delete actualFilterObject[key]
             }
         }
-        console.log(JSON.stringify(actualFilterObject))
         refetch({
             filterV:
             {
