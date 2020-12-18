@@ -15,12 +15,7 @@ export default function VehicleSection() {
     const { token } = useContext(UserContext)
 
     const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
-        fetchPolicy: "network-only",
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
+        fetchPolicy: "network-only"
     })
 
     if (error) return <h2>Error</h2>

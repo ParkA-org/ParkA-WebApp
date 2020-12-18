@@ -133,13 +133,7 @@ export default function EditVehicle(): JSX.Element {
     })
     const [showModal, setShowModal] = useState(false)
     const [requestError, setRequestError] = useState(null)
-    const [GetVehicle, { data }] = useLazyQuery(GET_VEHICLE_BY_ID, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
-    })
+    const [GetVehicle, { data }] = useLazyQuery(GET_VEHICLE_BY_ID)
     const [UpdateVehicle] = useMutation(UPDATE_VEHICLE, {
         onCompleted() {
             setShowModal(false)
@@ -150,11 +144,6 @@ export default function EditVehicle(): JSX.Element {
             setRequestError(error)
             setShowModal(false)
             console.error(error)
-        },
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
         }
     })
     const [options, setOptions] = useState([])

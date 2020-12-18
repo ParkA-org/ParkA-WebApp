@@ -6,6 +6,10 @@ import { ParkingData } from "utils/types";
 import IndicatorStats from "components/IndicatorStats"
 import ParkingSection from "components/ParkingSection"
 import LineChart from "components/LineChart"
+import React from "react";
+import { NewLink } from "components/VehicleSection/styles";
+import PlusIcon from "components/Icons/Plus"
+import NavigationLink from "components/NavigationLink"
 
 const Container = styled.div`
     width: 100%;
@@ -41,20 +45,32 @@ export default function ParkingDashboard() {
                 </>
                 :
                 <div className="emptySection">
-                    <img src="/placeholders/empty/parking.svg" alt="empty vehicle" />
-                    <h3>¡No tienes parqueos registrados!</h3>
+                    <div>
+                        <img src="/placeholders/empty/parking.svg" alt="empty vehicle" />
+                        <h3>¡No tienes parqueos registrados!</h3>
+                    </div>
+                    <NavigationLink href="/parking/register">
+                        <NewLink><PlusIcon />Registra tu primer parqueo</NewLink>
+                    </NavigationLink>
                     <style jsx>{`
                         .emptySection {
-                            margin: 0 auto;
+                            margin: 2em auto;
                             display: flex;
-                            flex-direction: column;
                             justify-content: space-around;
+                            align-items: center;
                             font-size: 1.2rem;
-                            max-width: 350px;
+                            height: auto;
+                            max-width: 50vw;
                         }
                         h3 {
                             margin: 1em 0;
                             color: #0B768C;
+                        }
+
+                        .emptySection > div {
+                            display: flex;
+                            flex-direction: column;
+                            margin-right: 4em;
                         }
                     `}</style>
                 </div>

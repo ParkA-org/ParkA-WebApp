@@ -27,12 +27,7 @@ export default function Reservations() {
     const [completedReservations, setCompletedReservations] = useState<Reservation[]>([])
 
     const { loading, error, data } = useQuery<ReservationsData>(GET_CLIENT_RESERVATIONS, {
-        fetchPolicy: "network-only",
-        context: {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
-        }
+        fetchPolicy: "network-only"
     })
 
     useEffect(() => {

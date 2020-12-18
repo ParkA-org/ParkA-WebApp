@@ -48,13 +48,7 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const router = useRouter()
     const [token, setToken] = useLocalStorage("token", "")
     const [userId, setUserId] = useLocalStorage("user-id", "")
-    const [getUser, { data }] = useLazyQuery(GET_USER, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
-    })
+    const [getUser, { data }] = useLazyQuery(GET_USER)
     const [user, setUser] = useState<User>(undefined)
     const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN)
     const [loading, setLoading] = useState(true)

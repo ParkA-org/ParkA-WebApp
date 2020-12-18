@@ -42,11 +42,6 @@ export default function Login(): JSX.Element {
   const { token } = useContext(UserContext)
 
   const [ChangePassword] = useMutation(CHANGE_PASSWORD, {
-    context: {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    },
     onCompleted() {
       router.push('/profile')
     }

@@ -104,11 +104,6 @@ type ReservationFormProps = ReviewInput & { setShowModal: (value: boolean) => vo
 function ReservationForm({ parking, reservation, user, setShowModal }: ReservationFormProps) {
     const { token } = useContext(UserContext)
     const [CreateReview] = useMutation(CREATE_REVIEW, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        },
         onCompleted() {
             setShowModal(false)
         }

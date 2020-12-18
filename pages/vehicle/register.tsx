@@ -144,11 +144,6 @@ export default function VehicleRegister(): JSX.Element {
       setRequestError(error)
       setShowModal(false)
       console.error(error)
-    },
-    context: {
-      headers: {
-        authorization: token ? `Bearer ${token}` : ""
-      }
     }
   })
 

@@ -167,11 +167,6 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     const [CreateParking] = useMutation(CREATE_PARKING, {
         onCompleted() {
             router.push('/parking')
-        },
-        context: {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
         }
     })
 

@@ -163,11 +163,6 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
     const [EditParking] = useMutation(EDIT_PARKING, {
         onCompleted() {
             router.push('/parking')
-        },
-        context: {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
         }
     })
 

@@ -16,7 +16,7 @@ export const VehicleList = styled.ul`
 
 export const NewLink = styled.h3`
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
     font-size: 1.5em;
     color: #0B768C;

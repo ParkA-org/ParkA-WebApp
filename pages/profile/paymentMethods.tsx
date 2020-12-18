@@ -102,12 +102,7 @@ export default function PaymentMethods() {
     const { token } = useContext(UserContext)
 
     const { loading, error, data } = useQuery<PaymentsData>(GET_PAYMENTS, {
-        fetchPolicy: "network-only",
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
+        fetchPolicy: "network-only"
     })
 
     if (error) return <h2>Error</h2>
