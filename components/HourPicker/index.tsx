@@ -24,9 +24,26 @@ export default function HourPicker({ hourPrice, checkout, setCheckout, calendar 
     const [GetParkingDisponibility, { data }] = useLazyQuery<ParkingAvailability>(GET_PARKING_DISPONIBILITY)
 
     const [startDate, setStartDate] = useState<Date>
-        (getTimezoneDate(checkout.checkInDate))
+        (() => {
+            if (checkout.checkInDate !== undefined)
+                return getTimezoneDate(checkout.checkInDate)
+            else {
+                let initialDate = new Date(Date.now())
+                initialDate.setMinutes(0)
+                return initialDate
+            }
+        })
     const [endDate, setEndDate] = useState<Date>
-        (getTimezoneDate(checkout.checkOutDate))
+        (() => {
+            if (checkout.checkOutDate !== undefined)
+                return getTimezoneDate(checkout.checkOutDate)
+            else {
+                let initialDate = new Date(Date.now())
+                initialDate.setMinutes(0)
+                initialDate.setHours(initialDate.getHours() + 2)
+                return initialDate
+            }
+        })
 
     const calculateTime = (start: Date, end: Date) => {
         let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
@@ -90,6 +107,10 @@ export default function HourPicker({ hourPrice, checkout, setCheckout, calendar 
         let dayOfWeek = date.getDay()
 
         for (let i = 0; i < calendar[week[dayOfWeek]].length; i++) {
+            if (0 === calendar[week[dayOfWeek]][i].start / 100 &&
+                24 === calendar[week[dayOfWeek]][i].finish / 100)
+                return false
+
             if (hour < (calendar[week[dayOfWeek]][i].start / 100) || hour > (calendar[week[dayOfWeek]][i].finish) / 100) {
                 return true
             }

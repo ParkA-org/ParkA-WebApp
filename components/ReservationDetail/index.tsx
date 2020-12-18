@@ -1,11 +1,10 @@
-import { useRef, useEffect, useState } from "react"
+import { useRef } from "react"
 import { useQuery } from "@apollo/client"
 import { Parking, Vehicle, ReservationInput } from "utils/types"
 import { GET_ALL_VEHICLES } from "queries"
 import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 import MoneyIcon from "components/Icons/Money"
-import { DatePicker } from "rsuite";
-import { BsArrowRight } from "react-icons/bs"
+import HourPicker from "components/HourPicker"
 
 type ElementProps = {
     name: string;
@@ -31,81 +30,6 @@ function SectionElement({ name, children, value }: ElementProps) {
                 {children}<StyledInput type="text" value={value} />
             </div>
         </ElementContainer>
-    )
-}
-
-type HourPickerProps = {
-    hourPrice: number;
-    checkout: ReservationInput;
-    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
-}
-
-function HourPicker({ hourPrice, checkout, setCheckout }: HourPickerProps): JSX.Element {
-    const [startDate, setStartDate] = useState<Date>()
-    const [endDate, setEndDate] = useState<Date>()
-    const calculateTime = (start: Date, end: Date) => {
-        let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
-        endingDate.setTime(start.getTime())
-        endingDate.setHours(endingHour)
-        endingDate.setMinutes(endingMinutes)
-        hourDiff = Math.abs(endingHour - startingHour)
-        setCheckout({
-            ...checkout,
-            checkInDate: new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString(),
-            checkOutDate: new Date(endingDate.getTime() - (endingDate.getTimezoneOffset() * 60000)).toISOString(),
-            rentDate: new Date(rentDate.getTime() - (rentDate.getTimezoneOffset() * 60000)).toISOString(),
-            total: hourPrice * hourDiff
-        })
-    }
-
-    useEffect(() => {
-        if (startDate && endDate) {
-            calculateTime(startDate, endDate)
-        }
-    }, [startDate, endDate])
-
-    return (
-        <section>
-            <div>
-                <p>Desde</p>
-                <DatePicker
-                    format="YYYY-MM-DD HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 30 !== 0}
-                    onOk={(value) => setStartDate(value)}
-                />
-            </div>
-            <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
-            <div>
-                <p>Hasta</p>
-                <DatePicker
-                    format="HH:mm"
-                    ranges={[]}
-                    hideMinutes={minute => minute % 30 !== 0}
-                    onOk={(value) => setEndDate(value)}
-                />
-            </div>
-            <style jsx>
-                {`
-                    div {
-                        display: flex;
-                        flex-direction: column;
-                        height: auto
-                        margin-right: 0.5em;
-                    }
-
-                    p {
-                        margin-bottom: 0.5em;
-                    }
-
-                    section {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-around;
-                    }
-                `}
-            </style>
-        </section>
     )
 }
 
