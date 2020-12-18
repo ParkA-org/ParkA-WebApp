@@ -86,6 +86,11 @@ export default function HourPicker({ hourPrice, checkout, setCheckout, calendar 
         if (data) {
             parkingAvailableCalendar = data.getParkingAvaliability
         }
+
+        if (parkingAvailableCalendar.length === 0) {
+            return false
+        }
+
         for (let z = 0; z < parkingAvailableCalendar.length; z++) {
             let calendar = parkingAvailableCalendar[z]
             if (new Date(calendar.date).getDate() === (new Date(date).getDate() - 1)) {
