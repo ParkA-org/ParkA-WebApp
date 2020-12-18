@@ -14,3 +14,7 @@ export function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }
+
+export function getTimezoneDate(date) {
+    return (new Date(new Date(date).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
+}

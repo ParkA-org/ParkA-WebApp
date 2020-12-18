@@ -1,11 +1,10 @@
-import { useRef, useEffect, useState } from "react"
-import { useLazyQuery, useQuery } from "@apollo/client"
-import { Parking, Vehicle, ReservationInput, Calendar, ParkingSchedule, ParkingCalendar } from "utils/types"
-import { GET_ALL_VEHICLES, GET_PARKING_DISPONIBILITY } from "queries"
-import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
+import { useRef } from "react"
+import { useQuery } from "@apollo/client"
 import MoneyIcon from "components/Icons/Money"
-import { DatePicker } from "rsuite";
-import { BsArrowRight } from "react-icons/bs"
+import HourPicker from "components/HourPicker"
+import { GET_ALL_VEHICLES } from "queries"
+import { Parking, Vehicle, ReservationInput } from "utils/types"
+import { Container, StyledInput, ElementContainer, CheckboxContainer, StyledSelect, StyledImage, LeftSection, RightSection } from "./styles"
 
 type ElementProps = {
     name: string;
@@ -23,10 +22,6 @@ type AllVehiclesData = {
     getAllUserVehicles: Vehicle[]
 }
 
-type ParkingAvailability = {
-    getParkingAvaliability: ParkingCalendar[]
-}
-
 function SectionElement({ name, children, value }: ElementProps) {
     return (
         <ElementContainer>
@@ -35,176 +30,6 @@ function SectionElement({ name, children, value }: ElementProps) {
                 {children}<StyledInput type="text" value={value} />
             </div>
         </ElementContainer>
-    )
-}
-
-type HourPickerProps = {
-    hourPrice: number;
-    calendar: Calendar;
-    checkout: ReservationInput;
-    setCheckout: React.Dispatch<React.SetStateAction<ReservationInput>>;
-}
-
-
-function HourPicker({ hourPrice, checkout, setCheckout, calendar }: HourPickerProps): JSX.Element {
-
-    const [GetParkingDisponibility, { data }] = useLazyQuery<ParkingAvailability>(GET_PARKING_DISPONIBILITY)
-
-    const [startDate, setStartDate] = useState<Date>
-        (new Date(new Date(checkout.checkInDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
-    const [endDate, setEndDate] = useState<Date>
-        (new Date(new Date(checkout.checkOutDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
-
-    const calculateTime = (start: Date, end: Date) => {
-        let startingHour = start.getHours(), endingHour = end.getHours(), endingMinutes = end.getMinutes(), endingDate = new Date(), hourDiff = 0, rentDate = new Date(Date.now());
-        endingDate.setTime(start.getTime())
-        endingDate.setHours(endingHour)
-        endingDate.setMinutes(endingMinutes)
-        hourDiff = Math.abs(endingHour - startingHour)
-        setCheckout({
-            ...checkout,
-            checkInDate: new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString(),
-            checkOutDate: new Date(endingDate.getTime() - (endingDate.getTimezoneOffset() * 60000)).toISOString(),
-            rentDate: new Date(rentDate.getTime() - (rentDate.getTimezoneOffset() * 60000)).toISOString(),
-            total: hourPrice * hourDiff
-        })
-    }
-
-
-    const DisableCalendarDates = (date: Date, calendar: Calendar): boolean => {
-
-        const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-
-        let dayOfWeek = date.getDay()
-
-        for (let i = 0; i < week.length; i++) {
-            if (calendar[week[i]].length === 0 && dayOfWeek === i) {
-                return true
-            }
-        }
-
-        if (date.getTime() < new Date(Date.now()).getTime()) {
-            return true
-        }
-
-        return false
-    }
-
-    const DisableAvailableCalendarHours = (hour: number): boolean => {
-        let parkingAvailableCalendar = []
-
-        if (data) {
-            parkingAvailableCalendar = data.getParkingAvaliability
-        }
-
-        for (let z = 0; z < parkingAvailableCalendar.length; z++) {
-            let calendar = parkingAvailableCalendar[z]
-            for (let i = 0; i < calendar.schedules.length; i++) {
-                if (hour < (calendar.schedules[i].start / 100) || hour > (calendar.schedules[i].finish) / 100) {
-                    return false
-                }
-            }
-        }
-
-        return true
-    }
-
-    const DisableCalendarHours = (hour: number, date: Date, calendar: Calendar): boolean => {
-
-        const week = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
-
-        let dayOfWeek = date.getDay()
-
-        for (let i = 0; i < calendar[week[dayOfWeek]].length; i++) {
-            if (hour < (calendar[week[dayOfWeek]][i].start / 100) || hour > (calendar[week[dayOfWeek]][i].finish) / 100) {
-                return true
-            }
-        }
-        return DisableAvailableCalendarHours(hour)
-    }
-
-
-
-    useEffect(() => {
-        if (startDate && endDate) {
-            calculateTime(startDate, endDate)
-        }
-        if (startDate) {
-            GetParkingDisponibility(
-                {
-                    variables:
-                    {
-                        paInput:
-                        {
-                            parking: checkout.parking,
-                            date: startDate
-                        }
-                    }
-                })
-        }
-    }, [startDate, endDate])
-
-    return (
-        <>
-            <section>
-                <div>
-                    <p>Fecha</p>
-                    <DatePicker
-                        format="YYYY-MM-DD"
-                        defaultValue={startDate}
-                        disabledDate={(date) => {
-                            return DisableCalendarDates(date, calendar)
-                        }}
-                        onOk={(value) => setStartDate(value)}
-                    />
-                </div>
-            </section>
-            <section>
-                <div>
-                    <p>Desde</p>
-                    <DatePicker
-                        format="HH:mm"
-                        ranges={[]}
-                        defaultValue={startDate}
-                        disabledHours={(hour) => DisableCalendarHours(hour, startDate, calendar)}
-                        hideMinutes={minute => minute % 30 !== 0}
-                        onOk={(value) => setStartDate(value)}
-                    />
-                </div>
-                <BsArrowRight size="2em" style={{ alignSelf: "flex-end" }} />
-                <div>
-                    <p>Hasta</p>
-                    <DatePicker
-                        defaultValue={endDate}
-                        format="HH:mm"
-                        ranges={[]}
-                        disabledHours={(hour) => DisableCalendarHours(hour, startDate, calendar)}
-                        hideMinutes={minute => minute % 30 !== 0}
-                        onOk={(value) => setEndDate(value)}
-                    />
-                </div>
-                <style jsx>
-                    {`
-                    div {
-                        display: flex;
-                        flex-direction: column;
-                        height: auto
-                        margin-right: 0.5em;
-                    }
-
-                    p {
-                        margin-bottom: 0.5em;
-                    }
-
-                    section {
-                        width: 100%;
-                        display: flex;
-                        justify-content: space-around;
-                    }
-                `}
-                </style>
-            </section>
-        </>
     )
 }
 
