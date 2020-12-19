@@ -1,11 +1,8 @@
-import { useContext, useEffect } from "react"
 import Layout from "../layout";
 import ProfileSection from "components/ProfileSection"
 import VehicleSection from "components/VehicleSection"
 import styled from "styled-components"
-import { useRouter } from "next/router";
-import { USER_STATES } from "utils/constants"
-import { UserContext } from "context/UserContext";
+import useAuth from "hooks/useAuth"
 import { initializeApollo } from "lib/apolloClient";
 import { GET_ALL_VEHICLES } from "queries"
 
@@ -16,23 +13,16 @@ margin: 0 auto;
 `;
 
 export default function Profile(): JSX.Element {
-    const router = useRouter()
-    const { userStatus } = useContext(UserContext)
 
-    useEffect(() => {
-        // if (userStatus === USER_STATES.NOT_KNOWN) {
-        //     console.log('waiting')
-        // } else
-        // if (userStatus === USER_STATES.LOGGED_OUT) {
-        //     router.push("/login")
-        // }
-    }, [userStatus])
+    const { isLoggedIn, loading } = useAuth()
+
     return (
         <Layout pageTitle="Profile">
-            <Container>
+            {loading && <h3>Cargando....</h3>}
+            {isLoggedIn && <Container>
                 <ProfileSection />
                 <VehicleSection />
-            </Container>
+            </Container>}
         </Layout>
     );
 }

@@ -18,3 +18,23 @@ export function formatAMPM(date) {
 export function getTimezoneDate(date) {
     return (new Date(new Date(date).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)))
 }
+
+export function detectMobile() {
+    if (typeof navigator === "undefined") return null;
+
+    const toMatch = [
+        /Android/i,
+        /webOS/i,
+        /iPhone/i,
+        /iPad/i,
+        /iPod/i,
+        /BlackBerry/i,
+        /Windows Phone/i
+    ];
+
+    console.log('Navigator ', navigator.userAgent)
+
+    return toMatch.some((toMatchItem) => {
+        return navigator.userAgent.match(toMatchItem);
+    });
+}

@@ -1,12 +1,12 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components"
 import Layout from "../layout"
 import { useQuery } from "@apollo/client";
 import { GET_USER_PARKINGS } from "queries";
-import { ParkingData } from "utils/types";
+import { ParkingData, Parking } from "utils/types";
 import IndicatorStats from "components/IndicatorStats"
 import ParkingSection from "components/ParkingSection"
 import LineChart from "components/LineChart"
-import React from "react";
 import { NewLink } from "components/VehicleSection/styles";
 import PlusIcon from "components/Icons/Plus"
 import NavigationLink from "components/NavigationLink"
@@ -26,22 +26,27 @@ const Container = styled.div`
 
 export default function ParkingDashboard() {
 
-    let getAllUserParkings = []
+    const [parkings, setParkings] = useState<Parking[]>([])
+
     const { loading, error, data } = useQuery<ParkingData>(GET_USER_PARKINGS, {
         fetchPolicy: "network-only"
     })
-    if (data)
-        getAllUserParkings = data.getAllUserParkings
+
+    useEffect(() => {
+        if (data)
+            setParkings(data.getAllUserParkings)
+
+    }, [data])
 
     return (
         <Layout pageTitle="Dashboard de Parqueos">
-            {getAllUserParkings.length > 0 ?
+            {parkings.length > 0 ?
                 <>
                     <Container>
                         <LineChart />
                         <IndicatorStats />
                     </Container>
-                    <ParkingSection loading={loading} error={error} parkings={getAllUserParkings} />
+                    <ParkingSection loading={loading} error={error} parkings={parkings} />
                 </>
                 :
                 <div className="emptySection">

@@ -62,6 +62,8 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
                     setUser(data.getUserById)
                     setUserStatus(USER_STATES.LOGGED_IN)
                 }
+            } else {
+                setUserStatus(USER_STATES.LOGGED_OUT)
             }
         } else {
             if (!token || !userId) {
@@ -71,14 +73,13 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
                 setUserStatus(USER_STATES.LOGGED_IN)
             }
         }
-        if (!token || !userId) {
-            setUserStatus(USER_STATES.LOGGED_OUT)
-        }
-        if (user && user['name']) {
-            setUserStatus(USER_STATES.LOGGED_IN)
-        }
-
         setLoading(false)
+        console.log('Dentro del context')
+        console.log('Loading ', loading)
+        console.log('User ', user)
+        console.log('Status ', userStatus)
+        console.log('Token ', token)
+        console.log('User id ', userId)
     }, [data, userId, token])
 
     const modifyUser: (user: User) => void = function (user: User): void {
