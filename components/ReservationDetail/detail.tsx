@@ -23,7 +23,7 @@ function SectionElement({ name, children, value }: ElementProps) {
         <ElementContainer>
             <label><b>{name}</b></label>
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: "center", maxWidth: "250px" }}>
-                {children}<StyledInput type="text" value={value} />
+                {children}<h4>{value}</h4>
             </div>
         </ElementContainer>
     )

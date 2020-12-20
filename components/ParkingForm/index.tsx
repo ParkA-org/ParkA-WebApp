@@ -221,7 +221,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     "information": values.information,
                                     "sector": values.sector,
                                     "direction": values.direction,
-                                    "features": values.features,
+                                    "features": values.features.map(feat => feat.id),
                                     "calendar": modifiedState,
                                     "pictures": urls,
                                     "mainPicture": urls[0]
@@ -311,6 +311,17 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     label={feature.name}
                                                     value={feature.id}
                                                     inputStyles={{ width: "auto" }}
+                                                    onChange={() => {
+                                                        if (values.features.filter(feat => feat.id === feature.id).length > 0) {
+                                                            const nextValue = values.features.filter(
+                                                                value => value.id !== feature.id
+                                                            );
+                                                            setFieldValue('features', nextValue);
+                                                        } else {
+                                                            const nextValue = values.features.concat(feature);
+                                                            setFieldValue('features', nextValue);
+                                                        }
+                                                    }}
                                                 />
                                             )
                                         })}
