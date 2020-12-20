@@ -135,7 +135,7 @@ function ReservationForm({ parking, reservation, user, setShowModal }: Reservati
                         crI: {
                             parking,
                             reservation,
-                            user,
+                            reviewedUser: user,
                             title: values.title,
                             review: values.review,
                             calification: parseFloat(values.calification.toString()),

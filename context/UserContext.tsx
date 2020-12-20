@@ -74,12 +74,6 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
             }
         }
         setLoading(false)
-        console.log('Dentro del context')
-        console.log('Loading ', loading)
-        console.log('User ', user)
-        console.log('Status ', userStatus)
-        console.log('Token ', token)
-        console.log('User id ', userId)
     }, [data, userId, token])
 
     const modifyUser: (user: User) => void = function (user: User): void {

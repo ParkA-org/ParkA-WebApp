@@ -96,6 +96,8 @@ type Action =
         }
     }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
+
 function reducer(state: StateObject, action: Action) {
     switch (action.type) {
         case "add_range":
@@ -127,7 +129,11 @@ function reducer(state: StateObject, action: Action) {
         case "add_day":
             return {
                 ...state,
-                [action.payload.day]: []
+                [action.payload.day]: [{
+                    id: getRandomInt(1000),
+                    start: 900,
+                    finish: 1600
+                }]
             }
         case "remove_day":
             let stateCopy = {
@@ -217,7 +223,6 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     "direction": values.direction,
                                     "features": values.features,
                                     "calendar": modifiedState,
-                                    "isAvailable": true,
                                     "pictures": urls,
                                     "mainPicture": urls[0]
                                 }

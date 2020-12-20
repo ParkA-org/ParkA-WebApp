@@ -65,8 +65,6 @@ export default function DetailVehicle() {
         return `${name} ${lastName}`;
     }
 
-    if (loading) return <h3>Cargando...</h3>
-
     return (
         <Layout pageTitle="Editar Vehículo">
             <Container>

@@ -88,7 +88,7 @@ export default function ReservationDetail({ parking, checkout, setCheckout }: Co
                     <HourPicker hourPrice={parseInt(parking.priceHours)} checkout={checkout} setCheckout={setCheckout} calendar={parking.calendar} />
                 </ElementContainer>
 
-                <SectionElement name="Total de horas" value={checkout.total ? checkout.total.toString() : "0"} />
+                <SectionElement name="Costo total" value={checkout.total ? checkout.total.toString() : "0"} />
             </RightSection>
         </Container>
     )
