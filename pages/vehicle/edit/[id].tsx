@@ -299,7 +299,7 @@ export default function EditVehicle(): JSX.Element {
                                 <ButtonsContainer>
                                     <BtnCancel type="button">
                                         <img src="/images/mdi_delete.svg" />
-                                        <h2>Cancelar</h2>
+                                        <h2>Eliminar</h2>
                                     </BtnCancel>
                                     <BtnSave type="submit">
                                         <img src="/images/mdi_save.svg" />
