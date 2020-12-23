@@ -288,7 +288,6 @@ export default function EditVehicle(): JSX.Element {
                       isTouched={touched.licensePlate}
                       value={values.licensePlate}
                     />
-
                     {makersLoading ? (
                       <Spinner />
                     ) : (

@@ -331,6 +331,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         <RightSection>
                             <ImagePicker placement="vertical" setFiles={setFiles} pictures={pictures} />
                             <Button submit={false}>Editar parqueo</Button>
+                            <Button submit={false}>Eliminar parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`
