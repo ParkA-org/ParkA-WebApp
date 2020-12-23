@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react"
-import Layout from "./layout"
+import { useState, useEffect, useContext } from "react"
 import { useQuery } from "@apollo/client";
+import { UserContext } from "context/UserContext"
 import { GET_USER_REVIEWS } from "queries";
+import Layout from "./layout"
 import { Review } from "utils/types";
 import ReviewTable from "components/ReviewTable"
 
@@ -10,6 +11,12 @@ interface ReviewData {
 }
 
 export default function ReviewPage() {
+
+    const { redirect, loading: userLoading,  userStatus } = useContext(UserContext)
+
+    useEffect(() => {
+        redirect('/review')
+    }, [userLoading])
 
     const [userReviews, setUserReviews] = useState<Review[]>([])
     const { loading, error, data } = useQuery<ReviewData>(GET_USER_REVIEWS, {
@@ -22,6 +29,7 @@ export default function ReviewPage() {
         }
     }, [data])
 
+    if(userStatus === true){
     return (
         <Layout pageTitle="Reviews de usuarios">
             {userReviews.length > 0 ?
@@ -36,6 +44,14 @@ export default function ReviewPage() {
                     </style>
                 </div>
                 : <h2>No haz hecho ninguna reseña por el momento</h2>}
+        </Layout>
+    )
+                    }
+
+                    
+    return (
+        <Layout pageTitle="Reviews de usuarios">
+            <h3>Cargando....</h3>
         </Layout>
     )
 }
