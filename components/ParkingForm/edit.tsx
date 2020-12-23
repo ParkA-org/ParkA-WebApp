@@ -163,11 +163,6 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
     const [EditParking] = useMutation(EDIT_PARKING, {
         onCompleted() {
             router.push('/parking')
-        },
-        context: {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
         }
     })
 
@@ -336,6 +331,7 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         <RightSection>
                             <ImagePicker placement="vertical" setFiles={setFiles} pictures={pictures} />
                             <Button submit={false}>Editar parqueo</Button>
+                            <Button submit={false}>Eliminar parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`

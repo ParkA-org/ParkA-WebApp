@@ -84,7 +84,7 @@ function ImagePicker({ limit = 3, placement = "horizontal", setFiles, pictures =
             return { url: pic }
         })
         setImages(initialImages)
-    }, [pictures])
+    }, [])
 
     return (
         <>

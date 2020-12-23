@@ -96,6 +96,8 @@ type Action =
         }
     }
 
+const getRandomInt = (max) => Math.floor(Math.random() * max)
+
 function reducer(state: StateObject, action: Action) {
     switch (action.type) {
         case "add_range":
@@ -127,7 +129,11 @@ function reducer(state: StateObject, action: Action) {
         case "add_day":
             return {
                 ...state,
-                [action.payload.day]: []
+                [action.payload.day]: [{
+                    id: getRandomInt(1000),
+                    start: 900,
+                    finish: 1600
+                }]
             }
         case "remove_day":
             let stateCopy = {
@@ -167,17 +173,10 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
     const [CreateParking] = useMutation(CREATE_PARKING, {
         onCompleted() {
             router.push('/parking')
-        },
-        context: {
-            headers: {
-                authorization: `Bearer ${token}`
-            }
         }
     })
 
     useEffect(() => {
-        console.log('Cambiaron coordenadas')
-        console.log(coordinates)
         if (coordinates.lat !== 0)
             ReverseGeocode(`${coordinates.lat},${coordinates.lng}`, setGeocodeData)
     }, [coordinates])
@@ -222,9 +221,8 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                     "information": values.information,
                                     "sector": values.sector,
                                     "direction": values.direction,
-                                    "features": values.features,
+                                    "features": values.features.map(feat => feat.id),
                                     "calendar": modifiedState,
-                                    "isAvailable": true,
                                     "pictures": urls,
                                     "mainPicture": urls[0]
                                 }
@@ -313,6 +311,17 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                                                     label={feature.name}
                                                     value={feature.id}
                                                     inputStyles={{ width: "auto" }}
+                                                    onChange={() => {
+                                                        if (values.features.filter(feat => feat.id === feature.id).length > 0) {
+                                                            const nextValue = values.features.filter(
+                                                                value => value.id !== feature.id
+                                                            );
+                                                            setFieldValue('features', nextValue);
+                                                        } else {
+                                                            const nextValue = values.features.concat(feature);
+                                                            setFieldValue('features', nextValue);
+                                                        }
+                                                    }}
                                                 />
                                             )
                                         })}

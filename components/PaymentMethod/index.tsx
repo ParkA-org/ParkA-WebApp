@@ -38,7 +38,6 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
     const { loading, error, data } = useQuery<AllPaymentsData>(GET_USER_PAYMENTS, {
         onCompleted() {
             if (data && data.getAllUserPayments.length) {
-                console.log('Entro en payments')
                 setCheckout({ ...checkout, paymentInfo: data.getAllUserPayments[0].id })
                 setPayment(data.getAllUserPayments[0])
             }
@@ -110,14 +109,16 @@ export default function PaymentMethod({ checkout, setCheckout }: ComponentProps)
                 <DataContainer>
                     <div>
                         <h2><b>Método de Pago</b></h2>
-                        <StyledSelect onChange={e => {
-                            const { target } = e
-                            const { value } = target
-                            const selectedPayment = data.getAllUserPayments.find(payment => payment.id === value)
-                            setCheckout({ ...checkout, paymentInfo: selectedPayment.id })
-                            setPayment(selectedPayment)
-                        }} >
-                            {data && data.getAllUserPayments.map(payment => <option key={payment.id} value={payment.id}>{payment.cardHolder}</option>)}
+                        <StyledSelect
+                            style={{ width: "auto" }}
+                            onChange={e => {
+                                const { target } = e
+                                const { value } = target
+                                const selectedPayment = data.getAllUserPayments.find(payment => payment.id === value)
+                                setCheckout({ ...checkout, paymentInfo: selectedPayment.id })
+                                setPayment(selectedPayment)
+                            }} >
+                            {data && data.getAllUserPayments.map(payment => <option key={payment.id} value={payment.id}>{formatNumbers(payment.digit)}</option>)}
                         </StyledSelect>
                         {payment &&
                             (<>

@@ -8,7 +8,7 @@ export const ModalLayout = styled.div`
     top: 0;
     left: 0;
     right: 0;
-    z-index: 30;
+    z-index: 5;
 `;
 
 export const ModalContent = styled.div`

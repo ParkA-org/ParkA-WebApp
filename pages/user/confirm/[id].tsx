@@ -20,8 +20,6 @@ export default function ConfirmEmail(): JSX.Element {
         }
     })
     useEffect(() => {
-        console.log('Id ', id)
-        console.log('Email ', user.email)
         if (id) {
             ValidateEmail({
                 variables: {
