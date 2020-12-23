@@ -32,7 +32,8 @@ export default function ReservationCard({ id, checkInDate, checkOutDate, status,
     const parkingImage = parking.mainPicture
     const [showModal, setShowModal] = useState(false)
 
-    let dateObj = parseISOString(checkInDate), outDateObj = parseISOString(checkOutDate)
+    let dateObj = new Date(parseISOString(checkInDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000)),
+        outDateObj = new Date(parseISOString(checkOutDate).getTime() + (new Date().getTimezoneOffset() * 60 * 1000))
 
     return (
         <>
@@ -103,11 +104,6 @@ type ReservationFormProps = ReviewInput & { setShowModal: (value: boolean) => vo
 function ReservationForm({ parking, reservation, user, setShowModal }: ReservationFormProps) {
     const { token } = useContext(UserContext)
     const [CreateReview] = useMutation(CREATE_REVIEW, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        },
         onCompleted() {
             setShowModal(false)
         }
@@ -139,7 +135,7 @@ function ReservationForm({ parking, reservation, user, setShowModal }: Reservati
                         crI: {
                             parking,
                             reservation,
-                            user,
+                            reviewedUser: user,
                             title: values.title,
                             review: values.review,
                             calification: parseFloat(values.calification.toString()),

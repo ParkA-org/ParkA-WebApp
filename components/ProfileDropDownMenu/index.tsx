@@ -14,7 +14,6 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
     const router = useRouter()
 
     function showMenu(e) {
-        console.log(e.currentTarget.parentNode.nextSibling.style.display);
         var content = e.currentTarget.parentNode.nextSibling;
         if (content.style.display == 'none' || content.style.display == '') {
 

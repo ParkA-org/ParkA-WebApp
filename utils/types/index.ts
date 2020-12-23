@@ -208,3 +208,14 @@ export type Review = {
     createdAt: string;
 }
 
+export type ParkingSchedule = {
+    start: number;
+    finish: number;
+}
+
+export type ParkingCalendar = {
+    id: string;
+    parking: string;
+    schedules: ParkingSchedule[];
+    date: string;
+}

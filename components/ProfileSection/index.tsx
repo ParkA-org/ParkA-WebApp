@@ -20,13 +20,7 @@ import { User } from 'utils/types/user';
 
 export default function ProfileSection() {
     const { token } = useContext(UserContext)
-    const [getUser, { data, loading, error }] = useLazyQuery(GET_USER, {
-        context: {
-            headers: {
-                authorization: token ? `Bearer ${token}` : ""
-            }
-        }
-    })
+    const [getUser, { data, loading, error }] = useLazyQuery(GET_USER)
     const [user, setUser] = useState<User | null>(null)
     useEffect(() => {
         if (data)
@@ -44,7 +38,7 @@ export default function ProfileSection() {
         <ProfileContainer>
             <h1>{`${user?.name} ${user?.lastName}`}  <AiFillCheckCircle color="blue" /></h1>
             <ContentContainer>
-                <ProfilePicture alt="User Profile" src={user?.profilePicture==undefined ? "placeholders/image-placeholder.png":user?.profilePicture} />
+                <ProfilePicture alt="User Profile" src={user?.profilePicture == undefined ? "placeholders/image-placeholder.png" : user?.profilePicture} />
                 <NavigationLink href="/profile/edit">
                     <EditButton>Editar</EditButton>
                 </NavigationLink>

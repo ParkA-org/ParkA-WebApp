@@ -140,7 +140,6 @@ function ScheduleHeader({ day, dispatch, size }: { day: String, dispatch: any, s
 
 
 export default function SchedulePicker({ dispatch, state }: { dispatch: any, state: StateObject }) {
-
     return (
         <div className="scheduleContainer">
             {Object.keys(state).length > 0 ? Object.entries(state).map((item) => {
