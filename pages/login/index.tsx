@@ -47,8 +47,11 @@ export default function Login(): JSX.Element {
         <br />
         <FormContainer>
           <FieldSection>
-            <LoginButton>
-              {" "}
+            <LoginButton
+              onClick={() => {
+                signIn("facebook");
+              }}
+            >
               <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
               Continuar con <b>Facebook</b>
             </LoginButton>
