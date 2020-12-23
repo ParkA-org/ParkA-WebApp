@@ -81,7 +81,7 @@ export type PaymentsData = {
 };
 
 export default function PaymentMethods() {
-  const { redirect, loading: userLoading, userStatus, token } = useContext(
+  const { redirect, loading: userLoading, userStatus } = useContext(
     UserContext
   );
 
@@ -92,6 +92,7 @@ export default function PaymentMethods() {
   const [newDate, setNewDate] = useState("");
   const [editDate, setEditDate] = useState(false);
   const [currentPayment, setPayment] = useState<Payment | null>(null);
+  const [payments, setPayments] = useState<Payment[]>([]);
 
   const [UpdatePayment] = useMutation(UPDATE_PAYMENT, {
     onCompleted() {
@@ -108,9 +109,14 @@ export default function PaymentMethods() {
     fetchPolicy: "network-only",
   });
 
+  useEffect(() => {
+    if (data) {
+      setPayments(data.getAllUserPayments);
+    }
+  }, [data]);
+
   if (error) return <h2>Error</h2>;
 
-  const { getAllUserPayments } = data;
   if (userStatus === true) {
     return (
       <Layout pageTitle="Métodos de Pago">
@@ -125,7 +131,7 @@ export default function PaymentMethods() {
             </NavigationLink>
           </section>
           <Carousel title="">
-            {getAllUserPayments.map((payment) => {
+            {payments.map((payment) => {
               return (
                 <CreditCard
                   onClick={() => setPayment(payment)}
