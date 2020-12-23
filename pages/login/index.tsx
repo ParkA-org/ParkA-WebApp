@@ -1,4 +1,6 @@
-import styled from "styled-components"
+import { useRouter } from "next/router";
+import { signIn, signOut, useSession } from "next-auth/client";
+import styled from "styled-components";
 import Layout from "../layout";
 import {
   MainFormContainer,
@@ -6,13 +8,12 @@ import {
   FieldSection,
   InformationSection,
 } from "styles/formStyles";
-import { useRouter } from "next/router"
 
 const LoginButton = styled.button`
   background-color: white;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
-  padding: 1em; 
+  padding: 1em;
   border: 1px solid #333;
   margin-bottom: 1em;
   display: flex;
@@ -25,7 +26,7 @@ const LoginButton = styled.button`
   &:hover {
     cursor: pointer;
     color: white;
-    background-color: #63C7B2;
+    background-color: #63c7b2;
     border: none;
     border: 1px solid transparent;
   }
@@ -38,16 +39,28 @@ const Icon = styled.img`
 `;
 
 export default function Login(): JSX.Element {
-  const router = useRouter()
-
+  const router = useRouter();
+  const [session, loading] = useSession();
   return (
     <Layout pageTitle="Login">
       <MainFormContainer>
-      <br/>
+        <br />
         <FormContainer>
           <FieldSection>
-            <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
-            <LoginButton> <Icon src="/icons/googleLogo.png" alt="Google Logo" />Continuar con <b>Google </b></LoginButton>
+            <LoginButton>
+              {" "}
+              <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
+              Continuar con <b>Facebook</b>
+            </LoginButton>
+            <LoginButton
+              onClick={() => {
+                signIn("google");
+              }}
+            >
+              {" "}
+              <Icon src="/icons/googleLogo.png" alt="Google Logo" />
+              Continuar con <b>Google </b>
+            </LoginButton>
             <LoginButton onClick={() => router.push("/login/WithEmail")}>
               Iniciar sesión con mi correo electrónico
             </LoginButton>
@@ -60,13 +73,15 @@ export default function Login(): JSX.Element {
               src="/../images/projectLogo.png"
               style={{ width: "100%", height: "100%" }}
             />
-            <h3>Utiliza uno de estos métodos para registrarte o iniciar sesión</h3>
+            <h3>
+              Utiliza uno de estos métodos para registrarte o iniciar sesión
+            </h3>
           </InformationSection>
         </FormContainer>
-        <br/>
-        <br/>
-        <br/> 
-        <br/>
+        <br />
+        <br />
+        <br />
+        <br />
       </MainFormContainer>
     </Layout>
   );
