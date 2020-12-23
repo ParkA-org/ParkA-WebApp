@@ -26,7 +26,7 @@ export default function SignWithEmail(): JSX.Element {
   const [showEmailModal, setShowEmailModal] = useState(false)
   const [requestError, setRequestError] = useState(null)
   const [_, setUserId] = useLocalStorage("user-id", "")
-  const { setUser, setToken } = useContext(UserContext)
+  const { setUser, setToken, url } = useContext(UserContext)
   const [ConfirmEmail] = useMutation(CONFIRM_EMAIL)
   const [ResetPassword] = useMutation(RESET_PASSWORD)
   const [LoginUser] = useMutation(LOGIN_USER, {
@@ -38,7 +38,7 @@ export default function SignWithEmail(): JSX.Element {
       setUser(user)
       setShowModal(false)
       setRequestError(null)
-      router.push("/")
+        router.push(url)
     },
     onError(error) {
       setRequestError(error)

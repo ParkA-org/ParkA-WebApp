@@ -1,4 +1,6 @@
+import { useEffect } from "react"
 import { useQuery } from "@apollo/client"
+import { useRouter } from "next/router"
 import { GET_ALL_VEHICLES } from "queries";
 import PlusIcon from "components/Icons/Plus"
 import NavigationLink from "components/NavigationLink"
@@ -8,19 +10,26 @@ import {
     VehicleList,
     NewLink
 } from "./styles"
-import { UserContext } from "context/UserContext";
-import { useContext } from "react"
 
 export default function VehicleSection() {
-    const { token } = useContext(UserContext)
-
+    const router = useRouter()
     const { loading, error, data } = useQuery(GET_ALL_VEHICLES, {
-        fetchPolicy: "network-only"
+        fetchPolicy: "network-only",
+        errorPolicy: 'all'
     })
 
-    if (error) return <h2>Error</h2>
-    if (loading) return <h2>Loading...</h2>
-
+    if (error){
+        return (
+        <>
+            <h2>Error</h2>
+            <pre>Bad: {error.graphQLErrors.map(({ message }, i) => (
+        <span key={i}>{message}</span>
+      ))}
+      </pre>
+        </>)
+        }
+    
+    if(data) {
     const { getAllUserVehicles } = data
     return (
         <>
@@ -46,4 +55,7 @@ export default function VehicleSection() {
             }
         </>
     )
+}
+return <h2>Loading...</h2>
+
 }

@@ -1,8 +1,9 @@
+import { useEffect, useContext } from "react"
+import { UserContext } from "context/UserContext"
+import styled from "styled-components"
 import Layout from "../layout";
 import ProfileSection from "components/ProfileSection"
 import VehicleSection from "components/VehicleSection"
-import styled from "styled-components"
-import useAuth from "hooks/useAuth"
 import { initializeApollo } from "lib/apolloClient";
 import { GET_ALL_VEHICLES } from "queries"
 
@@ -14,32 +15,26 @@ margin: 0 auto;
 
 export default function Profile(): JSX.Element {
 
-    const { isLoggedIn, loading } = useAuth()
+    const { redirect, loading, userStatus } = useContext(UserContext)
 
+    useEffect(() => {
+        redirect('/profile')
+    }, [loading])
+
+    if(userStatus === true){
+            return (
+                <Layout pageTitle="Profile">
+                    <Container>
+                        <ProfileSection />
+                        <VehicleSection />
+                    </Container>
+            </Layout>
+        );
+    }
+    
     return (
         <Layout pageTitle="Profile">
-            {loading && <h3>Cargando....</h3>}
-            {isLoggedIn && <Container>
-                <ProfileSection />
-                <VehicleSection />
-            </Container>}
+            <h3>Cargando....</h3>
         </Layout>
-    );
+    )
 }
-
-// export async function getStaticProps() {
-//     const apolloClient = initializeApollo()
-
-//     await apolloClient.query({ query: GET_ALL_VEHICLES,  context: {
-//         headers: {
-//             'Authorization': 
-//         }
-//     }})
-
-//     return {
-//         props: {
-//             initialApolloState: apolloClient.cache.extract()
-//         }
-//     }
-
-// }

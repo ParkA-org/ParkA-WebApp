@@ -29,6 +29,8 @@ interface ContextInterface {
     token: String;
     loading: Boolean;
     logout: () => void;
+    redirect: (url: string) => void;
+    url: string;
     userStatus: undefined | false | true;
 }
 
@@ -41,6 +43,8 @@ export const UserContext = React.createContext<ContextInterface>({
     token: "",
     loading: true,
     logout: undefined,
+    redirect: undefined,
+    url: "",
     userStatus: USER_STATES.NOT_KNOWN
 })
 
@@ -52,6 +56,7 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
     const [user, setUser] = useState<User>(undefined)
     const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN)
     const [loading, setLoading] = useState(true)
+    const [url, setUrl] = useState("")
 
     useEffect(() => {
         if (user === undefined) {
@@ -87,6 +92,13 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken(authToken)
     }
 
+    const redirect: (redirection: string) => void = function(redirection: string): void {
+        if(userStatus === USER_STATES.LOGGED_OUT){
+            setUrl(redirection)
+            router.push('/login')
+        }
+    }
+
     const logout = () => {
         setUser({})
         setToken("")
@@ -95,7 +107,6 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         router.push("/")
     }
 
-
     const ContextValue = {
         user: user,
         token: token,
@@ -103,6 +114,8 @@ export function UserProvider({ children }: { children: React.ReactNode | React.R
         setToken: modifyToken,
         userId: userId,
         setUserId: setUserId,
+        redirect,
+        url,
         loading,
         logout,
         userStatus
