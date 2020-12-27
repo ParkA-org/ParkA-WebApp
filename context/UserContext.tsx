@@ -44,7 +44,7 @@ export const UserContext = React.createContext<ContextInterface>({
   loading: true,
   logout: undefined,
   redirect: undefined,
-  url: "",
+  url: "/",
   userStatus: USER_STATES.NOT_KNOWN,
 });
 

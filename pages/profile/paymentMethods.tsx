@@ -92,6 +92,7 @@ export default function PaymentMethods() {
   const [newDate, setNewDate] = useState("");
   const [editDate, setEditDate] = useState(false);
   const [currentPayment, setPayment] = useState<Payment | null>(null);
+  const [payments, setPayments] = useState<Payment[]>([]);
 
   const [UpdatePayment] = useMutation(UPDATE_PAYMENT, {
     onCompleted() {
@@ -110,7 +111,12 @@ export default function PaymentMethods() {
 
   if (error) return <h2>Error</h2>;
 
-  const { getAllUserPayments } = data;
+  useEffect(() => {
+    if (data) {
+      setPayments(data.getAllUserPayments);
+    }
+  }, [data]);
+
   if (userStatus === true) {
     return (
       <Layout pageTitle="Métodos de Pago">
@@ -125,17 +131,21 @@ export default function PaymentMethods() {
             </NavigationLink>
           </section>
           <Carousel title="">
-            {getAllUserPayments.map((payment) => {
-              return (
-                <CreditCard
-                  onClick={() => setPayment(payment)}
-                  cardNumber={payment.digit}
-                  cardHolder={payment.cardHolder}
-                  expirationDate={payment.expirationDate}
-                  cardStyles={{ marginRight: "20px", minWidth: "450px" }}
-                />
-              );
-            })}
+            {payments.length > 0 ? (
+              payments.map((payment) => {
+                return (
+                  <CreditCard
+                    onClick={() => setPayment(payment)}
+                    cardNumber={payment.digit}
+                    cardHolder={payment.cardHolder}
+                    expirationDate={payment.expirationDate}
+                    cardStyles={{ marginRight: "20px", minWidth: "450px" }}
+                  />
+                );
+              })
+            ) : (
+              <h3>Aún no tienes métodos de pago, crea uno!</h3>
+            )}
           </Carousel>
 
           {currentPayment === null ? (

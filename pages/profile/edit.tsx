@@ -102,7 +102,7 @@ export default function EditProfile(): JSX.Element {
       setInitialValues(tempUserValues);
     }
   }, [data]);
-  if (userStatusLoading === true) {
+  if (userStatus === true) {
     return (
       <Layout pageTitle="Editar Perfil">
         <MainFormContainer>
@@ -285,7 +285,7 @@ export default function EditProfile(): JSX.Element {
     );
   }
   return (
-    <Layout pageTitle="Reviews de usuarios">
+    <Layout pageTitle="Editar perfil">
       <h3>Cargando....</h3>
     </Layout>
   );
