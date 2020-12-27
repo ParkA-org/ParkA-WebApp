@@ -61,7 +61,7 @@ export function UserProvider({
   const [user, setUser] = useState<User>(undefined);
   const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN);
   const [loading, setLoading] = useState(true);
-  const [url, setUrl] = useState("");
+  const [url, setUrl] = useState("/");
 
   useEffect(() => {
     if (user === undefined) {

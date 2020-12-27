@@ -47,14 +47,22 @@ export default function Reservations() {
   useEffect(() => {
     if (data) {
       setPendingReservations(
-        data.getAllUserReservationsAsClient.filter(
-          (reservation) => reservation.status !== ReservationStatuses.Completed
-        )
+        data.getAllUserReservationsAsClient.filter((reservation) => {
+          let reservationDateTime = new Date(
+            reservation.checkOutDate
+          ).getTime();
+          let actualDateTime = new Date(Date.now()).getTime();
+          return reservationDateTime - actualDateTime > 0;
+        })
       );
       setCompletedReservations(
-        data.getAllUserReservationsAsClient.filter(
-          (reservation) => reservation.status === ReservationStatuses.Completed
-        )
+        data.getAllUserReservationsAsClient.filter((reservation) => {
+          let reservationDateTime = new Date(
+            reservation.checkOutDate
+          ).getTime();
+          let actualDateTime = new Date(Date.now()).getTime();
+          return reservationDateTime - actualDateTime < 0;
+        })
       );
     }
   }, [data]);
