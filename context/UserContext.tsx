@@ -32,6 +32,8 @@ interface ContextInterface {
   redirect: (url: string, as?: string) => void;
   url: string;
   userStatus: undefined | false | true;
+  socialLogin: string;
+  setSocialLogin: Dispatch<SetStateAction<String>>;
 }
 
 export const UserContext = React.createContext<ContextInterface>({
@@ -46,6 +48,8 @@ export const UserContext = React.createContext<ContextInterface>({
   redirect: undefined,
   url: "/",
   userStatus: USER_STATES.NOT_KNOWN,
+  socialLogin: "",
+  setSocialLogin: undefined,
 });
 
 export function UserProvider({
@@ -62,6 +66,7 @@ export function UserProvider({
   const [userStatus, setUserStatus] = useState(USER_STATES.NOT_KNOWN);
   const [loading, setLoading] = useState(true);
   const [url, setUrl] = useState("/");
+  const [socialLogin, setSocialLogin] = useState("");
 
   useEffect(() => {
     if (user === undefined) {
@@ -76,7 +81,7 @@ export function UserProvider({
         setUserStatus(USER_STATES.LOGGED_OUT);
       }
     } else {
-      if (!token || !userId) {
+      if (!token) {
         setUserStatus(USER_STATES.LOGGED_OUT);
       }
       if (user && user["name"]) {
@@ -129,6 +134,8 @@ export function UserProvider({
     loading,
     logout,
     userStatus,
+    socialLogin: socialLogin,
+    setSocialLogin: setSocialLogin,
   };
 
   return (

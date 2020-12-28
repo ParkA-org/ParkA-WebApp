@@ -1,5 +1,9 @@
 import { useRouter } from "next/router";
-import { signIn, signOut, useSession } from "next-auth/client";
+import { useContext, useEffect } from "react";
+import { UserContext } from "context/UserContext";
+import { signIn, useSession } from "next-auth/client";
+import { SOCIAL_LOGIN } from "mutations";
+import { useMutation } from "@apollo/client";
 import styled from "styled-components";
 import Layout from "../layout";
 import {
@@ -41,6 +45,56 @@ const Icon = styled.img`
 export default function Login(): JSX.Element {
   const router = useRouter();
   const [session, loading] = useSession();
+  const { setSocialLogin, socialLogin, setToken, setUser } = useContext(
+    UserContext
+  );
+  const [SocialLogin] = useMutation(SOCIAL_LOGIN, {
+    onCompleted({ socialLogin }) {
+      const { JWT, user, register } = socialLogin;
+      setToken(JWT);
+      setUser(user);
+      console.log("Llegamos al onCompleted");
+      if (register === true) {
+        router.push("/profile");
+      } else {
+        router.push("/register/PersonalIdentification");
+      }
+    },
+  });
+  useEffect(() => {
+    if (session) {
+      console.log("Loading ", loading);
+      if (session && session.user) {
+        console.log("Llegamos aqui");
+        setSocialLogin("google");
+        SocialLogin({
+          variables: {
+            slv: {
+              displayName: session.user.name,
+              photoUrl: session.user.image,
+              email: session.user.email,
+              origin: socialLogin,
+            },
+          },
+        });
+      }
+      // if (socialLogin === "google") {
+      //   SocialLogin({
+      //     variables: {
+      //       slv: {
+      //         displayName: session.user.name,
+      //         photoUrl: session.user.image,
+      //         email: session.user.email,
+      //         origin: socialLogin,
+      //       },
+      //     },
+      //   });
+      // } else if (socialLogin === "facebook") {
+      // }
+      console.log("Sesion ", session);
+    }
+  }, [loading]);
+
   return (
     <Layout pageTitle="Login">
       <MainFormContainer>
@@ -49,7 +103,10 @@ export default function Login(): JSX.Element {
           <FieldSection>
             <LoginButton
               onClick={() => {
-                signIn("facebook");
+                setSocialLogin("facebook");
+                signIn("facebook", {
+                  callbackUrl: "http://localhost:3000/login",
+                });
               }}
             >
               <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
@@ -57,7 +114,10 @@ export default function Login(): JSX.Element {
             </LoginButton>
             <LoginButton
               onClick={() => {
-                signIn("google");
+                setSocialLogin("google");
+                signIn("google", {
+                  callbackUrl: "http://localhost:3000/login",
+                });
               }}
             >
               {" "}
