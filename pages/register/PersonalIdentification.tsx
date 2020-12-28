@@ -32,16 +32,19 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
   const [localUser, setLocalUser] = useLocalStorage("user", {});
   const [showModal, setShowModal] = useState(false);
   const router = useRouter();
+
   const {
     loading: nationalitiesLoading,
     error: nationalitiesError,
-    data: nationalityData,
+    data: nationalityResults,
   } = useQuery<NationalityData>(GET_NATIONALITIES);
+
   const {
     loading: birthPlaceLoading,
     error: birthPlaceError,
     data: birthPlacedata,
   } = useQuery<BirthPlaceData>(GET_BIRTH_PLACES);
+
   let userValues = {
     typeOfDocument: "",
     documentCode: "",
@@ -50,6 +53,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     nationality: "",
     telephoneNumber: "",
   };
+
   const [initialUserValues, setInitialUserValues] = useState({
     typeOfDocument: "",
     documentCode: "",
@@ -132,7 +136,7 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   birthDate: newDate,
                   documentNumber: values.documentCode,
                   telephoneNumber: values.telephoneNumber.replaceAll("-", ""),
-                  nationality: nationalityData.getAllNationalities.filter(
+                  nationality: nationalityResults.getAllNationalities.filter(
                     (nation) => nation.name == values.nationality
                   )[0].id,
                   placeOfBirth: birthPlacedata.getAllCountries.filter(
@@ -225,26 +229,28 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
                   {nationalitiesLoading ? (
                     <Spinner />
                   ) : (
-                    <SelectField
-                      name="nationality"
-                      label="Nacionalidad"
-                      placeholder="Nacionalidad"
-                      placement="horizontal"
-                      errorMessage={errors.nationality}
-                      isTouched={touched.nationality}
-                      value={values.nationality}
-                    >
-                      {nationalityData.getAllNationalities.map(
-                        (nationality: BasicEntity) => (
-                          <option
-                            value={nationality.name}
-                            key={nationality.name}
-                          >
-                            {nationality.name}
-                          </option>
-                        )
-                      )}
-                    </SelectField>
+                    nationalityResults && (
+                      <SelectField
+                        name="nationality"
+                        label="Nacionalidad"
+                        placeholder="Nacionalidad"
+                        placement="horizontal"
+                        errorMessage={errors.nationality}
+                        isTouched={touched.nationality}
+                        value={values.nationality}
+                      >
+                        {nationalityResults.getAllNationalities.map(
+                          (nationality: BasicEntity) => (
+                            <option
+                              value={nationality.name}
+                              key={nationality.name}
+                            >
+                              {nationality.name}
+                            </option>
+                          )
+                        )}
+                      </SelectField>
+                    )
                   )}
                   <Field
                     type="date"
