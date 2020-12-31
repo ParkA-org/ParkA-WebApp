@@ -276,3 +276,11 @@ mutation validateReset($validateInput: ValidateResetPasswordCodeInput!) {
   }
 }
 `
+
+export const DELETE_VEHICLE = gql`
+mutation deleteVehicle($vehicleId: GetVehicleByIdInput!){
+  deleteVehicle(getVehicleByIdInput: $vehicleId){
+
+  }
+}
+`
