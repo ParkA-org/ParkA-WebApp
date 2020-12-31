@@ -100,9 +100,6 @@ export default function MapViewer(): JSX.Element {
     const panTo = useCallback(({ lat, lng }) => {
         if (process.browser) {
             if (mapRef && mapRef.current) {
-                console.log('Llegamos aqui')
-                console.log('Latitude ', lat)
-                console.log('Longitude ', lng)
                 mapRef.current!.panTo({ lat, lng });
                 mapRef.current!.setZoom(16);
                 setCoordinates({ lat: lat, lng: lng })
@@ -159,7 +156,6 @@ export default function MapViewer(): JSX.Element {
                                     key={`${marker.lat}-${marker.lng}`}
                                     position={{ lat: parseFloat(marker.lat), lng: parseFloat(marker.lng) }}
                                     onClick={() => {
-                                        console.log(marker)
                                         setSelected(marker);
                                     }}
                                     icon={{

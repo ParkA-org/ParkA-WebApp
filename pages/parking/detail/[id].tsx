@@ -11,6 +11,8 @@ import NavigationLink from "components/NavigationLink"
 import Carousel from "components/Carousel";
 import ReviewCard from "components/ReviewCard";
 import ImageViewer from "components/ImageViewer"
+import ModalPortal from "components/Modal"
+import AvailabilityModal from "components/AvailabilityModal"
 
 export const Container = styled.div`
     display:grid;
@@ -83,6 +85,7 @@ export const Button = styled.button`
 
 export default function ParkingDetail(): JSX.Element {
     const router = useRouter()
+    const [modal, showModal] = useState(false)
     const [parking, setParking] = useState<Parking>(null)
     const [reviews, setReviews] = useState<Review[]>([])
     const { userId } = useContext(UserContext)
@@ -143,7 +146,7 @@ export default function ParkingDetail(): JSX.Element {
                                 <NavigationLink href={`/parking/checkout/${id}`}>Reservar</NavigationLink>
                             }
                         </Button>
-                        <Button>Disponibilidad</Button>
+                        <Button onClick={() => showModal(true)}>Disponibilidad</Button>
                         <Button>Compartir</Button>
                     </ButtonGroup>
                 </Container>
@@ -151,6 +154,10 @@ export default function ParkingDetail(): JSX.Element {
                     <Carousel title="Reseñas">
                         {reviews.map(review => <ReviewCard key={review.id} {...review} />)}
                     </Carousel> : <h3>Este parqueo no tiene reseñas por el momento.</h3>}
+
+                {modal && <ModalPortal onClose={() => showModal(false)}>
+                    <AvailabilityModal parking={parking} />
+                </ModalPortal>}
             </div>
             <style jsx>{`
                 h1{

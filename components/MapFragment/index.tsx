@@ -29,11 +29,6 @@ const options = {
     fullscreenControl: false,
     styles: mapExtraStyles
 };
-const center = {
-    lat: 18.487876,
-    lng: -69.962292,
-};
-
 
 type LocationProps = {
     coordinates: Coordinates
@@ -45,23 +40,14 @@ export default function MapFragment({ coordinates }: LocationProps) {
         libraries,
     });
     const [marker, setMarker] = useState<Coordinates>(coordinates);
-
+    const [center, setCenter] = useState<Coordinates>();
     useEffect(() => {
-        panTo(coordinates)
-    }, [coordinates])
+        setCenter(coordinates)
+    }, [])
 
     const mapRef = useRef(null);
     const onMapLoad = useCallback((map) => {
         mapRef.current = map;
-    }, []);
-
-    const panTo = useCallback(({ lat, lng }) => {
-        if (process.browser) {
-            if (mapRef.current) {
-                mapRef.current!.panTo({ lat, lng });
-                mapRef.current!.setZoom(16);
-            }
-        }
     }, []);
 
     if (loadError) return <h2>Error</h2>;

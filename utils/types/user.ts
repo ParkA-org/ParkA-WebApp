@@ -1,3 +1,5 @@
+import { Review } from "."
+
 export type BasicEntity = {
     __typename: string;
     id: string;
@@ -58,6 +60,8 @@ export type User = {
     confirmed: boolean;
 
     origin: string;
+    
+    reviews: Review[]
 }
 
 export type UserInformation = {

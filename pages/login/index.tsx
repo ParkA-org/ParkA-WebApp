@@ -1,4 +1,10 @@
-import styled from "styled-components"
+import { useRouter } from "next/router";
+import { useContext, useEffect } from "react";
+import { UserContext } from "context/UserContext";
+import { signIn, useSession } from "next-auth/client";
+import { SOCIAL_LOGIN } from "mutations";
+import { useMutation } from "@apollo/client";
+import styled from "styled-components";
 import Layout from "../layout";
 import {
   MainFormContainer,
@@ -6,13 +12,12 @@ import {
   FieldSection,
   InformationSection,
 } from "styles/formStyles";
-import { useRouter } from "next/router"
 
 const LoginButton = styled.button`
   background-color: white;
-  color: rgba(0,0,0,0.8);
+  color: rgba(0, 0, 0, 0.8);
   border-radius: 5px;
-  padding: 1em; 
+  padding: 1em;
   border: 1px solid #333;
   margin-bottom: 1em;
   display: flex;
@@ -25,7 +30,7 @@ const LoginButton = styled.button`
   &:hover {
     cursor: pointer;
     color: white;
-    background-color: #63C7B2;
+    background-color: #63c7b2;
     border: none;
     border: 1px solid transparent;
   }
@@ -38,16 +43,87 @@ const Icon = styled.img`
 `;
 
 export default function Login(): JSX.Element {
-  const router = useRouter()
+  const router = useRouter();
+  const [session, loading] = useSession();
+  const { setSocialLogin, socialLogin, setToken, setUser } = useContext(
+    UserContext
+  );
+  const [SocialLogin] = useMutation(SOCIAL_LOGIN, {
+    onCompleted({ socialLogin }) {
+      const { JWT, user, register } = socialLogin;
+      setToken(JWT);
+      setUser(user);
+      console.log("Llegamos al onCompleted");
+      if (register === true) {
+        router.push("/profile");
+      } else {
+        router.push("/register/PersonalIdentification");
+      }
+    },
+  });
+  useEffect(() => {
+    if (session) {
+      console.log("Loading ", loading);
+      if (session && session.user) {
+        console.log("Llegamos aqui");
+        setSocialLogin("google");
+        SocialLogin({
+          variables: {
+            slv: {
+              displayName: session.user.name,
+              photoUrl: session.user.image,
+              email: session.user.email,
+              origin: socialLogin,
+            },
+          },
+        });
+      }
+      // if (socialLogin === "google") {
+      //   SocialLogin({
+      //     variables: {
+      //       slv: {
+      //         displayName: session.user.name,
+      //         photoUrl: session.user.image,
+      //         email: session.user.email,
+      //         origin: socialLogin,
+      //       },
+      //     },
+      //   });
+      // } else if (socialLogin === "facebook") {
+      // }
+      console.log("Sesion ", session);
+    }
+  }, [loading]);
 
   return (
     <Layout pageTitle="Login">
       <MainFormContainer>
-      <br/>
+        <br />
         <FormContainer>
           <FieldSection>
-            <LoginButton>  <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />Continuar con <b>Facebook</b></LoginButton>
-            <LoginButton> <Icon src="/icons/googleLogo.png" alt="Google Logo" />Continuar con <b>Google </b></LoginButton>
+            <LoginButton
+              onClick={() => {
+                setSocialLogin("facebook");
+                signIn("facebook", {
+                  callbackUrl: "http://localhost:3000/login",
+                });
+              }}
+            >
+              <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
+              Continuar con <b>Facebook</b>
+            </LoginButton>
+            <LoginButton
+              onClick={() => {
+                setSocialLogin("google");
+                signIn("google", {
+                  callbackUrl: "http://localhost:3000/login",
+                });
+              }}
+            >
+              {" "}
+              <Icon src="/icons/googleLogo.png" alt="Google Logo" />
+              Continuar con <b>Google </b>
+            </LoginButton>
             <LoginButton onClick={() => router.push("/login/WithEmail")}>
               Iniciar sesión con mi correo electrónico
             </LoginButton>
@@ -60,13 +136,15 @@ export default function Login(): JSX.Element {
               src="/../images/projectLogo.png"
               style={{ width: "100%", height: "100%" }}
             />
-            <h3>Utiliza uno de estos métodos para registrarte o iniciar sesión</h3>
+            <h3>
+              Utiliza uno de estos métodos para registrarte o iniciar sesión
+            </h3>
           </InformationSection>
         </FormContainer>
-        <br/>
-        <br/>
-        <br/> 
-        <br/>
+        <br />
+        <br />
+        <br />
+        <br />
       </MainFormContainer>
     </Layout>
   );

@@ -1,55 +1,38 @@
-import { useContext, useEffect } from "react"
-import Layout from "../layout";
-import ProfileSection from "components/ProfileSection"
-import VehicleSection from "components/VehicleSection"
-import styled from "styled-components"
-import { useRouter } from "next/router";
-import { USER_STATES } from "utils/constants"
+import { useEffect, useContext } from "react";
 import { UserContext } from "context/UserContext";
+import styled from "styled-components";
+import Layout from "../layout";
+import ProfileSection from "components/ProfileSection";
+import VehicleSection from "components/VehicleSection";
 import { initializeApollo } from "lib/apolloClient";
-import { GET_ALL_VEHICLES } from "queries"
-
+import { GET_ALL_VEHICLES } from "queries";
 
 const Container = styled.div`
-width: 100%;
-margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
 `;
 
 export default function Profile(): JSX.Element {
-    const router = useRouter()
-    const { userStatus } = useContext(UserContext)
+  const { redirect, loading, userStatus } = useContext(UserContext);
 
-    useEffect(() => {
-        // if (userStatus === USER_STATES.NOT_KNOWN) {
-        //     console.log('waiting')
-        // } else
-        // if (userStatus === USER_STATES.LOGGED_OUT) {
-        //     router.push("/login")
-        // }
-    }, [userStatus])
+  useEffect(() => {
+    redirect("/profile");
+  }, [loading]);
+
+  if (userStatus === true) {
     return (
-        <Layout pageTitle="Profile">
-            <Container>
-                <ProfileSection />
-                <VehicleSection />
-            </Container>
-        </Layout>
+      <Layout pageTitle="Profile">
+        <Container>
+          <ProfileSection />
+          <VehicleSection />
+        </Container>
+      </Layout>
     );
+  }
+
+  return (
+    <Layout pageTitle="Profile">
+      <h3>Cargando....</h3>
+    </Layout>
+  );
 }
-
-// export async function getStaticProps() {
-//     const apolloClient = initializeApollo()
-
-//     await apolloClient.query({ query: GET_ALL_VEHICLES,  context: {
-//         headers: {
-//             'Authorization': 
-//         }
-//     }})
-
-//     return {
-//         props: {
-//             initialApolloState: apolloClient.cache.extract()
-//         }
-//     }
-
-// }

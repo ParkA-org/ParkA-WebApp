@@ -47,6 +47,10 @@ export const RightSection = styled.div`
     justify-content: space-between;
     flex-wrap: wrap;
     margin-bottom: 1em;
+
+    & > button:last-child{
+        background-color: #B60000;
+    }
 `;
 
 export const StyledInput = styled.input`
