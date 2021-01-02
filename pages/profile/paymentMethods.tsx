@@ -81,7 +81,7 @@ export type PaymentsData = {
 };
 
 export default function PaymentMethods() {
-  const { redirect, loading: userLoading, userStatus, token } = useContext(
+  const { redirect, loading: userLoading, userStatus } = useContext(
     UserContext
   );
 
@@ -109,13 +109,13 @@ export default function PaymentMethods() {
     fetchPolicy: "network-only",
   });
 
-  if (error) return <h2>Error</h2>;
-
   useEffect(() => {
     if (data) {
       setPayments(data.getAllUserPayments);
     }
   }, [data]);
+
+  if (error) return <h2>Error</h2>;
 
   if (userStatus === true) {
     return (
@@ -131,21 +131,17 @@ export default function PaymentMethods() {
             </NavigationLink>
           </section>
           <Carousel title="">
-            {payments.length > 0 ? (
-              payments.map((payment) => {
-                return (
-                  <CreditCard
-                    onClick={() => setPayment(payment)}
-                    cardNumber={payment.digit}
-                    cardHolder={payment.cardHolder}
-                    expirationDate={payment.expirationDate}
-                    cardStyles={{ marginRight: "20px", minWidth: "450px" }}
-                  />
-                );
-              })
-            ) : (
-              <h3>Aún no tienes métodos de pago, crea uno!</h3>
-            )}
+            {payments.map((payment) => {
+              return (
+                <CreditCard
+                  onClick={() => setPayment(payment)}
+                  cardNumber={payment.digit}
+                  cardHolder={payment.cardHolder}
+                  expirationDate={payment.expirationDate}
+                  cardStyles={{ marginRight: "20px", minWidth: "450px" }}
+                />
+              );
+            })}
           </Carousel>
 
           {currentPayment === null ? (
