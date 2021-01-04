@@ -8,7 +8,7 @@ import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import { DatePicker } from "rsuite";
 import { useMutation } from "@apollo/client";
-import { UPDATE_PAYMENT } from "mutations";
+import { UPDATE_PAYMENT, DELETE_PAYMENT } from "mutations";
 import { UserContext } from "context/UserContext";
 import { GET_PAYMENTS } from "queries";
 import { useQuery } from "@apollo/client";
@@ -99,6 +99,12 @@ export default function PaymentMethods() {
       setEditDate(false);
     },
   });
+
+  const [DeletePayment] = useMutation(DELETE_PAYMENT, {
+    onCompleted(){
+      window.location.reload();
+    }
+  })
 
   const formatDate = (data: string): string => {
     if (data.length === 5) return data;
@@ -216,7 +222,13 @@ export default function PaymentMethods() {
                   <p>{currentPayment.card.name}</p>
                 </CardElement>
               </CardInformation>
-              <EliminateButton>Eliminar método de pago</EliminateButton>
+              <EliminateButton onClick={() => {
+                            DeletePayment({
+                              variables: {
+                                id: currentPayment.id,
+                              },
+                            });
+                          }} >Eliminar método de pago</EliminateButton>
             </InformationSection>
           )}
           <style jsx>{`
