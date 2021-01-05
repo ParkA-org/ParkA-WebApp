@@ -557,3 +557,49 @@ export const GET_PARKING_DISPONIBILITY = gql`
     }
   }
 `;
+
+export const GET_INSIGHTS = gql`
+  query getInsights {
+    getReservationsInsigths(year: 2020) {
+      totalEarnings
+      reservationTimeAverige
+      perDayReservations {
+        monday
+        tuesday
+        wednesday
+        thursday
+        friday
+        saturday
+        sunday
+      }
+      perMonthEarning {
+        january
+        february
+        march
+        april
+        may
+        june
+        july
+        august
+        september
+        october
+        november
+        december
+      }
+      perMonthReservations {
+        january
+        february
+        march
+        april
+        may
+        june
+        july
+        august
+        september
+        october
+        november
+        december
+      }
+    }
+  }
+`;
