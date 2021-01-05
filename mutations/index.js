@@ -301,13 +301,18 @@ mutation AppendUserInfo($auiv: AddUserInformationInput!) {
 
 export const DELETE_VEHICLE = gql`
 mutation deleteVehicle($vehicleId: GetVehicleByIdInput!){
-  deleteVehicle(getVehicleByIdInput: $vehicleId)\
+  deleteVehicle(deleteVehicle: $vehicleId)
 }
 `
-
 
 export const DELETE_PAYMENT = gql`
 mutation deletePayment($id: String!){
   deletePayment(id: $id)
+}
+`
+
+export const DELETE_PARKING = gql`
+mutation deleteParking($id: String!){
+  deleteParking(id: $id)
 }
 `
