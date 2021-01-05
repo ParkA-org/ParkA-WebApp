@@ -8,7 +8,7 @@ import { AiOutlineEdit, AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 import styled from "styled-components";
 import { DatePicker } from "rsuite";
 import { useMutation } from "@apollo/client";
-import { UPDATE_PAYMENT } from "mutations";
+import { UPDATE_PAYMENT, DELETE_PAYMENT } from "mutations";
 import { UserContext } from "context/UserContext";
 import { GET_PAYMENTS } from "queries";
 import { useQuery } from "@apollo/client";
@@ -81,7 +81,7 @@ export type PaymentsData = {
 };
 
 export default function PaymentMethods() {
-  const { redirect, loading: userLoading, userStatus, token } = useContext(
+  const { redirect, loading: userLoading, userStatus } = useContext(
     UserContext
   );
 
@@ -100,6 +100,12 @@ export default function PaymentMethods() {
     },
   });
 
+  const [DeletePayment] = useMutation(DELETE_PAYMENT, {
+    onCompleted(){
+      window.location.reload();
+    }
+  })
+
   const formatDate = (data: string): string => {
     if (data.length === 5) return data;
     else return `${data.substr(5, 2)}/${data.substr(2, 2)}`;
@@ -109,13 +115,13 @@ export default function PaymentMethods() {
     fetchPolicy: "network-only",
   });
 
-  if (error) return <h2>Error</h2>;
-
   useEffect(() => {
     if (data) {
       setPayments(data.getAllUserPayments);
     }
   }, [data]);
+
+  if (error) return <h2>Error</h2>;
 
   if (userStatus === true) {
     return (
@@ -131,21 +137,17 @@ export default function PaymentMethods() {
             </NavigationLink>
           </section>
           <Carousel title="">
-            {payments.length > 0 ? (
-              payments.map((payment) => {
-                return (
-                  <CreditCard
-                    onClick={() => setPayment(payment)}
-                    cardNumber={payment.digit}
-                    cardHolder={payment.cardHolder}
-                    expirationDate={payment.expirationDate}
-                    cardStyles={{ marginRight: "20px", minWidth: "450px" }}
-                  />
-                );
-              })
-            ) : (
-              <h3>Aún no tienes métodos de pago, crea uno!</h3>
-            )}
+            {payments.map((payment) => {
+              return (
+                <CreditCard
+                  onClick={() => setPayment(payment)}
+                  cardNumber={payment.digit}
+                  cardHolder={payment.cardHolder}
+                  expirationDate={payment.expirationDate}
+                  cardStyles={{ marginRight: "20px", minWidth: "450px" }}
+                />
+              );
+            })}
           </Carousel>
 
           {currentPayment === null ? (
@@ -220,7 +222,13 @@ export default function PaymentMethods() {
                   <p>{currentPayment.card.name}</p>
                 </CardElement>
               </CardInformation>
-              <EliminateButton>Eliminar método de pago</EliminateButton>
+              <EliminateButton onClick={() => {
+                            DeletePayment({
+                              variables: {
+                                id: currentPayment.id,
+                              },
+                            });
+                          }} >Eliminar método de pago</EliminateButton>
             </InformationSection>
           )}
           <style jsx>{`

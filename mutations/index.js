@@ -287,14 +287,32 @@ export const SOCIAL_LOGIN = gql`
 `;
 
 export const ADD_USER_INFO = gql`
-  mutation AppendUserInfo($auiv: AddUserInformationInput!) {
-    addUserInformation(addUserInformationInput: $auiv) {
-      JWT
-      user {
-        name
-        profilePicture
-      }
-      register
+mutation AppendUserInfo($auiv: AddUserInformationInput!) {
+  addUserInformation(addUserInformationInput: $auiv) {
+    JWT
+    user {
+      name
+      profilePicture
     }
+    register
   }
-`;
+}
+`
+
+export const DELETE_VEHICLE = gql`
+mutation deleteVehicle($vehicleId: GetVehicleByIdInput!){
+  deleteVehicle(deleteVehicle: $vehicleId)
+}
+`
+
+export const DELETE_PAYMENT = gql`
+mutation deletePayment($id: String!){
+  deletePayment(id: $id)
+}
+`
+
+export const DELETE_PARKING = gql`
+mutation deleteParking($id: String!){
+  deleteParking(id: $id)
+}
+`

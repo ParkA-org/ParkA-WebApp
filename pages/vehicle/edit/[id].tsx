@@ -9,7 +9,10 @@ import {
   GET_BODY_STYLES,
   GET_VEHICLE_BY_ID,
 } from "queries";
-import { UPDATE_VEHICLE } from "mutations";
+import { 
+  UPDATE_VEHICLE,
+  DELETE_VEHICLE,
+} from "mutations";
 import { CreateVehicleSchema } from "utils/schemas";
 import {
   BasicEntity,
@@ -178,6 +181,11 @@ export default function EditVehicle(): JSX.Element {
       console.error(error);
     },
   });
+  const [DeleteVehicle] = useMutation(DELETE_VEHICLE, {
+    onCompleted(){
+      router.push("/profile")
+    }
+  })
   const [options, setOptions] = useState([]);
   useEffect(() => {
     GetVehicle({ variables: { vehicleId: { id: id } } });
@@ -347,9 +355,19 @@ export default function EditVehicle(): JSX.Element {
                     />
                   </DetailsContainer>
                   <ButtonsContainer>
-                    <BtnCancel type="button">
+                    <BtnCancel
+                      onClick={() => {
+                        DeleteVehicle({
+                          variables: {
+                            vehicleId: {
+                              id: id
+                            }
+                          },
+                        });
+                      }}
+                      type="button">
                       <img src="/images/mdi_delete.svg" />
-                      <h2>Cancelar</h2>
+                      <h2>Eliminar</h2>
                     </BtnCancel>
                     <BtnSave type="submit">
                       <img src="/images/mdi_save.svg" />

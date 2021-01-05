@@ -1,19 +1,19 @@
-import { useState, useReducer, useContext, useEffect } from "react"
+import { useState, useReducer, useContext, useEffect } from "react";
 import { Formik, Form } from "formik";
-import MoneyIcon from "components/Icons/Money"
-import SchedulePicker from "components/SchedulePicker"
-import ImagePicker from "components/ImagePicker"
-import { EditParkingSchema } from "utils/schemas"
-import Field from "components/Field"
-import { Container, ElementContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, HeaderSection } from "./styles"
+import MoneyIcon from "components/Icons/Money";
+import SchedulePicker from "components/SchedulePicker";
+import ImagePicker from "components/ImagePicker";
+import { EditParkingSchema } from "utils/schemas";
+import Field from "components/Field";
+import { Container, ElementContainer, MiddleSection, LeftSection, RightSection, DayCheckboxContainer, HeaderSection } from "./styles";
 import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
-import { EDIT_PARKING } from "mutations"
+import { EDIT_PARKING, DELETE_PARKING } from "mutations"
 import { FeaturesData, Parking, Calendar } from "utils/types";
-import Spinner from "components/Spinner"
-import Button from "components/Button"
-import { uploadMultipleImages } from "services/uploadImage"
+import Spinner from "components/Spinner";
+import Button from "components/Button";
+import { uploadMultipleImages } from "services/uploadImage";
 import { useRouter } from "next/router";
 
 type DayCheckProps = {
@@ -177,6 +177,12 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
         }
     }, [calendar])
 
+    const [DeleteParking] = useMutation(DELETE_PARKING, {
+      onCompleted(){
+        router.push("/parking")
+      }
+    })
+
     return (
         <Formik
             enableReinitialize={true}
@@ -331,7 +337,15 @@ export default function ParkingForm({ parkingName, countParking, calendar, price
                         <RightSection>
                             <ImagePicker placement="vertical" setFiles={setFiles} pictures={pictures} />
                             <Button submit={false}>Editar parqueo</Button>
-                            <Button submit={false}>Eliminar parqueo</Button>
+                            <Button
+                             onClick={() => {
+                                DeleteParking({
+                                  variables: {
+                                    "id": id
+                                  },
+                                });
+                              }}
+                             submit={false}>Eliminar parqueo</Button>
                         </RightSection>
                         <style jsx>
                             {`

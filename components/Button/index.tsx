@@ -19,7 +19,7 @@ export default function Button({
   styles,
 }: props): JSX.Element {
   return (
-    <StyledButton onClick={onClick} type={submit ? "submit" : ""} rank={rank} style={styles}>
+    <StyledButton onClick={onClick} type={submit ? "submit" : "button"} rank={rank} style={styles}>
       {children}
     </StyledButton>
   );
