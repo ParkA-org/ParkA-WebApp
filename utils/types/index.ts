@@ -219,3 +219,40 @@ export type ParkingCalendar = {
     schedules: ParkingSchedule[];
     date: string;
 }
+
+export interface ParkingStats {
+    getReservationsInsigths: ReservationInsights;
+}
+
+export interface WeekInsights {
+    monday: number;
+    tuesday: number;
+    wednesday: number;
+    thursday: number;
+    friday: number;
+    saturday: number;
+    sunday: number;
+}
+
+export interface MonthInsights {
+    january: number;
+    february: number;
+    march: number;
+    april: number;
+    may: number;
+    june: number;
+    july: number;
+    august: number;
+    september: number;
+    october: number;
+    november: number;
+    december: number;
+}
+
+export interface ReservationInsights {
+    totalEarnings: number;
+    reservationTimeAverige: number;
+    perDayReservations: WeekInsights;
+    perMonthReservations: MonthInsights;
+    perMonthEarning: MonthInsights;
+}
