@@ -108,6 +108,14 @@ export const CREATE_RESERVATION = gql`
   }
 `;
 
+export const CANCEL_RESERVATION = gql`
+  mutation CancelReservation($caI: CancelReservationInput!) {
+    cancelReservation(cancelReservationInput: $caI) {
+      id
+    }
+  }
+`;
+
 export const UPDATE_RESERVATION = gql`
   mutation UpdateReservation($urInput: UpdateReservationInput!) {
     updateReservation(updateReservationInput: $urInput) {
@@ -278,6 +286,23 @@ export const SOCIAL_LOGIN = gql`
     socialLogin(socialLoginInput: $slv) {
       JWT
       user {
+        id
+        name
+        lastName
+        email
+        profilePicture
+        confirmed
+      }
+      register
+    }
+  }
+`;
+
+export const ADD_USER_INFO = gql`
+  mutation AppendUserInfo($auiv: AddUserInformationInput!) {
+    addUserInformation(addUserInformationInput: $auiv) {
+      JWT
+      user {
         name
         profilePicture
       }
@@ -286,33 +311,20 @@ export const SOCIAL_LOGIN = gql`
   }
 `;
 
-export const ADD_USER_INFO = gql`
-mutation AppendUserInfo($auiv: AddUserInformationInput!) {
-  addUserInformation(addUserInformationInput: $auiv) {
-    JWT
-    user {
-      name
-      profilePicture
-    }
-    register
-  }
-}
-`
-
 export const DELETE_VEHICLE = gql`
-mutation deleteVehicle($vehicleId: GetVehicleByIdInput!){
-  deleteVehicle(deleteVehicle: $vehicleId)
-}
-`
+  mutation deleteVehicle($vehicleId: GetVehicleByIdInput!) {
+    deleteVehicle(deleteVehicle: $vehicleId)
+  }
+`;
 
 export const DELETE_PAYMENT = gql`
-mutation deletePayment($id: String!){
-  deletePayment(id: $id)
-}
-`
+  mutation deletePayment($id: String!) {
+    deletePayment(id: $id)
+  }
+`;
 
 export const DELETE_PARKING = gql`
-mutation deleteParking($id: String!){
-  deleteParking(id: $id)
-}
-`
+  mutation deleteParking($id: String!) {
+    deleteParking(id: $id)
+  }
+`;

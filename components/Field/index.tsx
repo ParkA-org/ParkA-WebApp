@@ -1,5 +1,12 @@
 import { CSSProperties, useRef } from "react";
-import { StyledLabel, StyledField, ErrorMessage, UploaderImage, FieldContainer, CheckboxContainer } from "./styles";
+import {
+  StyledLabel,
+  StyledField,
+  ErrorMessage,
+  UploaderImage,
+  FieldContainer,
+  CheckboxContainer,
+} from "./styles";
 import Button from "components/Button";
 import { FormikErrors, FormikTouched } from "formik/dist/types";
 
@@ -34,18 +41,22 @@ export default function Field({
   placement = "vertical",
   inputStyles,
   containerStyles,
-  checked
+  checked,
 }: FieldProps): JSX.Element {
   if (type === "checkbox") {
     return (
       <CheckboxContainer>
-        <StyledLabel htmlFor={name}>
-          {label}
-        </StyledLabel>
-        <StyledField type="checkbox" name={name} value={value} checked={checked}
-          style={inputStyles} onChange={onChange} />
+        <StyledLabel htmlFor={name}>{label}</StyledLabel>
+        <StyledField
+          type="checkbox"
+          name={name}
+          value={value}
+          checked={checked}
+          style={inputStyles}
+          onChange={onChange}
+        />
       </CheckboxContainer>
-    )
+    );
   }
   return (
     <>
@@ -59,8 +70,8 @@ export default function Field({
           value={value}
           style={inputStyles}
         />
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
       </FieldContainer>
-      {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
     </>
   );
 }
@@ -86,13 +97,18 @@ export function SelectField({
   errorMessage,
   isTouched,
   value,
-  containerStyles
+  containerStyles,
 }: SelectFieldProps): JSX.Element {
   return (
     <>
       <FieldContainer placement={placement} style={containerStyles}>
         <StyledLabel htmlFor={name}>{label}</StyledLabel>
-        <StyledField component="select" name={name} placeholder={placeholder} value={value}>
+        <StyledField
+          component="select"
+          name={name}
+          placeholder={placeholder}
+          value={value}
+        >
           {children}
         </StyledField>
       </FieldContainer>
@@ -104,11 +120,14 @@ export function SelectField({
 }
 
 type FileUploaderProps = {
-  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void;
   placeholderImage?: string;
-}
+};
 
-export function FileUploader({ setFieldValue, placeholderImage }: FileUploaderProps): JSX.Element {
+export function FileUploader({
+  setFieldValue,
+  placeholderImage,
+}: FileUploaderProps): JSX.Element {
   const imgEl = useRef(null),
     inputEl = useRef(null);
   const handleChange = (event) => {
@@ -147,7 +166,6 @@ export function FileUploader({ setFieldValue, placeholderImage }: FileUploaderPr
         onChange={handleChange}
         style={{ display: "none" }}
         accept="image/*"
-
         ref={inputEl}
       />
       <Button onClick={handleClick}>Subir una imagen</Button>

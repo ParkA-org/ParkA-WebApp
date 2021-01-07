@@ -11,7 +11,9 @@ export default function EditParking(): JSX.Element {
   const router = useRouter();
   const { id } = router.query;
   const [parking, setParking] = useState<Parking>(null);
-  const [GetParkingWithId, { data, error }] = useLazyQuery(GET_PARKING_WITH_ID);
+  const [GetParkingWithId, { data, error, loading }] = useLazyQuery(
+    GET_PARKING_WITH_ID
+  );
 
   const { redirect, loading: userLoading, userStatus } = useContext(
     UserContext
@@ -31,7 +33,7 @@ export default function EditParking(): JSX.Element {
   }, [id, data]);
   if (error) return <h3>Error...</h3>;
 
-  if (userStatus === true) {
+  if (userStatus === true && !loading) {
     return (
       <Layout pageTitle="Editar parqueo">
         {parking && <ParkingForm {...parking} />}

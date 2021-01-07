@@ -104,9 +104,7 @@ export default function Login(): JSX.Element {
             <LoginButton
               onClick={() => {
                 setSocialLogin("facebook");
-                signIn("facebook", {
-                  callbackUrl: "http://localhost:3000/login",
-                });
+                signIn("facebook");
               }}
             >
               <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
@@ -115,9 +113,7 @@ export default function Login(): JSX.Element {
             <LoginButton
               onClick={() => {
                 setSocialLogin("google");
-                signIn("google", {
-                  callbackUrl: "http://localhost:3000/login",
-                });
+                signIn("google");
               }}
             >
               {" "}

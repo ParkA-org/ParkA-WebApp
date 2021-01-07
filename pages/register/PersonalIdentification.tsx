@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Formik, Form } from "formik";
 import { useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { GET_BIRTH_PLACES, GET_NATIONALITIES } from "queries";
-import { CREATE_USER, CREATE_USER_INFO } from "mutations";
+import { CREATE_USER, CREATE_USER_INFO, ADD_USER_INFO } from "mutations";
 import { PersonalIdentificationSchema } from "utils/schemas";
 import useLocalStorage from "hooks/useLocalStorage";
 import Layout from "../layout";
@@ -23,8 +23,10 @@ import {
   ActionSection,
   FormHeading,
 } from "styles/formStyles";
+import { UserContext } from "context/UserContext";
 
 export default function RegisterPersonalIdentificacion(): JSX.Element {
+  const { user, socialLogin } = useContext(UserContext);
   const [image, setLocalImage] = useLocalStorage(
     "image",
     "../placeholders/image.png"
@@ -63,23 +65,33 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
     telephoneNumber: "",
   });
 
+  const [AppendInfo] = useMutation(ADD_USER_INFO);
   const [CreateUser] = useMutation(CREATE_USER);
   const [CreateUserInfo] = useMutation(CREATE_USER_INFO, {
     onCompleted({ createUserInformation }) {
       const { id } = createUserInformation;
-      CreateUser({
-        variables: {
-          cuInput: {
-            name: localUser.name,
-            lastName: localUser.lastName,
-            email: localUser.email,
-            password: localUser.password,
+      if (socialLogin === "google") {
+        AppendInfo({
+          variables: {
+            id: user.id,
             userInformation: id,
-            profilePicture: image,
-            origin: "web",
           },
-        },
-      });
+        });
+      } else {
+        CreateUser({
+          variables: {
+            cuInput: {
+              name: localUser.name,
+              lastName: localUser.lastName,
+              email: localUser.email,
+              password: localUser.password,
+              userInformation: id,
+              profilePicture: image,
+              origin: "web",
+            },
+          },
+        });
+      }
       setShowModal(false);
       router.push("register/EmailSent");
     },

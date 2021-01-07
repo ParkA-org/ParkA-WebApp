@@ -142,6 +142,7 @@ export const GET_VEHICLE_BY_ID = gql`
       licensePlate
       detail
       alias
+      mainPicture
       bodyStyle {
         id
         name
@@ -236,6 +237,7 @@ export const GET_USER_PARKINGS = gql`
       priceHours
       isAvailable
       verified
+      rating
     }
   }
 `;

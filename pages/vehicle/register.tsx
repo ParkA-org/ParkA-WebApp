@@ -315,14 +315,15 @@ export default function VehicleRegister(): JSX.Element {
                         ) : (
                           bodyStylesData.getAllBodyStyles.map(
                             (vehicleType: BasicEntity) => (
-                              <div className="radioContainer">
+                              <div
+                                className="radioContainer"
+                                key={vehicleType.id}
+                              >
                                 <Field
-                                  key={vehicleType.name}
                                   type="radio"
                                   label={vehicleType.name}
                                   name="bodyStyle"
                                   value={vehicleType.id}
-                                  containerStyles={{ width: "300px" }}
                                 />
                                 <label>{vehicleType.name}</label>
                               </div>
