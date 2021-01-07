@@ -22,7 +22,7 @@ export type ReservationsData = {
 };
 
 export default function Reservations() {
-  const { redirect, loading: userLoading, userStatus, token } = useContext(
+  const { redirect, loading: userLoading, userStatus } = useContext(
     UserContext
   );
 
@@ -48,20 +48,22 @@ export default function Reservations() {
     if (data) {
       setPendingReservations(
         data.getAllUserReservationsAsClient.filter((reservation) => {
-          let reservationDateTime = new Date(
-            reservation.checkOutDate
-          ).getTime();
-          let actualDateTime = new Date(Date.now()).getTime();
-          return reservationDateTime - actualDateTime > 0;
+          // let reservationDateTime = new Date(
+          //   reservation.checkOutDate
+          // ).getTime();
+          // let actualDateTime = new Date(Date.now()).getTime();
+          // return reservationDateTime - actualDateTime > 0;
+          return reservation.status === "Created";
         })
       );
       setCompletedReservations(
         data.getAllUserReservationsAsClient.filter((reservation) => {
-          let reservationDateTime = new Date(
-            reservation.checkOutDate
-          ).getTime();
-          let actualDateTime = new Date(Date.now()).getTime();
-          return reservationDateTime - actualDateTime < 0;
+          // let reservationDateTime = new Date(
+          //   reservation.checkOutDate
+          // ).getTime();
+          // let actualDateTime = new Date(Date.now()).getTime();
+          // return reservationDateTime - actualDateTime < 0;
+          return reservation.status !== "Created";
         })
       );
     }
