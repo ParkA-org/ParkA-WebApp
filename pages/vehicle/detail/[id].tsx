@@ -94,11 +94,14 @@ export default function DetailVehicle() {
           {loading && <h3>Cargando...</h3>}
           {error && <h3>Ocurrio un error</h3>}
           {data && (
-            <section>
+            <section
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
               <VehicleCard vehicle={data.getVehicleById} />
-              <IconButton color="#AB1414" text="">
-                <DeleteIcon />
-              </IconButton>
             </section>
           )}
           <section>

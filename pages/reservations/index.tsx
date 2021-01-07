@@ -95,9 +95,14 @@ export default function Reservations() {
               })}
             </Carousel>
           ) : (
-            <h3>No tienes reservas pendientes</h3>
+            <>
+              <h1>Reservas Pendientes</h1>
+              <h3 style={{ margin: "1.5em 0em" }}>
+                No tienes reservas pendientes
+              </h3>
+            </>
           )}
-          {completedReservations.length > 0 && (
+          {completedReservations.length > 0 ? (
             <Carousel title="Reservas Pasadas">
               {completedReservations.map((reservation) => {
                 return (
@@ -105,6 +110,13 @@ export default function Reservations() {
                 );
               })}
             </Carousel>
+          ) : (
+            <>
+              <h1>Reservas Pasadas</h1>
+              <h3 style={{ margin: "1.5em 0em" }}>
+                No tienes reservas pasadas
+              </h3>
+            </>
           )}
         </Container>
       </Layout>

@@ -89,6 +89,7 @@ export type Parking = {
     features: BasicEntity[];
     verified: boolean;
     user: User;
+    rating: number;
 }
 
 export interface ParkingData {

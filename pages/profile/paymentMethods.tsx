@@ -27,6 +27,7 @@ const InformationSection = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   background-color: #c4c4c4;
   padding: 2em;
   margin-top: 2em;
@@ -97,21 +98,22 @@ export default function PaymentMethods() {
   const [UpdatePayment] = useMutation(UPDATE_PAYMENT, {
     onCompleted() {
       setEditDate(false);
+      window.location.reload();
     },
   });
 
   const [DeletePayment] = useMutation(DELETE_PAYMENT, {
-    onCompleted(){
+    onCompleted() {
       window.location.reload();
-    }
-  })
+    },
+  });
 
   const formatDate = (data: string): string => {
     if (data.length === 5) return data;
     else return `${data.substr(5, 2)}/${data.substr(2, 2)}`;
   };
 
-  const { error, data } = useQuery<PaymentsData>(GET_PAYMENTS, {
+  const { error, data, loading } = useQuery<PaymentsData>(GET_PAYMENTS, {
     fetchPolicy: "network-only",
   });
 
@@ -123,7 +125,7 @@ export default function PaymentMethods() {
 
   if (error) return <h2>Error</h2>;
 
-  if (userStatus === true) {
+  if (userStatus === true && !loading) {
     return (
       <Layout pageTitle="Métodos de Pago">
         <PageContainer>
@@ -165,7 +167,7 @@ export default function PaymentMethods() {
                     {editDate ? (
                       <>
                         <DatePicker
-                          format="YYYY-MM-DD"
+                          format="YYYY-MM"
                           defaultValue={new Date(Date.now())}
                           onOk={(date) => setNewDate(date.toISOString())}
                         />
@@ -222,13 +224,17 @@ export default function PaymentMethods() {
                   <p>{currentPayment.card.name}</p>
                 </CardElement>
               </CardInformation>
-              <EliminateButton onClick={() => {
-                            DeletePayment({
-                              variables: {
-                                id: currentPayment.id,
-                              },
-                            });
-                          }} >Eliminar método de pago</EliminateButton>
+              <EliminateButton
+                onClick={() => {
+                  DeletePayment({
+                    variables: {
+                      id: currentPayment.id,
+                    },
+                  });
+                }}
+              >
+                Eliminar método de pago
+              </EliminateButton>
             </InformationSection>
           )}
           <style jsx>{`
@@ -245,6 +251,9 @@ export default function PaymentMethods() {
               display: flex;
               justify-content: space-between;
               align-items: center;
+            }
+            .expirationContainer:hover {
+              cursor: pointer;
             }
             span {
               color: #fc0606;
