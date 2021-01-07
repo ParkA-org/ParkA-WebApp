@@ -286,8 +286,12 @@ export const SOCIAL_LOGIN = gql`
     socialLogin(socialLoginInput: $slv) {
       JWT
       user {
+        id
         name
+        lastName
+        email
         profilePicture
+        confirmed
       }
       register
     }
