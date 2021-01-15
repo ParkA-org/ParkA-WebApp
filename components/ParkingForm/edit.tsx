@@ -1,5 +1,6 @@
 import { useState, useReducer, useContext, useEffect } from "react";
 import { Formik, Form } from "formik";
+import ModalPortal from "components/Modal";
 import MoneyIcon from "components/Icons/Money";
 import SchedulePicker from "components/SchedulePicker";
 import ImagePicker from "components/ImagePicker";
@@ -199,6 +200,7 @@ export default function ParkingForm({
   features,
   id,
 }: Parking) {
+  const [showModal, setShowModal] = useState(false);
   const { token } = useContext(UserContext);
   const router = useRouter();
   const presentationalWeek = [
@@ -228,6 +230,7 @@ export default function ParkingForm({
   } = useQuery<FeaturesData>(GET_FEATURES);
   const [EditParking] = useMutation(EDIT_PARKING, {
     onCompleted() {
+      setShowModal(false);
       router.push("/parking");
     },
   });
@@ -245,6 +248,7 @@ export default function ParkingForm({
 
   const [DeleteParking] = useMutation(DELETE_PARKING, {
     onCompleted() {
+      setShowModal(false);
       router.push("/parking");
     },
   });
@@ -272,6 +276,7 @@ export default function ParkingForm({
           });
         }
 
+        setShowModal(true);
         if (files.length > 0) {
           uploadMultipleImages(files)
             .then((response) => {
@@ -298,6 +303,10 @@ export default function ParkingForm({
                   },
                 },
               });
+            })
+            .catch((error) => {
+              setShowModal(false);
+              console.log(error);
             });
         } else {
           let newFeatures = values.features.filter(
@@ -464,6 +473,12 @@ export default function ParkingForm({
                 }
               `}
             </style>
+            {showModal && (
+              <ModalPortal onClose={() => setShowModal(false)}>
+                <Spinner />
+                <h3>Cargando...</h3>
+              </ModalPortal>
+            )}
           </Container>
         </Form>
       )}

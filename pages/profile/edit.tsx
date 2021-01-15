@@ -12,6 +12,7 @@ import NavigationLink from "components/NavigationLink";
 import Field, { FileUploader, SelectField } from "components/Field";
 import SaveIcon from "components/Icons/Save";
 import DeleteIcon from "components/Icons/Delete";
+import ModalPortal from "components/Modal";
 import {
   MainFormContainer,
   FormContainer,
@@ -41,7 +42,14 @@ export default function EditProfile(): JSX.Element {
   const [
     updateUserInformation,
     { loading: infoLoading, error: infoError },
-  ] = useMutation(UPDATE_USER_INFORMATION);
+  ] = useMutation(UPDATE_USER_INFORMATION, {
+    onCompleted() {
+      setShowModal(false);
+      if (typeof window !== undefined) {
+        window.location.reload();
+      }
+    },
+  });
   const {
     data,
     loading: userLoading,
@@ -102,6 +110,9 @@ export default function EditProfile(): JSX.Element {
       setInitialValues(tempUserValues);
     }
   }, [data]);
+
+  const [showModal, setShowModal] = useState(false);
+
   if (userStatus === true) {
     return (
       <Layout pageTitle="Editar Perfil">
@@ -110,11 +121,14 @@ export default function EditProfile(): JSX.Element {
             enableReinitialize={true}
             initialValues={initialValues}
             validationSchema={EditProfileSchema}
-            onSubmit={(values) => {
-              console.log("Values ", values);
+            onSubmit={async (values) => {
+              setShowModal(true);
               if (values.file) {
-                UploadImageService(values.file).then((result) => {
-                  let url = result.data[0].url;
+                console.log("Empezamos a subir imagen");
+                let result = await UploadImageService(values.file);
+                let url = await result.data[0].url;
+                if (url) {
+                  console.log("Subimos la imagen con el url ", url);
                   updateUser({
                     variables: {
                       user: {
@@ -136,7 +150,7 @@ export default function EditProfile(): JSX.Element {
                       },
                     },
                   });
-                });
+                }
               } else {
                 updateUser({
                   variables: {
@@ -281,6 +295,12 @@ export default function EditProfile(): JSX.Element {
         </MainFormContainer>
         {imageStatus.loading && <p>Cargando...</p>}
         {imageStatus.error && <p>Error...</p>}
+        {showModal && (
+          <ModalPortal onClose={() => setShowModal(false)}>
+            <Spinner />
+            <h3>Cargando...</h3>
+          </ModalPortal>
+        )}
       </Layout>
     );
   }

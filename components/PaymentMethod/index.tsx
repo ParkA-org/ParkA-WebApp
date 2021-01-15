@@ -94,7 +94,9 @@ export default function PaymentMethod({
     return (
       <>
         <h3>Aún no tienes un método de pago registrado</h3>
-        <NavigationLink href="/payment">Ir a metodos de pago</NavigationLink>
+        <NavigationLink href="/profile/paymentMethods">
+          Ir a metodos de pago
+        </NavigationLink>
       </>
     );
   }

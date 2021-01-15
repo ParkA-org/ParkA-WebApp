@@ -73,10 +73,15 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
       if (socialLogin === "google") {
         AppendInfo({
           variables: {
-            id: user.id,
-            userInformation: id,
+            auiv: {
+              id: user.id,
+              userInformation: id,
+            },
           },
         });
+
+        setShowModal(false);
+        router.push("/profile");
       } else {
         CreateUser({
           variables: {
@@ -91,9 +96,10 @@ export default function RegisterPersonalIdentificacion(): JSX.Element {
             },
           },
         });
+
+        setShowModal(false);
+        router.push("/register/EmailSent");
       }
-      setShowModal(false);
-      router.push("register/EmailSent");
     },
   });
 

@@ -16,6 +16,20 @@ export default function LineChart() {
       width: 320px;
     }
   `;
+  const presentationalMonths = {
+    january: "Enero",
+    february: "Febrero",
+    march: "Marzo",
+    april: "Abril",
+    may: "Mayo",
+    june: "Junio",
+    july: "Julio",
+    august: "Agosto",
+    september: "Septiembre",
+    october: "Octubre",
+    november: "Noviembre",
+    december: "Diciembre",
+  };
   const { loading, data, error } = useQuery<ParkingStats>(GET_INSIGHTS);
 
   const canvaRef = useRef(null);
@@ -29,8 +43,9 @@ export default function LineChart() {
         keys.push(key);
         values.push(value);
       }
-      keys = keys.slice(7);
-      values = values.slice(7);
+      keys = [...keys.slice(9), ...keys.slice(1, 3)];
+      values = [...values.slice(9), ...values.slice(1, 3)];
+      keys = keys.map((k) => presentationalMonths[k]);
       let myChart = new Chart(ctx, {
         type: "line",
         data: {
@@ -65,65 +80,17 @@ export default function LineChart() {
           },
         },
       });
-    } else {
-      let myChart = new Chart(ctx, {
-        type: "line",
-        data: {
-          datasets: [
-            {
-              label: "Villa Faro",
-              data: [10, 20, 15, 30, 60, 40],
-              backgroundColor: "rgb(39, 104, 232)",
-              borderColor: "rgba(39, 104, 232, 0.5)",
-              borderWidth: 3,
-              tension: 0,
-              fill: false,
-            },
-            {
-              label: "Alma Rosa I",
-              data: [30, 10, 25, 10, 20, 45],
-              backgroundColor: "rgb(227, 145, 30)",
-              borderColor: "rgba(227, 145, 30, 0.5)",
-              borderWidth: 3,
-              tension: 0,
-              fill: false,
-            },
-          ],
-        },
-        options: {
-          showLines: true,
-          responsive: true,
-          title: {
-            display: true,
-            fontSize: 20,
-            position: "top",
-            text: "Ganancias de parqueos últimos 6 meses",
-          },
-          scales: {
-            xAxes: [
-              {
-                type: "category",
-                labels: [
-                  "Abril",
-                  "Mayo",
-                  "Junio",
-                  "Julio",
-                  "Agosto",
-                  "Septiembre",
-                ],
-              },
-            ],
-          },
-        },
-      });
     }
   }, [loading]);
 
   return (
     <>
-      <ChartContainer>
-        <canvas ref={canvaRef} />
-      </ChartContainer>
+      {data && (
+        <ChartContainer>
+          <canvas ref={canvaRef} />
+        </ChartContainer>
+      )}
+      {!data && <h3>Cargando estadisticas...</h3>}
     </>
   );
 }

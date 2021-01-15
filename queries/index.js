@@ -40,6 +40,7 @@ export const GET_USER = gql`
       }
       reviews {
         id
+        calification
       }
     }
   }

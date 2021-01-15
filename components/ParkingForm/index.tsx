@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect, useContext } from "react";
+import React, { useState, useReducer, useEffect } from "react";
 import ModalPortal from "components/Modal";
 import { Formik, Form } from "formik";
 import MoneyIcon from "components/Icons/Money";
@@ -15,7 +15,6 @@ import {
   RightSection,
   DayCheckboxContainer,
 } from "./styles";
-import { UserContext } from "context/UserContext";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_FEATURES } from "queries";
 import { CREATE_PARKING } from "mutations";
@@ -256,6 +255,7 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
             return { start: value.start, finish: value.finish };
           });
         }
+        setShowModal(true);
         uploadMultipleImages(files)
           .then((response) => {
             return response.data;
@@ -280,8 +280,12 @@ export default function ParkingForm({ coordinates }: ParkingProps) {
                 },
               },
             });
+            setShowModal(false);
           })
-          .catch((error) => console.error(error));
+          .catch((error) => {
+            console.error(error);
+            setShowModal(false);
+          });
       }}
     >
       {({ setFieldValue, errors, touched, values }) => (

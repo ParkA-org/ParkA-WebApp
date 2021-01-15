@@ -28,9 +28,43 @@ export default function ProfileSection() {
       let obj = jwt_decode(token);
       getUser({ variables: { id: obj.id } });
     }
-  }, [data]);
+  }, [data, loading]);
   if (loading) return <h2>Cargando...</h2>;
   if (error) return <h2>Ocurrio un error</h2>;
+
+  const getRatingStars = (): JSX.Element => {
+    if (user?.reviews.length > 0) {
+      let stars = [];
+      let califications = 0;
+      const { reviews } = user;
+      reviews.forEach((review) => {
+        califications += review.calification;
+      });
+
+      califications = califications / reviews.length;
+
+      for (let i = 0; i < 5; i++) {
+        if (i <= califications) {
+          stars.push(<BsStarFill color="goldenrod" />);
+        } else {
+          stars.push(<BsStarFill color="white" />);
+        }
+      }
+      return (
+        <>
+          {stars}({califications})
+        </>
+      );
+    }
+    return (
+      <>
+        <BsStarFill color="goldenrod" /> <BsStarFill color="goldenrod" />{" "}
+        <BsStarFill color="goldenrod" /> <BsStarFill color="goldenrod" />{" "}
+        <BsStarFill color="goldenrod" />
+        (5.00)
+      </>
+    );
+  };
 
   return (
     <ProfileContainer>
@@ -64,12 +98,7 @@ export default function ProfileSection() {
             </h4>
           </ContentRow>
           <ContentRow>
-            <h4>
-              <BsStarFill color="goldenrod" /> <BsStarFill color="goldenrod" />{" "}
-              <BsStarFill color="goldenrod" /> <BsStarFill color="goldenrod" />{" "}
-              <BsStarHalf color="goldenrod" />
-              (4.20)
-            </h4>
+            <h4>{getRatingStars()}</h4>
           </ContentRow>
         </ContentSection>
         <CircularButton color="#336F8B;">

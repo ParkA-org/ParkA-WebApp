@@ -1,7 +1,5 @@
 import Head from "next/head";
-import { useState, useEffect } from "react";
 import Navbar from "components/Navbar";
-import ModalPortal from "components/Modal";
 
 type LayoutProps = {
   pageTitle?: string;
@@ -14,37 +12,6 @@ export default function Layout({
   icon = "/favicon.ico",
   children,
 }: LayoutProps): JSX.Element {
-  const [showModal, setShowModal] = useState(false);
-  const [pageSize, setPageSize] = useState(1200);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      let w = document.documentElement.clientWidth;
-      setPageSize(w);
-      if (pageSize < 500) {
-        setShowModal(true);
-      } else {
-        setShowModal(false);
-      }
-    }
-    const handleResizing = () => {
-      if (typeof window !== "undefined") {
-        let w = document.documentElement.clientWidth;
-        setPageSize(w);
-        if (pageSize < 500) {
-          setShowModal(true);
-        } else {
-          setShowModal(false);
-        }
-      }
-    };
-
-    window.addEventListener("resize", handleResizing);
-
-    return () => {
-      window.removeEventListener("resize", handleResizing);
-    };
-  }, [pageSize]);
-
   return (
     <div className="container">
       <Head>
@@ -53,11 +20,6 @@ export default function Layout({
       </Head>
       <Navbar />
       {children}
-      {showModal && (
-        <ModalPortal onClose={() => setShowModal(false)}>
-          <h1>Visitando desde celular</h1>
-        </ModalPortal>
-      )}
       <style jsx>{`
         a {
           color: unset;
@@ -100,6 +62,15 @@ export default function Layout({
 
         .logo {
           height: 1em;
+        }
+
+        .normal-span {
+          font-size: 1.6rem;
+          color: #084c7c;
+        }
+
+        .normal-span:hover {
+          cursor: pointer;
         }
 
         @media (max-width: 600px) {

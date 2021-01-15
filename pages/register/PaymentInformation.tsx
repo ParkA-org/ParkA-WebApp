@@ -30,7 +30,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
   const [CreatePayment] = useMutation(CREATE_PAYMENT, {
     onCompleted() {
       setShowModal(false);
-      router.push("/profile/paymentMethod");
+      router.push("/profile/paymentMethods");
     },
     onError(error) {
       console.log("Using mutation on error");
@@ -118,7 +118,7 @@ export default function RegisterPaymentInformation(): JSX.Element {
                       mask={cardMask}
                       id="cardNumber"
                       name="cardNumber"
-                      placeholder="Enter your card number"
+                      placeholder="Entre los números de su tarjeta"
                       type="text"
                       onChange={handleChange}
                       onBlur={handleBlur}

@@ -76,7 +76,7 @@ export const EditProfileSchema = Yup.object().shape({
   documentNumber: Yup.string()
     .required("Requerido")
     .max(11, "Máximo de 11 caracteres"),
-  profilePicture: Yup.string().required("Requerido"),
+  profilePicture: Yup.string(),
   file: Yup.mixed(),
 });
 

@@ -168,7 +168,9 @@ export function FileUploader({
         accept="image/*"
         ref={inputEl}
       />
-      <Button onClick={handleClick}>Subir una imagen</Button>
+      <Button submit={false} onClick={handleClick}>
+        Subir una imagen
+      </Button>
       <style jsx>
         {`
           button {

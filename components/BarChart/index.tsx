@@ -7,6 +7,16 @@ type ComponentProps = {
 };
 
 export default function BarChart({ week }: ComponentProps) {
+  const presentationalWeek = {
+    sunday: "Domingo",
+    monday: "Lunes",
+    tuesday: "Martes",
+    wednesday: "Miercoles",
+    thursday: "Jueves",
+    friday: "Viernes",
+    saturday: "Sabado",
+  };
+
   const canvaRef = useRef(null);
   useEffect(() => {
     let ctx = canvaRef.current;
@@ -18,8 +28,7 @@ export default function BarChart({ week }: ComponentProps) {
     }
     keys = keys.slice(1);
     values = values.slice(1);
-    console.log("Keys ", keys);
-    console.log("Values ", values);
+    keys = keys.map((k) => presentationalWeek[k]);
     let myChart = new Chart(ctx, {
       type: "bar",
       data: {

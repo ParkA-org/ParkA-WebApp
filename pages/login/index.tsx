@@ -73,24 +73,11 @@ export default function Login(): JSX.Element {
               displayName: session.user.name,
               photoUrl: session.user.image,
               email: session.user.email,
-              origin: socialLogin,
+              origin: "google",
             },
           },
         });
       }
-      // if (socialLogin === "google") {
-      //   SocialLogin({
-      //     variables: {
-      //       slv: {
-      //         displayName: session.user.name,
-      //         photoUrl: session.user.image,
-      //         email: session.user.email,
-      //         origin: socialLogin,
-      //       },
-      //     },
-      //   });
-      // } else if (socialLogin === "facebook") {
-      // }
       console.log("Sesion ", session);
     }
   }, [loading]);
@@ -101,15 +88,6 @@ export default function Login(): JSX.Element {
         <br />
         <FormContainer>
           <FieldSection>
-            <LoginButton
-              onClick={() => {
-                setSocialLogin("facebook");
-                signIn("facebook");
-              }}
-            >
-              <Icon src="/icons/fbLogo.png" alt="Facebook Logo" />
-              Continuar con <b>Facebook</b>
-            </LoginButton>
             <LoginButton
               onClick={() => {
                 setSocialLogin("google");

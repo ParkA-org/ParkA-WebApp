@@ -17,6 +17,7 @@ import NavigationLink from "components/NavigationLink";
 const PageContainer = styled.div`
   height: 88vh;
   width: auto;
+  margin-top: 2rem;
   padding: 0 2em;
   display: flex;
   flex-direction: column;

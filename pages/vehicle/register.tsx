@@ -342,6 +342,9 @@ export default function VehicleRegister(): JSX.Element {
                       component="textarea"
                       style={{ width: "900px" }}
                     />
+                    {errors.detail ? (
+                      <p style={{ color: "red" }}>{errors.detail}</p>
+                    ) : null}
                   </DetailsContainer>
                   <ButtonsContainer>
                     <BtnCancel type="button">

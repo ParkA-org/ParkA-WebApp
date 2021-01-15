@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 import { GET_INSIGHTS } from "queries";
 import { WeekInsights, ParkingStats } from "utils/types";
-import { Item } from "components/ParkingStats/styles";
+import { Item } from "./styles";
 import { BiDollar } from "react-icons/bi";
 import { BsClock } from "react-icons/bs";
 import BarChart from "components/BarChart";

@@ -47,6 +47,17 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
       e.currentTarget.parentNode.nextSibling.style.display = "none";
     }
   }
+  const getImageUrl = () => {
+    if (loading) {
+      return "/images/profile_pic.svg";
+    } else {
+      if (user?.profilePicture?.length > 0) {
+        return user.profilePicture.toString();
+      } else {
+        return "/images/profile_pic.svg";
+      }
+    }
+  };
 
   return (
     <DropdownMenu>
@@ -56,12 +67,7 @@ export default function ProfileDropDownMenu({ logout }): JSX.Element {
         </ToggleButton>
         <DropdownButton onClick={() => router.push("/profile")}>
           <div>
-            <img
-              className="userProfilePic"
-              src={
-                loading ? "/images/profile_pic.svg" : `${user?.profilePicture}`
-              }
-            />
+            <img className="userProfilePic" src={getImageUrl()} />
             <h4>{loading ? "Cargando..." : user?.name} </h4>
           </div>
         </DropdownButton>
